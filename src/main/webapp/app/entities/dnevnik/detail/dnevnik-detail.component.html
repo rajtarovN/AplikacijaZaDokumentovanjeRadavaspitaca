@@ -1,0 +1,49 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="dnevnik">
+      <h2 data-cy="dnevnikDetailsHeading"><span jhiTranslate="diplomskiApp.dnevnik.detail.title">Dnevnik</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="diplomskiApp.dnevnik.pocetakVazenja">Pocetak Vazenja</span></dt>
+        <dd>
+          <span>{{ dnevnik.pocetakVazenja | formatMediumDate }}</span>
+        </dd>
+        <dt><span jhiTranslate="diplomskiApp.dnevnik.krajVazenja">Kraj Vazenja</span></dt>
+        <dd>
+          <span>{{ dnevnik.krajVazenja | formatMediumDate }}</span>
+        </dd>
+        <dt><span jhiTranslate="diplomskiApp.dnevnik.id">Id</span></dt>
+        <dd>
+          <span>{{ dnevnik.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="diplomskiApp.dnevnik.grupa">Grupa</span></dt>
+        <dd>
+          <div *ngIf="dnevnik.grupa">
+            <a [routerLink]="['/grupa', dnevnik.grupa?.id, 'view']">{{ dnevnik.grupa?.id }}</a>
+          </div>
+        </dd>
+        <dt><span jhiTranslate="diplomskiApp.dnevnik.vaspitac">Vaspitac</span></dt>
+        <dd>
+          <span *ngFor="let vaspitac of dnevnik.vaspitacs; let last = last">
+            <a [routerLink]="['/vaspitac', vaspitac?.id, 'view']">{{ vaspitac.id }}</a
+            >{{ last ? '' : ', ' }}
+          </span>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/dnevnik', dnevnik.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

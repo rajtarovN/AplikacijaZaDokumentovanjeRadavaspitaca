@@ -1,0 +1,205 @@
+
+entity Korisnik {
+	korisnickoIme String,
+    sifra String,
+    ime String,
+    prezime String,
+    id Long
+}
+
+entity Vaspitac {
+    datumZaposlenja LocalDate,
+    godineIskustva Integer,
+    opis String,
+    id Long
+}
+
+entity Direktor {
+    id Long
+}
+
+entity Pedagog {
+    id Long
+}
+
+
+entity Objekat {
+	opis String,
+    id Long
+}
+
+
+entity Adresa {
+	mesto String,
+    ulica String,
+    broj String,
+    id Long
+}
+
+entity PotrebanMaterijal {
+	naziv String,
+    kolicina Integer,
+    id Long,
+    statusMaterijala StatusMaterijala
+}
+
+entity Dnevnik {
+	pocetakVazenja LocalDate,
+    krajVazenja LocalDate,
+    id Long
+}
+
+entity Grupa {
+    id Long,
+    tipGrupe TipGrupe
+
+}
+entity Roditelj {
+    id Long
+
+}
+entity Prica {
+    id Long
+
+}
+entity PlanPrice {
+    id Long,
+    izvoriSaznanja String,
+    nazivTeme String,
+    pocetnaIdeja String,
+    datumPocetka LocalDate,
+    nacinUcescaVaspitaca String,
+    materijali String,
+    ucescePorodice String,
+    mesta String,
+    datumZavrsetka LocalDate
+
+}
+entity KonacnaPrica {
+    id Long,
+    tekst String
+
+}
+entity KomentarNaPricu {
+    id Long,
+    tekst String,
+    datum LocalDate
+
+}
+entity Formular {
+    id Long,
+    mesecUpisa Integer,
+    jmbg String,
+    datumRodjenja String,
+    imeDeteta String,
+    mestoRodjenja String,
+    opstinaRodjenja String,
+    drzava String,
+    brDeceUPorodici Integer,
+    zdravstveniProblemi String,
+    zdravstveniUslovi String,
+    statusFormulara StatusFormulara,
+    tipGrupe TipGrupe
+
+}
+enum StatusFormulara {
+	NOV, ODOBREN, ODBIJEN
+}
+
+entity PodaciORoditeljima {
+    id Long,
+    jmbg String,
+    ime String,
+    prezime String,
+    telefon String,
+    firma String,
+    radnoVreme String,
+    radniStatus RadniStatus
+}
+
+entity ZapazanjeUVeziDeteta {
+    id Long,
+    interesovanja String,
+    prednosti String,
+    mane String,
+    predlozi String,
+    datum LocalDate
+
+}
+
+entity Dete {
+  visina Integer,
+  tezina Integer,
+    id Long
+
+}
+entity NeDolasci {
+  datum LocalDate,
+  razlog String,
+    id Long
+
+}
+
+enum StatusMaterijala {
+	NOV, KUPLJEN, ODBIJEN
+}
+
+enum RadniStatus {
+	NOV, KUPLJEN, ODBIJEN
+}
+
+enum TipGrupe {
+	POLUDNEVNA, JASLICE, PREDSKOLSKA
+}
+
+
+relationship OneToOne {
+	Objekat{adresa} to  Adresa,
+    //Grupa to TipGrupe,
+    NeDolasci to Dete
+}
+
+relationship OneToOne {
+     Prica{planPrice} to PlanPrice,
+     Prica{konacnaPrica} to KonacnaPrica,
+     Dnevnik{grupa(id)} to Grupa{dnevnik},
+    //Formular to TipGrupe,
+    //Formular to StatusFormulara,
+    Formular to Adresa,
+    Dete to Formular,
+    //PodaciORoditeljima to RadniStatus,
+    ZapazanjeUVeziDeteta to Vaspitac
+}
+
+relationship ManyToMany {
+    Dnevnik{vaspitac(id)} to Vaspitac{dnevnik}
+}
+
+relationship OneToMany {
+	Roditelj to Dete,
+   Dnevnik to Prica,
+   Objekat to PotrebanMaterijal,
+   Prica to KomentarNaPricu,
+   //PotrebanMaterijal to StatusMaterijala,
+   Objekat to Vaspitac,
+   Dnevnik to NeDolasci,
+   Grupa to Dete,
+   Roditelj to Formular,
+   Dete to ZapazanjeUVeziDeteta,
+   Formular to PodaciORoditeljima
+
+}
+
+
+//paginate JobHistory, Employee with infinite-scroll
+paginate all with pagination
+
+// Use Data Transfer Objects (DTO)
+// dto * with mapstruct
+
+// Set service options to all except few
+service all with serviceImpl //except Employee, Job
+
+
+// Set an angular suffix
+// angularSuffix * with mySuffix

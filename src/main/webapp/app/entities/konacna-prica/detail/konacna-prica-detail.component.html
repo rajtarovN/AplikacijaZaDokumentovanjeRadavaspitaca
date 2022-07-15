@@ -1,0 +1,32 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="konacnaPrica">
+      <h2 data-cy="konacnaPricaDetailsHeading"><span jhiTranslate="diplomskiApp.konacnaPrica.detail.title">Konacna Prica</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="diplomskiApp.konacnaPrica.id">Id</span></dt>
+        <dd>
+          <span>{{ konacnaPrica.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="diplomskiApp.konacnaPrica.tekst">Tekst</span></dt>
+        <dd>
+          <span>{{ konacnaPrica.tekst }}</span>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/konacna-prica', konacnaPrica.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

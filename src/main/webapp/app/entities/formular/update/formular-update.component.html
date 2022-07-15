@@ -1,0 +1,195 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-formular-heading" data-cy="FormularCreateUpdateHeading" jhiTranslate="diplomskiApp.formular.home.createOrEditLabel">
+        Create or edit a Formular
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="row mb-3" [hidden]="editForm.get('id')!.value == null">
+          <label class="form-label" jhiTranslate="diplomskiApp.formular.id" for="field_id">Id</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="diplomskiApp.formular.mesecUpisa" for="field_mesecUpisa">Mesec Upisa</label>
+          <input
+            type="number"
+            class="form-control"
+            name="mesecUpisa"
+            id="field_mesecUpisa"
+            data-cy="mesecUpisa"
+            formControlName="mesecUpisa"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="diplomskiApp.formular.jmbg" for="field_jmbg">Jmbg</label>
+          <input type="text" class="form-control" name="jmbg" id="field_jmbg" data-cy="jmbg" formControlName="jmbg" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="diplomskiApp.formular.datumRodjenja" for="field_datumRodjenja">Datum Rodjenja</label>
+          <input
+            type="text"
+            class="form-control"
+            name="datumRodjenja"
+            id="field_datumRodjenja"
+            data-cy="datumRodjenja"
+            formControlName="datumRodjenja"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="diplomskiApp.formular.imeDeteta" for="field_imeDeteta">Ime Deteta</label>
+          <input type="text" class="form-control" name="imeDeteta" id="field_imeDeteta" data-cy="imeDeteta" formControlName="imeDeteta" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="diplomskiApp.formular.mestoRodjenja" for="field_mestoRodjenja">Mesto Rodjenja</label>
+          <input
+            type="text"
+            class="form-control"
+            name="mestoRodjenja"
+            id="field_mestoRodjenja"
+            data-cy="mestoRodjenja"
+            formControlName="mestoRodjenja"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="diplomskiApp.formular.opstinaRodjenja" for="field_opstinaRodjenja"
+            >Opstina Rodjenja</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="opstinaRodjenja"
+            id="field_opstinaRodjenja"
+            data-cy="opstinaRodjenja"
+            formControlName="opstinaRodjenja"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="diplomskiApp.formular.drzava" for="field_drzava">Drzava</label>
+          <input type="text" class="form-control" name="drzava" id="field_drzava" data-cy="drzava" formControlName="drzava" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="diplomskiApp.formular.brDeceUPorodici" for="field_brDeceUPorodici"
+            >Br Dece U Porodici</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="brDeceUPorodici"
+            id="field_brDeceUPorodici"
+            data-cy="brDeceUPorodici"
+            formControlName="brDeceUPorodici"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="diplomskiApp.formular.zdravstveniProblemi" for="field_zdravstveniProblemi"
+            >Zdravstveni Problemi</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="zdravstveniProblemi"
+            id="field_zdravstveniProblemi"
+            data-cy="zdravstveniProblemi"
+            formControlName="zdravstveniProblemi"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="diplomskiApp.formular.zdravstveniUslovi" for="field_zdravstveniUslovi"
+            >Zdravstveni Uslovi</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="zdravstveniUslovi"
+            id="field_zdravstveniUslovi"
+            data-cy="zdravstveniUslovi"
+            formControlName="zdravstveniUslovi"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="diplomskiApp.formular.statusFormulara" for="field_statusFormulara"
+            >Status Formulara</label
+          >
+          <select
+            class="form-control"
+            name="statusFormulara"
+            formControlName="statusFormulara"
+            id="field_statusFormulara"
+            data-cy="statusFormulara"
+          >
+            <option [ngValue]="null">{{ 'diplomskiApp.StatusFormulara.null' | translate }}</option>
+            <option *ngFor="let statusFormulara of statusFormularaValues" [value]="statusFormulara">
+              {{ 'diplomskiApp.StatusFormulara.' + statusFormulara | translate }}
+            </option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="diplomskiApp.formular.tipGrupe" for="field_tipGrupe">Tip Grupe</label>
+          <select class="form-control" name="tipGrupe" formControlName="tipGrupe" id="field_tipGrupe" data-cy="tipGrupe">
+            <option [ngValue]="null">{{ 'diplomskiApp.TipGrupe.null' | translate }}</option>
+            <option *ngFor="let tipGrupe of tipGrupeValues" [value]="tipGrupe">
+              {{ 'diplomskiApp.TipGrupe.' + tipGrupe | translate }}
+            </option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="diplomskiApp.formular.adresa" for="field_adresa">Adresa</label>
+          <select class="form-control" id="field_adresa" data-cy="adresa" name="adresa" formControlName="adresa">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="adresaOption.id === editForm.get('adresa')!.value?.id ? editForm.get('adresa')!.value : adresaOption"
+              *ngFor="let adresaOption of adresasCollection; trackBy: trackAdresaById"
+            >
+              {{ adresaOption.id }}
+            </option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="diplomskiApp.formular.roditelj" for="field_roditelj">Roditelj</label>
+          <select class="form-control" id="field_roditelj" data-cy="roditelj" name="roditelj" formControlName="roditelj">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="roditeljOption.id === editForm.get('roditelj')!.value?.id ? editForm.get('roditelj')!.value : roditeljOption"
+              *ngFor="let roditeljOption of roditeljsSharedCollection; trackBy: trackRoditeljById"
+            >
+              {{ roditeljOption.id }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

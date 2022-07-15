@@ -1,0 +1,27 @@
+{
+  "diplomskiApp": {
+    "adresa": {
+      "home": {
+        "title": "Adresas",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Adresa",
+        "createOrEditLabel": "Create or edit a Adresa",
+        "notFound": "No Adresas found"
+      },
+      "created": "A new Adresa is created with identifier {{ param }}",
+      "updated": "A Adresa is updated with identifier {{ param }}",
+      "deleted": "A Adresa is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Adresa {{ id }}?"
+      },
+      "detail": {
+        "title": "Adresa"
+      },
+      "mesto": "Mesto",
+      "ulica": "Ulica",
+      "broj": "Broj",
+      "id": "Id",
+      "formular": "Formular"
+    }
+  }
+}

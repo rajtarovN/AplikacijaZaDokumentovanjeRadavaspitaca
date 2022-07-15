@@ -1,0 +1,42 @@
+{
+  "applications": "*",
+  "changelogDate": "20220715121721",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "ne_dolasci",
+  "fields": [
+    {
+      "fieldName": "datum",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "razlog",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "id",
+      "fieldType": "Long"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "NeDolasci",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "dete",
+      "otherEntityRelationshipName": "neDolasci",
+      "ownerSide": true,
+      "relationshipName": "dete",
+      "relationshipType": "one-to-one"
+    },
+    {
+      "otherEntityName": "dnevnik",
+      "otherEntityRelationshipName": "neDolasci",
+      "relationshipName": "dnevnik",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "service": "serviceImpl"
+}

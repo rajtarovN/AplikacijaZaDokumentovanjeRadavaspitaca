@@ -1,0 +1,33 @@
+{
+  "applications": "*",
+  "changelogDate": "20220715121712",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "roditelj",
+  "fields": [
+    {
+      "fieldName": "id",
+      "fieldType": "Long"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Roditelj",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "dete",
+      "otherEntityRelationshipName": "roditelj",
+      "relationshipName": "dete",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "formular",
+      "otherEntityRelationshipName": "roditelj",
+      "relationshipName": "formular",
+      "relationshipType": "one-to-many"
+    }
+  ],
+  "service": "serviceImpl"
+}

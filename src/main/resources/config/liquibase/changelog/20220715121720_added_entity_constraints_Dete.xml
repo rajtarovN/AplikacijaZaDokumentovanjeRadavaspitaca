@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.6.xsd">
+    <!--
+        Added the constraints for entity Dete.
+    -->
+    <changeSet id="20220715121720-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="formular_id"
+                                 baseTableName="dete"
+                                 constraintName="fk_dete__formular_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="formular"/>
+
+        <addForeignKeyConstraint baseColumnNames="roditelj_id"
+                                 baseTableName="dete"
+                                 constraintName="fk_dete__roditelj_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="roditelj"/>
+
+        <addForeignKeyConstraint baseColumnNames="grupa_id"
+                                 baseTableName="dete"
+                                 constraintName="fk_dete__grupa_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="grupa"/>
+    </changeSet>
+</databaseChangeLog>

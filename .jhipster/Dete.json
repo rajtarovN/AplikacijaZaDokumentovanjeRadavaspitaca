@@ -1,0 +1,61 @@
+{
+  "applications": "*",
+  "changelogDate": "20220715121720",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "dete",
+  "fields": [
+    {
+      "fieldName": "visina",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "tezina",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "id",
+      "fieldType": "Long"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Dete",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "formular",
+      "otherEntityRelationshipName": "dete",
+      "ownerSide": true,
+      "relationshipName": "formular",
+      "relationshipType": "one-to-one"
+    },
+    {
+      "otherEntityName": "zapazanjeUVeziDeteta",
+      "otherEntityRelationshipName": "dete",
+      "relationshipName": "zapazanjeUVeziDeteta",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "neDolasci",
+      "otherEntityRelationshipName": "dete",
+      "ownerSide": false,
+      "relationshipName": "neDolasci",
+      "relationshipType": "one-to-one"
+    },
+    {
+      "otherEntityName": "roditelj",
+      "otherEntityRelationshipName": "dete",
+      "relationshipName": "roditelj",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "grupa",
+      "otherEntityRelationshipName": "dete",
+      "relationshipName": "grupa",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "service": "serviceImpl"
+}

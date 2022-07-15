@@ -1,0 +1,44 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="komentarNaPricu">
+      <h2 data-cy="komentarNaPricuDetailsHeading">
+        <span jhiTranslate="diplomskiApp.komentarNaPricu.detail.title">Komentar Na Pricu</span>
+      </h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="diplomskiApp.komentarNaPricu.id">Id</span></dt>
+        <dd>
+          <span>{{ komentarNaPricu.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="diplomskiApp.komentarNaPricu.tekst">Tekst</span></dt>
+        <dd>
+          <span>{{ komentarNaPricu.tekst }}</span>
+        </dd>
+        <dt><span jhiTranslate="diplomskiApp.komentarNaPricu.datum">Datum</span></dt>
+        <dd>
+          <span>{{ komentarNaPricu.datum | formatMediumDate }}</span>
+        </dd>
+        <dt><span jhiTranslate="diplomskiApp.komentarNaPricu.prica">Prica</span></dt>
+        <dd>
+          <div *ngIf="komentarNaPricu.prica">
+            <a [routerLink]="['/prica', komentarNaPricu.prica?.id, 'view']">{{ komentarNaPricu.prica?.id }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/komentar-na-pricu', komentarNaPricu.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

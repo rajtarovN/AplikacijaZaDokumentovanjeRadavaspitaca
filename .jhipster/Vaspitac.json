@@ -1,0 +1,53 @@
+{
+  "applications": "*",
+  "changelogDate": "20220715121704",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "vaspitac",
+  "fields": [
+    {
+      "fieldName": "datumZaposlenja",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "godineIskustva",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "opis",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "id",
+      "fieldType": "Long"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Vaspitac",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "zapazanjeUVeziDeteta",
+      "otherEntityRelationshipName": "vaspitac",
+      "ownerSide": false,
+      "relationshipName": "zapazanjeUVeziDeteta",
+      "relationshipType": "one-to-one"
+    },
+    {
+      "otherEntityName": "objekat",
+      "otherEntityRelationshipName": "vaspitac",
+      "relationshipName": "objekat",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "dnevnik",
+      "otherEntityRelationshipName": "vaspitac",
+      "ownerSide": false,
+      "relationshipName": "dnevnik",
+      "relationshipType": "many-to-many"
+    }
+  ],
+  "service": "serviceImpl"
+}

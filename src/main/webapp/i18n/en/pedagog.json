@@ -1,0 +1,23 @@
+{
+  "diplomskiApp": {
+    "pedagog": {
+      "home": {
+        "title": "Pedagogs",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Pedagog",
+        "createOrEditLabel": "Create or edit a Pedagog",
+        "notFound": "No Pedagogs found"
+      },
+      "created": "A new Pedagog is created with identifier {{ param }}",
+      "updated": "A Pedagog is updated with identifier {{ param }}",
+      "deleted": "A Pedagog is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Pedagog {{ id }}?"
+      },
+      "detail": {
+        "title": "Pedagog"
+      },
+      "id": "Id"
+    }
+  }
+}

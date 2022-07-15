@@ -1,0 +1,44 @@
+{
+  "applications": "*",
+  "changelogDate": "20220715121707",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "objekat",
+  "fields": [
+    {
+      "fieldName": "opis",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "id",
+      "fieldType": "Long"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Objekat",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "adresa",
+      "otherEntityRelationshipName": "objekat",
+      "ownerSide": true,
+      "relationshipName": "adresa",
+      "relationshipType": "one-to-one"
+    },
+    {
+      "otherEntityName": "potrebanMaterijal",
+      "otherEntityRelationshipName": "objekat",
+      "relationshipName": "potrebanMaterijal",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "vaspitac",
+      "otherEntityRelationshipName": "objekat",
+      "relationshipName": "vaspitac",
+      "relationshipType": "one-to-many"
+    }
+  ],
+  "service": "serviceImpl"
+}

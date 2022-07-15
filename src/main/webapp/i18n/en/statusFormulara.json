@@ -1,0 +1,10 @@
+{
+  "diplomskiApp": {
+    "StatusFormulara": {
+      "null": "",
+      "NOV": "NOV",
+      "ODOBREN": "ODOBREN",
+      "ODBIJEN": "ODBIJEN"
+    }
+  }
+}

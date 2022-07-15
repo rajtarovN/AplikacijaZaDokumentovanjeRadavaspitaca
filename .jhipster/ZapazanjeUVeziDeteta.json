@@ -1,0 +1,54 @@
+{
+  "applications": "*",
+  "changelogDate": "20220715121719",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "zapazanje_u_vezi_deteta",
+  "fields": [
+    {
+      "fieldName": "id",
+      "fieldType": "Long"
+    },
+    {
+      "fieldName": "interesovanja",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "prednosti",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "mane",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "predlozi",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "datum",
+      "fieldType": "LocalDate"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "ZapazanjeUVeziDeteta",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "vaspitac",
+      "otherEntityRelationshipName": "zapazanjeUVeziDeteta",
+      "ownerSide": true,
+      "relationshipName": "vaspitac",
+      "relationshipType": "one-to-one"
+    },
+    {
+      "otherEntityName": "dete",
+      "otherEntityRelationshipName": "zapazanjeUVeziDeteta",
+      "relationshipName": "dete",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "service": "serviceImpl"
+}

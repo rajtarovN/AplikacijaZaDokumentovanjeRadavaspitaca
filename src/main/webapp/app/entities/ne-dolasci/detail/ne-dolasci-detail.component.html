@@ -1,0 +1,48 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="neDolasci">
+      <h2 data-cy="neDolasciDetailsHeading"><span jhiTranslate="diplomskiApp.neDolasci.detail.title">Ne Dolasci</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="diplomskiApp.neDolasci.datum">Datum</span></dt>
+        <dd>
+          <span>{{ neDolasci.datum | formatMediumDate }}</span>
+        </dd>
+        <dt><span jhiTranslate="diplomskiApp.neDolasci.razlog">Razlog</span></dt>
+        <dd>
+          <span>{{ neDolasci.razlog }}</span>
+        </dd>
+        <dt><span jhiTranslate="diplomskiApp.neDolasci.id">Id</span></dt>
+        <dd>
+          <span>{{ neDolasci.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="diplomskiApp.neDolasci.dete">Dete</span></dt>
+        <dd>
+          <div *ngIf="neDolasci.dete">
+            <a [routerLink]="['/dete', neDolasci.dete?.id, 'view']">{{ neDolasci.dete?.id }}</a>
+          </div>
+        </dd>
+        <dt><span jhiTranslate="diplomskiApp.neDolasci.dnevnik">Dnevnik</span></dt>
+        <dd>
+          <div *ngIf="neDolasci.dnevnik">
+            <a [routerLink]="['/dnevnik', neDolasci.dnevnik?.id, 'view']">{{ neDolasci.dnevnik?.id }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/ne-dolasci', neDolasci.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,97 @@
+{
+  "applications": "*",
+  "changelogDate": "20220715121717",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "formular",
+  "fields": [
+    {
+      "fieldName": "id",
+      "fieldType": "Long"
+    },
+    {
+      "fieldName": "mesecUpisa",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "jmbg",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "datumRodjenja",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "imeDeteta",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "mestoRodjenja",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "opstinaRodjenja",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "drzava",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "brDeceUPorodici",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "zdravstveniProblemi",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "zdravstveniUslovi",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "statusFormulara",
+      "fieldType": "StatusFormulara",
+      "fieldValues": "NOV,ODOBREN,ODBIJEN"
+    },
+    {
+      "fieldName": "tipGrupe",
+      "fieldType": "TipGrupe",
+      "fieldValues": "POLUDNEVNA,JASLICE,PREDSKOLSKA"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Formular",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "adresa",
+      "otherEntityRelationshipName": "formular",
+      "ownerSide": true,
+      "relationshipName": "adresa",
+      "relationshipType": "one-to-one"
+    },
+    {
+      "otherEntityName": "podaciORoditeljima",
+      "otherEntityRelationshipName": "formular",
+      "relationshipName": "podaciORoditeljima",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "dete",
+      "otherEntityRelationshipName": "formular",
+      "ownerSide": false,
+      "relationshipName": "dete",
+      "relationshipType": "one-to-one"
+    },
+    {
+      "otherEntityName": "roditelj",
+      "otherEntityRelationshipName": "formular",
+      "relationshipName": "roditelj",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "service": "serviceImpl"
+}

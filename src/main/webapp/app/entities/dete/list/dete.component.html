@@ -1,0 +1,116 @@
+<div>
+  <h2 id="page-heading" data-cy="DeteHeading">
+    <span jhiTranslate="diplomskiApp.dete.home.title">Detes</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="loadPage()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span jhiTranslate="diplomskiApp.dete.home.refreshListLabel">Refresh List</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-dete"
+        [routerLink]="['/dete/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span jhiTranslate="diplomskiApp.dete.home.createLabel"> Create a new Dete </span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="detes?.length === 0">
+    <span jhiTranslate="diplomskiApp.dete.home.notFound">No detes found</span>
+  </div>
+
+  <div class="table-responsive" id="entities" *ngIf="detes && detes.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="loadPage()">
+          <th scope="col" jhiSortBy="visina">
+            <span jhiTranslate="diplomskiApp.dete.visina">Visina</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="tezina">
+            <span jhiTranslate="diplomskiApp.dete.tezina">Tezina</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="id"><span jhiTranslate="diplomskiApp.dete.id">Id</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="formular.id">
+            <span jhiTranslate="diplomskiApp.dete.formular">Formular</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="roditelj.id">
+            <span jhiTranslate="diplomskiApp.dete.roditelj">Roditelj</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="grupa.id">
+            <span jhiTranslate="diplomskiApp.dete.grupa">Grupa</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let dete of detes; trackBy: trackId" data-cy="entityTable">
+          <td>{{ dete.visina }}</td>
+          <td>{{ dete.tezina }}</td>
+          <td>
+            <a [routerLink]="['/dete', dete.id, 'view']">{{ dete.id }}</a>
+          </td>
+          <td>
+            <div *ngIf="dete.formular">
+              <a [routerLink]="['/formular', dete.formular?.id, 'view']">{{ dete.formular?.id }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="dete.roditelj">
+              <a [routerLink]="['/roditelj', dete.roditelj?.id, 'view']">{{ dete.roditelj?.id }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="dete.grupa">
+              <a [routerLink]="['/grupa', dete.grupa?.id, 'view']">{{ dete.grupa?.id }}</a>
+            </div>
+          </td>
+          <td class="text-end">
+            <div class="btn-group">
+              <button type="submit" [routerLink]="['/dete', dete.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+              </button>
+
+              <button type="submit" [routerLink]="['/dete', dete.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+              </button>
+
+              <button type="submit" (click)="delete(dete)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="detes && detes.length > 0">
+    <div class="d-flex justify-content-center">
+      <jhi-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></jhi-item-count>
+    </div>
+
+    <div class="d-flex justify-content-center">
+      <ngb-pagination
+        [collectionSize]="totalItems"
+        [(page)]="ngbPaginationPage"
+        [pageSize]="itemsPerPage"
+        [maxSize]="5"
+        [rotate]="true"
+        [boundaryLinks]="true"
+        (pageChange)="loadPage($event)"
+      ></ngb-pagination>
+    </div>
+  </div>
+</div>

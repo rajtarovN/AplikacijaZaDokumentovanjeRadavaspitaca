@@ -1,0 +1,7 @@
+export enum TipGrupe {
+  POLUDNEVNA = 'POLUDNEVNA',
+
+  JASLICE = 'JASLICE',
+
+  PREDSKOLSKA = 'PREDSKOLSKA',
+}

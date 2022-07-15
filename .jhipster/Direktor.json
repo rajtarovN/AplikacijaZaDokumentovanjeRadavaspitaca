@@ -1,0 +1,20 @@
+{
+  "applications": "*",
+  "changelogDate": "20220715121705",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "direktor",
+  "fields": [
+    {
+      "fieldName": "id",
+      "fieldType": "Long"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Direktor",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [],
+  "service": "serviceImpl"
+}

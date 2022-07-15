@@ -1,0 +1,50 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="potrebanMaterijal">
+      <h2 data-cy="potrebanMaterijalDetailsHeading">
+        <span jhiTranslate="diplomskiApp.potrebanMaterijal.detail.title">Potreban Materijal</span>
+      </h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="diplomskiApp.potrebanMaterijal.naziv">Naziv</span></dt>
+        <dd>
+          <span>{{ potrebanMaterijal.naziv }}</span>
+        </dd>
+        <dt><span jhiTranslate="diplomskiApp.potrebanMaterijal.kolicina">Kolicina</span></dt>
+        <dd>
+          <span>{{ potrebanMaterijal.kolicina }}</span>
+        </dd>
+        <dt><span jhiTranslate="diplomskiApp.potrebanMaterijal.id">Id</span></dt>
+        <dd>
+          <span>{{ potrebanMaterijal.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="diplomskiApp.potrebanMaterijal.statusMaterijala">Status Materijala</span></dt>
+        <dd>
+          <span jhiTranslate="{{ 'diplomskiApp.StatusMaterijala.' + potrebanMaterijal.statusMaterijala }}">{{
+            potrebanMaterijal.statusMaterijala
+          }}</span>
+        </dd>
+        <dt><span jhiTranslate="diplomskiApp.potrebanMaterijal.objekat">Objekat</span></dt>
+        <dd>
+          <div *ngIf="potrebanMaterijal.objekat">
+            <a [routerLink]="['/objekat', potrebanMaterijal.objekat?.id, 'view']">{{ potrebanMaterijal.objekat?.id }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/potreban-materijal', potrebanMaterijal.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,25 @@
+{
+  "diplomskiApp": {
+    "roditelj": {
+      "home": {
+        "title": "Roditeljs",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Roditelj",
+        "createOrEditLabel": "Create or edit a Roditelj",
+        "notFound": "No Roditeljs found"
+      },
+      "created": "A new Roditelj is created with identifier {{ param }}",
+      "updated": "A Roditelj is updated with identifier {{ param }}",
+      "deleted": "A Roditelj is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Roditelj {{ id }}?"
+      },
+      "detail": {
+        "title": "Roditelj"
+      },
+      "id": "Id",
+      "dete": "Dete",
+      "formular": "Formular"
+    }
+  }
+}

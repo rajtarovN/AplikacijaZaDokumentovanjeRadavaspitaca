@@ -1,0 +1,30 @@
+{
+  "diplomskiApp": {
+    "dete": {
+      "home": {
+        "title": "Detes",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Dete",
+        "createOrEditLabel": "Create or edit a Dete",
+        "notFound": "No Detes found"
+      },
+      "created": "A new Dete is created with identifier {{ param }}",
+      "updated": "A Dete is updated with identifier {{ param }}",
+      "deleted": "A Dete is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Dete {{ id }}?"
+      },
+      "detail": {
+        "title": "Dete"
+      },
+      "visina": "Visina",
+      "tezina": "Tezina",
+      "id": "Id",
+      "formular": "Formular",
+      "zapazanjeUVeziDeteta": "Zapazanje U Vezi Deteta",
+      "neDolasci": "Ne Dolasci",
+      "roditelj": "Roditelj",
+      "grupa": "Grupa"
+    }
+  }
+}

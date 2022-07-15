@@ -51,6 +51,37 @@ public class CacheConfiguration {
             createCache(cm, com.diplomski.myapp.domain.User.class.getName());
             createCache(cm, com.diplomski.myapp.domain.Authority.class.getName());
             createCache(cm, com.diplomski.myapp.domain.User.class.getName() + ".authorities");
+            createCache(cm, com.diplomski.myapp.domain.Korisnik.class.getName());
+            createCache(cm, com.diplomski.myapp.domain.Vaspitac.class.getName());
+            createCache(cm, com.diplomski.myapp.domain.Vaspitac.class.getName() + ".dnevniks");
+            createCache(cm, com.diplomski.myapp.domain.Direktor.class.getName());
+            createCache(cm, com.diplomski.myapp.domain.Pedagog.class.getName());
+            createCache(cm, com.diplomski.myapp.domain.Objekat.class.getName());
+            createCache(cm, com.diplomski.myapp.domain.Objekat.class.getName() + ".potrebanMaterijals");
+            createCache(cm, com.diplomski.myapp.domain.Objekat.class.getName() + ".vaspitacs");
+            createCache(cm, com.diplomski.myapp.domain.Adresa.class.getName());
+            createCache(cm, com.diplomski.myapp.domain.PotrebanMaterijal.class.getName());
+            createCache(cm, com.diplomski.myapp.domain.Dnevnik.class.getName());
+            createCache(cm, com.diplomski.myapp.domain.Dnevnik.class.getName() + ".pricas");
+            createCache(cm, com.diplomski.myapp.domain.Dnevnik.class.getName() + ".neDolascis");
+            createCache(cm, com.diplomski.myapp.domain.Dnevnik.class.getName() + ".vaspitacs");
+            createCache(cm, com.diplomski.myapp.domain.Grupa.class.getName());
+            createCache(cm, com.diplomski.myapp.domain.Grupa.class.getName() + ".detes");
+            createCache(cm, com.diplomski.myapp.domain.Roditelj.class.getName());
+            createCache(cm, com.diplomski.myapp.domain.Roditelj.class.getName() + ".detes");
+            createCache(cm, com.diplomski.myapp.domain.Roditelj.class.getName() + ".formulars");
+            createCache(cm, com.diplomski.myapp.domain.Prica.class.getName());
+            createCache(cm, com.diplomski.myapp.domain.PlanPrice.class.getName());
+            createCache(cm, com.diplomski.myapp.domain.KonacnaPrica.class.getName());
+            createCache(cm, com.diplomski.myapp.domain.KomentarNaPricu.class.getName());
+            createCache(cm, com.diplomski.myapp.domain.Formular.class.getName());
+            createCache(cm, com.diplomski.myapp.domain.Formular.class.getName() + ".podaciORoditeljimas");
+            createCache(cm, com.diplomski.myapp.domain.PodaciORoditeljima.class.getName());
+            createCache(cm, com.diplomski.myapp.domain.ZapazanjeUVeziDeteta.class.getName());
+            createCache(cm, com.diplomski.myapp.domain.Dete.class.getName());
+            createCache(cm, com.diplomski.myapp.domain.Dete.class.getName() + ".zapazanjeUVeziDetetas");
+            createCache(cm, com.diplomski.myapp.domain.NeDolasci.class.getName());
+            createCache(cm, com.diplomski.myapp.domain.Prica.class.getName() + ".komentarNaPricus");
             // jhipster-needle-ehcache-add-entry
         };
     }

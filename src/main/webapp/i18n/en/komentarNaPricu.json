@@ -1,0 +1,26 @@
+{
+  "diplomskiApp": {
+    "komentarNaPricu": {
+      "home": {
+        "title": "Komentar Na Pricus",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Komentar Na Pricu",
+        "createOrEditLabel": "Create or edit a Komentar Na Pricu",
+        "notFound": "No Komentar Na Pricus found"
+      },
+      "created": "A new Komentar Na Pricu is created with identifier {{ param }}",
+      "updated": "A Komentar Na Pricu is updated with identifier {{ param }}",
+      "deleted": "A Komentar Na Pricu is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Komentar Na Pricu {{ id }}?"
+      },
+      "detail": {
+        "title": "Komentar Na Pricu"
+      },
+      "id": "Id",
+      "tekst": "Tekst",
+      "datum": "Datum",
+      "prica": "Prica"
+    }
+  }
+}

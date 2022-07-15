@@ -1,0 +1,61 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-korisnik-heading" data-cy="KorisnikCreateUpdateHeading" jhiTranslate="diplomskiApp.korisnik.home.createOrEditLabel">
+        Create or edit a Korisnik
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="diplomskiApp.korisnik.korisnickoIme" for="field_korisnickoIme">Korisnicko Ime</label>
+          <input
+            type="text"
+            class="form-control"
+            name="korisnickoIme"
+            id="field_korisnickoIme"
+            data-cy="korisnickoIme"
+            formControlName="korisnickoIme"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="diplomskiApp.korisnik.sifra" for="field_sifra">Sifra</label>
+          <input type="text" class="form-control" name="sifra" id="field_sifra" data-cy="sifra" formControlName="sifra" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="diplomskiApp.korisnik.ime" for="field_ime">Ime</label>
+          <input type="text" class="form-control" name="ime" id="field_ime" data-cy="ime" formControlName="ime" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="diplomskiApp.korisnik.prezime" for="field_prezime">Prezime</label>
+          <input type="text" class="form-control" name="prezime" id="field_prezime" data-cy="prezime" formControlName="prezime" />
+        </div>
+
+        <div class="row mb-3" [hidden]="editForm.get('id')!.value == null">
+          <label class="form-label" jhiTranslate="diplomskiApp.korisnik.id" for="field_id">Id</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

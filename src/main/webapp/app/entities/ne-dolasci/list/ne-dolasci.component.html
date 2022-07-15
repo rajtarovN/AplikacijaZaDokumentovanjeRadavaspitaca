@@ -1,0 +1,118 @@
+<div>
+  <h2 id="page-heading" data-cy="NeDolasciHeading">
+    <span jhiTranslate="diplomskiApp.neDolasci.home.title">Ne Dolascis</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="loadPage()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span jhiTranslate="diplomskiApp.neDolasci.home.refreshListLabel">Refresh List</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-ne-dolasci"
+        [routerLink]="['/ne-dolasci/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span jhiTranslate="diplomskiApp.neDolasci.home.createLabel"> Create a new Ne Dolasci </span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="neDolascis?.length === 0">
+    <span jhiTranslate="diplomskiApp.neDolasci.home.notFound">No neDolascis found</span>
+  </div>
+
+  <div class="table-responsive" id="entities" *ngIf="neDolascis && neDolascis.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="loadPage()">
+          <th scope="col" jhiSortBy="datum">
+            <span jhiTranslate="diplomskiApp.neDolasci.datum">Datum</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="razlog">
+            <span jhiTranslate="diplomskiApp.neDolasci.razlog">Razlog</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="id"><span jhiTranslate="diplomskiApp.neDolasci.id">Id</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="dete.id">
+            <span jhiTranslate="diplomskiApp.neDolasci.dete">Dete</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="dnevnik.id">
+            <span jhiTranslate="diplomskiApp.neDolasci.dnevnik">Dnevnik</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let neDolasci of neDolascis; trackBy: trackId" data-cy="entityTable">
+          <td>{{ neDolasci.datum | formatMediumDate }}</td>
+          <td>{{ neDolasci.razlog }}</td>
+          <td>
+            <a [routerLink]="['/ne-dolasci', neDolasci.id, 'view']">{{ neDolasci.id }}</a>
+          </td>
+          <td>
+            <div *ngIf="neDolasci.dete">
+              <a [routerLink]="['/dete', neDolasci.dete?.id, 'view']">{{ neDolasci.dete?.id }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="neDolasci.dnevnik">
+              <a [routerLink]="['/dnevnik', neDolasci.dnevnik?.id, 'view']">{{ neDolasci.dnevnik?.id }}</a>
+            </div>
+          </td>
+          <td class="text-end">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/ne-dolasci', neDolasci.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/ne-dolasci', neDolasci.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+              </button>
+
+              <button type="submit" (click)="delete(neDolasci)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="neDolascis && neDolascis.length > 0">
+    <div class="d-flex justify-content-center">
+      <jhi-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></jhi-item-count>
+    </div>
+
+    <div class="d-flex justify-content-center">
+      <ngb-pagination
+        [collectionSize]="totalItems"
+        [(page)]="ngbPaginationPage"
+        [pageSize]="itemsPerPage"
+        [maxSize]="5"
+        [rotate]="true"
+        [boundaryLinks]="true"
+        (pageChange)="loadPage($event)"
+      ></ngb-pagination>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,10 @@
+{
+  "diplomskiApp": {
+    "RadniStatus": {
+      "null": "",
+      "NOV": "NOV",
+      "KUPLJEN": "KUPLJEN",
+      "ODBIJEN": "ODBIJEN"
+    }
+  }
+}

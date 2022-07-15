@@ -1,0 +1,24 @@
+{
+  "diplomskiApp": {
+    "konacnaPrica": {
+      "home": {
+        "title": "Konacna Pricas",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Konacna Prica",
+        "createOrEditLabel": "Create or edit a Konacna Prica",
+        "notFound": "No Konacna Pricas found"
+      },
+      "created": "A new Konacna Prica is created with identifier {{ param }}",
+      "updated": "A Konacna Prica is updated with identifier {{ param }}",
+      "deleted": "A Konacna Prica is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Konacna Prica {{ id }}?"
+      },
+      "detail": {
+        "title": "Konacna Prica"
+      },
+      "id": "Id",
+      "tekst": "Tekst"
+    }
+  }
+}

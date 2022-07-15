@@ -1,0 +1,27 @@
+{
+  "diplomskiApp": {
+    "potrebanMaterijal": {
+      "home": {
+        "title": "Potreban Materijals",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Potreban Materijal",
+        "createOrEditLabel": "Create or edit a Potreban Materijal",
+        "notFound": "No Potreban Materijals found"
+      },
+      "created": "A new Potreban Materijal is created with identifier {{ param }}",
+      "updated": "A Potreban Materijal is updated with identifier {{ param }}",
+      "deleted": "A Potreban Materijal is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Potreban Materijal {{ id }}?"
+      },
+      "detail": {
+        "title": "Potreban Materijal"
+      },
+      "naziv": "Naziv",
+      "kolicina": "Kolicina",
+      "id": "Id",
+      "statusMaterijala": "Status Materijala",
+      "objekat": "Objekat"
+    }
+  }
+}

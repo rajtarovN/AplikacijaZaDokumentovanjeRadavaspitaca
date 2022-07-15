@@ -1,0 +1,23 @@
+{
+  "diplomskiApp": {
+    "direktor": {
+      "home": {
+        "title": "Direktors",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Direktor",
+        "createOrEditLabel": "Create or edit a Direktor",
+        "notFound": "No Direktors found"
+      },
+      "created": "A new Direktor is created with identifier {{ param }}",
+      "updated": "A Direktor is updated with identifier {{ param }}",
+      "deleted": "A Direktor is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Direktor {{ id }}?"
+      },
+      "detail": {
+        "title": "Direktor"
+      },
+      "id": "Id"
+    }
+  }
+}

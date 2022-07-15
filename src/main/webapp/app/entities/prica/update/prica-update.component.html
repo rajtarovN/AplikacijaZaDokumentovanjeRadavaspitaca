@@ -1,0 +1,75 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-prica-heading" data-cy="PricaCreateUpdateHeading" jhiTranslate="diplomskiApp.prica.home.createOrEditLabel">
+        Create or edit a Prica
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="row mb-3" [hidden]="editForm.get('id')!.value == null">
+          <label class="form-label" jhiTranslate="diplomskiApp.prica.id" for="field_id">Id</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="diplomskiApp.prica.planPrice" for="field_planPrice">Plan Price</label>
+          <select class="form-control" id="field_planPrice" data-cy="planPrice" name="planPrice" formControlName="planPrice">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="planPriceOption.id === editForm.get('planPrice')!.value?.id ? editForm.get('planPrice')!.value : planPriceOption"
+              *ngFor="let planPriceOption of planPricesCollection; trackBy: trackPlanPriceById"
+            >
+              {{ planPriceOption.id }}
+            </option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="diplomskiApp.prica.konacnaPrica" for="field_konacnaPrica">Konacna Prica</label>
+          <select class="form-control" id="field_konacnaPrica" data-cy="konacnaPrica" name="konacnaPrica" formControlName="konacnaPrica">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="
+                konacnaPricaOption.id === editForm.get('konacnaPrica')!.value?.id ? editForm.get('konacnaPrica')!.value : konacnaPricaOption
+              "
+              *ngFor="let konacnaPricaOption of konacnaPricasCollection; trackBy: trackKonacnaPricaById"
+            >
+              {{ konacnaPricaOption.id }}
+            </option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="diplomskiApp.prica.dnevnik" for="field_dnevnik">Dnevnik</label>
+          <select class="form-control" id="field_dnevnik" data-cy="dnevnik" name="dnevnik" formControlName="dnevnik">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="dnevnikOption.id === editForm.get('dnevnik')!.value?.id ? editForm.get('dnevnik')!.value : dnevnikOption"
+              *ngFor="let dnevnikOption of dnevniksSharedCollection; trackBy: trackDnevnikById"
+            >
+              {{ dnevnikOption.id }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,40 @@
+{
+  "applications": "*",
+  "changelogDate": "20220715121708",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "adresa",
+  "fields": [
+    {
+      "fieldName": "mesto",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "ulica",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "broj",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "id",
+      "fieldType": "Long"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Adresa",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "formular",
+      "otherEntityRelationshipName": "adresa",
+      "ownerSide": false,
+      "relationshipName": "formular",
+      "relationshipType": "one-to-one"
+    }
+  ],
+  "service": "serviceImpl"
+}

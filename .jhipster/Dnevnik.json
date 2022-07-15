@@ -1,0 +1,57 @@
+{
+  "applications": "*",
+  "changelogDate": "20220715121710",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "dnevnik",
+  "fields": [
+    {
+      "fieldName": "pocetakVazenja",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "krajVazenja",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "id",
+      "fieldType": "Long"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Dnevnik",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityField": "id",
+      "otherEntityName": "grupa",
+      "otherEntityRelationshipName": "dnevnik",
+      "ownerSide": true,
+      "relationshipName": "grupa",
+      "relationshipType": "one-to-one"
+    },
+    {
+      "otherEntityName": "prica",
+      "otherEntityRelationshipName": "dnevnik",
+      "relationshipName": "prica",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "neDolasci",
+      "otherEntityRelationshipName": "dnevnik",
+      "relationshipName": "neDolasci",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityField": "id",
+      "otherEntityName": "vaspitac",
+      "otherEntityRelationshipName": "dnevnik",
+      "ownerSide": true,
+      "relationshipName": "vaspitac",
+      "relationshipType": "many-to-many"
+    }
+  ],
+  "service": "serviceImpl"
+}

@@ -1,0 +1,97 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-dnevnik-heading" data-cy="DnevnikCreateUpdateHeading" jhiTranslate="diplomskiApp.dnevnik.home.createOrEditLabel">
+        Create or edit a Dnevnik
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="diplomskiApp.dnevnik.pocetakVazenja" for="field_pocetakVazenja">Pocetak Vazenja</label>
+          <div class="input-group">
+            <input
+              id="field_pocetakVazenja"
+              data-cy="pocetakVazenja"
+              type="text"
+              class="form-control"
+              name="pocetakVazenja"
+              ngbDatepicker
+              #pocetakVazenjaDp="ngbDatepicker"
+              formControlName="pocetakVazenja"
+            />
+            <button type="button" class="btn btn-secondary" (click)="pocetakVazenjaDp.toggle()">
+              <fa-icon icon="calendar-alt"></fa-icon>
+            </button>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="diplomskiApp.dnevnik.krajVazenja" for="field_krajVazenja">Kraj Vazenja</label>
+          <div class="input-group">
+            <input
+              id="field_krajVazenja"
+              data-cy="krajVazenja"
+              type="text"
+              class="form-control"
+              name="krajVazenja"
+              ngbDatepicker
+              #krajVazenjaDp="ngbDatepicker"
+              formControlName="krajVazenja"
+            />
+            <button type="button" class="btn btn-secondary" (click)="krajVazenjaDp.toggle()">
+              <fa-icon icon="calendar-alt"></fa-icon>
+            </button>
+          </div>
+        </div>
+
+        <div class="row mb-3" [hidden]="editForm.get('id')!.value == null">
+          <label class="form-label" jhiTranslate="diplomskiApp.dnevnik.id" for="field_id">Id</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="diplomskiApp.dnevnik.grupa" for="field_grupa">Grupa</label>
+          <select class="form-control" id="field_grupa" data-cy="grupa" name="grupa" formControlName="grupa">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="grupaOption.id === editForm.get('grupa')!.value?.id ? editForm.get('grupa')!.value : grupaOption"
+              *ngFor="let grupaOption of grupasCollection; trackBy: trackGrupaById"
+            >
+              {{ grupaOption.id }}
+            </option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
+          <label jhiTranslate="diplomskiApp.dnevnik.vaspitac" for="field_vaspitacs">Vaspitac</label>
+          <select class="form-control" id="field_vaspitacs" data-cy="vaspitac" multiple name="vaspitacs" formControlName="vaspitacs">
+            <option
+              [ngValue]="getSelectedVaspitac(vaspitacOption, editForm.get('vaspitacs')!.value)"
+              *ngFor="let vaspitacOption of vaspitacsSharedCollection; trackBy: trackVaspitacById"
+            >
+              {{ vaspitacOption.id }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

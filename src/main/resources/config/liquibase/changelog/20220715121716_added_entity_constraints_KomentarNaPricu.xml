@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.6.xsd">
+    <!--
+        Added the constraints for entity KomentarNaPricu.
+    -->
+    <changeSet id="20220715121716-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="prica_id"
+                                 baseTableName="komentar_na_pricu"
+                                 constraintName="fk_komentar_na_pricu__prica_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="prica"/>
+    </changeSet>
+</databaseChangeLog>

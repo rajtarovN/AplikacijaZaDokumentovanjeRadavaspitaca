@@ -1,0 +1,112 @@
+<div>
+  <h2 id="page-heading" data-cy="VaspitacHeading">
+    <span jhiTranslate="diplomskiApp.vaspitac.home.title">Vaspitacs</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="loadPage()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span jhiTranslate="diplomskiApp.vaspitac.home.refreshListLabel">Refresh List</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-vaspitac"
+        [routerLink]="['/vaspitac/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span jhiTranslate="diplomskiApp.vaspitac.home.createLabel"> Create a new Vaspitac </span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="vaspitacs?.length === 0">
+    <span jhiTranslate="diplomskiApp.vaspitac.home.notFound">No vaspitacs found</span>
+  </div>
+
+  <div class="table-responsive" id="entities" *ngIf="vaspitacs && vaspitacs.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="loadPage()">
+          <th scope="col" jhiSortBy="datumZaposlenja">
+            <span jhiTranslate="diplomskiApp.vaspitac.datumZaposlenja">Datum Zaposlenja</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="godineIskustva">
+            <span jhiTranslate="diplomskiApp.vaspitac.godineIskustva">Godine Iskustva</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="opis"><span jhiTranslate="diplomskiApp.vaspitac.opis">Opis</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="id"><span jhiTranslate="diplomskiApp.vaspitac.id">Id</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="objekat.id">
+            <span jhiTranslate="diplomskiApp.vaspitac.objekat">Objekat</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let vaspitac of vaspitacs; trackBy: trackId" data-cy="entityTable">
+          <td>{{ vaspitac.datumZaposlenja | formatMediumDate }}</td>
+          <td>{{ vaspitac.godineIskustva }}</td>
+          <td>{{ vaspitac.opis }}</td>
+          <td>
+            <a [routerLink]="['/vaspitac', vaspitac.id, 'view']">{{ vaspitac.id }}</a>
+          </td>
+          <td>
+            <div *ngIf="vaspitac.objekat">
+              <a [routerLink]="['/objekat', vaspitac.objekat?.id, 'view']">{{ vaspitac.objekat?.id }}</a>
+            </div>
+          </td>
+          <td class="text-end">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/vaspitac', vaspitac.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/vaspitac', vaspitac.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+              </button>
+
+              <button type="submit" (click)="delete(vaspitac)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="vaspitacs && vaspitacs.length > 0">
+    <div class="d-flex justify-content-center">
+      <jhi-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></jhi-item-count>
+    </div>
+
+    <div class="d-flex justify-content-center">
+      <ngb-pagination
+        [collectionSize]="totalItems"
+        [(page)]="ngbPaginationPage"
+        [pageSize]="itemsPerPage"
+        [maxSize]="5"
+        [rotate]="true"
+        [boundaryLinks]="true"
+        (pageChange)="loadPage($event)"
+      ></ngb-pagination>
+    </div>
+  </div>
+</div>

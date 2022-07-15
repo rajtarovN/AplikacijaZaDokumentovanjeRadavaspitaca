@@ -1,0 +1,44 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="korisnik">
+      <h2 data-cy="korisnikDetailsHeading"><span jhiTranslate="diplomskiApp.korisnik.detail.title">Korisnik</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="diplomskiApp.korisnik.korisnickoIme">Korisnicko Ime</span></dt>
+        <dd>
+          <span>{{ korisnik.korisnickoIme }}</span>
+        </dd>
+        <dt><span jhiTranslate="diplomskiApp.korisnik.sifra">Sifra</span></dt>
+        <dd>
+          <span>{{ korisnik.sifra }}</span>
+        </dd>
+        <dt><span jhiTranslate="diplomskiApp.korisnik.ime">Ime</span></dt>
+        <dd>
+          <span>{{ korisnik.ime }}</span>
+        </dd>
+        <dt><span jhiTranslate="diplomskiApp.korisnik.prezime">Prezime</span></dt>
+        <dd>
+          <span>{{ korisnik.prezime }}</span>
+        </dd>
+        <dt><span jhiTranslate="diplomskiApp.korisnik.id">Id</span></dt>
+        <dd>
+          <span>{{ korisnik.id }}</span>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/korisnik', korisnik.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

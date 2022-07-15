@@ -1,0 +1,39 @@
+{
+  "applications": "*",
+  "changelogDate": "20220715121711",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "grupa",
+  "fields": [
+    {
+      "fieldName": "id",
+      "fieldType": "Long"
+    },
+    {
+      "fieldName": "tipGrupe",
+      "fieldType": "TipGrupe",
+      "fieldValues": "POLUDNEVNA,JASLICE,PREDSKOLSKA"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Grupa",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "dete",
+      "otherEntityRelationshipName": "grupa",
+      "relationshipName": "dete",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "dnevnik",
+      "otherEntityRelationshipName": "grupa",
+      "ownerSide": false,
+      "relationshipName": "dnevnik",
+      "relationshipType": "one-to-one"
+    }
+  ],
+  "service": "serviceImpl"
+}

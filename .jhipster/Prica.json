@@ -1,0 +1,47 @@
+{
+  "applications": "*",
+  "changelogDate": "20220715121713",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "prica",
+  "fields": [
+    {
+      "fieldName": "id",
+      "fieldType": "Long"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Prica",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "planPrice",
+      "otherEntityRelationshipName": "prica",
+      "ownerSide": true,
+      "relationshipName": "planPrice",
+      "relationshipType": "one-to-one"
+    },
+    {
+      "otherEntityName": "konacnaPrica",
+      "otherEntityRelationshipName": "prica",
+      "ownerSide": true,
+      "relationshipName": "konacnaPrica",
+      "relationshipType": "one-to-one"
+    },
+    {
+      "otherEntityName": "komentarNaPricu",
+      "otherEntityRelationshipName": "prica",
+      "relationshipName": "komentarNaPricu",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "dnevnik",
+      "otherEntityRelationshipName": "prica",
+      "relationshipName": "dnevnik",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "service": "serviceImpl"
+}

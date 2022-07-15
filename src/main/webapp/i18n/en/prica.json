@@ -1,0 +1,27 @@
+{
+  "diplomskiApp": {
+    "prica": {
+      "home": {
+        "title": "Pricas",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Prica",
+        "createOrEditLabel": "Create or edit a Prica",
+        "notFound": "No Pricas found"
+      },
+      "created": "A new Prica is created with identifier {{ param }}",
+      "updated": "A Prica is updated with identifier {{ param }}",
+      "deleted": "A Prica is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Prica {{ id }}?"
+      },
+      "detail": {
+        "title": "Prica"
+      },
+      "id": "Id",
+      "planPrice": "Plan Price",
+      "konacnaPrica": "Konacna Prica",
+      "komentarNaPricu": "Komentar Na Pricu",
+      "dnevnik": "Dnevnik"
+    }
+  }
+}

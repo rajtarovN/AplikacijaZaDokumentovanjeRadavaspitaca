@@ -1,0 +1,156 @@
+<div>
+  <h2 id="page-heading" data-cy="FormularHeading">
+    <span jhiTranslate="diplomskiApp.formular.home.title">Formulars</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="loadPage()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span jhiTranslate="diplomskiApp.formular.home.refreshListLabel">Refresh List</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-formular"
+        [routerLink]="['/formular/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span jhiTranslate="diplomskiApp.formular.home.createLabel"> Create a new Formular </span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="formulars?.length === 0">
+    <span jhiTranslate="diplomskiApp.formular.home.notFound">No formulars found</span>
+  </div>
+
+  <div class="table-responsive" id="entities" *ngIf="formulars && formulars.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="loadPage()">
+          <th scope="col" jhiSortBy="id"><span jhiTranslate="diplomskiApp.formular.id">Id</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="mesecUpisa">
+            <span jhiTranslate="diplomskiApp.formular.mesecUpisa">Mesec Upisa</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="jmbg"><span jhiTranslate="diplomskiApp.formular.jmbg">Jmbg</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="datumRodjenja">
+            <span jhiTranslate="diplomskiApp.formular.datumRodjenja">Datum Rodjenja</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="imeDeteta">
+            <span jhiTranslate="diplomskiApp.formular.imeDeteta">Ime Deteta</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="mestoRodjenja">
+            <span jhiTranslate="diplomskiApp.formular.mestoRodjenja">Mesto Rodjenja</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="opstinaRodjenja">
+            <span jhiTranslate="diplomskiApp.formular.opstinaRodjenja">Opstina Rodjenja</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="drzava">
+            <span jhiTranslate="diplomskiApp.formular.drzava">Drzava</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="brDeceUPorodici">
+            <span jhiTranslate="diplomskiApp.formular.brDeceUPorodici">Br Dece U Porodici</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="zdravstveniProblemi">
+            <span jhiTranslate="diplomskiApp.formular.zdravstveniProblemi">Zdravstveni Problemi</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="zdravstveniUslovi">
+            <span jhiTranslate="diplomskiApp.formular.zdravstveniUslovi">Zdravstveni Uslovi</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="statusFormulara">
+            <span jhiTranslate="diplomskiApp.formular.statusFormulara">Status Formulara</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="tipGrupe">
+            <span jhiTranslate="diplomskiApp.formular.tipGrupe">Tip Grupe</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="adresa.id">
+            <span jhiTranslate="diplomskiApp.formular.adresa">Adresa</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="roditelj.id">
+            <span jhiTranslate="diplomskiApp.formular.roditelj">Roditelj</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let formular of formulars; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/formular', formular.id, 'view']">{{ formular.id }}</a>
+          </td>
+          <td>{{ formular.mesecUpisa }}</td>
+          <td>{{ formular.jmbg }}</td>
+          <td>{{ formular.datumRodjenja }}</td>
+          <td>{{ formular.imeDeteta }}</td>
+          <td>{{ formular.mestoRodjenja }}</td>
+          <td>{{ formular.opstinaRodjenja }}</td>
+          <td>{{ formular.drzava }}</td>
+          <td>{{ formular.brDeceUPorodici }}</td>
+          <td>{{ formular.zdravstveniProblemi }}</td>
+          <td>{{ formular.zdravstveniUslovi }}</td>
+          <td jhiTranslate="{{ 'diplomskiApp.StatusFormulara.' + formular.statusFormulara }}">{{ formular.statusFormulara }}</td>
+          <td jhiTranslate="{{ 'diplomskiApp.TipGrupe.' + formular.tipGrupe }}">{{ formular.tipGrupe }}</td>
+          <td>
+            <div *ngIf="formular.adresa">
+              <a [routerLink]="['/adresa', formular.adresa?.id, 'view']">{{ formular.adresa?.id }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="formular.roditelj">
+              <a [routerLink]="['/roditelj', formular.roditelj?.id, 'view']">{{ formular.roditelj?.id }}</a>
+            </div>
+          </td>
+          <td class="text-end">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/formular', formular.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/formular', formular.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+              </button>
+
+              <button type="submit" (click)="delete(formular)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="formulars && formulars.length > 0">
+    <div class="d-flex justify-content-center">
+      <jhi-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></jhi-item-count>
+    </div>
+
+    <div class="d-flex justify-content-center">
+      <ngb-pagination
+        [collectionSize]="totalItems"
+        [(page)]="ngbPaginationPage"
+        [pageSize]="itemsPerPage"
+        [maxSize]="5"
+        [rotate]="true"
+        [boundaryLinks]="true"
+        (pageChange)="loadPage($event)"
+      ></ngb-pagination>
+    </div>
+  </div>
+</div>

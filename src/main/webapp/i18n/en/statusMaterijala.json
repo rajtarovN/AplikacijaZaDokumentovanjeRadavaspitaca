@@ -1,0 +1,10 @@
+{
+  "diplomskiApp": {
+    "StatusMaterijala": {
+      "null": "",
+      "NOV": "NOV",
+      "KUPLJEN": "KUPLJEN",
+      "ODBIJEN": "ODBIJEN"
+    }
+  }
+}

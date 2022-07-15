@@ -1,0 +1,46 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="prica">
+      <h2 data-cy="pricaDetailsHeading"><span jhiTranslate="diplomskiApp.prica.detail.title">Prica</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="diplomskiApp.prica.id">Id</span></dt>
+        <dd>
+          <span>{{ prica.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="diplomskiApp.prica.planPrice">Plan Price</span></dt>
+        <dd>
+          <div *ngIf="prica.planPrice">
+            <a [routerLink]="['/plan-price', prica.planPrice?.id, 'view']">{{ prica.planPrice?.id }}</a>
+          </div>
+        </dd>
+        <dt><span jhiTranslate="diplomskiApp.prica.konacnaPrica">Konacna Prica</span></dt>
+        <dd>
+          <div *ngIf="prica.konacnaPrica">
+            <a [routerLink]="['/konacna-prica', prica.konacnaPrica?.id, 'view']">{{ prica.konacnaPrica?.id }}</a>
+          </div>
+        </dd>
+        <dt><span jhiTranslate="diplomskiApp.prica.dnevnik">Dnevnik</span></dt>
+        <dd>
+          <div *ngIf="prica.dnevnik">
+            <a [routerLink]="['/dnevnik', prica.dnevnik?.id, 'view']">{{ prica.dnevnik?.id }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/prica', prica.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

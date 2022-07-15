@@ -1,0 +1,27 @@
+{
+  "diplomskiApp": {
+    "neDolasci": {
+      "home": {
+        "title": "Ne Dolascis",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Ne Dolasci",
+        "createOrEditLabel": "Create or edit a Ne Dolasci",
+        "notFound": "No Ne Dolascis found"
+      },
+      "created": "A new Ne Dolasci is created with identifier {{ param }}",
+      "updated": "A Ne Dolasci is updated with identifier {{ param }}",
+      "deleted": "A Ne Dolasci is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Ne Dolasci {{ id }}?"
+      },
+      "detail": {
+        "title": "Ne Dolasci"
+      },
+      "datum": "Datum",
+      "razlog": "Razlog",
+      "id": "Id",
+      "dete": "Dete",
+      "dnevnik": "Dnevnik"
+    }
+  }
+}

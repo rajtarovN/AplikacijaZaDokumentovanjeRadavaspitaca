@@ -1,0 +1,29 @@
+{
+  "diplomskiApp": {
+    "vaspitac": {
+      "home": {
+        "title": "Vaspitacs",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Vaspitac",
+        "createOrEditLabel": "Create or edit a Vaspitac",
+        "notFound": "No Vaspitacs found"
+      },
+      "created": "A new Vaspitac is created with identifier {{ param }}",
+      "updated": "A Vaspitac is updated with identifier {{ param }}",
+      "deleted": "A Vaspitac is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Vaspitac {{ id }}?"
+      },
+      "detail": {
+        "title": "Vaspitac"
+      },
+      "datumZaposlenja": "Datum Zaposlenja",
+      "godineIskustva": "Godine Iskustva",
+      "opis": "Opis",
+      "id": "Id",
+      "zapazanjeUVeziDeteta": "Zapazanje U Vezi Deteta",
+      "objekat": "Objekat",
+      "dnevnik": "Dnevnik"
+    }
+  }
+}

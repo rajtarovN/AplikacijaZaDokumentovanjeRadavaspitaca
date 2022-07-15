@@ -1,0 +1,66 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="podaciORoditeljima">
+      <h2 data-cy="podaciORoditeljimaDetailsHeading">
+        <span jhiTranslate="diplomskiApp.podaciORoditeljima.detail.title">Podaci O Roditeljima</span>
+      </h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="diplomskiApp.podaciORoditeljima.id">Id</span></dt>
+        <dd>
+          <span>{{ podaciORoditeljima.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="diplomskiApp.podaciORoditeljima.jmbg">Jmbg</span></dt>
+        <dd>
+          <span>{{ podaciORoditeljima.jmbg }}</span>
+        </dd>
+        <dt><span jhiTranslate="diplomskiApp.podaciORoditeljima.ime">Ime</span></dt>
+        <dd>
+          <span>{{ podaciORoditeljima.ime }}</span>
+        </dd>
+        <dt><span jhiTranslate="diplomskiApp.podaciORoditeljima.prezime">Prezime</span></dt>
+        <dd>
+          <span>{{ podaciORoditeljima.prezime }}</span>
+        </dd>
+        <dt><span jhiTranslate="diplomskiApp.podaciORoditeljima.telefon">Telefon</span></dt>
+        <dd>
+          <span>{{ podaciORoditeljima.telefon }}</span>
+        </dd>
+        <dt><span jhiTranslate="diplomskiApp.podaciORoditeljima.firma">Firma</span></dt>
+        <dd>
+          <span>{{ podaciORoditeljima.firma }}</span>
+        </dd>
+        <dt><span jhiTranslate="diplomskiApp.podaciORoditeljima.radnoVreme">Radno Vreme</span></dt>
+        <dd>
+          <span>{{ podaciORoditeljima.radnoVreme }}</span>
+        </dd>
+        <dt><span jhiTranslate="diplomskiApp.podaciORoditeljima.radniStatus">Radni Status</span></dt>
+        <dd>
+          <span jhiTranslate="{{ 'diplomskiApp.RadniStatus.' + podaciORoditeljima.radniStatus }}">{{
+            podaciORoditeljima.radniStatus
+          }}</span>
+        </dd>
+        <dt><span jhiTranslate="diplomskiApp.podaciORoditeljima.formular">Formular</span></dt>
+        <dd>
+          <div *ngIf="podaciORoditeljima.formular">
+            <a [routerLink]="['/formular', podaciORoditeljima.formular?.id, 'view']">{{ podaciORoditeljima.formular?.id }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/podaci-o-roditeljima', podaciORoditeljima.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

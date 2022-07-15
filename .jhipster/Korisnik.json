@@ -1,0 +1,36 @@
+{
+  "applications": "*",
+  "changelogDate": "20220715121703",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "korisnik",
+  "fields": [
+    {
+      "fieldName": "korisnickoIme",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "sifra",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "ime",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "prezime",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "id",
+      "fieldType": "Long"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Korisnik",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [],
+  "service": "serviceImpl"
+}

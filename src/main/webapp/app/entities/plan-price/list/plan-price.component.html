@@ -1,0 +1,130 @@
+<div>
+  <h2 id="page-heading" data-cy="PlanPriceHeading">
+    <span jhiTranslate="diplomskiApp.planPrice.home.title">Plan Prices</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="loadPage()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span jhiTranslate="diplomskiApp.planPrice.home.refreshListLabel">Refresh List</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-plan-price"
+        [routerLink]="['/plan-price/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span jhiTranslate="diplomskiApp.planPrice.home.createLabel"> Create a new Plan Price </span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="planPrices?.length === 0">
+    <span jhiTranslate="diplomskiApp.planPrice.home.notFound">No planPrices found</span>
+  </div>
+
+  <div class="table-responsive" id="entities" *ngIf="planPrices && planPrices.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="loadPage()">
+          <th scope="col" jhiSortBy="id"><span jhiTranslate="diplomskiApp.planPrice.id">Id</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="izvoriSaznanja">
+            <span jhiTranslate="diplomskiApp.planPrice.izvoriSaznanja">Izvori Saznanja</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="nazivTeme">
+            <span jhiTranslate="diplomskiApp.planPrice.nazivTeme">Naziv Teme</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="pocetnaIdeja">
+            <span jhiTranslate="diplomskiApp.planPrice.pocetnaIdeja">Pocetna Ideja</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="datumPocetka">
+            <span jhiTranslate="diplomskiApp.planPrice.datumPocetka">Datum Pocetka</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="nacinUcescaVaspitaca">
+            <span jhiTranslate="diplomskiApp.planPrice.nacinUcescaVaspitaca">Nacin Ucesca Vaspitaca</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="materijali">
+            <span jhiTranslate="diplomskiApp.planPrice.materijali">Materijali</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="ucescePorodice">
+            <span jhiTranslate="diplomskiApp.planPrice.ucescePorodice">Ucesce Porodice</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="mesta">
+            <span jhiTranslate="diplomskiApp.planPrice.mesta">Mesta</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="datumZavrsetka">
+            <span jhiTranslate="diplomskiApp.planPrice.datumZavrsetka">Datum Zavrsetka</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let planPrice of planPrices; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/plan-price', planPrice.id, 'view']">{{ planPrice.id }}</a>
+          </td>
+          <td>{{ planPrice.izvoriSaznanja }}</td>
+          <td>{{ planPrice.nazivTeme }}</td>
+          <td>{{ planPrice.pocetnaIdeja }}</td>
+          <td>{{ planPrice.datumPocetka | formatMediumDate }}</td>
+          <td>{{ planPrice.nacinUcescaVaspitaca }}</td>
+          <td>{{ planPrice.materijali }}</td>
+          <td>{{ planPrice.ucescePorodice }}</td>
+          <td>{{ planPrice.mesta }}</td>
+          <td>{{ planPrice.datumZavrsetka | formatMediumDate }}</td>
+          <td class="text-end">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/plan-price', planPrice.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/plan-price', planPrice.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+              </button>
+
+              <button type="submit" (click)="delete(planPrice)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="planPrices && planPrices.length > 0">
+    <div class="d-flex justify-content-center">
+      <jhi-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></jhi-item-count>
+    </div>
+
+    <div class="d-flex justify-content-center">
+      <ngb-pagination
+        [collectionSize]="totalItems"
+        [(page)]="ngbPaginationPage"
+        [pageSize]="itemsPerPage"
+        [maxSize]="5"
+        [rotate]="true"
+        [boundaryLinks]="true"
+        (pageChange)="loadPage($event)"
+      ></ngb-pagination>
+    </div>
+  </div>
+</div>

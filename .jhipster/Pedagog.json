@@ -1,0 +1,20 @@
+{
+  "applications": "*",
+  "changelogDate": "20220715121706",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "pedagog",
+  "fields": [
+    {
+      "fieldName": "id",
+      "fieldType": "Long"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Pedagog",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [],
+  "service": "serviceImpl"
+}

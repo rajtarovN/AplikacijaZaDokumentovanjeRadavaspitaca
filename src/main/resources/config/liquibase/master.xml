@@ -15,7 +15,37 @@
     <property name="datetimeType" value="datetime" dbms="oracle, mssql, postgresql, h2"/>
 
     <include file="config/liquibase/changelog/00000000000000_initial_schema.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20220715121703_added_entity_Korisnik.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20220715121704_added_entity_Vaspitac.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20220715121705_added_entity_Direktor.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20220715121706_added_entity_Pedagog.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20220715121707_added_entity_Objekat.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20220715121708_added_entity_Adresa.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20220715121709_added_entity_PotrebanMaterijal.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20220715121710_added_entity_Dnevnik.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20220715121711_added_entity_Grupa.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20220715121712_added_entity_Roditelj.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20220715121713_added_entity_Prica.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20220715121714_added_entity_PlanPrice.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20220715121715_added_entity_KonacnaPrica.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20220715121716_added_entity_KomentarNaPricu.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20220715121717_added_entity_Formular.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20220715121718_added_entity_PodaciORoditeljima.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20220715121719_added_entity_ZapazanjeUVeziDeteta.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20220715121720_added_entity_Dete.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20220715121721_added_entity_NeDolasci.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
+    <include file="config/liquibase/changelog/20220715121704_added_entity_constraints_Vaspitac.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20220715121707_added_entity_constraints_Objekat.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20220715121709_added_entity_constraints_PotrebanMaterijal.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20220715121710_added_entity_constraints_Dnevnik.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20220715121713_added_entity_constraints_Prica.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20220715121717_added_entity_constraints_Formular.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20220715121718_added_entity_constraints_PodaciORoditeljima.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20220715121719_added_entity_constraints_ZapazanjeUVeziDeteta.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20220715121720_added_entity_constraints_Dete.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20220715121721_added_entity_constraints_NeDolasci.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20220715121716_added_entity_constraints_KomentarNaPricu.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
     <!-- jhipster-needle-liquibase-add-incremental-changelog - JHipster will add incremental liquibase changelogs here -->
 </databaseChangeLog>

@@ -1,0 +1,88 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="formular">
+      <h2 data-cy="formularDetailsHeading"><span jhiTranslate="diplomskiApp.formular.detail.title">Formular</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="diplomskiApp.formular.id">Id</span></dt>
+        <dd>
+          <span>{{ formular.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="diplomskiApp.formular.mesecUpisa">Mesec Upisa</span></dt>
+        <dd>
+          <span>{{ formular.mesecUpisa }}</span>
+        </dd>
+        <dt><span jhiTranslate="diplomskiApp.formular.jmbg">Jmbg</span></dt>
+        <dd>
+          <span>{{ formular.jmbg }}</span>
+        </dd>
+        <dt><span jhiTranslate="diplomskiApp.formular.datumRodjenja">Datum Rodjenja</span></dt>
+        <dd>
+          <span>{{ formular.datumRodjenja }}</span>
+        </dd>
+        <dt><span jhiTranslate="diplomskiApp.formular.imeDeteta">Ime Deteta</span></dt>
+        <dd>
+          <span>{{ formular.imeDeteta }}</span>
+        </dd>
+        <dt><span jhiTranslate="diplomskiApp.formular.mestoRodjenja">Mesto Rodjenja</span></dt>
+        <dd>
+          <span>{{ formular.mestoRodjenja }}</span>
+        </dd>
+        <dt><span jhiTranslate="diplomskiApp.formular.opstinaRodjenja">Opstina Rodjenja</span></dt>
+        <dd>
+          <span>{{ formular.opstinaRodjenja }}</span>
+        </dd>
+        <dt><span jhiTranslate="diplomskiApp.formular.drzava">Drzava</span></dt>
+        <dd>
+          <span>{{ formular.drzava }}</span>
+        </dd>
+        <dt><span jhiTranslate="diplomskiApp.formular.brDeceUPorodici">Br Dece U Porodici</span></dt>
+        <dd>
+          <span>{{ formular.brDeceUPorodici }}</span>
+        </dd>
+        <dt><span jhiTranslate="diplomskiApp.formular.zdravstveniProblemi">Zdravstveni Problemi</span></dt>
+        <dd>
+          <span>{{ formular.zdravstveniProblemi }}</span>
+        </dd>
+        <dt><span jhiTranslate="diplomskiApp.formular.zdravstveniUslovi">Zdravstveni Uslovi</span></dt>
+        <dd>
+          <span>{{ formular.zdravstveniUslovi }}</span>
+        </dd>
+        <dt><span jhiTranslate="diplomskiApp.formular.statusFormulara">Status Formulara</span></dt>
+        <dd>
+          <span jhiTranslate="{{ 'diplomskiApp.StatusFormulara.' + formular.statusFormulara }}">{{ formular.statusFormulara }}</span>
+        </dd>
+        <dt><span jhiTranslate="diplomskiApp.formular.tipGrupe">Tip Grupe</span></dt>
+        <dd>
+          <span jhiTranslate="{{ 'diplomskiApp.TipGrupe.' + formular.tipGrupe }}">{{ formular.tipGrupe }}</span>
+        </dd>
+        <dt><span jhiTranslate="diplomskiApp.formular.adresa">Adresa</span></dt>
+        <dd>
+          <div *ngIf="formular.adresa">
+            <a [routerLink]="['/adresa', formular.adresa?.id, 'view']">{{ formular.adresa?.id }}</a>
+          </div>
+        </dd>
+        <dt><span jhiTranslate="diplomskiApp.formular.roditelj">Roditelj</span></dt>
+        <dd>
+          <div *ngIf="formular.roditelj">
+            <a [routerLink]="['/roditelj', formular.roditelj?.id, 'view']">{{ formular.roditelj?.id }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/formular', formular.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

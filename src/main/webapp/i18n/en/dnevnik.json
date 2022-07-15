@@ -1,0 +1,29 @@
+{
+  "diplomskiApp": {
+    "dnevnik": {
+      "home": {
+        "title": "Dnevniks",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Dnevnik",
+        "createOrEditLabel": "Create or edit a Dnevnik",
+        "notFound": "No Dnevniks found"
+      },
+      "created": "A new Dnevnik is created with identifier {{ param }}",
+      "updated": "A Dnevnik is updated with identifier {{ param }}",
+      "deleted": "A Dnevnik is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Dnevnik {{ id }}?"
+      },
+      "detail": {
+        "title": "Dnevnik"
+      },
+      "pocetakVazenja": "Pocetak Vazenja",
+      "krajVazenja": "Kraj Vazenja",
+      "id": "Id",
+      "grupa": "Grupa",
+      "prica": "Prica",
+      "neDolasci": "Ne Dolasci",
+      "vaspitac": "Vaspitac"
+    }
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "applications": "*",
+  "changelogDate": "20220715121709",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "potreban_materijal",
+  "fields": [
+    {
+      "fieldName": "naziv",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "kolicina",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "id",
+      "fieldType": "Long"
+    },
+    {
+      "fieldName": "statusMaterijala",
+      "fieldType": "StatusMaterijala",
+      "fieldValues": "NOV,KUPLJEN,ODBIJEN"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "PotrebanMaterijal",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "objekat",
+      "otherEntityRelationshipName": "potrebanMaterijal",
+      "relationshipName": "objekat",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "service": "serviceImpl"
+}

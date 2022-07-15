@@ -1,0 +1,56 @@
+{
+  "applications": "*",
+  "changelogDate": "20220715121718",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "podaci_o_roditeljima",
+  "fields": [
+    {
+      "fieldName": "id",
+      "fieldType": "Long"
+    },
+    {
+      "fieldName": "jmbg",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "ime",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "prezime",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "telefon",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "firma",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "radnoVreme",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "radniStatus",
+      "fieldType": "RadniStatus",
+      "fieldValues": "NOV,KUPLJEN,ODBIJEN"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "PodaciORoditeljima",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "formular",
+      "otherEntityRelationshipName": "podaciORoditeljima",
+      "relationshipName": "formular",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "service": "serviceImpl"
+}

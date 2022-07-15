@@ -1,0 +1,30 @@
+{
+  "diplomskiApp": {
+    "zapazanjeUVeziDeteta": {
+      "home": {
+        "title": "Zapazanje U Vezi Detetas",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Zapazanje U Vezi Deteta",
+        "createOrEditLabel": "Create or edit a Zapazanje U Vezi Deteta",
+        "notFound": "No Zapazanje U Vezi Detetas found"
+      },
+      "created": "A new Zapazanje U Vezi Deteta is created with identifier {{ param }}",
+      "updated": "A Zapazanje U Vezi Deteta is updated with identifier {{ param }}",
+      "deleted": "A Zapazanje U Vezi Deteta is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Zapazanje U Vezi Deteta {{ id }}?"
+      },
+      "detail": {
+        "title": "Zapazanje U Vezi Deteta"
+      },
+      "id": "Id",
+      "interesovanja": "Interesovanja",
+      "prednosti": "Prednosti",
+      "mane": "Mane",
+      "predlozi": "Predlozi",
+      "datum": "Datum",
+      "vaspitac": "Vaspitac",
+      "dete": "Dete"
+    }
+  }
+}

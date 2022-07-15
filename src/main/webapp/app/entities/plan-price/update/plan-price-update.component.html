@@ -1,0 +1,144 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-plan-price-heading" data-cy="PlanPriceCreateUpdateHeading" jhiTranslate="diplomskiApp.planPrice.home.createOrEditLabel">
+        Create or edit a Plan Price
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="row mb-3" [hidden]="editForm.get('id')!.value == null">
+          <label class="form-label" jhiTranslate="diplomskiApp.planPrice.id" for="field_id">Id</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="diplomskiApp.planPrice.izvoriSaznanja" for="field_izvoriSaznanja">Izvori Saznanja</label>
+          <input
+            type="text"
+            class="form-control"
+            name="izvoriSaznanja"
+            id="field_izvoriSaznanja"
+            data-cy="izvoriSaznanja"
+            formControlName="izvoriSaznanja"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="diplomskiApp.planPrice.nazivTeme" for="field_nazivTeme">Naziv Teme</label>
+          <input type="text" class="form-control" name="nazivTeme" id="field_nazivTeme" data-cy="nazivTeme" formControlName="nazivTeme" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="diplomskiApp.planPrice.pocetnaIdeja" for="field_pocetnaIdeja">Pocetna Ideja</label>
+          <input
+            type="text"
+            class="form-control"
+            name="pocetnaIdeja"
+            id="field_pocetnaIdeja"
+            data-cy="pocetnaIdeja"
+            formControlName="pocetnaIdeja"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="diplomskiApp.planPrice.datumPocetka" for="field_datumPocetka">Datum Pocetka</label>
+          <div class="input-group">
+            <input
+              id="field_datumPocetka"
+              data-cy="datumPocetka"
+              type="text"
+              class="form-control"
+              name="datumPocetka"
+              ngbDatepicker
+              #datumPocetkaDp="ngbDatepicker"
+              formControlName="datumPocetka"
+            />
+            <button type="button" class="btn btn-secondary" (click)="datumPocetkaDp.toggle()">
+              <fa-icon icon="calendar-alt"></fa-icon>
+            </button>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="diplomskiApp.planPrice.nacinUcescaVaspitaca" for="field_nacinUcescaVaspitaca"
+            >Nacin Ucesca Vaspitaca</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="nacinUcescaVaspitaca"
+            id="field_nacinUcescaVaspitaca"
+            data-cy="nacinUcescaVaspitaca"
+            formControlName="nacinUcescaVaspitaca"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="diplomskiApp.planPrice.materijali" for="field_materijali">Materijali</label>
+          <input
+            type="text"
+            class="form-control"
+            name="materijali"
+            id="field_materijali"
+            data-cy="materijali"
+            formControlName="materijali"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="diplomskiApp.planPrice.ucescePorodice" for="field_ucescePorodice">Ucesce Porodice</label>
+          <input
+            type="text"
+            class="form-control"
+            name="ucescePorodice"
+            id="field_ucescePorodice"
+            data-cy="ucescePorodice"
+            formControlName="ucescePorodice"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="diplomskiApp.planPrice.mesta" for="field_mesta">Mesta</label>
+          <input type="text" class="form-control" name="mesta" id="field_mesta" data-cy="mesta" formControlName="mesta" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="diplomskiApp.planPrice.datumZavrsetka" for="field_datumZavrsetka">Datum Zavrsetka</label>
+          <div class="input-group">
+            <input
+              id="field_datumZavrsetka"
+              data-cy="datumZavrsetka"
+              type="text"
+              class="form-control"
+              name="datumZavrsetka"
+              ngbDatepicker
+              #datumZavrsetkaDp="ngbDatepicker"
+              formControlName="datumZavrsetka"
+            />
+            <button type="button" class="btn btn-secondary" (click)="datumZavrsetkaDp.toggle()">
+              <fa-icon icon="calendar-alt"></fa-icon>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

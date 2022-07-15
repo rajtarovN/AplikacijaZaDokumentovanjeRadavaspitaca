@@ -1,0 +1,39 @@
+{
+  "diplomskiApp": {
+    "formular": {
+      "home": {
+        "title": "Formulars",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Formular",
+        "createOrEditLabel": "Create or edit a Formular",
+        "notFound": "No Formulars found"
+      },
+      "created": "A new Formular is created with identifier {{ param }}",
+      "updated": "A Formular is updated with identifier {{ param }}",
+      "deleted": "A Formular is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Formular {{ id }}?"
+      },
+      "detail": {
+        "title": "Formular"
+      },
+      "id": "Id",
+      "mesecUpisa": "Mesec Upisa",
+      "jmbg": "Jmbg",
+      "datumRodjenja": "Datum Rodjenja",
+      "imeDeteta": "Ime Deteta",
+      "mestoRodjenja": "Mesto Rodjenja",
+      "opstinaRodjenja": "Opstina Rodjenja",
+      "drzava": "Drzava",
+      "brDeceUPorodici": "Br Dece U Porodici",
+      "zdravstveniProblemi": "Zdravstveni Problemi",
+      "zdravstveniUslovi": "Zdravstveni Uslovi",
+      "statusFormulara": "Status Formulara",
+      "tipGrupe": "Tip Grupe",
+      "adresa": "Adresa",
+      "podaciORoditeljima": "Podaci O Roditeljima",
+      "dete": "Dete",
+      "roditelj": "Roditelj"
+    }
+  }
+}

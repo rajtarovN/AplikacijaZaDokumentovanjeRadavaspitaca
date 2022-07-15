@@ -1,0 +1,31 @@
+{
+  "diplomskiApp": {
+    "podaciORoditeljima": {
+      "home": {
+        "title": "Podaci O Roditeljimas",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Podaci O Roditeljima",
+        "createOrEditLabel": "Create or edit a Podaci O Roditeljima",
+        "notFound": "No Podaci O Roditeljimas found"
+      },
+      "created": "A new Podaci O Roditeljima is created with identifier {{ param }}",
+      "updated": "A Podaci O Roditeljima is updated with identifier {{ param }}",
+      "deleted": "A Podaci O Roditeljima is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Podaci O Roditeljima {{ id }}?"
+      },
+      "detail": {
+        "title": "Podaci O Roditeljima"
+      },
+      "id": "Id",
+      "jmbg": "Jmbg",
+      "ime": "Ime",
+      "prezime": "Prezime",
+      "telefon": "Telefon",
+      "firma": "Firma",
+      "radnoVreme": "Radno Vreme",
+      "radniStatus": "Radni Status",
+      "formular": "Formular"
+    }
+  }
+}

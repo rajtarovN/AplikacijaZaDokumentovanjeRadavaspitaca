@@ -1,0 +1,35 @@
+{
+  "applications": "*",
+  "changelogDate": "20220715121716",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "komentar_na_pricu",
+  "fields": [
+    {
+      "fieldName": "id",
+      "fieldType": "Long"
+    },
+    {
+      "fieldName": "tekst",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "datum",
+      "fieldType": "LocalDate"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "KomentarNaPricu",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "prica",
+      "otherEntityRelationshipName": "komentarNaPricu",
+      "relationshipName": "prica",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "service": "serviceImpl"
+}

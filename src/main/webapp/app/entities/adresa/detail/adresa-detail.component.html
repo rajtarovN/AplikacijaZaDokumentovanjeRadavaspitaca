@@ -1,0 +1,40 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="adresa">
+      <h2 data-cy="adresaDetailsHeading"><span jhiTranslate="diplomskiApp.adresa.detail.title">Adresa</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="diplomskiApp.adresa.mesto">Mesto</span></dt>
+        <dd>
+          <span>{{ adresa.mesto }}</span>
+        </dd>
+        <dt><span jhiTranslate="diplomskiApp.adresa.ulica">Ulica</span></dt>
+        <dd>
+          <span>{{ adresa.ulica }}</span>
+        </dd>
+        <dt><span jhiTranslate="diplomskiApp.adresa.broj">Broj</span></dt>
+        <dd>
+          <span>{{ adresa.broj }}</span>
+        </dd>
+        <dt><span jhiTranslate="diplomskiApp.adresa.id">Id</span></dt>
+        <dd>
+          <span>{{ adresa.id }}</span>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/adresa', adresa.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

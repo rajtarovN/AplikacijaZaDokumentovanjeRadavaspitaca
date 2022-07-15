@@ -1,0 +1,24 @@
+{
+  "applications": "*",
+  "changelogDate": "20220715121715",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "konacna_prica",
+  "fields": [
+    {
+      "fieldName": "id",
+      "fieldType": "Long"
+    },
+    {
+      "fieldName": "tekst",
+      "fieldType": "String"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "KonacnaPrica",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [],
+  "service": "serviceImpl"
+}

@@ -1,0 +1,56 @@
+{
+  "applications": "*",
+  "changelogDate": "20220715121714",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "plan_price",
+  "fields": [
+    {
+      "fieldName": "id",
+      "fieldType": "Long"
+    },
+    {
+      "fieldName": "izvoriSaznanja",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "nazivTeme",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "pocetnaIdeja",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "datumPocetka",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "nacinUcescaVaspitaca",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "materijali",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "ucescePorodice",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "mesta",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "datumZavrsetka",
+      "fieldType": "LocalDate"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "PlanPrice",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [],
+  "service": "serviceImpl"
+}

@@ -5,7 +5,7 @@
     <div class="d-flex justify-content-end">
       <button class="btn btn-info me-2" (click)="loadPage()" [disabled]="isLoading">
         <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
-        <span jhiTranslate="diplomskiApp.vaspitac.home.refreshListLabel">Refresh List</span>
+        <span jhiTranslate="diplomskiApp.vaspitac.home.refreshListLabel">Osvezavanje liste</span>
       </button>
 
       <button
@@ -15,7 +15,7 @@
         [routerLink]="['/vaspitac/new']"
       >
         <fa-icon icon="plus"></fa-icon>
-        <span jhiTranslate="diplomskiApp.vaspitac.home.createLabel"> Create a new Vaspitac </span>
+        <span jhiTranslate="diplomskiApp.vaspitac.home.createLabel"> Dodaj novog vaspitaca </span>
       </button>
     </div>
   </h2>
@@ -40,7 +40,7 @@
           </th>
           <th scope="col" jhiSortBy="opis"><span jhiTranslate="diplomskiApp.vaspitac.opis">Opis</span> <fa-icon icon="sort"></fa-icon></th>
           <th scope="col" jhiSortBy="id"><span jhiTranslate="diplomskiApp.vaspitac.id">Id</span> <fa-icon icon="sort"></fa-icon></th>
-          <th scope="col" jhiSortBy="objekat.id">
+          <th scope="col" jhiSortBy="objekat.naziv">
             <span jhiTranslate="diplomskiApp.vaspitac.objekat">Objekat</span> <fa-icon icon="sort"></fa-icon>
           </th>
           <th scope="col"></th>
@@ -56,7 +56,7 @@
           </td>
           <td>
             <div *ngIf="vaspitac.objekat">
-              <a [routerLink]="['/objekat', vaspitac.objekat?.id, 'view']">{{ vaspitac.objekat?.id }}</a>
+              <a [routerLink]="['/objekat', vaspitac.objekat?.naziv, 'view']">{{ vaspitac.objekat?.naziv }}</a>
             </div>
           </td>
           <td class="text-end">
@@ -68,7 +68,7 @@
                 data-cy="entityDetailsButton"
               >
                 <fa-icon icon="eye"></fa-icon>
-                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                <span class="d-none d-md-inline">Prikaz</span>
               </button>
 
               <button
@@ -78,12 +78,12 @@
                 data-cy="entityEditButton"
               >
                 <fa-icon icon="pencil-alt"></fa-icon>
-                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                <span class="d-none d-md-inline">Uredi</span>
               </button>
 
               <button type="submit" (click)="delete(vaspitac)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
                 <fa-icon icon="times"></fa-icon>
-                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                <span class="d-none d-md-inline">Brisanje</span>
               </button>
             </div>
           </td>

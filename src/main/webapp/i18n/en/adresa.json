@@ -3,16 +3,16 @@
     "adresa": {
       "home": {
         "title": "Adresas",
-        "refreshListLabel": "Refresh list",
-        "createLabel": "Create a new Adresa",
-        "createOrEditLabel": "Create or edit a Adresa",
-        "notFound": "No Adresas found"
+        "refreshListLabel": "Osvezavanje liste",
+        "createLabel": "Dodavanje adrese",
+        "createOrEditLabel": "Dodavanje ili uredjivanje adrese",
+        "notFound": "Nijedna adresa nije pronadjena"
       },
-      "created": "A new Adresa is created with identifier {{ param }}",
-      "updated": "A Adresa is updated with identifier {{ param }}",
-      "deleted": "A Adresa is deleted with identifier {{ param }}",
+      "created": "Kreirana je nova adresa sa id-jem: {{ param }}",
+      "updated": "Obnovljeni su podaci o adresi {{ param }}",
+      "deleted": "Obrisana je adresa {{ param }}",
       "delete": {
-        "question": "Are you sure you want to delete Adresa {{ id }}?"
+        "question": "Da li ste sigurni da zelite da izbrisete adresu {{ id }} {{ulica}} {{broj}}?"
       },
       "detail": {
         "title": "Adresa"

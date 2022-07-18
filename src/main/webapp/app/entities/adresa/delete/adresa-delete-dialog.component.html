@@ -1,6 +1,6 @@
 <form *ngIf="adresa" name="deleteForm" (ngSubmit)="confirmDelete(adresa.id!)">
   <div class="modal-header">
-    <h4 class="modal-title" data-cy="adresaDeleteDialogHeading" jhiTranslate="entity.delete.title">Confirm delete operation</h4>
+    <h4 class="modal-title" data-cy="adresaDeleteDialogHeading">Potvrda brisanja</h4>
 
     <button type="button" class="btn-close" data-dismiss="modal" aria-hidden="true" (click)="cancel()">&times;</button>
   </div>
@@ -8,18 +8,22 @@
   <div class="modal-body">
     <jhi-alert-error></jhi-alert-error>
 
-    <p id="jhi-delete-adresa-heading" jhiTranslate="diplomskiApp.adresa.delete.question" [translateValues]="{ id: adresa.id }">
+    <p
+      id="jhi-delete-adresa-heading"
+      jhiTranslate="diplomskiApp.adresa.delete.question"
+      [translateValues]="{ id: adresa.id, ulica: adresa.ulica, broj: adresa.broj }"
+    >
       Are you sure you want to delete this Adresa?
     </p>
   </div>
 
   <div class="modal-footer">
     <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="cancel()">
-      <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+      <fa-icon icon="ban"></fa-icon>&nbsp;<span>Otkazi brisanje</span>
     </button>
 
     <button id="jhi-confirm-delete-adresa" data-cy="entityConfirmDeleteButton" type="submit" class="btn btn-danger">
-      <fa-icon icon="times"></fa-icon>&nbsp;<span jhiTranslate="entity.action.delete">Delete</span>
+      <fa-icon icon="times"></fa-icon>&nbsp;<span>Izbrisi</span>
     </button>
   </div>
 </form>

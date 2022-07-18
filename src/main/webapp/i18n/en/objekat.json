@@ -2,17 +2,17 @@
   "diplomskiApp": {
     "objekat": {
       "home": {
-        "title": "Objekats",
-        "refreshListLabel": "Refresh list",
-        "createLabel": "Create a new Objekat",
-        "createOrEditLabel": "Create or edit a Objekat",
-        "notFound": "No Objekats found"
+        "title": "Vrtici (Objekti)",
+        "refreshListLabel": "Osvezavanje liste",
+        "createLabel": "Dodavanje vrtica",
+        "createOrEditLabel": "Dodavanje ili uredjivanje vrtica",
+        "notFound": "Nijedan objekat nije pronadjen"
       },
-      "created": "A new Objekat is created with identifier {{ param }}",
-      "updated": "A Objekat is updated with identifier {{ param }}",
-      "deleted": "A Objekat is deleted with identifier {{ param }}",
+      "created": "Kreiran je nov objekat sa id-jem: {{ param }}",
+      "updated": "Obnovljeni su podaci o objektu sa id-jem:{{ param }}",
+      "deleted": "Obrisan je objekat sa id-jem: {{ param }}",
       "delete": {
-        "question": "Are you sure you want to delete Objekat {{ id }}?"
+        "question": "da li ste sigurni da zelite da izbrisete objekat sa id-jem: {{ id }} i nazivom {{naziv}}?"
       },
       "detail": {
         "title": "Objekat"

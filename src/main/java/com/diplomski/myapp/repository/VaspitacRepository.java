@@ -1,6 +1,8 @@
 package com.diplomski.myapp.repository;
 
 import com.diplomski.myapp.domain.Vaspitac;
+import java.util.List;
+import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.repository.*;
 import org.springframework.stereotype.Repository;
 
@@ -9,4 +11,7 @@ import org.springframework.stereotype.Repository;
  */
 @SuppressWarnings("unused")
 @Repository
-public interface VaspitacRepository extends JpaRepository<Vaspitac, Long> {}
+public interface VaspitacRepository extends JpaRepository<Vaspitac, Long> {
+    @Query("SELECT d from Vaspitac d where  d.objekat.id = ?1 ")
+    List<Vaspitac> getByObjekat(Long id);
+}

@@ -3,6 +3,7 @@ package com.diplomski.myapp.service.impl;
 import com.diplomski.myapp.domain.Objekat;
 import com.diplomski.myapp.repository.ObjekatRepository;
 import com.diplomski.myapp.service.ObjekatService;
+import java.util.List;
 import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -72,5 +73,10 @@ public class ObjekatServiceImpl implements ObjekatService {
     public void delete(Long id) {
         log.debug("Request to delete Objekat : {}", id);
         objekatRepository.deleteById(id);
+    }
+
+    @Override
+    public List<Objekat> findAll() {
+        return objekatRepository.findAll();
     }
 }

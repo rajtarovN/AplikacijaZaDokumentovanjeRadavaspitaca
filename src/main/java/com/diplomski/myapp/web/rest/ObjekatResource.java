@@ -176,4 +176,12 @@ public class ObjekatResource {
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))
             .build();
     }
+
+    @GetMapping("/objekats/all")
+    public ResponseEntity<List<Objekat>> getAllObjekat() {
+        log.debug("REST request to get all Objekat :");
+        List<Objekat> objekat = objekatService.findAll();
+        //HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), objekat);
+        return ResponseEntity.ok().body(objekat);
+    }
 }

@@ -21,6 +21,7 @@ export class ObjekatUpdateComponent implements OnInit {
 
   editForm = this.fb.group({
     opis: [],
+    naziv: [],
     id: [],
     adresa: [],
   });
@@ -80,6 +81,7 @@ export class ObjekatUpdateComponent implements OnInit {
   protected updateForm(objekat: IObjekat): void {
     this.editForm.patchValue({
       opis: objekat.opis,
+      naziv: objekat.naziv,
       id: objekat.id,
       adresa: objekat.adresa,
     });
@@ -99,6 +101,7 @@ export class ObjekatUpdateComponent implements OnInit {
     return {
       ...new Objekat(),
       opis: this.editForm.get(['opis'])!.value,
+      naziv: this.editForm.get(['naziv'])!.value,
       id: this.editForm.get(['id'])!.value,
       adresa: this.editForm.get(['adresa'])!.value,
     };

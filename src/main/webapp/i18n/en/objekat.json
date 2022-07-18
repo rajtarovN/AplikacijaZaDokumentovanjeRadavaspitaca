@@ -18,6 +18,7 @@
         "title": "Objekat"
       },
       "opis": "Opis",
+      "naziv": "Naziv",
       "id": "Id",
       "adresa": "Adresa",
       "potrebanMaterijal": "Potreban Materijal",

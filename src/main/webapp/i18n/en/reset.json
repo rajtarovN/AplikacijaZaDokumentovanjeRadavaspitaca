@@ -1,25 +1,25 @@
 {
   "reset": {
     "request": {
-      "title": "Reset your password",
+      "title": "Pravljenje nove lozinke",
       "form": {
-        "button": "Reset password"
+        "button": "Posalji"
       },
       "messages": {
-        "info": "Enter the email address you used to register",
-        "success": "Check your emails for details on how to reset your password."
+        "info": "Unesite email koji koristite.",
+        "success": "Proverite email za detalje kako da resetujete lozinku."
       }
     },
     "finish": {
-      "title": "Reset password",
+      "title": "Resetovanje lozinke",
       "form": {
-        "button": "Validate new password"
+        "button": "Validiraj novu lozinku"
       },
       "messages": {
-        "info": "Choose a new password",
-        "success": "<strong>Your password has been reset.</strong> Please ",
-        "keymissing": "The reset key is missing.",
-        "error": "Your password couldn't be reset. Remember a password request is only valid for 24 hours."
+        "info": "Odaberite novu lozinku",
+        "success": "<strong>Vasa lozinka je obnovljena.</strong> Molimo Vas ",
+        "keymissing": "Nedostaje reset kljuc.",
+        "error": "Vasa lozinka en moze biti resetovana. Zapamtite da je zahtev za novu lozinku validan samo 24h."
       }
     }
   }

@@ -6,7 +6,7 @@
       "home": "Home",
       "jhipster-needle-menu-add-element": "JHipster will add additional menu entries here (do not translate!)",
       "entities": {
-        "main": "Entities",
+        "main": "Entiteti",
         "korisnik": "Korisnik",
         "vaspitac": "Vaspitac",
         "direktor": "Direktor",
@@ -29,13 +29,13 @@
         "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
       },
       "account": {
-        "main": "Account",
-        "settings": "Settings",
-        "password": "Password",
+        "main": "Nalog",
+        "settings": "Podesavanja",
+        "password": "Lozinka",
         "sessions": "Sessions",
-        "login": "Sign in",
-        "logout": "Sign out",
-        "register": "Register"
+        "login": "Uloguj se",
+        "logout": "Izloguj se",
+        "register": "Registracija"
       },
       "admin": {
         "main": "Administration",
@@ -52,49 +52,49 @@
       "language": "Language"
     },
     "form": {
-      "username.label": "Username",
-      "username.placeholder": "Your username",
-      "currentpassword.label": "Current password",
-      "currentpassword.placeholder": "Current password",
-      "newpassword.label": "New password",
-      "newpassword.placeholder": "New password",
-      "confirmpassword.label": "New password confirmation",
-      "confirmpassword.placeholder": "Confirm the new password",
+      "username.label": "Korisnicko ime",
+      "username.placeholder": "Korisnicko ime",
+      "currentpassword.label": "Trenutna lozinka",
+      "currentpassword.placeholder": "Trenutna lozinka",
+      "newpassword.label": "Nova lozinka",
+      "newpassword.placeholder": "Nova lozinka",
+      "confirmpassword.label": "Potvrda nove lozinke",
+      "confirmpassword.placeholder": "Potvrda nove lozinke",
       "email.label": "Email",
-      "email.placeholder": "Your email"
+      "email.placeholder": "Vas email"
     },
     "messages": {
       "info": {
         "authenticated": {
-          "prefix": "If you want to ",
-          "link": "sign in",
-          "suffix": ", you can try the default accounts:<br/>- Administrator (login=\"admin\" and password=\"admin\") <br/>- User (login=\"user\" and password=\"user\")."
+          "prefix": "Ako zelite da se ",
+          "link": "ulogujete",
+          "suffix": " mozete kliknuti na link."
         },
         "register": {
-          "noaccount": "You don't have an account yet?",
-          "link": "Register a new account"
+          "noaccount": "Jos uvek nemate nalog?",
+          "link": "Ovde napravite novi nalog."
         }
       },
       "error": {
-        "dontmatch": "The password and its confirmation do not match!"
+        "dontmatch": "Lozinka i njena potvrda se ne poklapaju"
       },
       "validate": {
         "newpassword": {
-          "required": "Your password is required.",
-          "minlength": "Your password is required to be at least 4 characters.",
-          "maxlength": "Your password cannot be longer than 50 characters.",
-          "strength": "Password strength:"
+          "required": "Lozinka je obavezna.",
+          "minlength": "Potrebano je da lozinka ima najmanje 4 karaktera.",
+          "maxlength": "Lozinka ne moze biti duza od 50 karaktera.",
+          "strength": "Jacina lozinke:"
         },
         "confirmpassword": {
-          "required": "Your confirmation password is required.",
-          "minlength": "Your confirmation password is required to be at least 4 characters.",
-          "maxlength": "Your confirmation password cannot be longer than 50 characters."
+          "required": "Potrebno je da potvrdite lozinku.",
+          "minlength": "Potvrda lozinke treba biti bar 4 karaktera.",
+          "maxlength": "Potvrda lozinke treba biti kraca od 50 karaktera."
         },
         "email": {
-          "required": "Your email is required.",
-          "invalid": "Your email is invalid.",
-          "minlength": "Your email is required to be at least 5 characters.",
-          "maxlength": "Your email cannot be longer than 50 characters."
+          "required": "Potrebno je uneti email.",
+          "invalid": "Email nije validan.",
+          "minlength": "Potrebno je da je email dug bar 5 karaktera.",
+          "maxlength": "Potrebno je da email nije duzi od 50 karaktera."
         }
       }
     },

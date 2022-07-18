@@ -29,6 +29,14 @@ import { UserRouteAccessService } from 'app/core/auth/user-route-access.service'
           loadChildren: () => import('./login/login.module').then(m => m.LoginModule),
         },
         {
+          path: 'pregled-objekata',
+          loadChildren: () => import('./pregled-objekata/pregled-objekata.module').then(m => m.PregledObjekataModule),
+        },
+        {
+          path: 'pregled-vaspitaca',
+          loadChildren: () => import('./pregled-vaspitaca/pregled-vaspitaca.module').then(m => m.PregledVaspitacaModule),
+        },
+        {
           path: '',
           loadChildren: () => import(`./entities/entity-routing.module`).then(m => m.EntityRoutingModule),
         },

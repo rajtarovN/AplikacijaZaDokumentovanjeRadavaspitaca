@@ -1,0 +1,28 @@
+<div id="container-div">
+  <h2>Svi vrtici (objekti):</h2>
+  <ul class="example-card" *ngFor="let objekat of observable">
+    <div class="card">
+      <table>
+        <tr>
+          <th class="imageClass">
+            <span class="imageClass">
+              <img class="imageClass" src="../content/images/krug.png" alt="Italian Trulli" />
+            </span>
+          </th>
+          <th class="thClass">
+            <span class="field">
+              <h1 id="title{{ this.objekat.naziv }}">{{ this.objekat.naziv }}</h1>
+              <p>Opis: {{ this.objekat.opis }}</p>
+              <p>
+                Ulica: {{ this.objekat.adresa.ulica }} {{ this.objekat.adresa.broj }},
+                <br />
+                Mesto: {{ this.objekat.adresa.mesto }}
+              </p>
+              <button class="btn btn-info">Vaspitaci</button>
+            </span>
+          </th>
+        </tr>
+      </table>
+    </div>
+  </ul>
+</div>

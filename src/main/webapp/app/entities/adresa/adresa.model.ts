@@ -18,6 +18,10 @@ export class Adresa implements IAdresa {
   ) {}
 }
 
+export class AdresaDTO {
+  constructor(public mesto: string | null, public ulica: string | null, public broj: string | null, public id: number) {}
+}
+
 export function getAdresaIdentifier(adresa: IAdresa): number | undefined {
   return adresa.id;
 }

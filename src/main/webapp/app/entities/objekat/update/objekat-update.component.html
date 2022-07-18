@@ -13,6 +13,11 @@
           <input type="text" class="form-control" name="opis" id="field_opis" data-cy="opis" formControlName="opis" />
         </div>
 
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="diplomskiApp.objekat.naziv" for="field_naziv">Naziv</label>
+          <input type="text" class="form-control" name="naziv" id="field_naziv" data-cy="naziv" formControlName="naziv" />
+        </div>
+
         <div class="row mb-3" [hidden]="editForm.get('id')!.value == null">
           <label class="form-label" jhiTranslate="diplomskiApp.objekat.id" for="field_id">Id</label>
           <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />

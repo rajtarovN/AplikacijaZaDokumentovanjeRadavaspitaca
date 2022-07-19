@@ -27,6 +27,18 @@ export class PodaciORoditeljima implements IPodaciORoditeljima {
   ) {}
 }
 
+export class PodaciORoditeljimaDTO {
+  constructor(
+    public id: number,
+    public ime: string,
+    public prezime: string,
+    public telefon: string,
+    public firma: string,
+    public radnoVreme: string,
+    public radniStatus: RadniStatus
+  ) {}
+}
+
 export function getPodaciORoditeljimaIdentifier(podaciORoditeljima: IPodaciORoditeljima): number | undefined {
   return podaciORoditeljima.id;
 }

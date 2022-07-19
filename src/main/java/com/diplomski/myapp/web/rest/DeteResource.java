@@ -3,6 +3,7 @@ package com.diplomski.myapp.web.rest;
 import com.diplomski.myapp.domain.Dete;
 import com.diplomski.myapp.repository.DeteRepository;
 import com.diplomski.myapp.service.DeteService;
+import com.diplomski.myapp.web.rest.dto.ProfilDetetaDTO;
 import com.diplomski.myapp.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -182,5 +183,12 @@ public class DeteResource {
             .noContent()
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))
             .build();
+    }
+
+    @GetMapping("/detes/profil/{id}")
+    public ResponseEntity<ProfilDetetaDTO> getProfil(@PathVariable Long id) {
+        log.debug("REST request to get Dete profil : {}", id);
+        ProfilDetetaDTO dete = deteService.findProfil(id);
+        return ResponseEntity.ok().body(dete);
     }
 }

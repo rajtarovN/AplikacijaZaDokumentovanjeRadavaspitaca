@@ -3,6 +3,7 @@ package com.diplomski.myapp.service.impl;
 import com.diplomski.myapp.domain.Dete;
 import com.diplomski.myapp.repository.DeteRepository;
 import com.diplomski.myapp.service.DeteService;
+import com.diplomski.myapp.web.rest.dto.ProfilDetetaDTO;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -91,5 +92,20 @@ public class DeteServiceImpl implements DeteService {
     public void delete(Long id) {
         log.debug("Request to delete Dete : {}", id);
         deteRepository.deleteById(id);
+    }
+
+    @Override
+    public ProfilDetetaDTO findProfil(Long id) {
+        Optional<Dete> dete = deteRepository.findById(id);
+        if (dete.isPresent()) {
+            ProfilDetetaDTO profilDTO = new ProfilDetetaDTO(dete.get());
+            //int izostanci = dete.get().getNeDolasci().stream().filter(nd -> nd.)
+            profilDTO.setBrojIzostanaka(0);
+            //profilDTO.setVaspitac(dete.get().getGrupa().getDnevnik().getVaspitacs()[0]);
+            profilDTO.setVaspitac("Mira Lazic");
+            return profilDTO;
+        }
+
+        return null;
     }
 }

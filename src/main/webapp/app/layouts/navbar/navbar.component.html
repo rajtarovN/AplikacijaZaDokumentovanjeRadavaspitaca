@@ -401,6 +401,12 @@
               </a>
             </li>
             <li *ngSwitchCase="false">
+              <a class="dropdown-item" (click)="pregledObjekata()" id="pregledObjekata" data-cy="pregledObjekata">
+                <fa-icon icon="sign-in-alt" [fixedWidth]="true"></fa-icon>
+                pregled
+              </a>
+            </li>
+            <li *ngSwitchCase="false">
               <a
                 class="dropdown-item"
                 routerLink="account/register"

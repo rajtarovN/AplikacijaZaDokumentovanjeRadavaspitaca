@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import { isPresent } from 'app/core/util/operators';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
 import { createRequestOption } from 'app/core/request/request-util';
-import { IDete, getDeteIdentifier } from '../dete.model';
+import { IDete, getDeteIdentifier, ProfilDetetaDTO } from '../dete.model';
 
 export type EntityResponseType = HttpResponse<IDete>;
 export type EntityArrayResponseType = HttpResponse<IDete[]>;
@@ -56,5 +56,9 @@ export class DeteService {
       return [...detesToAdd, ...deteCollection];
     }
     return deteCollection;
+  }
+
+  getprofile(id: number): Observable<any> {
+    return this.http.get<any>(`${this.resourceUrl}/profil/${id}`, { observe: 'response' });
   }
 }

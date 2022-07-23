@@ -21,6 +21,9 @@ public class Objekat implements Serializable {
     @Column(name = "opis")
     private String opis;
 
+    @Column(name = "naziv")
+    private String naziv;
+
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
     @SequenceGenerator(name = "sequenceGenerator")
@@ -59,6 +62,14 @@ public class Objekat implements Serializable {
 
     public Long getId() {
         return this.id;
+    }
+
+    public String getNaziv() {
+        return naziv;
+    }
+
+    public void setNaziv(String naziv) {
+        this.naziv = naziv;
     }
 
     public Objekat id(Long id) {
@@ -170,6 +181,7 @@ public class Objekat implements Serializable {
         return "Objekat{" +
             "id=" + getId() +
             ", opis='" + getOpis() + "'" +
+            ", naziv='" + getNaziv() + "'" +
             "}";
     }
 }

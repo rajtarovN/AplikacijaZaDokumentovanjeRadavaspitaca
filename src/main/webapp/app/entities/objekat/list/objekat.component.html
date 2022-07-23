@@ -1,11 +1,11 @@
 <div>
   <h2 id="page-heading" data-cy="ObjekatHeading">
-    <span jhiTranslate="diplomskiApp.objekat.home.title">Objekats</span>
+    <span jhiTranslate="diplomskiApp.objekat.home.title">Vrtici (Objekti)</span>
 
     <div class="d-flex justify-content-end">
       <button class="btn btn-info me-2" (click)="loadPage()" [disabled]="isLoading">
         <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
-        <span jhiTranslate="diplomskiApp.objekat.home.refreshListLabel">Refresh List</span>
+        <span jhiTranslate="diplomskiApp.objekat.home.refreshListLabel">Osvezi listu</span>
       </button>
 
       <button
@@ -15,7 +15,7 @@
         [routerLink]="['/objekat/new']"
       >
         <fa-icon icon="plus"></fa-icon>
-        <span jhiTranslate="diplomskiApp.objekat.home.createLabel"> Create a new Objekat </span>
+        <span jhiTranslate="diplomskiApp.objekat.home.createLabel"> Dodaj novi objekat </span>
       </button>
     </div>
   </h2>
@@ -25,7 +25,7 @@
   <jhi-alert></jhi-alert>
 
   <div class="alert alert-warning" id="no-result" *ngIf="objekats?.length === 0">
-    <span jhiTranslate="diplomskiApp.objekat.home.notFound">No objekats found</span>
+    <span jhiTranslate="diplomskiApp.objekat.home.notFound">Nijedan objekat nije pronadjen</span>
   </div>
 
   <div class="table-responsive" id="entities" *ngIf="objekats && objekats.length > 0">
@@ -48,7 +48,7 @@
           </td>
           <td>
             <div *ngIf="objekat.adresa">
-              <a [routerLink]="['/adresa', objekat.adresa?.id, 'view']">{{ objekat.adresa?.id }}</a>
+              <a [routerLink]="['/adresa', objekat.adresa?.id, 'view']">{{ objekat.adresa?.ulica }} {{ objekat.adresa?.broj }}</a>
             </div>
           </td>
           <td class="text-end">
@@ -60,7 +60,7 @@
                 data-cy="entityDetailsButton"
               >
                 <fa-icon icon="eye"></fa-icon>
-                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                <span class="d-none d-md-inline">Prikaz</span>
               </button>
 
               <button
@@ -70,12 +70,12 @@
                 data-cy="entityEditButton"
               >
                 <fa-icon icon="pencil-alt"></fa-icon>
-                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                <span class="d-none d-md-inline">Uredi</span>
               </button>
 
               <button type="submit" (click)="delete(objekat)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
                 <fa-icon icon="times"></fa-icon>
-                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                <span class="d-none d-md-inline">Brisanje</span>
               </button>
             </div>
           </td>

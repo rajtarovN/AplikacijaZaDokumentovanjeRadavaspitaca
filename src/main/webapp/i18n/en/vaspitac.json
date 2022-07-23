@@ -2,17 +2,17 @@
   "diplomskiApp": {
     "vaspitac": {
       "home": {
-        "title": "Vaspitacs",
-        "refreshListLabel": "Refresh list",
-        "createLabel": "Create a new Vaspitac",
-        "createOrEditLabel": "Create or edit a Vaspitac",
-        "notFound": "No Vaspitacs found"
+        "title": "Vaspitaci",
+        "refreshListLabel": "Osvezavanje liste",
+        "createLabel": "Dodavanje vaspitaca",
+        "createOrEditLabel": "Dodavanje ili uredjivanje vaspitaca",
+        "notFound": "Vaspitaci nisu pronadjeni"
       },
-      "created": "A new Vaspitac is created with identifier {{ param }}",
-      "updated": "A Vaspitac is updated with identifier {{ param }}",
-      "deleted": "A Vaspitac is deleted with identifier {{ param }}",
+      "created": "Kreiran je nov vaspitac sa id-jem: {{ param }}",
+      "updated": "Obnovljeni su podaci o vaspitacu sa id-jem: {{ param }}",
+      "deleted": "Obrisan je vaspitac sa idjem: {{ param }}",
       "delete": {
-        "question": "Are you sure you want to delete Vaspitac {{ id }}?"
+        "question": "Da li ste sigurni da zelite da izbrisete vaspitaca {{ id }}?"
       },
       "detail": {
         "title": "Vaspitac"

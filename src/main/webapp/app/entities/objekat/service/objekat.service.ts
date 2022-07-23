@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import { isPresent } from 'app/core/util/operators';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
 import { createRequestOption } from 'app/core/request/request-util';
-import { IObjekat, getObjekatIdentifier } from '../objekat.model';
+import { IObjekat, getObjekatIdentifier, ObjekatDTO } from '../objekat.model';
 
 export type EntityResponseType = HttpResponse<IObjekat>;
 export type EntityArrayResponseType = HttpResponse<IObjekat[]>;
@@ -56,5 +56,10 @@ export class ObjekatService {
       return [...objekatsToAdd, ...objekatCollection];
     }
     return objekatCollection;
+  }
+
+  getAll(req?: any): Observable<EntityArrayResponseType> {
+    const options = createRequestOption(req);
+    return this.http.get<ObjekatDTO[]>(this.resourceUrl + '/all', { params: options, observe: 'response' });
   }
 }

@@ -25,6 +25,9 @@ export class Vaspitac implements IVaspitac {
   ) {}
 }
 
+export class VaspitacDTO {
+  constructor(public datumZaposlenja: dayjs.Dayjs, public godineIskustva: number, public opis: string, public id: number) {}
+}
 export function getVaspitacIdentifier(vaspitac: IVaspitac): number | undefined {
   return vaspitac.id;
 }

@@ -95,4 +95,11 @@ public class VaspitacServiceImpl implements VaspitacService {
         log.debug("Request to delete Vaspitac : {}", id);
         vaspitacRepository.deleteById(id);
     }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Vaspitac> getByObjekat(Long id) {
+        log.debug("Request to get all Vaspitacs");
+        return vaspitacRepository.getByObjekat(id);
+    }
 }

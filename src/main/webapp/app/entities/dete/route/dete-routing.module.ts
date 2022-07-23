@@ -6,6 +6,7 @@ import { DeteComponent } from '../list/dete.component';
 import { DeteDetailComponent } from '../detail/dete-detail.component';
 import { DeteUpdateComponent } from '../update/dete-update.component';
 import { DeteRoutingResolveService } from './dete-routing-resolve.service';
+import { ProfilDetetaComponent } from '../profilDeteta/profil-deteta/profil-deteta.component';
 
 const deteRoute: Routes = [
   {
@@ -35,6 +36,14 @@ const deteRoute: Routes = [
   {
     path: ':id/edit',
     component: DeteUpdateComponent,
+    resolve: {
+      dete: DeteRoutingResolveService,
+    },
+    canActivate: [UserRouteAccessService],
+  },
+  {
+    path: ':id/profil',
+    component: ProfilDetetaComponent,
     resolve: {
       dete: DeteRoutingResolveService,
     },

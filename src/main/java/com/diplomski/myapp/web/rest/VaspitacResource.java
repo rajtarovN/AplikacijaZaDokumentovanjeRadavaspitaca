@@ -187,4 +187,12 @@ public class VaspitacResource {
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))
             .build();
     }
+
+    //getByObjekat
+    @GetMapping("/vaspitacs/getByObjekat/{id}")
+    public ResponseEntity<List<Vaspitac>> getByObjekat(@PathVariable Long id) {
+        log.debug("REST request to get Vaspitac : {}", id);
+        List<Vaspitac> vaspitac = vaspitacService.getByObjekat(id);
+        return ResponseEntity.ok().body(vaspitac);
+    }
 }

@@ -1,0 +1,91 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="dete">
+      <h2 data-cy="deteDetailsHeading" class="titleLeft">
+        <span>Dete: {{ dete.ime }}</span>
+      </h2>
+      <h5 class="titleRight">
+        Zvati u hitnim situacijama:
+        <ul class="example-card" *ngIf="dete.roditelji">
+          {{
+            dete.roditelji[0].telefon
+          }}
+        </ul>
+      </h5>
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="diplomskiApp.dete.visina">Visina</span></dt>
+        <dd>
+          <span>{{ dete.visina }}</span>
+        </dd>
+        <dt><span jhiTranslate="diplomskiApp.dete.tezina">Tezina</span></dt>
+        <dd>
+          <span>{{ dete.tezina }}</span>
+        </dd>
+        <dt><span>Godina rodjenja: </span></dt>
+        <dd>
+          <span>{{ dete.datumRodjenja }}</span>
+        </dd>
+        <dt><span>Mesto rodjenja:</span></dt>
+        <dd>
+          <span>{{ dete.mestoRodjenja }}</span>
+        </dd>
+        <dt><span>Opstina: </span></dt>
+        <dd>
+          <span>{{ dete.opstina }}</span>
+        </dd>
+        <dt><span>Drzava: </span></dt>
+        <dd>
+          <span>{{ dete.drzava }}</span>
+        </dd>
+        <dt><span>Zdravstveni uslovi: </span></dt>
+        <dd>
+          <span>{{ dete.zdravstveniUslovi }}</span>
+        </dd>
+        <dt><span>Zdravstveni problemi: </span></dt>
+        <dd>
+          <span>{{ dete.zdravstveniProblemi }}</span>
+        </dd>
+        <dt><span>Grupa: </span></dt>
+        <dd>
+          <span>{{ dete.grupa }}</span>
+        </dd>
+        <dt><span>Vaspitac: </span></dt>
+        <dd>
+          <span>{{ dete.vaspitac }}</span>
+        </dd>
+        <dt><span>Broj ne dolazaka: </span></dt>
+        <dd>
+          <span>{{ dete.brojIzostanaka }}</span>
+        </dd>
+      </dl>
+
+      <div>
+        <h3>Podaci o roditeljima</h3>
+        <ul class="listaKarti" *ngFor="let objekat of dete.roditelji">
+          <div style="display: inline">
+            Ime: {{ objekat.ime }}<br />
+            Prezime: {{ objekat.prezime }}<br />
+            Telefon: {{ objekat.telefon }}<br />
+            Radni status: {{ objekat.radniStatus }}<br />
+            Firma: {{ objekat.firma }}<br />
+            Radno vreme: {{ objekat.radnoVreme }}<br />
+          </div>
+        </ul>
+      </div>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Nazad</span>
+      </button>
+
+      <button type="button" [routerLink]="['/dete', dete.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Uredi</span>
+      </button>
+    </div>
+  </div>
+</div>

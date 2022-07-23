@@ -6,6 +6,7 @@ import { ZapazanjeUVeziDetetaComponent } from '../list/zapazanje-u-vezi-deteta.c
 import { ZapazanjeUVeziDetetaDetailComponent } from '../detail/zapazanje-u-vezi-deteta-detail.component';
 import { ZapazanjeUVeziDetetaUpdateComponent } from '../update/zapazanje-u-vezi-deteta-update.component';
 import { ZapazanjeUVeziDetetaRoutingResolveService } from './zapazanje-u-vezi-deteta-routing-resolve.service';
+import { PregledZapazanjaComponent } from '../pregled-zapazanja/pregled-zapazanja/pregled-zapazanja.component';
 
 const zapazanjeUVeziDetetaRoute: Routes = [
   {
@@ -35,6 +36,14 @@ const zapazanjeUVeziDetetaRoute: Routes = [
   {
     path: ':id/edit',
     component: ZapazanjeUVeziDetetaUpdateComponent,
+    resolve: {
+      zapazanjeUVeziDeteta: ZapazanjeUVeziDetetaRoutingResolveService,
+    },
+    canActivate: [UserRouteAccessService],
+  },
+  {
+    path: ':id/pregled',
+    component: PregledZapazanjaComponent,
     resolve: {
       zapazanjeUVeziDeteta: ZapazanjeUVeziDetetaRoutingResolveService,
     },

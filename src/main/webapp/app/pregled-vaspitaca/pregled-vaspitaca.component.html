@@ -1,0 +1,26 @@
+<div id="container-div">
+  <h2>Vaspitaci:</h2>
+  <ul class="example-card" *ngFor="let vaspitac of observable">
+    <div class="card">
+      <table>
+        <tr>
+          <th class="imageClass">
+            <span class="imageClass">
+              <img class="imageClass" src="../content/images/krug.png" alt="Italian Trulli" />
+            </span>
+          </th>
+          <th class="thClass">
+            <span class="field">
+              <h1 id="title{{ this.vaspitac.id }}">
+                MIRA TINA
+                <!--                {{this.vaspitac.ime}} {{ this.vaspitac.prezime}}-->
+              </h1>
+              <p>Opis: {{ this.vaspitac.opis }}</p>
+              <p>Godine iskustva: {{ this.vaspitac.godineIskustva }}</p>
+            </span>
+          </th>
+        </tr>
+      </table>
+    </div>
+  </ul>
+</div>

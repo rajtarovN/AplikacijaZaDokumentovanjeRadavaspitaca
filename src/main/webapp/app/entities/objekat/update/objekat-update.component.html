@@ -13,6 +13,11 @@
           <input type="text" class="form-control" name="opis" id="field_opis" data-cy="opis" formControlName="opis" />
         </div>
 
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="diplomskiApp.objekat.naziv" for="field_naziv">Naziv</label>
+          <input type="text" class="form-control" name="naziv" id="field_naziv" data-cy="naziv" formControlName="naziv" />
+        </div>
+
         <div class="row mb-3" [hidden]="editForm.get('id')!.value == null">
           <label class="form-label" jhiTranslate="diplomskiApp.objekat.id" for="field_id">Id</label>
           <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
@@ -26,7 +31,7 @@
               [ngValue]="adresaOption.id === editForm.get('adresa')!.value?.id ? editForm.get('adresa')!.value : adresaOption"
               *ngFor="let adresaOption of adresasCollection; trackBy: trackAdresaById"
             >
-              {{ adresaOption.id }}
+              {{ adresaOption.ulica }} {{ adresaOption.broj }}
             </option>
           </select>
         </div>
@@ -34,7 +39,12 @@
 
       <div>
         <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
-          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span>Otkazi promene</span>
+        </button>
+
+        <button id="jh-create-entity" data-cy="entityCreateButton" class="btn btn-info me-2 create-adresa" [routerLink]="['/adresa/new']">
+          <fa-icon icon="plus"></fa-icon>
+          <span> Dodaj novu adresu </span>
         </button>
 
         <button
@@ -44,7 +54,7 @@
           [disabled]="editForm.invalid || isSaving"
           class="btn btn-primary"
         >
-          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+          <fa-icon icon="save"></fa-icon>&nbsp;<span>Sacuvaj promene</span>
         </button>
       </div>
     </form>

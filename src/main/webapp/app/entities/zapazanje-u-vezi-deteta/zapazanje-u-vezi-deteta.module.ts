@@ -5,6 +5,7 @@ import { ZapazanjeUVeziDetetaDetailComponent } from './detail/zapazanje-u-vezi-d
 import { ZapazanjeUVeziDetetaUpdateComponent } from './update/zapazanje-u-vezi-deteta-update.component';
 import { ZapazanjeUVeziDetetaDeleteDialogComponent } from './delete/zapazanje-u-vezi-deteta-delete-dialog.component';
 import { ZapazanjeUVeziDetetaRoutingModule } from './route/zapazanje-u-vezi-deteta-routing.module';
+import { PregledZapazanjaComponent } from './pregled-zapazanja/pregled-zapazanja/pregled-zapazanja.component';
 
 @NgModule({
   imports: [SharedModule, ZapazanjeUVeziDetetaRoutingModule],
@@ -13,6 +14,7 @@ import { ZapazanjeUVeziDetetaRoutingModule } from './route/zapazanje-u-vezi-dete
     ZapazanjeUVeziDetetaDetailComponent,
     ZapazanjeUVeziDetetaUpdateComponent,
     ZapazanjeUVeziDetetaDeleteDialogComponent,
+    PregledZapazanjaComponent,
   ],
   entryComponents: [ZapazanjeUVeziDetetaDeleteDialogComponent],
 })

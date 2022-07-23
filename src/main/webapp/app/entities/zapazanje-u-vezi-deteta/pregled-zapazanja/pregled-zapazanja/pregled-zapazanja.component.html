@@ -1,0 +1,72 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div>
+      <h2 data-cy="zapazanjeUVeziDetetaDetailsHeading">
+        <span>Zapazanje U Vezi Deteta</span>
+      </h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+      <table>
+        <tr>
+          <th>
+            <ul *ngFor="let zapazanje of observable">
+              <button (click)="changeZapazanje(zapazanje)">{{ zapazanje.datum }}</button>
+            </ul>
+          </th>
+          <th>
+            <dl class="row-md jh-entity-details">
+              <dt><span jhiTranslate="diplomskiApp.zapazanjeUVeziDeteta.id">Id</span></dt>
+              <dd>
+                <span>{{ zapazanjeUVeziDeteta?.id }}</span>
+              </dd>
+              <dt><span jhiTranslate="diplomskiApp.zapazanjeUVeziDeteta.interesovanja">Interesovanja</span></dt>
+              <dd>
+                <span>{{ zapazanjeUVeziDeteta?.interesovanja }}</span>
+              </dd>
+              <dt><span jhiTranslate="diplomskiApp.zapazanjeUVeziDeteta.prednosti">Prednosti</span></dt>
+              <dd>
+                <span>{{ zapazanjeUVeziDeteta?.prednosti }}</span>
+              </dd>
+              <dt><span jhiTranslate="diplomskiApp.zapazanjeUVeziDeteta.mane">Mane</span></dt>
+              <dd>
+                <span>{{ zapazanjeUVeziDeteta?.mane }}</span>
+              </dd>
+              <dt><span jhiTranslate="diplomskiApp.zapazanjeUVeziDeteta.predlozi">Predlozi</span></dt>
+              <dd>
+                <span>{{ zapazanjeUVeziDeteta?.predlozi }}</span>
+              </dd>
+              <dt><span jhiTranslate="diplomskiApp.zapazanjeUVeziDeteta.datum">Datum</span></dt>
+              <dd>
+                <span>{{ zapazanjeUVeziDeteta?.datum | formatMediumDate }}</span>
+              </dd>
+              <dt><span jhiTranslate="diplomskiApp.zapazanjeUVeziDeteta.vaspitac">Vaspitac</span></dt>
+              <dd>
+                <div *ngIf="zapazanjeUVeziDeteta?.vaspitac">
+                  <a [routerLink]="['/vaspitac', zapazanjeUVeziDeteta?.vaspitac?.id, 'view']">{{ zapazanjeUVeziDeteta?.vaspitac?.id }}</a>
+                </div>
+              </dd>
+              <dt><span jhiTranslate="diplomskiApp.zapazanjeUVeziDeteta.dete">Dete</span></dt>
+              <dd>
+                <div *ngIf="zapazanjeUVeziDeteta?.dete">
+                  <a [routerLink]="['/dete', zapazanjeUVeziDeteta?.dete?.id, 'view']">{{ zapazanjeUVeziDeteta?.dete?.id }}</a>
+                </div>
+              </dd>
+            </dl>
+          </th>
+        </tr>
+      </table>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/zapazanje-u-vezi-deteta', zapazanjeUVeziDeteta?.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

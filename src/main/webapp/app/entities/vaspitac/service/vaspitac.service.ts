@@ -8,7 +8,8 @@ import { isPresent } from 'app/core/util/operators';
 import { DATE_FORMAT } from 'app/config/input.constants';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
 import { createRequestOption } from 'app/core/request/request-util';
-import { IVaspitac, getVaspitacIdentifier } from '../vaspitac.model';
+import { IVaspitac, getVaspitacIdentifier, VaspitacDTO } from '../vaspitac.model';
+import { ObjekatDTO } from '../../objekat/objekat.model';
 
 export type EntityResponseType = HttpResponse<IVaspitac>;
 export type EntityArrayResponseType = HttpResponse<IVaspitac[]>;
@@ -72,6 +73,11 @@ export class VaspitacService {
       return [...vaspitacsToAdd, ...vaspitacCollection];
     }
     return vaspitacCollection;
+  }
+
+  getByObjekat(req?: any): Observable<EntityArrayResponseType> {
+    const options = createRequestOption(req);
+    return this.http.get<VaspitacDTO[]>(this.resourceUrl + '/getByObjekat/1', { params: options, observe: 'response' });
   }
 
   protected convertDateFromClient(vaspitac: IVaspitac): IVaspitac {

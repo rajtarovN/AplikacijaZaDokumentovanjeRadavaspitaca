@@ -3,16 +3,16 @@
     "potrebanMaterijal": {
       "home": {
         "title": "Potreban Materijals",
-        "refreshListLabel": "Refresh list",
-        "createLabel": "Create a new Potreban Materijal",
-        "createOrEditLabel": "Create or edit a Potreban Materijal",
-        "notFound": "No Potreban Materijals found"
+        "refreshListLabel": "Osvezavanje liste",
+        "createLabel": "Zatrazi materijal",
+        "createOrEditLabel": "Dodavanje materijala",
+        "notFound": "Nijedan materijal nije pronadjen"
       },
-      "created": "A new Potreban Materijal is created with identifier {{ param }}",
-      "updated": "A Potreban Materijal is updated with identifier {{ param }}",
-      "deleted": "A Potreban Materijal is deleted with identifier {{ param }}",
+      "created": "Zatrazili ste materijal sa id-jem: {{ param }}",
+      "updated": "Obnovljeni su podaci o materijalu {{ param }}",
+      "deleted": "Obrisan je materijal {{ param }}",
       "delete": {
-        "question": "Are you sure you want to delete Potreban Materijal {{ id }}?"
+        "question": "Da li ste sigurni da zelite da izbrisete materijal {{ id }}?"
       },
       "detail": {
         "title": "Potreban Materijal"

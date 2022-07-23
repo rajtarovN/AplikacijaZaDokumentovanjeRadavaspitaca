@@ -25,12 +25,17 @@ import { FooterComponent } from './layouts/footer/footer.component';
 import { PageRibbonComponent } from './layouts/profiles/page-ribbon.component';
 import { ActiveMenuDirective } from './layouts/navbar/active-menu.directive';
 import { ErrorComponent } from './layouts/error/error.component';
+//import { PregledObjekataComponent } from './pregled-objekata/pregled-objekata.component';
+//import { PregledVaspitacaComponent } from './pregled-vaspitaca/pregled-vaspitaca.component';
+import { PregledObjekataModule } from './pregled-objekata/pregled-objekata.module';
+import { PregledVaspitacaModule } from './pregled-vaspitaca/pregled-vaspitaca.module';
 
 @NgModule({
   imports: [
     BrowserModule,
     SharedModule,
     HomeModule,
+    // MaterialModule,
     // jhipster-needle-angular-add-module JHipster will add new module here
     AppRoutingModule,
     // Set this to true to enable service worker (PWA)
@@ -38,6 +43,8 @@ import { ErrorComponent } from './layouts/error/error.component';
     HttpClientModule,
     NgxWebstorageModule.forRoot({ prefix: 'jhi', separator: '-', caseSensitive: true }),
     TranslationModule,
+    PregledObjekataModule,
+    PregledVaspitacaModule,
   ],
   providers: [
     Title,

@@ -6,6 +6,7 @@ import { PlanPriceComponent } from '../list/plan-price.component';
 import { PlanPriceDetailComponent } from '../detail/plan-price-detail.component';
 import { PlanPriceUpdateComponent } from '../update/plan-price-update.component';
 import { PlanPriceRoutingResolveService } from './plan-price-routing-resolve.service';
+import { PisanjePlanaComponent } from '../pisanje-plana/pisanje-plana.component';
 
 const planPriceRoute: Routes = [
   {
@@ -35,6 +36,14 @@ const planPriceRoute: Routes = [
   {
     path: ':id/edit',
     component: PlanPriceUpdateComponent,
+    resolve: {
+      planPrice: PlanPriceRoutingResolveService,
+    },
+    canActivate: [UserRouteAccessService],
+  },
+  {
+    path: 'pisanje-plana',
+    component: PisanjePlanaComponent,
     resolve: {
       planPrice: PlanPriceRoutingResolveService,
     },

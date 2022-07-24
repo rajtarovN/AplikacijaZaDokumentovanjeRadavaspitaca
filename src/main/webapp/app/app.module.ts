@@ -29,6 +29,9 @@ import { ErrorComponent } from './layouts/error/error.component';
 //import { PregledVaspitacaComponent } from './pregled-vaspitaca/pregled-vaspitaca.component';
 import { PregledObjekataModule } from './pregled-objekata/pregled-objekata.module';
 import { PregledVaspitacaModule } from './pregled-vaspitaca/pregled-vaspitaca.module';
+import { RichTextEditorModule, ToolbarService, LinkService, ImageService, HtmlEditorService } from '@syncfusion/ej2-angular-richtexteditor';
+//import {QuillModule} from "ngx-quill";
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   imports: [
@@ -45,8 +48,15 @@ import { PregledVaspitacaModule } from './pregled-vaspitaca/pregled-vaspitaca.mo
     TranslationModule,
     PregledObjekataModule,
     PregledVaspitacaModule,
+    RichTextEditorModule,
+    //QuillModule,
+    ReactiveFormsModule,
   ],
   providers: [
+    ToolbarService,
+    LinkService,
+    ImageService,
+    HtmlEditorService,
     Title,
     { provide: LOCALE_ID, useValue: 'en' },
     { provide: NgbDateAdapter, useClass: NgbDateDayjsAdapter },

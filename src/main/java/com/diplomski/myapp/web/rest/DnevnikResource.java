@@ -1,5 +1,6 @@
 package com.diplomski.myapp.web.rest;
 
+import com.diplomski.myapp.domain.Dete;
 import com.diplomski.myapp.domain.Dnevnik;
 import com.diplomski.myapp.repository.DnevnikRepository;
 import com.diplomski.myapp.service.DnevnikService;
@@ -9,6 +10,7 @@ import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Set;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -184,5 +186,13 @@ public class DnevnikResource {
             .noContent()
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))
             .build();
+    }
+
+    //getDeca
+    @GetMapping("/dnevniks/getDeca/{id}")
+    public ResponseEntity<Set<Dete>> getDeca(@PathVariable Long id) {
+        log.debug("REST request to get deca from Dnevnik : {}", id);
+        Set<Dete> deca = dnevnikService.findAllChildren(id);
+        return ResponseEntity.ok().body(deca);
     }
 }

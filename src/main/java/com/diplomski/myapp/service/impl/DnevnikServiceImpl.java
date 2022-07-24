@@ -1,9 +1,12 @@
 package com.diplomski.myapp.service.impl;
 
+import com.diplomski.myapp.domain.Dete;
 import com.diplomski.myapp.domain.Dnevnik;
 import com.diplomski.myapp.repository.DnevnikRepository;
 import com.diplomski.myapp.service.DnevnikService;
+import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -79,5 +82,10 @@ public class DnevnikServiceImpl implements DnevnikService {
     public void delete(Long id) {
         log.debug("Request to delete Dnevnik : {}", id);
         dnevnikRepository.deleteById(id);
+    }
+
+    @Override
+    public Set<Dete> findAllChildren(Long id) {
+        return dnevnikRepository.findById(id).get().getGrupa().getDetes();
     }
 }

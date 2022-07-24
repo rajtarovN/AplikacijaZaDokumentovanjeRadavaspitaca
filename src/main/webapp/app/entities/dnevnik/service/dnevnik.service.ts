@@ -9,6 +9,8 @@ import { DATE_FORMAT } from 'app/config/input.constants';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
 import { createRequestOption } from 'app/core/request/request-util';
 import { IDnevnik, getDnevnikIdentifier } from '../dnevnik.model';
+import { DeteDTO } from '../../ne-dolasci/ne-dolasci.model';
+import { ObjekatDTO } from '../../objekat/objekat.model';
 
 export type EntityResponseType = HttpResponse<IDnevnik>;
 export type EntityArrayResponseType = HttpResponse<IDnevnik[]>;
@@ -72,6 +74,11 @@ export class DnevnikService {
       return [...dnevniksToAdd, ...dnevnikCollection];
     }
     return dnevnikCollection;
+  }
+
+  getDeca(id: string): any {
+    //const options = createRequestOption(id);
+    return this.http.get<DeteDTO[]>(this.resourceUrl + '/getDeca/' + id);
   }
 
   protected convertDateFromClient(dnevnik: IDnevnik): IDnevnik {

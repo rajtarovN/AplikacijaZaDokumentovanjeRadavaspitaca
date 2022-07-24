@@ -1,7 +1,10 @@
 package com.diplomski.myapp.service;
 
+import com.diplomski.myapp.domain.Dete;
 import com.diplomski.myapp.domain.Dnevnik;
+import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -63,4 +66,6 @@ public interface DnevnikService {
      * @param id the id of the entity.
      */
     void delete(Long id);
+
+    Set<Dete> findAllChildren(Long id);
 }

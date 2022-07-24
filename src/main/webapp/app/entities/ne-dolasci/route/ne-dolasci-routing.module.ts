@@ -6,6 +6,7 @@ import { NeDolasciComponent } from '../list/ne-dolasci.component';
 import { NeDolasciDetailComponent } from '../detail/ne-dolasci-detail.component';
 import { NeDolasciUpdateComponent } from '../update/ne-dolasci-update.component';
 import { NeDolasciRoutingResolveService } from './ne-dolasci-routing-resolve.service';
+import { IzostanciComponent } from '../izostanci/izostanci.component';
 
 const neDolasciRoute: Routes = [
   {
@@ -35,6 +36,14 @@ const neDolasciRoute: Routes = [
   {
     path: ':id/edit',
     component: NeDolasciUpdateComponent,
+    resolve: {
+      neDolasci: NeDolasciRoutingResolveService,
+    },
+    canActivate: [UserRouteAccessService],
+  },
+  {
+    path: 'izostanci',
+    component: IzostanciComponent,
     resolve: {
       neDolasci: NeDolasciRoutingResolveService,
     },

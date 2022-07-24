@@ -1,0 +1,53 @@
+<div>
+  <h2 id="page-heading" data-cy="NeDolasciHeading">
+    <span jhiTranslate="diplomskiApp.neDolasci.home.title">Izostanci</span>
+
+    <div class="d-flex justify-content-end">
+      <span>Dan: {{ this.datum }}</span>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="table-responsive" id="entities" *ngIf="izostanci && izostanci.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="loadPage()">
+          <th scope="col" jhiSortBy="izostanak.dete"><span> Dete</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col">
+            <span> Odsutan</span>
+          </th>
+          <th scope="col">
+            <span> Dodaj razlog</span>
+          </th>
+          <th scope="col">
+            <span> Razlog</span>
+          </th>
+          <th scope="col">
+            <span> Oznaci odsutnost</span>
+          </th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let izostanak of izostanci; trackBy: trackId" data-cy="entityTable">
+          <td>{{ izostanak.dete }}</td>
+          <td>{{ izostanak.odsutan }}</td>
+          <td>
+            <button type="submit" (click)="dodajRazlog(izostanak)" class="btn btn-primary btn-sm" data-cy="entityEditButton">
+              Dodaj razlog
+            </button>
+          </td>
+          <td>{{ izostanak.razlog }}</td>
+          <td>
+            <button type="submit" (click)="promeniOdsutnost(izostanak.idDeteta)" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
+              Odsutan/Prisutan todo
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

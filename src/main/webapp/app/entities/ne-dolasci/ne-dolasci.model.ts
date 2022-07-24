@@ -20,6 +20,22 @@ export class NeDolasci implements INeDolasci {
   ) {}
 }
 
+export class NeDolasciDTO {
+  constructor(
+    public datum: dayjs.Dayjs | null,
+    public razlog: string | null,
+    public dete: string | null,
+    public idDeteta: number,
+    public idDnevnika: number,
+    public odsutan: boolean, //true znaci da nije tu
+    public id?: number | null
+  ) {}
+}
+
+export class DeteDTO {
+  constructor(public imePrezime: string | null, public id: number | null) {}
+}
+
 export function getNeDolasciIdentifier(neDolasci: INeDolasci): number | undefined {
   return neDolasci.id;
 }

@@ -1,0 +1,25 @@
+<form *ngIf="neDolasci" name="deleteForm" (ngSubmit)="save()">
+  <div class="modal-header">
+    <h4 class="modal-title" data-cy="neDolasciDeleteDialogHeading" jhiTranslate="entity.delete.title">Unos razloga za izostanak</h4>
+
+    <button type="button" class="btn-close" data-dismiss="modal" aria-hidden="true" (click)="cancel()">&times;</button>
+  </div>
+
+  <div class="modal-body">
+    <jhi-alert-error></jhi-alert-error>
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <div class="row mb-3">
+        <label class="form-label" jhiTranslate="diplomskiApp.neDolasci.razlog" for="field_razlog">Razlog</label>
+        <input type="text" class="form-control" name="razlog" id="field_razlog" data-cy="razlog" formControlName="razlog" />
+      </div>
+    </form>
+  </div>
+
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="cancel()">
+      <fa-icon icon="ban"></fa-icon>&nbsp;<span>Otkazi promene</span>
+    </button>
+
+    <button (click)="save()" type="submit" class="btn btn-danger"><fa-icon icon="times"></fa-icon>&nbsp;<span>Sacuvaj</span></button>
+  </div>
+</form>

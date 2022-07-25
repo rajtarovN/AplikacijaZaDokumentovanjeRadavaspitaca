@@ -1,5 +1,6 @@
 package com.diplomski.myapp.domain;
 
+import com.diplomski.myapp.web.rest.dto.NeDolasciDTO;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -31,12 +32,29 @@ public class NeDolasci implements Serializable {
 
     @JsonIgnoreProperties(value = { "formular", "zapazanjeUVeziDetetas", "neDolasci", "roditelj", "grupa" }, allowSetters = true)
     @OneToOne
-    @JoinColumn(unique = true)
+    @JoinColumn(unique = false)
     private Dete dete;
 
     @ManyToOne
     @JsonIgnoreProperties(value = { "grupa", "pricas", "neDolascis", "vaspitacs" }, allowSetters = true)
     private Dnevnik dnevnik;
+
+    public NeDolasci(NeDolasciDTO dto, Dete dete, Dnevnik dnevnik) {
+        this.dete = dete;
+        this.datum = dto.getDatum();
+        this.dnevnik = dnevnik;
+        this.razlog = dto.getRazlog();
+    }
+
+    public NeDolasci() {}
+
+    public NeDolasci(LocalDate datum, String razlog, Long id, Dete dete, Dnevnik dnevnik) {
+        this.datum = datum;
+        this.razlog = razlog;
+        this.id = id;
+        this.dete = dete;
+        this.dnevnik = dnevnik;
+    }
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 

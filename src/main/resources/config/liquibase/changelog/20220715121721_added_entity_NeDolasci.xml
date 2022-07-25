@@ -21,7 +21,7 @@
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="dete_id" type="bigint">
-                <constraints nullable="true" unique="true" uniqueConstraintName="ux_ne_dolasci__dete_id" />
+                <constraints nullable="true" unique="false" uniqueConstraintName="ux_ne_dolasci__dete_id" />
             </column>
             <column name="dnevnik_id" type="bigint">
                 <constraints nullable="true" />

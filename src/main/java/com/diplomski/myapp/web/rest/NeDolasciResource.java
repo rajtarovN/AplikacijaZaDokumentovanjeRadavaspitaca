@@ -3,6 +3,7 @@ package com.diplomski.myapp.web.rest;
 import com.diplomski.myapp.domain.NeDolasci;
 import com.diplomski.myapp.repository.NeDolasciRepository;
 import com.diplomski.myapp.service.NeDolasciService;
+import com.diplomski.myapp.web.rest.dto.NeDolasciDTO;
 import com.diplomski.myapp.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -177,5 +178,20 @@ public class NeDolasciResource {
             .noContent()
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))
             .build();
+    }
+
+    @PostMapping("/ne-dolascis/create-list")
+    public ResponseEntity<String> createNeDolasciList(@RequestBody List<NeDolasciDTO> neDolasci) throws URISyntaxException {
+        log.debug("REST request to save list NeDolasci : {}", neDolasci);
+        for (NeDolasciDTO nd : neDolasci) {
+            if (nd.getId() != null) {
+                throw new BadRequestAlertException("A new neDolasci cannot already have an ID", ENTITY_NAME, "idexists");
+            }
+        }
+        String result = neDolasciService.saveList(neDolasci);
+        return ResponseEntity
+            .created(new URI("/api/ne-dolascis/create-list/"))
+            .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result))
+            .body(result);
     }
 }

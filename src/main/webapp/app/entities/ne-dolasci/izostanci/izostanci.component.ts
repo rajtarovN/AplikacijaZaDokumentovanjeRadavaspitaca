@@ -7,6 +7,7 @@ import dayjs from 'dayjs/esm';
 import { NeDolasciDeleteDialogComponent } from '../delete/ne-dolasci-delete-dialog.component';
 import { DodajRazlogComponent } from '../dodaj-razlog/dodaj-razlog.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NeDolasciService } from '../service/ne-dolasci.service';
 
 @Component({
   selector: 'jhi-izostanci',
@@ -20,7 +21,7 @@ export class IzostanciComponent implements OnInit {
   ascending!: boolean;
   isLoading = false;
 
-  constructor(public dnevnikService: DnevnikService, protected modalService: NgbModal) {
+  constructor(public dnevnikService: DnevnikService, protected modalService: NgbModal, public nedolasciService: NeDolasciService) {
     this.datum = dayjs();
   }
 
@@ -47,6 +48,18 @@ export class IzostanciComponent implements OnInit {
     const izostanak = this.izostanci!.filter(x => x.idDeteta === id)[0];
     izostanak.odsutan = !izostanak.odsutan;
   }
+  sacuvaj(): void {
+    const listaIzostanaka = this.izostanci!.filter(x => x.odsutan);
+    this.nedolasciService.createNeDolasci(listaIzostanaka).subscribe({
+      next: (res: HttpResponse<any>) => {
+        this.onSuccess(res.body, res.headers);
+      },
+      error: () => {
+        this.onError();
+      },
+    });
+  }
+
   loadPage(): void {
     this.isLoading = true;
 

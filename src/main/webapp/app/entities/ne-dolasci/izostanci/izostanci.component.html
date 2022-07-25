@@ -10,7 +10,7 @@
   <jhi-alert-error></jhi-alert-error>
 
   <jhi-alert></jhi-alert>
-
+  <button (click)="sacuvaj()">Sacuvaj</button>
   <div class="table-responsive" id="entities" *ngIf="izostanci && izostanci.length > 0">
     <table class="table table-striped" aria-describedby="page-heading">
       <thead>
@@ -36,7 +36,13 @@
           <td>{{ izostanak.dete }}</td>
           <td>{{ izostanak.odsutan }}</td>
           <td>
-            <button type="submit" (click)="dodajRazlog(izostanak)" class="btn btn-primary btn-sm" data-cy="entityEditButton">
+            <button
+              [disabled]="!izostanak.odsutan ? 'disabled' : null"
+              type="submit"
+              (click)="dodajRazlog(izostanak)"
+              class="btn btn-primary btn-sm"
+              data-cy="entityEditButton"
+            >
               Dodaj razlog
             </button>
           </td>

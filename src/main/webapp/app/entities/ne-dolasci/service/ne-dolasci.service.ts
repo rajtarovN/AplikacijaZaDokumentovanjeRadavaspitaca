@@ -8,7 +8,7 @@ import { isPresent } from 'app/core/util/operators';
 import { DATE_FORMAT } from 'app/config/input.constants';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
 import { createRequestOption } from 'app/core/request/request-util';
-import { INeDolasci, getNeDolasciIdentifier } from '../ne-dolasci.model';
+import { INeDolasci, getNeDolasciIdentifier, NeDolasciDTO } from '../ne-dolasci.model';
 
 export type EntityResponseType = HttpResponse<INeDolasci>;
 export type EntityArrayResponseType = HttpResponse<INeDolasci[]>;
@@ -75,6 +75,13 @@ export class NeDolasciService {
       return [...neDolascisToAdd, ...neDolasciCollection];
     }
     return neDolasciCollection;
+  }
+
+  createNeDolasci(listaIzostanaka: NeDolasciDTO[]): Observable<EntityResponseType> {
+    //const copy = this.convertDateFromClient(listaIzostanaka);
+    return this.http
+      .post<INeDolasci>(this.resourceUrl + '/create-list', listaIzostanaka, { observe: 'response' })
+      .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
   }
 
   protected convertDateFromClient(neDolasci: INeDolasci): INeDolasci {

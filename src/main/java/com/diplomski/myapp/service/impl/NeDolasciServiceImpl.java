@@ -1,8 +1,14 @@
 package com.diplomski.myapp.service.impl;
 
+import com.diplomski.myapp.domain.Dete;
+import com.diplomski.myapp.domain.Dnevnik;
 import com.diplomski.myapp.domain.NeDolasci;
+import com.diplomski.myapp.repository.DeteRepository;
+import com.diplomski.myapp.repository.DnevnikRepository;
 import com.diplomski.myapp.repository.NeDolasciRepository;
 import com.diplomski.myapp.service.NeDolasciService;
+import com.diplomski.myapp.web.rest.dto.NeDolasciDTO;
+import java.util.List;
 import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,8 +28,17 @@ public class NeDolasciServiceImpl implements NeDolasciService {
 
     private final NeDolasciRepository neDolasciRepository;
 
-    public NeDolasciServiceImpl(NeDolasciRepository neDolasciRepository) {
+    private final DeteRepository deteRepository;
+    private final DnevnikRepository dnevnikRepository;
+
+    public NeDolasciServiceImpl(
+        NeDolasciRepository neDolasciRepository,
+        DeteRepository deteRepository,
+        DnevnikRepository dnevnikRepository
+    ) {
         this.neDolasciRepository = neDolasciRepository;
+        this.deteRepository = deteRepository;
+        this.dnevnikRepository = dnevnikRepository;
     }
 
     @Override
@@ -75,5 +90,16 @@ public class NeDolasciServiceImpl implements NeDolasciService {
     public void delete(Long id) {
         log.debug("Request to delete NeDolasci : {}", id);
         neDolasciRepository.deleteById(id);
+    }
+
+    @Override
+    public String saveList(List<NeDolasciDTO> neDolasci) {
+        log.debug("Request to save NeDolasci : {}", neDolasci);
+        for (NeDolasciDTO dto : neDolasci) {
+            Optional<Dete> dete = this.deteRepository.findById(dto.getIdDeteta());
+            Optional<Dnevnik> dnevnik = this.dnevnikRepository.findById(dto.getIdDeteta());
+            neDolasciRepository.save(new NeDolasci(dto, dete.get(), dnevnik.get()));
+        }
+        return "Successfully saved nedolasci";
     }
 }

@@ -1,5 +1,6 @@
 package com.diplomski.myapp.service;
 
+import com.diplomski.myapp.domain.KonacnaPrica;
 import com.diplomski.myapp.domain.Prica;
 import java.util.Optional;
 import org.springframework.data.domain.Page;
@@ -55,4 +56,6 @@ public interface PricaService {
      * @param id the id of the entity.
      */
     void delete(Long id);
+
+    KonacnaPrica startWriting(Long id);
 }

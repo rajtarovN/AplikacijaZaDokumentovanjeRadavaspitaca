@@ -3,6 +3,8 @@ package com.diplomski.myapp.service.impl;
 import com.diplomski.myapp.domain.Formular;
 import com.diplomski.myapp.repository.FormularRepository;
 import com.diplomski.myapp.service.FormularService;
+import com.diplomski.myapp.web.rest.dto.DeteZaGrupuDTO;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -121,5 +123,15 @@ public class FormularServiceImpl implements FormularService {
     public void delete(Long id) {
         log.debug("Request to delete Formular : {}", id);
         formularRepository.deleteById(id);
+    }
+
+    @Override
+    public List<DeteZaGrupuDTO> findAllDecaZaGrupu() {
+        List<Formular> listFormulara = formularRepository.findAllOdobren();
+        List<DeteZaGrupuDTO> dtos = new ArrayList<>();
+        listFormulara.forEach(f -> {
+            dtos.add(new DeteZaGrupuDTO(f));
+        });
+        return dtos;
     }
 }

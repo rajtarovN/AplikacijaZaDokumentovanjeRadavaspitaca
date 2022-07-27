@@ -5,7 +5,9 @@ import { Observable } from 'rxjs';
 import { isPresent } from 'app/core/util/operators';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
 import { createRequestOption } from 'app/core/request/request-util';
-import { IFormular, getFormularIdentifier } from '../formular.model';
+import { IFormular, getFormularIdentifier, DeteZaGrupuDTO } from '../formular.model';
+import { IVaspitac } from '../../vaspitac/vaspitac.model';
+import { map } from 'rxjs/operators';
 
 export type EntityResponseType = HttpResponse<IFormular>;
 export type EntityArrayResponseType = HttpResponse<IFormular[]>;
@@ -58,5 +60,10 @@ export class FormularService {
       return [...formularsToAdd, ...formularCollection];
     }
     return formularCollection;
+  }
+
+  getDecaZaRaspored(req?: any): Observable<EntityArrayResponseType> {
+    const options = createRequestOption(req);
+    return this.http.get<DeteZaGrupuDTO[]>(this.resourceUrl + '/getDeca', { params: options, observe: 'response' });
   }
 }

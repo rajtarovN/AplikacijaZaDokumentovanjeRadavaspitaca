@@ -25,6 +25,10 @@ export class Vaspitac implements IVaspitac {
   ) {}
 }
 
+export class VaspitacZaGrupuDTO {
+  constructor(public ime?: string | null, public id?: number) {}
+}
+
 export class VaspitacDTO {
   constructor(public datumZaposlenja: dayjs.Dayjs, public godineIskustva: number, public opis: string, public id: number) {}
 }

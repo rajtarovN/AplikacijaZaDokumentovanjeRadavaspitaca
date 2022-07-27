@@ -1,0 +1,59 @@
+<div class="tableOrder">
+  <div class="tableOrder1">
+    Lista dece:
+    <table class="table table-striped tableWidth" aria-describedby="page-heading">
+      <thead>
+        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="loadPage()">
+          <th scope="col" jhiSortBy="dete.imeDeteta"><span>Ime deteta</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col">
+            <span>Dodaj dete</span>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let dete of deca" data-cy="entityTable" [ngClass]="{ color: dete.dodato }">
+          <td>
+            {{ dete.imeDeteta }}
+          </td>
+          <td class="text-end">
+            <div class="btn-group">
+              <button type="submit" (click)="addDeteToGroup(dete)" class="btn btn-primary btn-sm" data-cy="entityEditButton">
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Dodaj dete u grupu</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="tableOrder1">
+    Grupa:
+    <table class="table table-striped tableWidth" aria-describedby="page-heading">
+      <thead>
+        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="loadPage()">
+          <th scope="col" jhiSortBy="dete.ime"><span>Ime deteta</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col">
+            <span>Dodaj dete</span>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let dete of dodataDeca" data-cy="entityTable" [ngClass]="{ color: dete.dodato }">
+          <td>
+            {{ dete.imeDeteta }}
+          </td>
+
+          <td class="text-end">
+            <div class="btn-group">
+              <button type="submit" (click)="removeFromGrupa(dete.id)" class="btn btn-primary btn-sm" data-cy="entityEditButton">
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Izbaci dete iz grupe</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

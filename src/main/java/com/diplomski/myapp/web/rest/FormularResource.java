@@ -3,6 +3,7 @@ package com.diplomski.myapp.web.rest;
 import com.diplomski.myapp.domain.Formular;
 import com.diplomski.myapp.repository.FormularRepository;
 import com.diplomski.myapp.service.FormularService;
+import com.diplomski.myapp.web.rest.dto.DeteZaGrupuDTO;
 import com.diplomski.myapp.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -186,5 +187,11 @@ public class FormularResource {
             .noContent()
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))
             .build();
+    }
+
+    @GetMapping("/formulars/getDeca")
+    public ResponseEntity<List<DeteZaGrupuDTO>> getAllDecaZaGrupu() {
+        List<DeteZaGrupuDTO> listDeca = formularService.findAllDecaZaGrupu();
+        return ResponseEntity.ok().body(listDeca);
     }
 }

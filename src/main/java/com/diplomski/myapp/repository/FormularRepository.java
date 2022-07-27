@@ -1,6 +1,8 @@
 package com.diplomski.myapp.repository;
 
 import com.diplomski.myapp.domain.Formular;
+import com.diplomski.myapp.domain.enumeration.StatusFormulara;
+import java.util.List;
 import org.springframework.data.jpa.repository.*;
 import org.springframework.stereotype.Repository;
 
@@ -9,4 +11,7 @@ import org.springframework.stereotype.Repository;
  */
 @SuppressWarnings("unused")
 @Repository
-public interface FormularRepository extends JpaRepository<Formular, Long> {}
+public interface FormularRepository extends JpaRepository<Formular, Long> {
+    @Query("SELECT f from Formular f where f.statusFormulara = 'ODOBREN' ")
+    List<Formular> findAllOdobren();
+}

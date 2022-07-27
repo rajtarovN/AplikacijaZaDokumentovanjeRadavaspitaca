@@ -48,8 +48,8 @@ class PodaciORoditeljimaResourceIT {
     private static final String DEFAULT_RADNO_VREME = "AAAAAAAAAA";
     private static final String UPDATED_RADNO_VREME = "BBBBBBBBBB";
 
-    private static final RadniStatus DEFAULT_RADNI_STATUS = RadniStatus.NOV;
-    private static final RadniStatus UPDATED_RADNI_STATUS = RadniStatus.KUPLJEN;
+    private static final RadniStatus DEFAULT_RADNI_STATUS = RadniStatus.ZAPOSLEN;
+    private static final RadniStatus UPDATED_RADNI_STATUS = RadniStatus.ZAPOSLEN;
 
     private static final String ENTITY_API_URL = "/api/podaci-o-roditeljimas";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";

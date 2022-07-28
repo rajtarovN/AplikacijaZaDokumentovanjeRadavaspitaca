@@ -1,0 +1,113 @@
+<div>
+  <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+    <div class="row mb-3">
+      <label class="form-label" jhiTranslate="diplomskiApp.dnevnik.pocetakVazenja" for="field_pocetakVazenja">Pocetak Vazenja</label>
+      <div class="input-group">
+        <input
+          id="field_pocetakVazenja"
+          data-cy="pocetakVazenja"
+          type="text"
+          class="form-control"
+          name="pocetakVazenja"
+          ngbDatepicker
+          #pocetakVazenjaDp="ngbDatepicker"
+          formControlName="pocetakVazenja"
+        />
+        <button type="button" class="btn btn-secondary" (click)="pocetakVazenjaDp.toggle()">
+          <fa-icon icon="calendar-alt"></fa-icon>
+        </button>
+      </div>
+    </div>
+
+    <div class="row mb-3">
+      <label class="form-label" jhiTranslate="diplomskiApp.dnevnik.krajVazenja" for="field_krajVazenja">Kraj Vazenja</label>
+      <div class="input-group">
+        <input
+          id="field_krajVazenja"
+          data-cy="krajVazenja"
+          type="text"
+          class="form-control"
+          name="krajVazenja"
+          ngbDatepicker
+          #krajVazenjaDp="ngbDatepicker"
+          formControlName="krajVazenja"
+        />
+        <button type="button" class="btn btn-secondary" (click)="krajVazenjaDp.toggle()">
+          <fa-icon icon="calendar-alt"></fa-icon>
+        </button>
+      </div>
+    </div>
+    <div class="row mb-3">
+      <label jhiTranslate="diplomskiApp.dnevnik.vaspitac" for="field_vaspitacs">Vaspitac</label>
+      <select class="form-control" id="field_vaspitacs" data-cy="vaspitac" multiple name="vaspitacs" formControlName="vaspitacs">
+        <option
+          [ngValue]="getSelectedVaspitac(vaspitacOption, editForm.get('vaspitacs')!.value)"
+          *ngFor="let vaspitacOption of listaVasapitaca"
+        >
+          {{ vaspitacOption.id }}
+        </option>
+      </select>
+    </div>
+    <button (click)="save()">Sacuvaj</button>
+  </form>
+
+  <div class="tableOrder">
+    <div class="tableOrder1">
+      Lista dece:
+      <table class="table table-striped tableWidth" aria-describedby="page-heading">
+        <thead>
+          <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="loadPage()">
+            <th scope="col" jhiSortBy="dete.imeDeteta"><span>Ime deteta</span> <fa-icon icon="sort"></fa-icon></th>
+            <th scope="col">
+              <span>Dodaj dete</span>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let dete of deca" data-cy="entityTable" [ngClass]="{ color: dete.dodato }">
+            <td>
+              {{ dete.imeDeteta }}
+            </td>
+            <td class="text-end">
+              <div class="btn-group">
+                <button type="submit" (click)="addDeteToGroup(dete)" class="btn btn-primary btn-sm" data-cy="entityEditButton">
+                  <fa-icon icon="pencil-alt"></fa-icon>
+                  <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Dodaj dete u grupu</span>
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="tableOrder1">
+      Grupa:
+      <table class="table table-striped tableWidth" aria-describedby="page-heading">
+        <thead>
+          <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="loadPage()">
+            <th scope="col" jhiSortBy="dete.ime"><span>Ime deteta</span> <fa-icon icon="sort"></fa-icon></th>
+            <th scope="col">
+              <span>Dodaj dete</span>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let dete of dodataDeca" data-cy="entityTable" [ngClass]="{ color: dete.dodato }">
+            <td>
+              {{ dete.imeDeteta }}
+            </td>
+
+            <td class="text-end">
+              <div class="btn-group">
+                <button type="submit" (click)="removeFromGrupa(dete.id)" class="btn btn-primary btn-sm" data-cy="entityEditButton">
+                  <fa-icon icon="pencil-alt"></fa-icon>
+                  <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Izbaci dete iz grupe</span>
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

@@ -1,6 +1,7 @@
 package com.diplomski.myapp.service;
 
 import com.diplomski.myapp.domain.Formular;
+import com.diplomski.myapp.web.rest.dto.DeteZaGrupuDTO;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.data.domain.Page;
@@ -62,4 +63,6 @@ public interface FormularService {
      * @param id the id of the entity.
      */
     void delete(Long id);
+
+    List<DeteZaGrupuDTO> findAllDecaZaGrupu();
 }

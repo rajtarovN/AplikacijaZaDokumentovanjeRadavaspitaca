@@ -3,6 +3,7 @@ package com.diplomski.myapp.web.rest;
 import com.diplomski.myapp.domain.Vaspitac;
 import com.diplomski.myapp.repository.VaspitacRepository;
 import com.diplomski.myapp.service.VaspitacService;
+import com.diplomski.myapp.web.rest.dto.VaspitacDTO;
 import com.diplomski.myapp.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -193,6 +194,13 @@ public class VaspitacResource {
     public ResponseEntity<List<Vaspitac>> getByObjekat(@PathVariable Long id) {
         log.debug("REST request to get Vaspitac : {}", id);
         List<Vaspitac> vaspitac = vaspitacService.getByObjekat(id);
+        return ResponseEntity.ok().body(vaspitac);
+    }
+
+    @GetMapping("/vaspitacs/getImena")
+    public ResponseEntity<List<VaspitacDTO>> getImena() {
+        log.debug("REST request to get imena Vaspitac");
+        List<VaspitacDTO> vaspitac = vaspitacService.getImena();
         return ResponseEntity.ok().body(vaspitac);
     }
 }

@@ -7,4 +7,5 @@ public enum StatusFormulara {
     NOV,
     ODOBREN,
     ODBIJEN,
+    RASPOREDJEN,
 }

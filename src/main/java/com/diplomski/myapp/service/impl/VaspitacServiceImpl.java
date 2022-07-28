@@ -1,8 +1,12 @@
 package com.diplomski.myapp.service.impl;
 
+import com.diplomski.myapp.domain.Formular;
 import com.diplomski.myapp.domain.Vaspitac;
 import com.diplomski.myapp.repository.VaspitacRepository;
 import com.diplomski.myapp.service.VaspitacService;
+import com.diplomski.myapp.web.rest.dto.DeteZaGrupuDTO;
+import com.diplomski.myapp.web.rest.dto.VaspitacDTO;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -101,5 +105,15 @@ public class VaspitacServiceImpl implements VaspitacService {
     public List<Vaspitac> getByObjekat(Long id) {
         log.debug("Request to get all Vaspitacs");
         return vaspitacRepository.getByObjekat(id);
+    }
+
+    @Override
+    public List<VaspitacDTO> getImena() {
+        List<Vaspitac> listImena = vaspitacRepository.findAll(); //todo by status, tj da nije u penziji, i sl
+        List<VaspitacDTO> dtos = new ArrayList<>();
+        listImena.forEach(f -> {
+            dtos.add(new VaspitacDTO(f));
+        });
+        return dtos;
     }
 }

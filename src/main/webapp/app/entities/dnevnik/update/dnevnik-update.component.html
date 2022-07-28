@@ -65,7 +65,7 @@
         </div>
 
         <div class="row mb-3">
-          <label jhiTranslate="diplomskiApp.dnevnik.vaspitac" for="field_vaspitacs">Vaspitac</label>
+          <label for="field_vaspitacs">Vaspitac</label>
           <select class="form-control" id="field_vaspitacs" data-cy="vaspitac" multiple name="vaspitacs" formControlName="vaspitacs">
             <option
               [ngValue]="getSelectedVaspitac(vaspitacOption, editForm.get('vaspitacs')!.value)"

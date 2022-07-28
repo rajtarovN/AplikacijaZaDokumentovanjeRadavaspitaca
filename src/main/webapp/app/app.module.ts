@@ -32,6 +32,7 @@ import { PregledVaspitacaModule } from './pregled-vaspitaca/pregled-vaspitaca.mo
 import { RichTextEditorModule, ToolbarService, LinkService, ImageService, HtmlEditorService } from '@syncfusion/ej2-angular-richtexteditor';
 //import {QuillModule} from "ngx-quill";
 import { ReactiveFormsModule } from '@angular/forms';
+import { RasporedDeceModule } from './raspored-dece/raspored-dece.module';
 
 @NgModule({
   imports: [
@@ -51,6 +52,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     RichTextEditorModule,
     //QuillModule,
     ReactiveFormsModule,
+    RasporedDeceModule,
   ],
   providers: [
     ToolbarService,

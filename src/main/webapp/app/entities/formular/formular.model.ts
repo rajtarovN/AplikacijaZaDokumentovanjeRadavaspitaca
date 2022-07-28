@@ -25,6 +25,10 @@ export interface IFormular {
   roditelj?: IRoditelj | null;
 }
 
+export class DeteZaGrupuDTO {
+  constructor(public id?: number, public imeDeteta?: string | null, public dodato?: boolean | null) {}
+}
+
 export class Formular implements IFormular {
   constructor(
     public id?: number,

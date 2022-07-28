@@ -1,0 +1,171 @@
+import { Component, OnInit } from '@angular/core';
+import dayjs from 'dayjs/esm';
+import { TipGrupe } from '../../entities/enumerations/tip-grupe.model';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { HttpHeaders, HttpResponse } from '@angular/common/http';
+import { VaspitacService } from '../../entities/vaspitac/service/vaspitac.service';
+import { FormularService } from '../../entities/formular/service/formular.service';
+import { DeteZaGrupuDTO } from '../../entities/formular/formular.model';
+import { IVaspitac, VaspitacZaGrupuDTO } from '../../entities/vaspitac/vaspitac.model';
+import { GrupaDTO } from '../../entities/grupa/grupa.model';
+import { GrupaService } from '../../entities/grupa/service/grupa.service';
+import { FormBuilder } from '@angular/forms';
+
+@Component({
+  selector: 'jhi-raspored-dece',
+  templateUrl: './raspored-dece.component.html',
+  styleUrls: ['./raspored-dece.component.scss'],
+})
+export class RasporedDeceComponent implements OnInit {
+  deca: DeteZaGrupuDTO[];
+  dodataDeca: DeteZaGrupuDTO[];
+  predicate!: string;
+  datumPocetka: dayjs.Dayjs;
+  datumKraja: dayjs.Dayjs;
+  tipGrupe: TipGrupe;
+  vaspitacDto: VaspitacZaGrupuDTO | undefined;
+  listaVasapitaca: VaspitacZaGrupuDTO[] | undefined;
+  ascending!: boolean;
+  isLoading = false;
+
+  editForm = this.fb.group({
+    pocetakVazenja: [],
+    krajVazenja: [],
+    vaspitacs: [],
+  });
+  panelOpenState = false;
+
+  constructor(
+    public vaspitacService: VaspitacService,
+    protected modalService: NgbModal,
+    public formularService: FormularService,
+    public grupaService: GrupaService,
+    protected fb: FormBuilder
+  ) {
+    this.datumPocetka = dayjs();
+    this.datumKraja = dayjs();
+    this.dodataDeca = [];
+    this.deca = [];
+    this.tipGrupe = TipGrupe.POLUDNEVNA;
+  }
+
+  ngOnInit(): void {
+    this.datumPocetka = dayjs();
+    this.datumKraja = dayjs();
+    this.loadPage();
+    this.dodataDeca = [];
+    this.deca = [];
+  }
+  trackId(_index: number, item: DeteZaGrupuDTO): number {
+    return item.id!;
+  }
+
+  save(): void {
+    const newGrupa = new GrupaDTO(
+      this.tipGrupe,
+      this.dodataDeca,
+      this.datumPocetka,
+      this.datumKraja,
+      this.editForm.get(['vaspitacs'])!.value[0]
+    );
+    // eslint-disable-next-line no-console
+    console.log(newGrupa);
+    this.grupaService.createGrupa(newGrupa).subscribe({
+      next: (res: HttpResponse<any>) => {
+        this.onCreateSuccess(res.body, res.headers);
+      },
+      error: () => {
+        this.onError();
+      },
+    });
+  }
+  addDeteToGroup(dete1: DeteZaGrupuDTO): void {
+    const dete: DeteZaGrupuDTO = this.deca.filter(elem => elem.id === dete1.id)[0];
+    this.dodataDeca.push(dete);
+    this.deca.forEach((element, index) => {
+      if (element.id === dete1.id) {
+        this.deca.splice(index, 1);
+      }
+      //delete this.deca[index];}
+    });
+  }
+  removeFromGrupa(id: number | undefined): void {
+    const dete: DeteZaGrupuDTO = this.dodataDeca.filter(elem => elem.id === id)[0];
+    this.deca.push(dete);
+    this.dodataDeca.forEach((element, index) => {
+      if (element.id === id) {
+        this.dodataDeca.splice(index, 1);
+      }
+    });
+  }
+
+  loadPage(): void {
+    this.isLoading = true;
+    this.formularService.getDecaZaRaspored().subscribe({
+      next: (res: HttpResponse<DeteZaGrupuDTO[]>) => {
+        this.isLoading = false;
+        this.onGetDecaSuccess(res.body, res.headers);
+      },
+      error: () => {
+        this.isLoading = false;
+        this.onError();
+      },
+    });
+    // eslint-disable-next-line no-console
+    console.log(this.deca);
+
+    this.vaspitacService.getImena().subscribe({
+      next: (res: HttpResponse<VaspitacZaGrupuDTO[]>) => {
+        this.isLoading = false;
+        this.onSuccess(res.body, res.headers);
+      },
+      error: () => {
+        this.isLoading = false;
+        this.onError();
+      },
+    });
+  }
+
+  getSelectedVaspitac(option: VaspitacZaGrupuDTO, selectedVals?: VaspitacZaGrupuDTO[]): VaspitacZaGrupuDTO {
+    if (selectedVals) {
+      for (const selectedVal of selectedVals) {
+        if (option.id === selectedVal.id) {
+          return selectedVal;
+        }
+      }
+    }
+    return option;
+  }
+  protected onSuccess(data: VaspitacZaGrupuDTO[] | null, headers: HttpHeaders): void {
+    this.listaVasapitaca = [];
+    // eslint-disable-next-line no-console
+    console.log(this.deca);
+
+    let i: VaspitacZaGrupuDTO;
+    for (i of data!) {
+      //todo id dnevnika
+      this.listaVasapitaca.push(i);
+    }
+  }
+  protected onGetDecaSuccess(data: DeteZaGrupuDTO[] | null, headers: HttpHeaders): void {
+    this.deca = [];
+    // eslint-disable-next-line no-console
+    console.log(this.deca);
+
+    let i: DeteZaGrupuDTO;
+    for (i of data!) {
+      //todo id dnevnika
+      this.deca.push(i);
+    }
+  }
+
+  protected onError(): void {
+    // eslint-disable-next-line no-console
+    console.log('aaa'); //todo
+  }
+
+  private onCreateSuccess(body: any | null, headers: HttpHeaders): void {
+    // eslint-disable-next-line no-console
+    console.log('uspeh'); //todo nesto paametnije
+  }
+}

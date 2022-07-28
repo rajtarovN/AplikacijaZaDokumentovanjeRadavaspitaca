@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import { isPresent } from 'app/core/util/operators';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
 import { createRequestOption } from 'app/core/request/request-util';
-import { IGrupa, getGrupaIdentifier } from '../grupa.model';
+import { IGrupa, getGrupaIdentifier, GrupaDTO } from '../grupa.model';
 
 export type EntityResponseType = HttpResponse<IGrupa>;
 export type EntityArrayResponseType = HttpResponse<IGrupa[]>;
@@ -56,5 +56,9 @@ export class GrupaService {
       return [...grupasToAdd, ...grupaCollection];
     }
     return grupaCollection;
+  }
+
+  createGrupa(grupa: GrupaDTO): Observable<EntityResponseType> {
+    return this.http.post<IGrupa>(this.resourceUrl + '/createGrupa', grupa, { observe: 'response' });
   }
 }

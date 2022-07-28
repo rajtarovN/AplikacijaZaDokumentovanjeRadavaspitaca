@@ -1,6 +1,7 @@
 package com.diplomski.myapp.service;
 
 import com.diplomski.myapp.domain.Vaspitac;
+import com.diplomski.myapp.web.rest.dto.VaspitacDTO;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.data.domain.Page;
@@ -64,4 +65,6 @@ public interface VaspitacService {
     void delete(Long id);
 
     List<Vaspitac> getByObjekat(Long id);
+
+    List<VaspitacDTO> getImena();
 }

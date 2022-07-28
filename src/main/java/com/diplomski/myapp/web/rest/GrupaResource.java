@@ -3,6 +3,7 @@ package com.diplomski.myapp.web.rest;
 import com.diplomski.myapp.domain.Grupa;
 import com.diplomski.myapp.repository.GrupaRepository;
 import com.diplomski.myapp.service.GrupaService;
+import com.diplomski.myapp.web.rest.dto.GrupaDTO;
 import com.diplomski.myapp.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -182,5 +183,16 @@ public class GrupaResource {
             .noContent()
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))
             .build();
+    }
+
+    @PostMapping("/grupas/createGrupa")
+    public ResponseEntity<Grupa> createGrupaWithDTO(@RequestBody GrupaDTO grupa) throws URISyntaxException {
+        log.debug("REST request to save Grupa :");
+
+        Grupa result = grupaService.saveGrupa(grupa);
+        return ResponseEntity
+            .created(new URI("/api/grupas/" + result.getId()))
+            .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
+            .body(result);
     }
 }

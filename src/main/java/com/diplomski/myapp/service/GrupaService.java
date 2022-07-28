@@ -1,6 +1,7 @@
 package com.diplomski.myapp.service;
 
 import com.diplomski.myapp.domain.Grupa;
+import com.diplomski.myapp.web.rest.dto.GrupaDTO;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.data.domain.Page;
@@ -62,4 +63,6 @@ public interface GrupaService {
      * @param id the id of the entity.
      */
     void delete(Long id);
+
+    Grupa saveGrupa(GrupaDTO grupa);
 }

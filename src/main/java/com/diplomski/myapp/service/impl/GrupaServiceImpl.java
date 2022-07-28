@@ -1,10 +1,17 @@
 package com.diplomski.myapp.service.impl;
 
+import com.diplomski.myapp.domain.Dete;
+import com.diplomski.myapp.domain.Dnevnik;
 import com.diplomski.myapp.domain.Grupa;
+import com.diplomski.myapp.domain.Vaspitac;
+import com.diplomski.myapp.repository.DeteRepository;
+import com.diplomski.myapp.repository.DnevnikRepository;
 import com.diplomski.myapp.repository.GrupaRepository;
+import com.diplomski.myapp.repository.VaspitacRepository;
 import com.diplomski.myapp.service.GrupaService;
-import java.util.List;
-import java.util.Optional;
+import com.diplomski.myapp.web.rest.dto.DeteZaGrupuDTO;
+import com.diplomski.myapp.web.rest.dto.GrupaDTO;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 import org.slf4j.Logger;
@@ -24,9 +31,20 @@ public class GrupaServiceImpl implements GrupaService {
     private final Logger log = LoggerFactory.getLogger(GrupaServiceImpl.class);
 
     private final GrupaRepository grupaRepository;
+    private final DeteRepository deteRepository;
+    private final VaspitacRepository vaspitacRepository;
+    private final DnevnikRepository dnevnikRepository;
 
-    public GrupaServiceImpl(GrupaRepository grupaRepository) {
+    public GrupaServiceImpl(
+        GrupaRepository grupaRepository,
+        DeteRepository deteRepository,
+        VaspitacRepository vaspitacRepository,
+        DnevnikRepository dnevnikRepository
+    ) {
         this.grupaRepository = grupaRepository;
+        this.deteRepository = deteRepository;
+        this.vaspitacRepository = vaspitacRepository;
+        this.dnevnikRepository = dnevnikRepository;
     }
 
     @Override
@@ -88,5 +106,36 @@ public class GrupaServiceImpl implements GrupaService {
     public void delete(Long id) {
         log.debug("Request to delete Grupa : {}", id);
         grupaRepository.deleteById(id);
+    }
+
+    @Override
+    public Grupa saveGrupa(GrupaDTO grupa) {
+        Grupa newGrupa = new Grupa();
+        newGrupa.setTipGrupe(grupa.tipGrupe);
+        Set<Dete> deca = new HashSet<>();
+        for (DeteZaGrupuDTO d : grupa.getDeca()) {
+            Dete dete = this.deteRepository.findById(d.getId()).get();
+            deca.add(dete);
+            dete.setGrupa(newGrupa);
+        }
+        newGrupa.setDetes(deca);
+
+        Dnevnik newDnevnik = new Dnevnik();
+        newDnevnik.setGrupa(newGrupa);
+        newDnevnik.setKrajVazenja(grupa.getKrajVazenja());
+        newDnevnik.setPocetakVazenja(grupa.getPocetakVazenja());
+        Set<Vaspitac> vaspitaci = new HashSet<>();
+        Vaspitac vaspitac = this.vaspitacRepository.findById(grupa.getVaspitac().getId()).get();
+        vaspitaci.add(vaspitac);
+        newDnevnik.setVaspitacs(vaspitaci);
+        newGrupa.setDnevnik(newDnevnik);
+        if (vaspitac.getDnevniks() == null) {
+            vaspitac.setDnevniks(new HashSet<>());
+        }
+        this.grupaRepository.save(newGrupa);
+        vaspitac.getDnevniks().add(newDnevnik);
+        this.vaspitacRepository.save(vaspitac);
+        this.dnevnikRepository.save(newDnevnik);
+        return newGrupa; //todo proveri da li se cuvaju svi podaci
     }
 }

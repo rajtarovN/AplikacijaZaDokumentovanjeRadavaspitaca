@@ -1,17 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { DeteDTO, NeDolasciDTO } from '../../entities/ne-dolasci/ne-dolasci.model';
 import dayjs from 'dayjs/esm';
 import { TipGrupe } from '../../entities/enumerations/tip-grupe.model';
-import { DnevnikService } from '../../entities/dnevnik/service/dnevnik.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { NeDolasciService } from '../../entities/ne-dolasci/service/ne-dolasci.service';
-import { DodajRazlogComponent } from '../../entities/ne-dolasci/dodaj-razlog/dodaj-razlog.component';
 import { HttpHeaders, HttpResponse } from '@angular/common/http';
 import { VaspitacService } from '../../entities/vaspitac/service/vaspitac.service';
-import { DeteService } from '../../entities/dete/service/dete.service';
 import { FormularService } from '../../entities/formular/service/formular.service';
 import { DeteZaGrupuDTO } from '../../entities/formular/formular.model';
-import { VaspitacZaGrupuDTO } from '../../entities/vaspitac/vaspitac.model';
+import { IVaspitac, VaspitacZaGrupuDTO } from '../../entities/vaspitac/vaspitac.model';
+import { GrupaDTO } from '../../entities/grupa/grupa.model';
+import { GrupaService } from '../../entities/grupa/service/grupa.service';
+import { FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'jhi-raspored-dece',
@@ -22,21 +20,33 @@ export class RasporedDeceComponent implements OnInit {
   deca: DeteZaGrupuDTO[];
   dodataDeca: DeteZaGrupuDTO[];
   predicate!: string;
-  datumPocetka: dayjs.Dayjs | undefined;
-  datumKraja: dayjs.Dayjs | undefined;
-  tipGrupe?: TipGrupe | null;
+  datumPocetka: dayjs.Dayjs;
+  datumKraja: dayjs.Dayjs;
+  tipGrupe: TipGrupe;
   vaspitacDto: VaspitacZaGrupuDTO | undefined;
   listaVasapitaca: VaspitacZaGrupuDTO[] | undefined;
   ascending!: boolean;
   isLoading = false;
 
+  editForm = this.fb.group({
+    pocetakVazenja: [],
+    krajVazenja: [],
+    vaspitacs: [],
+  });
   panelOpenState = false;
 
-  constructor(public vaspitacService: VaspitacService, protected modalService: NgbModal, public formularService: FormularService) {
+  constructor(
+    public vaspitacService: VaspitacService,
+    protected modalService: NgbModal,
+    public formularService: FormularService,
+    public grupaService: GrupaService,
+    protected fb: FormBuilder
+  ) {
     this.datumPocetka = dayjs();
     this.datumKraja = dayjs();
     this.dodataDeca = [];
     this.deca = [];
+    this.tipGrupe = TipGrupe.POLUDNEVNA;
   }
 
   ngOnInit(): void {
@@ -50,16 +60,24 @@ export class RasporedDeceComponent implements OnInit {
     return item.id!;
   }
 
-  sacuvaj(): void {
-    // const listaIzostanaka = this.izostanci!.filter(x => x.odsutan);
-    // this.nedolasciService.createNeDolasci(listaIzostanaka).subscribe({
-    //   next: (res: HttpResponse<any>) => {
-    //     this.onSuccess(res.body, res.headers);
-    //   },
-    //   error: () => {
-    //     this.onError();
-    //   },
-    // });
+  save(): void {
+    const newGrupa = new GrupaDTO(
+      this.tipGrupe,
+      this.dodataDeca,
+      this.datumPocetka,
+      this.datumKraja,
+      this.editForm.get(['vaspitacs'])!.value[0]
+    );
+    // eslint-disable-next-line no-console
+    console.log(newGrupa);
+    this.grupaService.createGrupa(newGrupa).subscribe({
+      next: (res: HttpResponse<any>) => {
+        this.onCreateSuccess(res.body, res.headers);
+      },
+      error: () => {
+        this.onError();
+      },
+    });
   }
   addDeteToGroup(dete1: DeteZaGrupuDTO): void {
     const dete: DeteZaGrupuDTO = this.deca.filter(elem => elem.id === dete1.id)[0];
@@ -108,6 +126,16 @@ export class RasporedDeceComponent implements OnInit {
     });
   }
 
+  getSelectedVaspitac(option: VaspitacZaGrupuDTO, selectedVals?: VaspitacZaGrupuDTO[]): VaspitacZaGrupuDTO {
+    if (selectedVals) {
+      for (const selectedVal of selectedVals) {
+        if (option.id === selectedVal.id) {
+          return selectedVal;
+        }
+      }
+    }
+    return option;
+  }
   protected onSuccess(data: VaspitacZaGrupuDTO[] | null, headers: HttpHeaders): void {
     this.listaVasapitaca = [];
     // eslint-disable-next-line no-console
@@ -134,5 +162,10 @@ export class RasporedDeceComponent implements OnInit {
   protected onError(): void {
     // eslint-disable-next-line no-console
     console.log('aaa'); //todo
+  }
+
+  private onCreateSuccess(body: any | null, headers: HttpHeaders): void {
+    // eslint-disable-next-line no-console
+    console.log('uspeh'); //todo nesto paametnije
   }
 }

@@ -6,6 +6,7 @@ import { isPresent } from 'app/core/util/operators';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
 import { createRequestOption } from 'app/core/request/request-util';
 import { IPedagog, getPedagogIdentifier } from '../pedagog.model';
+import { IUser } from '../../../admin/user-management/user-management.model';
 
 export type EntityResponseType = HttpResponse<IPedagog>;
 export type EntityArrayResponseType = HttpResponse<IPedagog[]>;
@@ -56,5 +57,9 @@ export class PedagogService {
       return [...pedagogsToAdd, ...pedagogCollection];
     }
     return pedagogCollection;
+  }
+
+  createZaposlen(user: IUser): Observable<IUser> {
+    return this.http.post<IUser>('api/createPedagog', user);
   }
 }

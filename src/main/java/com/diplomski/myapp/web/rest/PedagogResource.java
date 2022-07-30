@@ -1,14 +1,23 @@
 package com.diplomski.myapp.web.rest;
 
 import com.diplomski.myapp.domain.Pedagog;
+import com.diplomski.myapp.domain.User;
 import com.diplomski.myapp.repository.PedagogRepository;
+import com.diplomski.myapp.repository.UserRepository;
+import com.diplomski.myapp.security.AuthoritiesConstants;
 import com.diplomski.myapp.service.PedagogService;
+import com.diplomski.myapp.service.UserService;
+import com.diplomski.myapp.service.dto.AdminUserDTO;
 import com.diplomski.myapp.web.rest.errors.BadRequestAlertException;
+import com.diplomski.myapp.web.rest.errors.EmailAlreadyUsedException;
+import com.diplomski.myapp.web.rest.errors.LoginAlreadyUsedException;
+import com.diplomski.myapp.web.rest.vm.ManagedUserVM;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import javax.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -17,6 +26,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import tech.jhipster.web.util.HeaderUtil;
@@ -41,9 +51,20 @@ public class PedagogResource {
 
     private final PedagogRepository pedagogRepository;
 
-    public PedagogResource(PedagogService pedagogService, PedagogRepository pedagogRepository) {
+    private final UserService userService;
+
+    private final UserRepository userRepository;
+
+    public PedagogResource(
+        PedagogService pedagogService,
+        PedagogRepository pedagogRepository,
+        UserService userService,
+        UserRepository userRepository
+    ) {
         this.pedagogService = pedagogService;
         this.pedagogRepository = pedagogRepository;
+        this.userService = userService;
+        this.userRepository = userRepository;
     }
 
     /**
@@ -64,6 +85,27 @@ public class PedagogResource {
             .created(new URI("/api/pedagogs/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
             .body(result);
+    }
+
+    @PostMapping("/createPedagog")
+    //@PreAuthorize("hasAuthority(\"" + AuthoritiesConstants.ADMIN + "\")")
+    public ResponseEntity<User> createUser(@Valid @RequestBody ManagedUserVM managedUserVM) throws URISyntaxException {
+        log.debug("REST request to save User : {}", managedUserVM);
+
+        if (managedUserVM.getId() != null) {
+            throw new BadRequestAlertException("A new user cannot already have an ID", "userManagement", "idexists");
+            // Lowercase the user login before comparing with database
+        } else if (userRepository.findOneByLogin(managedUserVM.getLogin().toLowerCase()).isPresent()) {
+            throw new LoginAlreadyUsedException();
+        } else if (userRepository.findOneByEmailIgnoreCase(managedUserVM.getEmail()).isPresent()) {
+            throw new EmailAlreadyUsedException();
+        } else {
+            User newUser = userService.createZaposlen(managedUserVM, managedUserVM.getPassword());
+            return ResponseEntity
+                .created(new URI("/api/admin/users/" + newUser.getLogin()))
+                .headers(HeaderUtil.createAlert(applicationName, "userManagement.created", newUser.getLogin()))
+                .body(newUser);
+        }
     }
 
     /**

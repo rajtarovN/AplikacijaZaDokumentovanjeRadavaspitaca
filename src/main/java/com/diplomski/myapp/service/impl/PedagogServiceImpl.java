@@ -2,6 +2,7 @@ package com.diplomski.myapp.service.impl;
 
 import com.diplomski.myapp.domain.Pedagog;
 import com.diplomski.myapp.repository.PedagogRepository;
+import com.diplomski.myapp.repository.UserRepository;
 import com.diplomski.myapp.service.PedagogService;
 import java.util.Optional;
 import org.slf4j.Logger;
@@ -22,13 +23,17 @@ public class PedagogServiceImpl implements PedagogService {
 
     private final PedagogRepository pedagogRepository;
 
-    public PedagogServiceImpl(PedagogRepository pedagogRepository) {
+    private final UserRepository userRepository;
+
+    public PedagogServiceImpl(PedagogRepository pedagogRepository, UserRepository userRepository) {
         this.pedagogRepository = pedagogRepository;
+        this.userRepository = userRepository;
     }
 
     @Override
     public Pedagog save(Pedagog pedagog) {
         log.debug("Request to save Pedagog : {}", pedagog);
+        pedagog.setUser(this.userRepository.getById(pedagog.getUser().getId()));
         return pedagogRepository.save(pedagog);
     }
 

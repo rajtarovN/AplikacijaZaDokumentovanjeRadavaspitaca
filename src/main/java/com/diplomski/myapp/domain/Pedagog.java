@@ -21,6 +21,10 @@ public class Pedagog implements Serializable {
     @Column(name = "id")
     private Long id;
 
+    @OneToOne
+    @JoinColumn(unique = false, nullable = true)
+    private User user;
+
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
     public Long getId() {
@@ -61,5 +65,13 @@ public class Pedagog implements Serializable {
         return "Pedagog{" +
             "id=" + getId() +
             "}";
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }

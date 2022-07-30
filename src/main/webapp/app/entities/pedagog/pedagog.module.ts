@@ -5,9 +5,10 @@ import { PedagogDetailComponent } from './detail/pedagog-detail.component';
 import { PedagogUpdateComponent } from './update/pedagog-update.component';
 import { PedagogDeleteDialogComponent } from './delete/pedagog-delete-dialog.component';
 import { PedagogRoutingModule } from './route/pedagog-routing.module';
+import { AccountModule } from '../../account/account.module';
 
 @NgModule({
-  imports: [SharedModule, PedagogRoutingModule],
+  imports: [SharedModule, PedagogRoutingModule, AccountModule],
   declarations: [PedagogComponent, PedagogDetailComponent, PedagogUpdateComponent, PedagogDeleteDialogComponent],
   entryComponents: [PedagogDeleteDialogComponent],
 })

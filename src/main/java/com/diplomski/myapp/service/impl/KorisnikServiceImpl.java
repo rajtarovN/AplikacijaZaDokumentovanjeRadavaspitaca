@@ -45,19 +45,6 @@ public class KorisnikServiceImpl implements KorisnikService {
         return korisnikRepository
             .findById(korisnik.getId())
             .map(existingKorisnik -> {
-                if (korisnik.getKorisnickoIme() != null) {
-                    existingKorisnik.setKorisnickoIme(korisnik.getKorisnickoIme());
-                }
-                if (korisnik.getSifra() != null) {
-                    existingKorisnik.setSifra(korisnik.getSifra());
-                }
-                if (korisnik.getIme() != null) {
-                    existingKorisnik.setIme(korisnik.getIme());
-                }
-                if (korisnik.getPrezime() != null) {
-                    existingKorisnik.setPrezime(korisnik.getPrezime());
-                }
-
                 return existingKorisnik;
             })
             .map(korisnikRepository::save);

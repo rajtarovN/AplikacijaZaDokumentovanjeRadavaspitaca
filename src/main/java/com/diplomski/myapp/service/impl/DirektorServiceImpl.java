@@ -2,6 +2,7 @@ package com.diplomski.myapp.service.impl;
 
 import com.diplomski.myapp.domain.Direktor;
 import com.diplomski.myapp.repository.DirektorRepository;
+import com.diplomski.myapp.repository.UserRepository;
 import com.diplomski.myapp.service.DirektorService;
 import java.util.Optional;
 import org.slf4j.Logger;
@@ -21,14 +22,17 @@ public class DirektorServiceImpl implements DirektorService {
     private final Logger log = LoggerFactory.getLogger(DirektorServiceImpl.class);
 
     private final DirektorRepository direktorRepository;
+    private final UserRepository userRepository;
 
-    public DirektorServiceImpl(DirektorRepository direktorRepository) {
+    public DirektorServiceImpl(DirektorRepository direktorRepository, UserRepository userRepository) {
         this.direktorRepository = direktorRepository;
+        this.userRepository = userRepository;
     }
 
     @Override
     public Direktor save(Direktor direktor) {
         log.debug("Request to save Direktor : {}", direktor);
+        direktor.setUser(this.userRepository.getById(direktor.getUser().getId()));
         return direktorRepository.save(direktor);
     }
 

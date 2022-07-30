@@ -1,6 +1,6 @@
 <div class="d-flex justify-content-center">
   <div class="col-8">
-    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+    <form name="editForm" role="form" novalidate (ngSubmit)="saveUser()" [formGroup]="editForm">
       <h2 id="jhi-vaspitac-heading" data-cy="VaspitacCreateUpdateHeading" jhiTranslate="diplomskiApp.vaspitac.home.createOrEditLabel">
         Create or edit a Vaspitac
       </h2>
@@ -62,6 +62,208 @@
               {{ objekatOption.naziv }}
             </option>
           </select>
+        </div>
+      </div>
+      <div class="mb-3">
+        <label class="form-label" jhiTranslate="userManagement.login">Login</label>
+        <input type="text" class="form-control" name="login" formControlName="login" />
+
+        <div *ngIf="editForm.get('login')!.invalid && (editForm.get('login')!.dirty || editForm.get('login')!.touched)">
+          <small class="form-text text-danger" *ngIf="editForm.get('login')?.errors?.required" jhiTranslate="entity.validation.required">
+            This field is required.
+          </small>
+
+          <small
+            class="form-text text-danger"
+            *ngIf="editForm.get('login')?.errors?.maxlength"
+            jhiTranslate="entity.validation.maxlength"
+            [translateValues]="{ max: 50 }"
+          >
+            This field cannot be longer than 50 characters.
+          </small>
+
+          <small class="form-text text-danger" *ngIf="editForm.get('login')?.errors?.pattern" jhiTranslate="entity.validation.patternLogin">
+            This field can only contain letters, digits and e-mail addresses.
+          </small>
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label" jhiTranslate="userManagement.firstName">First Name</label>
+        <input type="text" class="form-control" name="firstName" formControlName="firstName" />
+
+        <div *ngIf="editForm.get('firstName')!.invalid && (editForm.get('firstName')!.dirty || editForm.get('firstName')!.touched)">
+          <small
+            class="form-text text-danger"
+            *ngIf="editForm.get('firstName')?.errors?.maxlength"
+            jhiTranslate="entity.validation.maxlength"
+            [translateValues]="{ max: 50 }"
+          >
+            This field cannot be longer than 50 characters.
+          </small>
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label jhiTranslate="userManagement.lastName">Last Name</label>
+        <input type="text" class="form-control" name="lastName" formControlName="lastName" />
+
+        <div *ngIf="editForm.get('lastName')!.invalid && (editForm.get('lastName')!.dirty || editForm.get('lastName')!.touched)">
+          <small
+            class="form-text text-danger"
+            *ngIf="editForm.get('lastName')?.errors?.maxlength"
+            jhiTranslate="entity.validation.maxlength"
+            [translateValues]="{ max: 50 }"
+          >
+            This field cannot be longer than 50 characters.
+          </small>
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label" jhiTranslate="userManagement.email">Email</label>
+        <input type="email" class="form-control" name="email" formControlName="email" />
+
+        <div *ngIf="editForm.get('email')!.invalid && (editForm.get('email')!.dirty || editForm.get('email')!.touched)">
+          <small class="form-text text-danger" *ngIf="editForm.get('email')?.errors?.required" jhiTranslate="entity.validation.required">
+            This field is required.
+          </small>
+
+          <small
+            class="form-text text-danger"
+            *ngIf="editForm.get('email')?.errors?.maxlength"
+            jhiTranslate="entity.validation.maxlength"
+            [translateValues]="{ max: 100 }"
+          >
+            This field cannot be longer than 100 characters.
+          </small>
+
+          <small
+            class="form-text text-danger"
+            *ngIf="editForm.get('email')?.errors?.minlength"
+            jhiTranslate="entity.validation.minlength"
+            [translateValues]="{ min: 5 }"
+          >
+            This field is required to be at least 5 characters.
+          </small>
+
+          <small
+            class="form-text text-danger"
+            *ngIf="editForm.get('email')?.errors?.email"
+            jhiTranslate="global.messages.validate.email.invalid"
+          >
+            Your email is invalid.
+          </small>
+        </div>
+      </div>
+
+      <div class="form-check">
+        <label class="form-check-label" for="activated">
+          <input
+            class="form-check-input"
+            [attr.disabled]="user.id === undefined ? 'disabled' : null"
+            type="checkbox"
+            id="activated"
+            name="activated"
+            formControlName="activated"
+          />
+          <span jhiTranslate="userManagement.activated">Activated</span>
+        </label>
+      </div>
+
+      <div class="mb-3" *ngIf="languages && languages.length > 0">
+        <label jhiTranslate="userManagement.langKey">Lang Key</label>
+        <select class="form-control" id="langKey" name="langKey" formControlName="langKey">
+          <option *ngFor="let language of languages" [value]="language">{{ language | findLanguageFromKey }}</option>
+        </select>
+      </div>
+
+      <div class="mb-3">
+        <label jhiTranslate="userManagement.profiles">Profiles</label>
+        <select class="form-control" multiple name="authority" formControlName="authorities">
+          <option *ngFor="let authority of authorities" [value]="authority">{{ authority }}</option>
+        </select>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label" for="password" jhiTranslate="global.form.newpassword.label">New password</label>
+        <input
+          type="password"
+          class="form-control"
+          id="password"
+          name="password"
+          placeholder="{{ 'global.form.newpassword.placeholder' | translate }}"
+          formControlName="password"
+          data-cy="firstPassword"
+        />
+
+        <div *ngIf="editForm.get('password')!.invalid && (editForm.get('password')!.dirty || editForm.get('password')!.touched)">
+          <small
+            class="form-text text-danger"
+            *ngIf="editForm.get('password')?.errors?.required"
+            jhiTranslate="global.messages.validate.newpassword.required"
+          >
+            Your password is required.
+          </small>
+
+          <small
+            class="form-text text-danger"
+            *ngIf="editForm.get('password')?.errors?.minlength"
+            jhiTranslate="global.messages.validate.newpassword.minlength"
+          >
+            Your password is required to be at least 4 characters.
+          </small>
+
+          <small
+            class="form-text text-danger"
+            *ngIf="editForm.get('password')?.errors?.maxlength"
+            jhiTranslate="global.messages.validate.newpassword.maxlength"
+          >
+            Your password cannot be longer than 50 characters.
+          </small>
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label" for="confirmPassword" jhiTranslate="global.form.confirmpassword.label">New password confirmation</label>
+        <input
+          type="password"
+          class="form-control"
+          id="confirmPassword"
+          name="confirmPassword"
+          placeholder="{{ 'global.form.confirmpassword.placeholder' | translate }}"
+          formControlName="confirmPassword"
+          data-cy="secondPassword"
+        />
+
+        <div
+          *ngIf="
+            editForm.get('confirmPassword')!.invalid && (editForm.get('confirmPassword')!.dirty || editForm.get('confirmPassword')!.touched)
+          "
+        >
+          <small
+            class="form-text text-danger"
+            *ngIf="editForm.get('confirmPassword')?.errors?.required"
+            jhiTranslate="global.messages.validate.confirmpassword.required"
+          >
+            Your confirmation password is required.
+          </small>
+
+          <small
+            class="form-text text-danger"
+            *ngIf="editForm.get('confirmPassword')?.errors?.minlength"
+            jhiTranslate="global.messages.validate.confirmpassword.minlength"
+          >
+            Your confirmation password is required to be at least 4 characters.
+          </small>
+
+          <small
+            class="form-text text-danger"
+            *ngIf="editForm.get('confirmPassword')?.errors?.maxlength"
+            jhiTranslate="global.messages.validate.confirmpassword.maxlength"
+          >
+            Your confirmation password cannot be longer than 50 characters.
+          </small>
         </div>
       </div>
 

@@ -6,6 +6,7 @@ import { isPresent } from 'app/core/util/operators';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
 import { createRequestOption } from 'app/core/request/request-util';
 import { IDirektor, getDirektorIdentifier } from '../direktor.model';
+import { IUser } from '../../../admin/user-management/user-management.model';
 
 export type EntityResponseType = HttpResponse<IDirektor>;
 export type EntityArrayResponseType = HttpResponse<IDirektor[]>;
@@ -58,5 +59,8 @@ export class DirektorService {
       return [...direktorsToAdd, ...direktorCollection];
     }
     return direktorCollection;
+  }
+  createZaposlen(user: IUser): Observable<IUser> {
+    return this.http.post<IUser>('api/createDirektor', user);
   }
 }

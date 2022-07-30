@@ -65,11 +65,7 @@ class KorisnikResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Korisnik createEntity(EntityManager em) {
-        Korisnik korisnik = new Korisnik()
-            .korisnickoIme(DEFAULT_KORISNICKO_IME)
-            .sifra(DEFAULT_SIFRA)
-            .ime(DEFAULT_IME)
-            .prezime(DEFAULT_PREZIME);
+        Korisnik korisnik = new Korisnik();
         return korisnik;
     }
 
@@ -80,11 +76,7 @@ class KorisnikResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Korisnik createUpdatedEntity(EntityManager em) {
-        Korisnik korisnik = new Korisnik()
-            .korisnickoIme(UPDATED_KORISNICKO_IME)
-            .sifra(UPDATED_SIFRA)
-            .ime(UPDATED_IME)
-            .prezime(UPDATED_PREZIME);
+        Korisnik korisnik = new Korisnik();
         return korisnik;
     }
 
@@ -106,10 +98,6 @@ class KorisnikResourceIT {
         List<Korisnik> korisnikList = korisnikRepository.findAll();
         assertThat(korisnikList).hasSize(databaseSizeBeforeCreate + 1);
         Korisnik testKorisnik = korisnikList.get(korisnikList.size() - 1);
-        assertThat(testKorisnik.getKorisnickoIme()).isEqualTo(DEFAULT_KORISNICKO_IME);
-        assertThat(testKorisnik.getSifra()).isEqualTo(DEFAULT_SIFRA);
-        assertThat(testKorisnik.getIme()).isEqualTo(DEFAULT_IME);
-        assertThat(testKorisnik.getPrezime()).isEqualTo(DEFAULT_PREZIME);
     }
 
     @Test
@@ -185,7 +173,6 @@ class KorisnikResourceIT {
         Korisnik updatedKorisnik = korisnikRepository.findById(korisnik.getId()).get();
         // Disconnect from session so that the updates on updatedKorisnik are not directly saved in db
         em.detach(updatedKorisnik);
-        updatedKorisnik.korisnickoIme(UPDATED_KORISNICKO_IME).sifra(UPDATED_SIFRA).ime(UPDATED_IME).prezime(UPDATED_PREZIME);
 
         restKorisnikMockMvc
             .perform(
@@ -199,10 +186,6 @@ class KorisnikResourceIT {
         List<Korisnik> korisnikList = korisnikRepository.findAll();
         assertThat(korisnikList).hasSize(databaseSizeBeforeUpdate);
         Korisnik testKorisnik = korisnikList.get(korisnikList.size() - 1);
-        assertThat(testKorisnik.getKorisnickoIme()).isEqualTo(UPDATED_KORISNICKO_IME);
-        assertThat(testKorisnik.getSifra()).isEqualTo(UPDATED_SIFRA);
-        assertThat(testKorisnik.getIme()).isEqualTo(UPDATED_IME);
-        assertThat(testKorisnik.getPrezime()).isEqualTo(UPDATED_PREZIME);
     }
 
     @Test
@@ -273,8 +256,6 @@ class KorisnikResourceIT {
         Korisnik partialUpdatedKorisnik = new Korisnik();
         partialUpdatedKorisnik.setId(korisnik.getId());
 
-        partialUpdatedKorisnik.sifra(UPDATED_SIFRA);
-
         restKorisnikMockMvc
             .perform(
                 patch(ENTITY_API_URL_ID, partialUpdatedKorisnik.getId())
@@ -287,10 +268,6 @@ class KorisnikResourceIT {
         List<Korisnik> korisnikList = korisnikRepository.findAll();
         assertThat(korisnikList).hasSize(databaseSizeBeforeUpdate);
         Korisnik testKorisnik = korisnikList.get(korisnikList.size() - 1);
-        assertThat(testKorisnik.getKorisnickoIme()).isEqualTo(DEFAULT_KORISNICKO_IME);
-        assertThat(testKorisnik.getSifra()).isEqualTo(UPDATED_SIFRA);
-        assertThat(testKorisnik.getIme()).isEqualTo(DEFAULT_IME);
-        assertThat(testKorisnik.getPrezime()).isEqualTo(DEFAULT_PREZIME);
     }
 
     @Test
@@ -305,8 +282,6 @@ class KorisnikResourceIT {
         Korisnik partialUpdatedKorisnik = new Korisnik();
         partialUpdatedKorisnik.setId(korisnik.getId());
 
-        partialUpdatedKorisnik.korisnickoIme(UPDATED_KORISNICKO_IME).sifra(UPDATED_SIFRA).ime(UPDATED_IME).prezime(UPDATED_PREZIME);
-
         restKorisnikMockMvc
             .perform(
                 patch(ENTITY_API_URL_ID, partialUpdatedKorisnik.getId())
@@ -319,10 +294,6 @@ class KorisnikResourceIT {
         List<Korisnik> korisnikList = korisnikRepository.findAll();
         assertThat(korisnikList).hasSize(databaseSizeBeforeUpdate);
         Korisnik testKorisnik = korisnikList.get(korisnikList.size() - 1);
-        assertThat(testKorisnik.getKorisnickoIme()).isEqualTo(UPDATED_KORISNICKO_IME);
-        assertThat(testKorisnik.getSifra()).isEqualTo(UPDATED_SIFRA);
-        assertThat(testKorisnik.getIme()).isEqualTo(UPDATED_IME);
-        assertThat(testKorisnik.getPrezime()).isEqualTo(UPDATED_PREZIME);
     }
 
     @Test

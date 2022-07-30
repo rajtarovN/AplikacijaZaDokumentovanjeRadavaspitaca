@@ -34,6 +34,18 @@ public class Roditelj implements Serializable {
     @JsonIgnoreProperties(value = { "adresa", "podaciORoditeljimas", "dete", "roditelj" }, allowSetters = true)
     private Set<Formular> formulars = new HashSet<>();
 
+    @OneToOne
+    @JoinColumn(unique = true)
+    private User user;
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
     public Long getId() {

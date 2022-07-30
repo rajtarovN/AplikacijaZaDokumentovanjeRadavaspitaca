@@ -2,6 +2,7 @@ package com.diplomski.myapp.service.impl;
 
 import com.diplomski.myapp.domain.Roditelj;
 import com.diplomski.myapp.repository.RoditeljRepository;
+import com.diplomski.myapp.repository.UserRepository;
 import com.diplomski.myapp.service.RoditeljService;
 import java.util.Optional;
 import org.slf4j.Logger;
@@ -21,14 +22,17 @@ public class RoditeljServiceImpl implements RoditeljService {
     private final Logger log = LoggerFactory.getLogger(RoditeljServiceImpl.class);
 
     private final RoditeljRepository roditeljRepository;
+    private final UserRepository userRepository;
 
-    public RoditeljServiceImpl(RoditeljRepository roditeljRepository) {
+    public RoditeljServiceImpl(RoditeljRepository roditeljRepository, UserRepository userRepository) {
         this.roditeljRepository = roditeljRepository;
+        this.userRepository = userRepository;
     }
 
     @Override
     public Roditelj save(Roditelj roditelj) {
         log.debug("Request to save Roditelj : {}", roditelj);
+        roditelj.setUser(this.userRepository.getById(roditelj.getUser().getId()));
         return roditeljRepository.save(roditelj);
     }
 

@@ -1,10 +1,9 @@
 package com.diplomski.myapp.service.impl;
 
-import com.diplomski.myapp.domain.Formular;
 import com.diplomski.myapp.domain.Vaspitac;
+import com.diplomski.myapp.repository.UserRepository;
 import com.diplomski.myapp.repository.VaspitacRepository;
 import com.diplomski.myapp.service.VaspitacService;
-import com.diplomski.myapp.web.rest.dto.DeteZaGrupuDTO;
 import com.diplomski.myapp.web.rest.dto.VaspitacDTO;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,14 +27,17 @@ public class VaspitacServiceImpl implements VaspitacService {
     private final Logger log = LoggerFactory.getLogger(VaspitacServiceImpl.class);
 
     private final VaspitacRepository vaspitacRepository;
+    private final UserRepository userRepository;
 
-    public VaspitacServiceImpl(VaspitacRepository vaspitacRepository) {
+    public VaspitacServiceImpl(VaspitacRepository vaspitacRepository, UserRepository userRepository) {
         this.vaspitacRepository = vaspitacRepository;
+        this.userRepository = userRepository;
     }
 
     @Override
     public Vaspitac save(Vaspitac vaspitac) {
         log.debug("Request to save Vaspitac : {}", vaspitac);
+        vaspitac.setUser(this.userRepository.getById(vaspitac.getUser().getId()));
         return vaspitacRepository.save(vaspitac);
     }
 

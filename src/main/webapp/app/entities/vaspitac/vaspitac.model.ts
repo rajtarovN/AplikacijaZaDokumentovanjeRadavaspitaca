@@ -2,6 +2,7 @@ import dayjs from 'dayjs/esm';
 import { IZapazanjeUVeziDeteta } from 'app/entities/zapazanje-u-vezi-deteta/zapazanje-u-vezi-deteta.model';
 import { IObjekat } from 'app/entities/objekat/objekat.model';
 import { IDnevnik } from 'app/entities/dnevnik/dnevnik.model';
+import { IUser } from '../../admin/user-management/user-management.model';
 
 export interface IVaspitac {
   datumZaposlenja?: dayjs.Dayjs | null;
@@ -11,6 +12,7 @@ export interface IVaspitac {
   zapazanjeUVeziDeteta?: IZapazanjeUVeziDeteta | null;
   objekat?: IObjekat | null;
   dnevniks?: IDnevnik[] | null;
+  user?: IUser;
 }
 
 export class Vaspitac implements IVaspitac {
@@ -21,7 +23,8 @@ export class Vaspitac implements IVaspitac {
     public id?: number,
     public zapazanjeUVeziDeteta?: IZapazanjeUVeziDeteta | null,
     public objekat?: IObjekat | null,
-    public dnevniks?: IDnevnik[] | null
+    public dnevniks?: IDnevnik[] | null,
+    public user?: IUser
   ) {}
 }
 

@@ -5,9 +5,10 @@ import { DirektorDetailComponent } from './detail/direktor-detail.component';
 import { DirektorUpdateComponent } from './update/direktor-update.component';
 import { DirektorDeleteDialogComponent } from './delete/direktor-delete-dialog.component';
 import { DirektorRoutingModule } from './route/direktor-routing.module';
+import { AccountModule } from '../../account/account.module';
 
 @NgModule({
-  imports: [SharedModule, DirektorRoutingModule],
+  imports: [SharedModule, DirektorRoutingModule, AccountModule],
   declarations: [DirektorComponent, DirektorDetailComponent, DirektorUpdateComponent, DirektorDeleteDialogComponent],
   entryComponents: [DirektorDeleteDialogComponent],
 })

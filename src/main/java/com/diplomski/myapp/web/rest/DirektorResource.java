@@ -1,21 +1,27 @@
 package com.diplomski.myapp.web.rest;
 
 import com.diplomski.myapp.domain.Direktor;
+import com.diplomski.myapp.domain.User;
 import com.diplomski.myapp.repository.DirektorRepository;
+import com.diplomski.myapp.repository.UserRepository;
 import com.diplomski.myapp.service.DirektorService;
+import com.diplomski.myapp.service.UserService;
 import com.diplomski.myapp.web.rest.errors.BadRequestAlertException;
+import com.diplomski.myapp.web.rest.errors.EmailAlreadyUsedException;
+import com.diplomski.myapp.web.rest.errors.LoginAlreadyUsedException;
+import com.diplomski.myapp.web.rest.vm.ManagedUserVM;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import javax.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -40,10 +46,20 @@ public class DirektorResource {
     private final DirektorService direktorService;
 
     private final DirektorRepository direktorRepository;
+    private final UserService userService;
 
-    public DirektorResource(DirektorService direktorService, DirektorRepository direktorRepository) {
+    private final UserRepository userRepository;
+
+    public DirektorResource(
+        DirektorService direktorService,
+        DirektorRepository direktorRepository,
+        UserService userService,
+        UserRepository userRepository
+    ) {
         this.direktorService = direktorService;
         this.direktorRepository = direktorRepository;
+        this.userService = userService;
+        this.userRepository = userRepository;
     }
 
     /**
@@ -177,5 +193,26 @@ public class DirektorResource {
             .noContent()
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))
             .build();
+    }
+
+    @PostMapping("/createDirektor")
+    //@PreAuthorize("hasAuthority(\"" + AuthoritiesConstants.ADMIN + "\")")
+    public ResponseEntity<User> createUser(@Valid @RequestBody ManagedUserVM managedUserVM) throws URISyntaxException {
+        log.debug("REST request to save User : {}", managedUserVM);
+
+        if (managedUserVM.getId() != null) {
+            throw new BadRequestAlertException("A new user cannot already have an ID", "userManagement", "idexists");
+            // Lowercase the user login before comparing with database
+        } else if (userRepository.findOneByLogin(managedUserVM.getLogin().toLowerCase()).isPresent()) {
+            throw new LoginAlreadyUsedException();
+        } else if (userRepository.findOneByEmailIgnoreCase(managedUserVM.getEmail()).isPresent()) {
+            throw new EmailAlreadyUsedException();
+        } else {
+            User newUser = userService.createZaposlen(managedUserVM, managedUserVM.getPassword());
+            return ResponseEntity
+                .created(new URI("/api/admin/users/" + newUser.getLogin()))
+                .headers(HeaderUtil.createAlert(applicationName, "userManagement.created", newUser.getLogin()))
+                .body(newUser);
+        }
     }
 }

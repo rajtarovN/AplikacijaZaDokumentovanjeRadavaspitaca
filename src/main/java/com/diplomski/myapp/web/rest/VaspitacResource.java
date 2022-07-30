@@ -1,16 +1,22 @@
 package com.diplomski.myapp.web.rest;
 
+import com.diplomski.myapp.domain.User;
 import com.diplomski.myapp.domain.Vaspitac;
+import com.diplomski.myapp.repository.UserRepository;
 import com.diplomski.myapp.repository.VaspitacRepository;
+import com.diplomski.myapp.service.UserService;
 import com.diplomski.myapp.service.VaspitacService;
 import com.diplomski.myapp.web.rest.dto.VaspitacDTO;
 import com.diplomski.myapp.web.rest.errors.BadRequestAlertException;
+import com.diplomski.myapp.web.rest.errors.EmailAlreadyUsedException;
+import com.diplomski.myapp.web.rest.errors.LoginAlreadyUsedException;
+import com.diplomski.myapp.web.rest.vm.ManagedUserVM;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.stream.StreamSupport;
+import javax.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -43,9 +49,20 @@ public class VaspitacResource {
 
     private final VaspitacRepository vaspitacRepository;
 
-    public VaspitacResource(VaspitacService vaspitacService, VaspitacRepository vaspitacRepository) {
+    private final UserService userService;
+
+    private final UserRepository userRepository;
+
+    public VaspitacResource(
+        VaspitacService vaspitacService,
+        VaspitacRepository vaspitacRepository,
+        UserService userService,
+        UserRepository userRepository
+    ) {
         this.vaspitacService = vaspitacService;
         this.vaspitacRepository = vaspitacRepository;
+        this.userService = userService;
+        this.userRepository = userRepository;
     }
 
     /**
@@ -202,5 +219,26 @@ public class VaspitacResource {
         log.debug("REST request to get imena Vaspitac");
         List<VaspitacDTO> vaspitac = vaspitacService.getImena();
         return ResponseEntity.ok().body(vaspitac);
+    }
+
+    @PostMapping("/createVaspitac")
+    //@PreAuthorize("hasAuthority(\"" + AuthoritiesConstants.ADMIN + "\")")
+    public ResponseEntity<User> createUser(@Valid @RequestBody ManagedUserVM managedUserVM) throws URISyntaxException {
+        log.debug("REST request to save User : {}", managedUserVM);
+
+        if (managedUserVM.getId() != null) {
+            throw new BadRequestAlertException("A new user cannot already have an ID", "userManagement", "idexists");
+            // Lowercase the user login before comparing with database
+        } else if (userRepository.findOneByLogin(managedUserVM.getLogin().toLowerCase()).isPresent()) {
+            throw new LoginAlreadyUsedException();
+        } else if (userRepository.findOneByEmailIgnoreCase(managedUserVM.getEmail()).isPresent()) {
+            throw new EmailAlreadyUsedException();
+        } else {
+            User newUser = userService.createZaposlen(managedUserVM, managedUserVM.getPassword());
+            return ResponseEntity
+                .created(new URI("/api/admin/users/" + newUser.getLogin()))
+                .headers(HeaderUtil.createAlert(applicationName, "userManagement.created", newUser.getLogin()))
+                .body(newUser);
+        }
     }
 }

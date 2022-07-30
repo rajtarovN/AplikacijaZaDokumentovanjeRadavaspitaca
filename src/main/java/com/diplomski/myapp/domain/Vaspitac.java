@@ -47,6 +47,10 @@ public class Vaspitac implements Serializable {
     @JsonIgnoreProperties(value = { "grupa", "pricas", "neDolascis", "vaspitacs" }, allowSetters = true)
     private Set<Dnevnik> dnevniks = new HashSet<>();
 
+    @OneToOne
+    @JoinColumn(unique = true)
+    private User user;
+
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
     public LocalDate getDatumZaposlenja() {
@@ -162,6 +166,14 @@ public class Vaspitac implements Serializable {
         this.dnevniks.remove(dnevnik);
         dnevnik.getVaspitacs().remove(this);
         return this;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here

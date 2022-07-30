@@ -5,9 +5,10 @@ import { VaspitacDetailComponent } from './detail/vaspitac-detail.component';
 import { VaspitacUpdateComponent } from './update/vaspitac-update.component';
 import { VaspitacDeleteDialogComponent } from './delete/vaspitac-delete-dialog.component';
 import { VaspitacRoutingModule } from './route/vaspitac-routing.module';
+import { AccountModule } from '../../account/account.module';
 
 @NgModule({
-  imports: [SharedModule, VaspitacRoutingModule],
+  imports: [SharedModule, VaspitacRoutingModule, AccountModule],
   declarations: [VaspitacComponent, VaspitacDetailComponent, VaspitacUpdateComponent, VaspitacDeleteDialogComponent],
   entryComponents: [VaspitacDeleteDialogComponent],
 })

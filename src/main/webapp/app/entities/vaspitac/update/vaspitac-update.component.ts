@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { finalize, map } from 'rxjs/operators';
@@ -9,6 +9,9 @@ import { IVaspitac, Vaspitac } from '../vaspitac.model';
 import { VaspitacService } from '../service/vaspitac.service';
 import { IObjekat } from 'app/entities/objekat/objekat.model';
 import { ObjekatService } from 'app/entities/objekat/service/objekat.service';
+import { User } from '../../../admin/user-management/user-management.model';
+import { LANGUAGES } from '../../../config/language.constants';
+import { UserManagementService } from '../../../admin/user-management/service/user-management.service';
 
 @Component({
   selector: 'jhi-vaspitac-update',
@@ -16,6 +19,11 @@ import { ObjekatService } from 'app/entities/objekat/service/objekat.service';
 })
 export class VaspitacUpdateComponent implements OnInit {
   isSaving = false;
+
+  languages = LANGUAGES;
+  authorities: string[] = [];
+  user!: User;
+  doNotMatch = false;
 
   objekatsSharedCollection: IObjekat[] = [];
 
@@ -25,9 +33,27 @@ export class VaspitacUpdateComponent implements OnInit {
     opis: [],
     id: [],
     objekat: [],
+    login: [
+      '',
+      [
+        Validators.required,
+        Validators.minLength(1),
+        Validators.maxLength(50),
+        Validators.pattern('^[a-zA-Z0-9!$&*+=?^_`{|}~.-]+@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*$|^[_.@A-Za-z0-9-]+$'),
+      ],
+    ],
+    email: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(254), Validators.email]],
+    password: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(50)]],
+    confirmPassword: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(50)]],
+    firstName: ['', [Validators.maxLength(50)]],
+    lastName: ['', [Validators.maxLength(50)]],
+    activated: [],
+    langKey: [],
+    authorities: [],
   });
 
   constructor(
+    private userService: UserManagementService,
     protected vaspitacService: VaspitacService,
     protected objekatService: ObjekatService,
     protected activatedRoute: ActivatedRoute,
@@ -35,11 +61,13 @@ export class VaspitacUpdateComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.user = new User();
     this.activatedRoute.data.subscribe(({ vaspitac }) => {
       this.updateForm(vaspitac);
 
       this.loadRelationshipsOptions();
     });
+    this.userService.authorities().subscribe(authorities => (this.authorities = authorities));
   }
 
   previousState(): void {
@@ -49,11 +77,29 @@ export class VaspitacUpdateComponent implements OnInit {
   save(): void {
     this.isSaving = true;
     const vaspitac = this.createFromForm();
+    vaspitac.user = this.user;
+    // eslint-disable-next-line no-console
+    console.log(vaspitac);
     if (vaspitac.id !== undefined) {
       this.subscribeToSaveResponse(this.vaspitacService.update(vaspitac));
     } else {
       this.subscribeToSaveResponse(this.vaspitacService.create(vaspitac));
     }
+  }
+  saveUser(): void {
+    this.doNotMatch = false;
+    this.isSaving = true;
+    this.updateUser(this.user);
+
+    this.vaspitacService.createZaposlen(this.user).subscribe({
+      next: res => {
+        // eslint-disable-next-line no-console
+        console.log(res);
+        this.user.id = res.id;
+        this.save();
+      },
+      error: () => this.onSaveError(),
+    });
   }
 
   trackObjekatById(_index: number, item: IObjekat): number {
@@ -110,5 +156,20 @@ export class VaspitacUpdateComponent implements OnInit {
       id: this.editForm.get(['id'])!.value,
       objekat: this.editForm.get(['objekat'])!.value,
     };
+  }
+  private updateUser(user: User): void {
+    user.login = this.editForm.get(['login'])!.value;
+    user.firstName = this.editForm.get(['firstName'])!.value;
+    user.lastName = this.editForm.get(['lastName'])!.value;
+    user.email = this.editForm.get(['email'])!.value;
+    user.activated = this.editForm.get(['activated'])!.value;
+    user.langKey = this.editForm.get(['langKey'])!.value;
+    user.authorities = this.editForm.get(['authorities'])!.value;
+    const password = this.editForm.get(['password'])!.value;
+    if (password !== this.editForm.get(['confirmPassword'])!.value) {
+      this.doNotMatch = true;
+    } else {
+      user.password = this.editForm.get(['password'])!.value;
+    }
   }
 }

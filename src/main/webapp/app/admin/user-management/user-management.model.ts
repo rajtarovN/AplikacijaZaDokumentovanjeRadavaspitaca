@@ -14,6 +14,7 @@ export interface IUser {
 }
 
 export class User implements IUser {
+  password?: any | null;
   constructor(
     public id?: number,
     public login?: string,

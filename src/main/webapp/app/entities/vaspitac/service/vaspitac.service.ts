@@ -10,6 +10,7 @@ import { ApplicationConfigService } from 'app/core/config/application-config.ser
 import { createRequestOption } from 'app/core/request/request-util';
 import { IVaspitac, getVaspitacIdentifier, VaspitacDTO, VaspitacZaGrupuDTO } from '../vaspitac.model';
 import { ObjekatDTO } from '../../objekat/objekat.model';
+import { IUser } from '../../../admin/user-management/user-management.model';
 
 export type EntityResponseType = HttpResponse<IVaspitac>;
 export type EntityArrayResponseType = HttpResponse<IVaspitac[]>;
@@ -107,5 +108,9 @@ export class VaspitacService {
       });
     }
     return res;
+  }
+
+  createZaposlen(user: IUser): Observable<IUser> {
+    return this.http.post<IUser>('api/createVaspitac', user);
   }
 }

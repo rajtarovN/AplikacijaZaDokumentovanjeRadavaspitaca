@@ -65,6 +65,9 @@ export class NavbarComponent implements OnInit {
   pregledObjekata(): void {
     this.router.navigate(['/pregled-objekata']);
   }
+  pregledVaspitaca(): void {
+    this.router.navigate(['/pregled-vaspitaca']);
+  }
 
   logout(): void {
     this.collapseNavbar();

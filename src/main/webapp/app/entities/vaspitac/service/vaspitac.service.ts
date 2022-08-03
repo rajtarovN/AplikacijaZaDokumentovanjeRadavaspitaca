@@ -76,9 +76,9 @@ export class VaspitacService {
     return vaspitacCollection;
   }
 
-  getByObjekat(req?: any): Observable<EntityArrayResponseType> {
+  getByObjekat(req: string): Observable<EntityArrayResponseType> {
     const options = createRequestOption(req);
-    return this.http.get<VaspitacDTO[]>(this.resourceUrl + '/getByObjekat/1', { params: options, observe: 'response' });
+    return this.http.get<VaspitacDTO[]>(this.resourceUrl + '/getByObjekat/' + req, { params: options, observe: 'response' });
   }
 
   getImena(req?: any): Observable<EntityArrayResponseType> {
@@ -87,7 +87,9 @@ export class VaspitacService {
       .get<VaspitacZaGrupuDTO[]>(this.resourceUrl + '/getImena', { params: options, observe: 'response' })
       .pipe(map((res: EntityArrayResponseType) => this.convertDateArrayFromServer(res)));
   }
-
+  createZaposlen(user: IUser): Observable<IUser> {
+    return this.http.post<IUser>('api/createVaspitac', user);
+  }
   protected convertDateFromClient(vaspitac: IVaspitac): IVaspitac {
     return Object.assign({}, vaspitac, {
       datumZaposlenja: vaspitac.datumZaposlenja?.isValid() ? vaspitac.datumZaposlenja.format(DATE_FORMAT) : undefined,
@@ -108,9 +110,5 @@ export class VaspitacService {
       });
     }
     return res;
-  }
-
-  createZaposlen(user: IUser): Observable<IUser> {
-    return this.http.post<IUser>('api/createVaspitac', user);
   }
 }

@@ -1,8 +1,9 @@
 <div class="d-flex justify-content-center">
   <div class="col-8">
     <div *ngIf="vaspitac">
-      <h2 data-cy="vaspitacDetailsHeading"><span jhiTranslate="diplomskiApp.vaspitac.detail.title">Vaspitac</span></h2>
-
+      <h2 data-cy="vaspitacDetailsHeading">
+        <span> Vaspitac {{ vaspitac.user?.firstName }} {{ vaspitac.user?.lastName }}</span>
+      </h2>
       <hr />
 
       <jhi-alert-error></jhi-alert-error>
@@ -38,7 +39,11 @@
         <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Nazad</span>
       </button>
 
-      <button type="button" [routerLink]="['/vaspitac', vaspitac.id, 'edit']" class="btn btn-primary">
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="book"></fa-icon>&nbsp;<span>Pregledaj dnevnik</span>
+      </button>
+
+      <button *jhiHasAnyAuthority="'ROLE_DIREKTOR'" type="button" [routerLink]="['/vaspitac', vaspitac.id, 'edit']" class="btn btn-primary">
         <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Uredi</span>
       </button>
     </div>

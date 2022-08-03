@@ -23,8 +23,8 @@ export class PotrebanMaterijalUpdateComponent implements OnInit {
 
   editForm = this.fb.group({
     naziv: [],
-    kolicina: [],
     id: [],
+    kolicina: [],
     statusMaterijala: [],
     objekat: [],
   });
@@ -84,8 +84,8 @@ export class PotrebanMaterijalUpdateComponent implements OnInit {
   protected updateForm(potrebanMaterijal: IPotrebanMaterijal): void {
     this.editForm.patchValue({
       naziv: potrebanMaterijal.naziv,
-      kolicina: potrebanMaterijal.kolicina,
       id: potrebanMaterijal.id,
+      kolicina: potrebanMaterijal.kolicina,
       statusMaterijala: potrebanMaterijal.statusMaterijala,
       objekat: potrebanMaterijal.objekat,
     });
@@ -110,9 +110,9 @@ export class PotrebanMaterijalUpdateComponent implements OnInit {
     return {
       ...new PotrebanMaterijal(),
       naziv: this.editForm.get(['naziv'])!.value,
-      kolicina: this.editForm.get(['kolicina'])!.value,
       id: this.editForm.get(['id'])!.value,
-      statusMaterijala: this.editForm.get(['statusMaterijala'])!.value,
+      kolicina: this.editForm.get(['kolicina'])!.value,
+      statusMaterijala: this.editForm.get('id')!.value != null ? this.editForm.get(['statusMaterijala'])!.value : StatusMaterijala.NOV,
       objekat: this.editForm.get(['objekat'])!.value,
     };
   }

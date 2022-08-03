@@ -27,9 +27,39 @@
             </span>
           </a>
         </li>
+
+        <li *jhiHasAnyAuthority="'ROLE_USER'">
+          <a
+            class="dropdown-item"
+            routerLink="objekat"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{ exact: true }"
+            (click)="collapseNavbar()"
+          >
+            <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
+
+            Objekti/Vrtici
+          </a>
+        </li>
+        <li *jhiHasAnyAuthority="'ROLE_USER'">
+          <a class="dropdown-item" (click)="pregledVaspitaca()" id="pregledVaspitaca" data-cy="pregledVaspitaca"> Vaspitaci </a>
+        </li>
+
+        <li *jhiHasAnyAuthority="'ROLE_USER'">
+          <a class="dropdown-item" (click)="pregledVaspitaca()" id="konkurisanje" data-cy="pregledVaspitaca"> Konkurs </a>
+        </li>
+
+        <li *jhiHasAnyAuthority="'ROLE_VASPITAC'">
+          <a class="dropdown-item" (click)="pregledVaspitaca()" id="materijal" data-cy="pregledVaspitaca"> Materijal </a>
+        </li>
+
+        <li *jhiHasAnyAuthority="'ROLE_USER'">
+          <a class="dropdown-item" (click)="pregledVaspitaca()" id="deca" data-cy="pregledVaspitaca"> Deca </a>
+        </li>
+
         <!-- jhipster-needle-add-element-to-menu - JHipster will add new menu items here -->
         <li
-          *ngSwitchCase="true"
+          *jhiHasAnyAuthority="'ROLE_ADMIN'"
           ngbDropdown
           class="nav-item dropdown pointer"
           display="dynamic"
@@ -328,6 +358,173 @@
             <!-- jhipster-needle-add-element-to-admin-menu - JHipster will add entities to the admin menu here -->
           </ul>
         </li>
+        <li
+          *jhiHasAnyAuthority="'ROLE_DIREKTOR'"
+          ngbDropdown
+          class="nav-item dropdown pointer"
+          display="dynamic"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
+        >
+          <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="direktor-menu" data-cy="adminMenu">
+            <span>
+              <fa-icon icon="users-cog"></fa-icon>
+              <span jhiTranslate="global.menu.admin.main">Administration</span>
+            </span>
+          </a>
+          <ul class="dropdown-menu" ngbDropdownMenu aria-labelledby="admin-menu">
+            <li>
+              <a class="dropdown-item" routerLink="objekat" routerLinkActive="active" (click)="collapseNavbar()">
+                <fa-icon icon="house" [fixedWidth]="true"></fa-icon>
+                <span>Objekti/Vrtici</span>
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item" routerLink="vaspitac" routerLinkActive="active" (click)="collapseNavbar()">
+                <fa-icon icon="user" [fixedWidth]="true"></fa-icon>
+                <span>Vaspitaci</span>
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item" routerLink="dnevnik" routerLinkActive="active" (click)="collapseNavbar()">
+                <fa-icon icon="book" [fixedWidth]="true"></fa-icon>
+                <span>Pregled dnevnika</span>
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item" routerLink="potreban-materijal" routerLinkActive="active" (click)="collapseNavbar()">
+                <fa-icon icon="cogs" [fixedWidth]="true"></fa-icon>
+                <span>Materijal</span>
+              </a>
+            </li>
+          </ul>
+        </li>
+        <li
+          *jhiHasAnyAuthority="'ROLE_VASPITAC'"
+          ngbDropdown
+          class="nav-item dropdown pointer"
+          display="dynamic"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
+        >
+          <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="vaspitac-deca-menu" data-cy="adminMenu">
+            <span>
+              <fa-icon icon="users-cog"></fa-icon>
+              <span>Deca</span>
+            </span>
+          </a>
+          <ul class="dropdown-menu" ngbDropdownMenu aria-labelledby="admin-menu">
+            <li>
+              <a class="dropdown-item" routerLink="ne-dolasci/izostanci" routereLinkActive="active" (click)="collapseNavbar()">
+                <fa-icon icon="users" [fixedWidth]="true"></fa-icon>
+                <span>Izostanci</span>
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item" routerLink="dete" routerLinkActive="active" (click)="collapseNavbar()">
+                <fa-icon icon="tachometer-alt" [fixedWidth]="true"></fa-icon>
+                <span>Tabela dece</span>
+              </a>
+            </li>
+
+            <!-- jhipster-needle-add-element-to-admin-menu - JHipster will add entities to the admin menu here -->
+          </ul>
+        </li>
+        <li
+          *jhiHasAnyAuthority="'ROLE_VASPITAC'"
+          ngbDropdown
+          class="nav-item dropdown pointer"
+          display="dynamic"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
+        >
+          <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="vaspitac-menu" data-cy="adminMenu">
+            <span>
+              <fa-icon icon="users-cog"></fa-icon>
+              <span>Dnevnik</span>
+            </span>
+          </a>
+          <ul class="dropdown-menu" ngbDropdownMenu aria-labelledby="admin-menu">
+            <li>
+              <a class="dropdown-item" routerLink="admin/user-management" routerLinkActive="active" (click)="collapseNavbar()">
+                <fa-icon icon="users" [fixedWidth]="true"></fa-icon>
+                <span>Stariji dnevnici</span>
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item" routerLink="admin/metrics" routerLinkActive="active" (click)="collapseNavbar()">
+                <fa-icon icon="tachometer-alt" [fixedWidth]="true"></fa-icon>
+                <span>Trenutni dnevnik</span>
+              </a>
+            </li>
+
+            <!-- jhipster-needle-add-element-to-admin-menu - JHipster will add entities to the admin menu here -->
+          </ul>
+        </li>
+        <li
+          *jhiHasAnyAuthority="'ROLE_PEDAGOG'"
+          ngbDropdown
+          class="nav-item dropdown pointer"
+          display="dynamic"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
+        >
+          <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="pedagog-menu" data-cy="adminMenu">
+            <span>
+              <fa-icon icon="users-cog"></fa-icon>
+              <span>Pregled</span>
+            </span>
+          </a>
+          <ul class="dropdown-menu" ngbDropdownMenu aria-labelledby="admin-menu">
+            <li>
+              <a class="dropdown-item" routerLink="vaspitac" routerLinkActive="active" (click)="collapseNavbar()">
+                <fa-icon icon="users" [fixedWidth]="true"></fa-icon>
+                <span>Vaspitaci</span>
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item" routerLink="dnevnik" routerLinkActive="active" (click)="collapseNavbar()">
+                <fa-icon icon="book" [fixedWidth]="true"></fa-icon>
+                <span>Dnevnici</span>
+              </a>
+            </li>
+
+            <!-- jhipster-needle-add-element-to-admin-menu - JHipster will add entities to the admin menu here -->
+          </ul>
+        </li>
+
+        <li
+          *jhiHasAnyAuthority="'ROLE_PEDAGOG'"
+          ngbDropdown
+          class="nav-item dropdown pointer"
+          display="dynamic"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
+        >
+          <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="deca-menu" data-cy="adminMenu">
+            <span>
+              <fa-icon icon="users"></fa-icon>
+              <span>Deca</span>
+            </span>
+          </a>
+          <ul class="dropdown-menu" ngbDropdownMenu aria-labelledby="admin-menu">
+            <li>
+              <a class="dropdown-item" routerLink="formular" routerLinkActive="active" (click)="collapseNavbar()">
+                <fa-icon icon="pencil" [fixedWidth]="true"></fa-icon>
+                <span>Upis dece</span>
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item" routerLink="raspored-dece" routerLinkActive="active" (click)="collapseNavbar()">
+                <fa-icon icon="users" [fixedWidth]="true"></fa-icon>
+                <span>Formiranje grupa</span>
+              </a>
+            </li>
+
+            <!-- jhipster-needle-add-element-to-admin-menu - JHipster will add entities to the admin menu here -->
+          </ul>
+        </li>
+
         <li ngbDropdown class="nav-item dropdown pointer" display="dynamic" *ngIf="languages && languages.length > 1">
           <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="languagesnavBarDropdown">
             <span>
@@ -400,12 +597,12 @@
                 <span jhiTranslate="global.menu.account.login">Sign in</span>
               </a>
             </li>
-            <li *ngSwitchCase="false">
-              <a class="dropdown-item" (click)="pregledObjekata()" id="pregledObjekata" data-cy="pregledObjekata">
-                <fa-icon icon="sign-in-alt" [fixedWidth]="true"></fa-icon>
-                pregled
-              </a>
-            </li>
+            <!--            <li *ngSwitchCase="false">-->
+            <!--              <a class="dropdown-item" (click)="pregledObjekata()" id="pregledObjekata" data-cy="pregledObjekata">-->
+            <!--                <fa-icon icon="sign-in-alt" [fixedWidth]="true"></fa-icon>-->
+            <!--                pregled-->
+            <!--              </a>-->
+            <!--            </li>-->
             <li *ngSwitchCase="false">
               <a
                 class="dropdown-item"

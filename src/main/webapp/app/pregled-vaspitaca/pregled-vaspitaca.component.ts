@@ -7,6 +7,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { HttpHeaders, HttpResponse } from '@angular/common/http';
 import { VaspitacDTO } from '../entities/vaspitac/vaspitac.model';
 import { VaspitacService } from '../entities/vaspitac/service/vaspitac.service';
+import { User } from '../admin/user-management/user-management.model';
 
 @Component({
   selector: 'jhi-pregled-vaspitaca',
@@ -32,8 +33,8 @@ export class PregledVaspitacaComponent implements OnInit {
 
   loadPage(): void {
     this.isLoading = true;
-
-    this.vaspitacService.getByObjekat().subscribe({
+    const id = localStorage.getItem('objekat');
+    this.vaspitacService.getByObjekat(id!).subscribe({
       next: (res: HttpResponse<any>) => {
         this.isLoading = false;
         this.onSuccess(res.body, res.headers);
@@ -51,6 +52,15 @@ export class PregledVaspitacaComponent implements OnInit {
 
   protected onSuccess(data: VaspitacDTO[] | null, headers: HttpHeaders): void {
     this.totalItems = Number(headers.get('X-Total-Count'));
+
+    let vaspitac1: VaspitacDTO;
+    for (vaspitac1 of data!) {
+      if (vaspitac1.user === undefined) {
+        vaspitac1.user = new User();
+        vaspitac1.user.firstName = 'Pera';
+        vaspitac1.user.lastName = 'Peric';
+      }
+    }
     this.observable = data ?? [];
     // eslint-disable-next-line no-console
     console.log('aaa', data, 'aaa');

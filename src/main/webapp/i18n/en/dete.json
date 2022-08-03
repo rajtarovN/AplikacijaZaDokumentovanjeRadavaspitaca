@@ -2,17 +2,17 @@
   "diplomskiApp": {
     "dete": {
       "home": {
-        "title": "Detes",
-        "refreshListLabel": "Refresh list",
-        "createLabel": "Create a new Dete",
-        "createOrEditLabel": "Create or edit a Dete",
-        "notFound": "No Detes found"
+        "title": "Deca",
+        "refreshListLabel": "Osvezavanje liste",
+        "createLabel": "Dodavanje deteta",
+        "createOrEditLabel": "Dodavanje ili uredjivanje podataka o detetu",
+        "notFound": "Nijedno dete nije pronadjeno"
       },
-      "created": "A new Dete is created with identifier {{ param }}",
-      "updated": "A Dete is updated with identifier {{ param }}",
-      "deleted": "A Dete is deleted with identifier {{ param }}",
+      "created": "Dodato je novo dete sa id-jem: {{ param }}",
+      "updated": "Obnovljeni su podaci deteta sa id-jem {{ param }}",
+      "deleted": "Obrisano je dete sa id-jem {{ param }}",
       "delete": {
-        "question": "Are you sure you want to delete Dete {{ id }}?"
+        "question": "Da li ste sigurni da zelite da obrisete dete sa id-jem {{ id }}?"
       },
       "detail": {
         "title": "Dete"

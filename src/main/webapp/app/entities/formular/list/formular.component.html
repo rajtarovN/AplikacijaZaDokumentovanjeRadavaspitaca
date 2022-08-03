@@ -9,6 +9,7 @@
       </button>
 
       <button
+        *jhiHasAnyAuthority="'ROLE_RODITELJ'"
         id="jh-create-entity"
         data-cy="entityCreateButton"
         class="btn btn-primary jh-create-entity create-formular"
@@ -32,77 +33,37 @@
     <table class="table table-striped" aria-describedby="page-heading">
       <thead>
         <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="loadPage()">
-          <th scope="col" jhiSortBy="id"><span jhiTranslate="diplomskiApp.formular.id">Id</span> <fa-icon icon="sort"></fa-icon></th>
-          <th scope="col" jhiSortBy="mesecUpisa">
-            <span jhiTranslate="diplomskiApp.formular.mesecUpisa">Mesec Upisa</span> <fa-icon icon="sort"></fa-icon>
-          </th>
-          <th scope="col" jhiSortBy="jmbg"><span jhiTranslate="diplomskiApp.formular.jmbg">Jmbg</span> <fa-icon icon="sort"></fa-icon></th>
-          <th scope="col" jhiSortBy="datumRodjenja">
-            <span jhiTranslate="diplomskiApp.formular.datumRodjenja">Datum Rodjenja</span> <fa-icon icon="sort"></fa-icon>
-          </th>
           <th scope="col" jhiSortBy="imeDeteta">
             <span jhiTranslate="diplomskiApp.formular.imeDeteta">Ime Deteta</span> <fa-icon icon="sort"></fa-icon>
           </th>
-          <th scope="col" jhiSortBy="mestoRodjenja">
-            <span jhiTranslate="diplomskiApp.formular.mestoRodjenja">Mesto Rodjenja</span> <fa-icon icon="sort"></fa-icon>
-          </th>
-          <th scope="col" jhiSortBy="opstinaRodjenja">
-            <span jhiTranslate="diplomskiApp.formular.opstinaRodjenja">Opstina Rodjenja</span> <fa-icon icon="sort"></fa-icon>
-          </th>
-          <th scope="col" jhiSortBy="drzava">
-            <span jhiTranslate="diplomskiApp.formular.drzava">Drzava</span> <fa-icon icon="sort"></fa-icon>
-          </th>
-          <th scope="col" jhiSortBy="brDeceUPorodici">
-            <span jhiTranslate="diplomskiApp.formular.brDeceUPorodici">Br Dece U Porodici</span> <fa-icon icon="sort"></fa-icon>
-          </th>
-          <th scope="col" jhiSortBy="zdravstveniProblemi">
-            <span jhiTranslate="diplomskiApp.formular.zdravstveniProblemi">Zdravstveni Problemi</span> <fa-icon icon="sort"></fa-icon>
-          </th>
-          <th scope="col" jhiSortBy="zdravstveniUslovi">
-            <span jhiTranslate="diplomskiApp.formular.zdravstveniUslovi">Zdravstveni Uslovi</span> <fa-icon icon="sort"></fa-icon>
-          </th>
-          <th scope="col" jhiSortBy="statusFormulara">
-            <span jhiTranslate="diplomskiApp.formular.statusFormulara">Status Formulara</span> <fa-icon icon="sort"></fa-icon>
+          <th scope="col" jhiSortBy="mesecUpisa">
+            <span jhiTranslate="diplomskiApp.formular.mesecUpisa">Mesec Upisa</span> <fa-icon icon="sort"></fa-icon>
           </th>
           <th scope="col" jhiSortBy="tipGrupe">
             <span jhiTranslate="diplomskiApp.formular.tipGrupe">Tip Grupe</span> <fa-icon icon="sort"></fa-icon>
           </th>
-          <th scope="col" jhiSortBy="adresa.id">
-            <span jhiTranslate="diplomskiApp.formular.adresa">Adresa</span> <fa-icon icon="sort"></fa-icon>
+          <th scope="col" jhiSortBy="datumRodjenja">
+            <span jhiTranslate="diplomskiApp.formular.datumRodjenja">Datum Rodjenja</span> <fa-icon icon="sort"></fa-icon>
           </th>
-          <th scope="col" jhiSortBy="roditelj.id">
-            <span jhiTranslate="diplomskiApp.formular.roditelj">Roditelj</span> <fa-icon icon="sort"></fa-icon>
+          <th scope="col" jhiSortBy="brDeceUPorodici">
+            <span jhiTranslate="diplomskiApp.formular.brDeceUPorodici">Br Dece U Porodici</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="statusFormulara">
+            <span jhiTranslate="diplomskiApp.formular.statusFormulara">Status Formulara</span> <fa-icon icon="sort"></fa-icon>
           </th>
           <th scope="col"></th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let formular of formulars; trackBy: trackId" data-cy="entityTable">
-          <td>
-            <a [routerLink]="['/formular', formular.id, 'view']">{{ formular.id }}</a>
-          </td>
-          <td>{{ formular.mesecUpisa }}</td>
-          <td>{{ formular.jmbg }}</td>
-          <td>{{ formular.datumRodjenja }}</td>
           <td>{{ formular.imeDeteta }}</td>
-          <td>{{ formular.mestoRodjenja }}</td>
-          <td>{{ formular.opstinaRodjenja }}</td>
-          <td>{{ formular.drzava }}</td>
-          <td>{{ formular.brDeceUPorodici }}</td>
-          <td>{{ formular.zdravstveniProblemi }}</td>
-          <td>{{ formular.zdravstveniUslovi }}</td>
-          <td jhiTranslate="{{ 'diplomskiApp.StatusFormulara.' + formular.statusFormulara }}">{{ formular.statusFormulara }}</td>
+          <td>{{ formular.mesecUpisa }}</td>
           <td jhiTranslate="{{ 'diplomskiApp.TipGrupe.' + formular.tipGrupe }}">{{ formular.tipGrupe }}</td>
-          <td>
-            <div *ngIf="formular.adresa">
-              <a [routerLink]="['/adresa', formular.adresa?.id, 'view']">{{ formular.adresa?.id }}</a>
-            </div>
-          </td>
-          <td>
-            <div *ngIf="formular.roditelj">
-              <a [routerLink]="['/roditelj', formular.roditelj?.id, 'view']">{{ formular.roditelj?.id }}</a>
-            </div>
-          </td>
+          <td>{{ formular.datumRodjenja }}</td>
+
+          <td>{{ formular.brDeceUPorodici }}</td>
+          <td jhiTranslate="{{ 'diplomskiApp.StatusFormulara.' + formular.statusFormulara }}">{{ formular.statusFormulara }}</td>
+
           <td class="text-end">
             <div class="btn-group">
               <button
@@ -116,6 +77,8 @@
               </button>
 
               <button
+                *jhiHasAnyAuthority="'ROLE_RODITELJ'"
+                [disabled]="formular.statusFormulara !== 'NOV'"
                 type="submit"
                 [routerLink]="['/formular', formular.id, 'edit']"
                 class="btn btn-primary btn-sm"
@@ -124,11 +87,10 @@
                 <fa-icon icon="pencil-alt"></fa-icon>
                 <span class="d-none d-md-inline">Uredi</span>
               </button>
-
-              <button type="submit" (click)="delete(formular)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
-                <fa-icon icon="times"></fa-icon>
-                <span class="d-none d-md-inline">Brisanje</span>
-              </button>
+              <!--              <button type="submit" (click)="delete(formular)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">-->
+              <!--                <fa-icon icon="times"></fa-icon>-->
+              <!--                <span class="d-none d-md-inline">Brisanje</span>-->
+              <!--              </button>-->
             </div>
           </td>
         </tr>

@@ -2,11 +2,11 @@
   "diplomskiApp": {
     "neDolasci": {
       "home": {
-        "title": "Ne Dolascis",
-        "refreshListLabel": "Refresh list",
-        "createLabel": "Create a new Ne Dolasci",
-        "createOrEditLabel": "Create or edit a Ne Dolasci",
-        "notFound": "No Ne Dolascis found"
+        "title": "Izostanci",
+        "refreshListLabel": "Osvezavanje liste",
+        "createLabel": "Dodavanje novog izostanka",
+        "createOrEditLabel": "Dodavanje novog izostanka",
+        "notFound": "Nijedan izostanak nije pronadjen"
       },
       "created": "A new Ne Dolasci is created with identifier {{ param }}",
       "updated": "A Ne Dolasci is updated with identifier {{ param }}",

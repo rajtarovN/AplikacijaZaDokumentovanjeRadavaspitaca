@@ -11,10 +11,7 @@
           </th>
           <th class="thClass">
             <span class="field">
-              <h1 id="title{{ this.vaspitac.id }}">
-                MIRA TINA
-                <!--                {{this.vaspitac.ime}} {{ this.vaspitac.prezime}}-->
-              </h1>
+              <h1 id="title{{ this.vaspitac.id }}">{{ this.vaspitac.user!.firstName! }} {{ this.vaspitac.user!.lastName! }}</h1>
               <p>Opis: {{ this.vaspitac.opis }}</p>
               <p>Godine iskustva: {{ this.vaspitac.godineIskustva }}</p>
             </span>

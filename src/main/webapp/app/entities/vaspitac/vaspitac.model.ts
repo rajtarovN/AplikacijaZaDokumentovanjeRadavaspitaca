@@ -33,7 +33,13 @@ export class VaspitacZaGrupuDTO {
 }
 
 export class VaspitacDTO {
-  constructor(public datumZaposlenja: dayjs.Dayjs, public godineIskustva: number, public opis: string, public id: number) {}
+  constructor(
+    public datumZaposlenja: dayjs.Dayjs,
+    public godineIskustva: number,
+    public opis: string,
+    public id: number,
+    public user?: IUser
+  ) {}
 }
 export function getVaspitacIdentifier(vaspitac: IVaspitac): number | undefined {
   return vaspitac.id;

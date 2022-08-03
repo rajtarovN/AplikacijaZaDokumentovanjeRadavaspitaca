@@ -8,15 +8,15 @@
         <span jhiTranslate="diplomskiApp.potrebanMaterijal.home.refreshListLabel">Refresh List</span>
       </button>
 
-      <button
-        id="jh-create-entity"
-        data-cy="entityCreateButton"
-        class="btn btn-primary jh-create-entity create-potreban-materijal"
-        [routerLink]="['/potreban-materijal/new']"
-      >
-        <fa-icon icon="plus"></fa-icon>
-        <span jhiTranslate="diplomskiApp.potrebanMaterijal.home.createLabel"> Create a new Potreban Materijal </span>
-      </button>
+      <!--      <button-->
+      <!--        id="jh-create-entity"-->
+      <!--        data-cy="entityCreateButton"-->
+      <!--        class="btn btn-primary jh-create-entity create-potreban-materijal"-->
+      <!--        [routerLink]="['/potreban-materijal/new']"-->
+      <!--      >-->
+      <!--        <fa-icon icon="plus"></fa-icon>-->
+      <!--        <span jhiTranslate="diplomskiApp.potrebanMaterijal.home.createLabel"> Create a new Potreban Materijal </span>-->
+      <!--      </button>-->
     </div>
   </h2>
 
@@ -62,7 +62,7 @@
           </td>
           <td>
             <div *ngIf="potrebanMaterijal.objekat">
-              <a [routerLink]="['/objekat', potrebanMaterijal.objekat?.id, 'view']">{{ potrebanMaterijal.objekat?.id }}</a>
+              <a [routerLink]="['/objekat', potrebanMaterijal.objekat?.id, 'view']">{{ potrebanMaterijal.objekat?.naziv }}</a>
             </div>
           </td>
           <td class="text-end">

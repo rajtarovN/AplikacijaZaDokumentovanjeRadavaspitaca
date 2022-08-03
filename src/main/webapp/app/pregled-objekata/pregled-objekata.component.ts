@@ -52,6 +52,11 @@ export class PregledObjekataComponent implements OnInit {
     this.loadPage();
   }
 
+  setObjekat(id: number): void {
+    localStorage.setItem('objekat', String(id));
+    this.router.navigateByUrl('/pregled-vaspitaca');
+  }
+
   protected onSuccess(data: ObjekatDTO[] | null, headers: HttpHeaders): void {
     this.totalItems = Number(headers.get('X-Total-Count'));
     this.observable = data ?? [];

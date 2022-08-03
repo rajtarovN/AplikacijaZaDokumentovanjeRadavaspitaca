@@ -33,7 +33,7 @@
         <dt><span jhiTranslate="diplomskiApp.potrebanMaterijal.objekat">Objekat</span></dt>
         <dd>
           <div *ngIf="potrebanMaterijal.objekat">
-            <a [routerLink]="['/objekat', potrebanMaterijal.objekat?.id, 'view']">{{ potrebanMaterijal.objekat?.id }}</a>
+            <a [routerLink]="['/objekat', potrebanMaterijal.objekat?.id, 'view']">{{ potrebanMaterijal.objekat?.naziv }}</a>
           </div>
         </dd>
       </dl>

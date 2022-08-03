@@ -14,12 +14,15 @@
 
         <div class="row mb-3">
           <label class="form-label" jhiTranslate="diplomskiApp.potrebanMaterijal.naziv" for="field_naziv">Naziv</label>
-          <input type="text" class="form-control" name="naziv" id="field_naziv" data-cy="naziv" formControlName="naziv" />
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" jhiTranslate="diplomskiApp.potrebanMaterijal.kolicina" for="field_kolicina">Kolicina</label>
-          <input type="number" class="form-control" name="kolicina" id="field_kolicina" data-cy="kolicina" formControlName="kolicina" />
+          <input
+            type="text"
+            class="form-control"
+            name="naziv"
+            id="field_naziv"
+            data-cy="naziv"
+            formControlName="naziv"
+            [readonly]="editForm.get('id')!.value != null"
+          />
         </div>
 
         <div class="row mb-3" [hidden]="editForm.get('id')!.value == null">
@@ -28,6 +31,11 @@
         </div>
 
         <div class="row mb-3">
+          <label class="form-label" jhiTranslate="diplomskiApp.potrebanMaterijal.kolicina" for="field_kolicina">Kolicina</label>
+          <input type="number" class="form-control" name="kolicina" id="field_kolicina" data-cy="kolicina" formControlName="kolicina" />
+        </div>
+
+        <div *ngIf="this.editForm.get('id')!.value != null" class="row mb-3">
           <label class="form-label" jhiTranslate="diplomskiApp.potrebanMaterijal.statusMaterijala" for="field_statusMaterijala"
             >Status Materijala</label
           >
@@ -44,6 +52,10 @@
             </option>
           </select>
         </div>
+        <div *ngIf="editForm.get('id')!.value == null">
+          <span jhiTranslate="diplomskiApp.potrebanMaterijal.statusMaterijala">Status Materijala</span><br />
+          <span>NOV</span>
+        </div>
 
         <div class="row mb-3">
           <label class="form-label" jhiTranslate="diplomskiApp.potrebanMaterijal.objekat" for="field_objekat">Objekat</label>
@@ -53,7 +65,7 @@
               [ngValue]="objekatOption.id === editForm.get('objekat')!.value?.id ? editForm.get('objekat')!.value : objekatOption"
               *ngFor="let objekatOption of objekatsSharedCollection; trackBy: trackObjekatById"
             >
-              {{ objekatOption.id }}
+              {{ objekatOption.naziv }}
             </option>
           </select>
         </div>

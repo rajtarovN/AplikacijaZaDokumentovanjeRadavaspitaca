@@ -1,7 +1,7 @@
 export enum RadniStatus {
   NOV = 'NOV',
 
-  KUPLJEN = 'KUPLJEN',
+  PENZIJA = 'PENZIJA',
 
-  ODBIJEN = 'ODBIJEN',
+  NEZAPOSLEN = 'NEZAPOSLEN',
 }

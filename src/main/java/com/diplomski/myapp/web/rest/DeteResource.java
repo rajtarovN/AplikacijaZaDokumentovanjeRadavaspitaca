@@ -191,4 +191,53 @@ public class DeteResource {
         ProfilDetetaDTO dete = deteService.findProfil(id);
         return ResponseEntity.ok().body(dete);
     }
+
+    //
+    @GetMapping("/detes/findByGrupa/{id}")
+    public ResponseEntity<List<Dete>> getAllDetesByGrupa(
+        @org.springdoc.api.annotations.ParameterObject Pageable pageable,
+        @RequestParam(required = false) String filter,
+        @PathVariable Long id
+    ) {
+        if ("nedolasci-is-null".equals(filter)) {
+            log.debug("REST request to get all Detes where neDolasci is null");
+            return new ResponseEntity<>(deteService.findAllWhereNeDolasciIsNull(), HttpStatus.OK);
+        }
+        log.debug("REST request to get a page of Detes");
+        Page<Dete> page = deteService.findAllByGrupa(pageable, id);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
+
+    @GetMapping("/detes/findByRoditelj/{username}")
+    public ResponseEntity<List<Dete>> getAllDetesByGrupa(
+        @org.springdoc.api.annotations.ParameterObject Pageable pageable,
+        @RequestParam(required = false) String filter,
+        @PathVariable String username
+    ) {
+        if ("nedolasci-is-null".equals(filter)) {
+            log.debug("REST request to get all Detes where neDolasci is null");
+            return new ResponseEntity<>(deteService.findAllWhereNeDolasciIsNull(), HttpStatus.OK);
+        }
+        log.debug("REST request to get a page of Detes");
+        Page<Dete> page = deteService.findAllByRoditelj(pageable, username);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
+
+    @GetMapping("/detes/findForVaspitac/{username}")
+    public ResponseEntity<List<Dete>> getAllDetesForVaspitac(
+        @org.springdoc.api.annotations.ParameterObject Pageable pageable,
+        @RequestParam(required = false) String filter,
+        @PathVariable String username
+    ) {
+        if ("nedolasci-is-null".equals(filter)) {
+            log.debug("REST request to get all Detes where neDolasci is null");
+            return new ResponseEntity<>(deteService.findAllWhereNeDolasciIsNull(), HttpStatus.OK);
+        }
+        log.debug("REST request to get a page of Detes");
+        Page<Dete> page = deteService.findAllForVaspitac(pageable, username);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
 }

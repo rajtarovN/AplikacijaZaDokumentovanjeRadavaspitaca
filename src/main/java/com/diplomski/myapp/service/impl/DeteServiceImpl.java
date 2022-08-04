@@ -1,16 +1,23 @@
 package com.diplomski.myapp.service.impl;
 
 import com.diplomski.myapp.domain.Dete;
+import com.diplomski.myapp.domain.Dnevnik;
+import com.diplomski.myapp.domain.Vaspitac;
 import com.diplomski.myapp.repository.DeteRepository;
+import com.diplomski.myapp.repository.VaspitacRepository;
 import com.diplomski.myapp.service.DeteService;
 import com.diplomski.myapp.web.rest.dto.ProfilDetetaDTO;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,8 +33,11 @@ public class DeteServiceImpl implements DeteService {
 
     private final DeteRepository deteRepository;
 
-    public DeteServiceImpl(DeteRepository deteRepository) {
+    private final VaspitacRepository vaspitacRepository;
+
+    public DeteServiceImpl(DeteRepository deteRepository, VaspitacRepository vaspitacRepository) {
         this.deteRepository = deteRepository;
+        this.vaspitacRepository = vaspitacRepository;
     }
 
     @Override
@@ -107,5 +117,45 @@ public class DeteServiceImpl implements DeteService {
         }
 
         return null;
+    }
+
+    @Override
+    public Page<Dete> findAllByGrupa(Pageable pageable, Long id) {
+        List<Dete> deca = this.deteRepository.findAllByGrupa(id); //.subList(
+        //                (pageable.getPageNumber())*pageable.getPageSize(),
+        //            (pageable.getPageNumber()+1)*pageable.getPageSize());
+
+        Page<Dete> page = new PageImpl<>(deca);
+        return page;
+    }
+
+    @Override
+    public Page<Dete> findAllByRoditelj(Pageable pageable, String username) {
+        List<Dete> deca =
+            this.deteRepository.findAllByRoditelj(username)
+                .subList((pageable.getPageNumber()) * pageable.getPageSize(), pageable.getPageNumber() * pageable.getPageSize());
+
+        Page<Dete> page = new PageImpl<>(deca);
+        return page;
+    }
+
+    @Override
+    public Page<Dete> findAllForVaspitac(Pageable pageable, String username) {
+        Set<Dnevnik> dnevniks = this.vaspitacRepository.getVaspitacIdByUsername(username).getDnevniks();
+        Dnevnik dnevnik = null;
+
+        for (Dnevnik d : dnevniks) {
+            if (d.getPocetakVazenja().isBefore(LocalDate.now()) && d.getKrajVazenja().isAfter(LocalDate.now())) {
+                dnevnik = d;
+                List<Dete> deca =
+                    this.deteRepository.findAllByGrupa(dnevnik.getGrupa().getId())
+                        .subList((pageable.getPageNumber()) * pageable.getPageSize(), pageable.getPageNumber() * pageable.getPageSize());
+
+                Page<Dete> page = new PageImpl<>(deca);
+                return page;
+            }
+        }
+        Page<Dete> page = new PageImpl<>(new ArrayList<>());
+        return page;
     }
 }

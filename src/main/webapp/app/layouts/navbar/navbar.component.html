@@ -28,7 +28,7 @@
           </a>
         </li>
 
-        <li *jhiHasAnyAuthority="'ROLE_USER'">
+        <li *jhiHasAnyAuthority="'ROLE_RODITELJ'">
           <a
             class="dropdown-item"
             routerLink="objekat"
@@ -41,20 +41,22 @@
             Objekti/Vrtici
           </a>
         </li>
-        <li *jhiHasAnyAuthority="'ROLE_USER'">
+        <li *jhiHasAnyAuthority="'ROLE_RODITELJ'">
           <a class="dropdown-item" (click)="pregledVaspitaca()" id="pregledVaspitaca" data-cy="pregledVaspitaca"> Vaspitaci </a>
         </li>
 
-        <li *jhiHasAnyAuthority="'ROLE_USER'">
+        <li *jhiHasAnyAuthority="'ROLE_RODITELJ'">
           <a class="dropdown-item" (click)="pregledVaspitaca()" id="konkurisanje" data-cy="pregledVaspitaca"> Konkurs </a>
         </li>
 
         <li *jhiHasAnyAuthority="'ROLE_VASPITAC'">
-          <a class="dropdown-item" (click)="pregledVaspitaca()" id="materijal" data-cy="pregledVaspitaca"> Materijal </a>
+          <a class="dropdown-item" routerLink="potreban-materijal" routerLinkActive="active" id="materijal" data-cy="pregledVaspitaca">
+            Materijal
+          </a>
         </li>
 
-        <li *jhiHasAnyAuthority="'ROLE_USER'">
-          <a class="dropdown-item" (click)="pregledVaspitaca()" id="deca" data-cy="pregledVaspitaca"> Deca </a>
+        <li *jhiHasAnyAuthority="'ROLE_RODITELJ'">
+          <a class="dropdown-item" routerLink="dete" routerLinkActive="active" id="deca" data-cy="pregledVaspitaca"> Deca </a>
         </li>
 
         <!-- jhipster-needle-add-element-to-menu - JHipster will add new menu items here -->
@@ -421,7 +423,7 @@
               </a>
             </li>
             <li>
-              <a class="dropdown-item" routerLink="dete" routerLinkActive="active" (click)="collapseNavbar()">
+              <a class="dropdown-item" (click)="pregledDece()" routerLinkActive="active" (click)="collapseNavbar()">
                 <fa-icon icon="tachometer-alt" [fixedWidth]="true"></fa-icon>
                 <span>Tabela dece</span>
               </a>
@@ -452,7 +454,7 @@
               </a>
             </li>
             <li>
-              <a class="dropdown-item" routerLink="admin/metrics" routerLinkActive="active" (click)="collapseNavbar()">
+              <a class="dropdown-item" routerLink="prica" routerLinkActive="active" (click)="collapseNavbar()">
                 <fa-icon icon="tachometer-alt" [fixedWidth]="true"></fa-icon>
                 <span>Trenutni dnevnik</span>
               </a>

@@ -8,6 +8,7 @@ import { createRequestOption } from 'app/core/request/request-util';
 import { IFormular, getFormularIdentifier, DeteZaGrupuDTO } from '../formular.model';
 import { IVaspitac } from '../../vaspitac/vaspitac.model';
 import { map } from 'rxjs/operators';
+import { IDete } from '../../dete/dete.model';
 
 export type EntityResponseType = HttpResponse<IFormular>;
 export type EntityArrayResponseType = HttpResponse<IFormular[]>;
@@ -65,5 +66,10 @@ export class FormularService {
   getDecaZaRaspored(req?: any): Observable<EntityArrayResponseType> {
     const options = createRequestOption(req);
     return this.http.get<DeteZaGrupuDTO[]>(this.resourceUrl + '/getDeca', { params: options, observe: 'response' });
+  }
+
+  queryFormularOfRoditelj(req: { size: number; page: number; sort: string[] }, username?: string): Observable<EntityArrayResponseType> {
+    const options = createRequestOption(req);
+    return this.http.get<IFormular[]>(this.resourceUrl + '/findByRoditelj/' + username!, { params: options, observe: 'response' });
   }
 }

@@ -1,17 +1,19 @@
 package com.diplomski.myapp.service.impl;
 
-import com.diplomski.myapp.domain.KonacnaPrica;
-import com.diplomski.myapp.domain.PlanPrice;
-import com.diplomski.myapp.domain.Prica;
-import com.diplomski.myapp.domain.Vaspitac;
+import com.diplomski.myapp.domain.*;
 import com.diplomski.myapp.repository.PlanPriceRepository;
 import com.diplomski.myapp.repository.PricaRepository;
+import com.diplomski.myapp.repository.VaspitacRepository;
 import com.diplomski.myapp.service.PricaService;
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,10 +30,16 @@ public class PricaServiceImpl implements PricaService {
     private final PricaRepository pricaRepository;
 
     private final PlanPriceRepository planPriceRepository;
+    private final VaspitacRepository vaspitacRepository;
 
-    public PricaServiceImpl(PricaRepository pricaRepository, PlanPriceRepository planPriceRepository) {
+    public PricaServiceImpl(
+        PricaRepository pricaRepository,
+        PlanPriceRepository planPriceRepository,
+        VaspitacRepository vaspitacRepository
+    ) {
         this.pricaRepository = pricaRepository;
         this.planPriceRepository = planPriceRepository;
+        this.vaspitacRepository = vaspitacRepository;
     }
 
     @Override
@@ -109,5 +117,38 @@ public class PricaServiceImpl implements PricaService {
         KonacnaPrica konacnaPrica = new KonacnaPrica();
         konacnaPrica.setTekst(text.toString()); //todo mozda ce ovde biti  problem
         return konacnaPrica;
+    }
+
+    @Override
+    public Page<Prica> findAllByUsername(Pageable pageable, String username) {
+        Vaspitac vaspitac = this.vaspitacRepository.getVaspitacIdByUsername(username);
+        Dnevnik currentDnevnik = null;
+        LocalDate today = LocalDate.now();
+        for (Dnevnik d : vaspitac.getDnevniks()) {
+            if (d.getPocetakVazenja().isBefore(today) && d.getKrajVazenja().isAfter(today)) {
+                currentDnevnik = d;
+                break;
+            }
+        }
+        if (currentDnevnik != null) {
+            List<Prica> price =
+                this.pricaRepository.findCurrentPricas(currentDnevnik.getId())
+                    .subList((pageable.getPageNumber()) * pageable.getPageSize(), pageable.getPageNumber() * pageable.getPageSize());
+
+            Page<Prica> page = new PageImpl<>(price);
+            return page;
+        }
+        Page<Prica> page = new PageImpl<>(new ArrayList<>());
+        return page;
+    }
+
+    @Override
+    public Page<Prica> findAllByDnevnik(Pageable pageable, Long id) {
+        List<Prica> price =
+            this.pricaRepository.findCurrentPricas(id)
+                .subList((pageable.getPageNumber()) * pageable.getPageSize(), pageable.getPageNumber() * pageable.getPageSize());
+
+        Page<Prica> page = new PageImpl<>(price);
+        return page;
     }
 }

@@ -81,6 +81,13 @@ export class DnevnikService {
     return this.http.get<DeteDTO[]>(this.resourceUrl + '/getDeca/' + id);
   }
 
+  queryOldDnevniks(req: { size: number; page: number; sort: string[] }, username: string): Observable<EntityArrayResponseType> {
+    const options = createRequestOption(req);
+    return this.http
+      .get<IDnevnik[]>(this.resourceUrl + '/findByUsername/' + username, { params: options, observe: 'response' })
+      .pipe(map((res: EntityArrayResponseType) => this.convertDateArrayFromServer(res)));
+  }
+
   protected convertDateFromClient(dnevnik: IDnevnik): IDnevnik {
     return Object.assign({}, dnevnik, {
       pocetakVazenja: dnevnik.pocetakVazenja?.isValid() ? dnevnik.pocetakVazenja.format(DATE_FORMAT) : undefined,

@@ -58,4 +58,8 @@ public interface PricaService {
     void delete(Long id);
 
     KonacnaPrica startWriting(Long id);
+
+    Page<Prica> findAllByUsername(Pageable pageable, String username);
+
+    Page<Prica> findAllByDnevnik(Pageable pageable, Long id);
 }

@@ -10,6 +10,7 @@ import { PotrebanMaterijalService } from '../service/potreban-materijal.service'
 import { IObjekat } from 'app/entities/objekat/objekat.model';
 import { ObjekatService } from 'app/entities/objekat/service/objekat.service';
 import { StatusMaterijala } from 'app/entities/enumerations/status-materijala.model';
+import { AccountService } from '../../../core/auth/account.service';
 
 @Component({
   selector: 'jhi-potreban-materijal-update',
@@ -33,7 +34,8 @@ export class PotrebanMaterijalUpdateComponent implements OnInit {
     protected potrebanMaterijalService: PotrebanMaterijalService,
     protected objekatService: ObjekatService,
     protected activatedRoute: ActivatedRoute,
-    protected fb: FormBuilder
+    protected fb: FormBuilder,
+    protected accountService: AccountService
   ) {}
 
   ngOnInit(): void {
@@ -54,7 +56,15 @@ export class PotrebanMaterijalUpdateComponent implements OnInit {
     if (potrebanMaterijal.id !== undefined) {
       this.subscribeToSaveResponse(this.potrebanMaterijalService.update(potrebanMaterijal));
     } else {
-      this.subscribeToSaveResponse(this.potrebanMaterijalService.create(potrebanMaterijal));
+      this.accountService.getAuthenticationState().subscribe(account => {
+        if (account) {
+          // eslint-disable-next-line no-console
+          console.log(account);
+          if (account.authorities[0] === 'ROLE_VASPITAC') {
+            this.subscribeToSaveResponse(this.potrebanMaterijalService.create(potrebanMaterijal, account.login));
+          }
+        }
+      });
     }
   }
 

@@ -56,14 +56,16 @@ public class PotrebanMaterijalResource {
      * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new potrebanMaterijal, or with status {@code 400 (Bad Request)} if the potrebanMaterijal has already an ID.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
-    @PostMapping("/potreban-materijals")
-    public ResponseEntity<PotrebanMaterijal> createPotrebanMaterijal(@RequestBody PotrebanMaterijal potrebanMaterijal)
-        throws URISyntaxException {
+    @PostMapping("/potreban-materijals/username/{username}")
+    public ResponseEntity<PotrebanMaterijal> createPotrebanMaterijal(
+        @RequestBody PotrebanMaterijal potrebanMaterijal,
+        @PathVariable String username
+    ) throws URISyntaxException {
         log.debug("REST request to save PotrebanMaterijal : {}", potrebanMaterijal);
         if (potrebanMaterijal.getId() != null) {
             throw new BadRequestAlertException("A new potrebanMaterijal cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        PotrebanMaterijal result = potrebanMaterijalService.save(potrebanMaterijal);
+        PotrebanMaterijal result = potrebanMaterijalService.save(potrebanMaterijal, username);
         return ResponseEntity
             .created(new URI("/api/potreban-materijals/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
@@ -183,5 +185,16 @@ public class PotrebanMaterijalResource {
             .noContent()
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))
             .build();
+    }
+
+    @GetMapping("/potreban-materijals/forVaspitac/{username}")
+    public ResponseEntity<List<PotrebanMaterijal>> getAllPotrebanMaterijalsForVaspitac(
+        @org.springdoc.api.annotations.ParameterObject Pageable pageable,
+        @PathVariable String username
+    ) {
+        log.debug("REST request to get a page of PotrebanMaterijals");
+        Page<PotrebanMaterijal> page = potrebanMaterijalService.findAllForVaspitac(pageable, username);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
 }

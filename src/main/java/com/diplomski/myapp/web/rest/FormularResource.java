@@ -194,4 +194,20 @@ public class FormularResource {
         List<DeteZaGrupuDTO> listDeca = formularService.findAllDecaZaGrupu();
         return ResponseEntity.ok().body(listDeca);
     }
+
+    @GetMapping("/formulars/findByRoditelj/{username}")
+    public ResponseEntity<List<Formular>> getAllFormulars(
+        @org.springdoc.api.annotations.ParameterObject Pageable pageable,
+        @RequestParam(required = false) String filter,
+        @PathVariable String username
+    ) {
+        if ("dete-is-null".equals(filter)) {
+            log.debug("REST request to get all Formulars where dete is null");
+            return new ResponseEntity<>(formularService.findAllWhereDeteIsNull(), HttpStatus.OK);
+        }
+        log.debug("REST request to get a page of Formulars");
+        Page<Formular> page = formularService.findAllByRoditelj(pageable, username);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
 }

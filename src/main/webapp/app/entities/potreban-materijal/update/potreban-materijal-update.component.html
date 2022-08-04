@@ -57,7 +57,7 @@
           <span>NOV</span>
         </div>
 
-        <div class="row mb-3">
+        <div class="row mb-3" [hidden]="this.editForm.get(['id'])!.value === undefined">
           <label class="form-label" jhiTranslate="diplomskiApp.potrebanMaterijal.objekat" for="field_objekat">Objekat</label>
           <select class="form-control" id="field_objekat" data-cy="objekat" name="objekat" formControlName="objekat">
             <option [ngValue]="null"></option>

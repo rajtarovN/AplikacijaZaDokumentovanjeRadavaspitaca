@@ -65,4 +65,6 @@ public interface FormularService {
     void delete(Long id);
 
     List<DeteZaGrupuDTO> findAllDecaZaGrupu();
+
+    Page<Formular> findAllByRoditelj(Pageable pageable, String username);
 }

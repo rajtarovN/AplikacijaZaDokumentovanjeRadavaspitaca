@@ -174,4 +174,27 @@ public class PricaResource {
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))
             .build();
     }
+
+    @GetMapping("/pricas/by/{username}")
+    public ResponseEntity<List<Prica>> getAllPricasByUsername(
+        @org.springdoc.api.annotations.ParameterObject Pageable pageable,
+        @PathVariable String username
+    ) {
+        log.debug("REST request to get a page of Pricas");
+        Page<Prica> page = pricaService.findAllByUsername(pageable, username);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
+
+    //byDnevnik
+    @GetMapping("/pricas/byDnevnik/{id}")
+    public ResponseEntity<List<Prica>> getAllPricasByUsername(
+        @org.springdoc.api.annotations.ParameterObject Pageable pageable,
+        @PathVariable Long id
+    ) {
+        log.debug("REST request to get a page of Pricas");
+        Page<Prica> page = pricaService.findAllByDnevnik(pageable, id);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
 }

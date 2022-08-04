@@ -194,4 +194,15 @@ public class NeDolasciResource {
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result))
             .body(result);
     }
+
+    @GetMapping("/ne-dolascis/findByGrupa/{id}")
+    public ResponseEntity<List<NeDolasci>> getAllNeDolascis(
+        @org.springdoc.api.annotations.ParameterObject Pageable pageable,
+        @PathVariable Long id
+    ) {
+        log.debug("REST request to get a page of NeDolascis");
+        Page<NeDolasci> page = neDolasciService.findAllByGrupa(pageable, id);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
 }

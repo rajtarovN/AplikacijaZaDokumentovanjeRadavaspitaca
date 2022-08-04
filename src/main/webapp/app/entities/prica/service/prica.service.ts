@@ -57,4 +57,14 @@ export class PricaService {
     }
     return pricaCollection;
   }
+
+  queryCurrentDnevnik(req: any, username: string): Observable<EntityArrayResponseType> {
+    const options = createRequestOption(req);
+    return this.http.get<IPrica[]>(this.resourceUrl + '/by/' + username, { params: options, observe: 'response' });
+  }
+
+  queryOldDnevnik(req: { size: number; page: number; sort: string[] }, dnevnik: string): Observable<EntityArrayResponseType> {
+    const options = createRequestOption(req);
+    return this.http.get<IPrica[]>(this.resourceUrl + '/byDnevnik/' + dnevnik, { params: options, observe: 'response' });
+  }
 }

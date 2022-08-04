@@ -16,8 +16,8 @@ export class PotrebanMaterijalService {
 
   constructor(protected http: HttpClient, protected applicationConfigService: ApplicationConfigService) {}
 
-  create(potrebanMaterijal: IPotrebanMaterijal): Observable<EntityResponseType> {
-    return this.http.post<IPotrebanMaterijal>(this.resourceUrl, potrebanMaterijal, { observe: 'response' });
+  create(potrebanMaterijal: IPotrebanMaterijal, login: string): Observable<EntityResponseType> {
+    return this.http.post<IPotrebanMaterijal>(this.resourceUrl + '/username/' + login, potrebanMaterijal, { observe: 'response' });
   }
 
   update(potrebanMaterijal: IPotrebanMaterijal): Observable<EntityResponseType> {
@@ -69,5 +69,10 @@ export class PotrebanMaterijalService {
       return [...potrebanMaterijalsToAdd, ...potrebanMaterijalCollection];
     }
     return potrebanMaterijalCollection;
+  }
+
+  queryByObjekat(req: { size: number; page: number; sort: string[] }, username: string): Observable<EntityArrayResponseType> {
+    const options = createRequestOption(req);
+    return this.http.get<IPotrebanMaterijal[]>(this.resourceUrl + '/forVaspitac/' + username, { params: options, observe: 'response' });
   }
 }

@@ -1,5 +1,6 @@
 package com.diplomski.myapp.service.impl;
 
+import com.diplomski.myapp.domain.Dete;
 import com.diplomski.myapp.domain.Formular;
 import com.diplomski.myapp.repository.FormularRepository;
 import com.diplomski.myapp.service.FormularService;
@@ -12,6 +13,7 @@ import java.util.stream.StreamSupport;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -133,5 +135,15 @@ public class FormularServiceImpl implements FormularService {
             dtos.add(new DeteZaGrupuDTO(f));
         });
         return dtos;
+    }
+
+    @Override
+    public Page<Formular> findAllByRoditelj(Pageable pageable, String username) {
+        List<Formular> formular =
+            this.formularRepository.findAllByRoditelj(username)
+                .subList((pageable.getPageNumber()) * pageable.getPageSize(), pageable.getPageNumber() * pageable.getPageSize());
+
+        Page<Formular> page = new PageImpl<>(formular);
+        return page;
     }
 }

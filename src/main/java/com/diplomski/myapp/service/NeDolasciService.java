@@ -59,4 +59,6 @@ public interface NeDolasciService {
     void delete(Long id);
 
     String saveList(List<NeDolasciDTO> neDolasci);
+
+    Page<NeDolasci> findAllByGrupa(Pageable pageable, Long id);
 }

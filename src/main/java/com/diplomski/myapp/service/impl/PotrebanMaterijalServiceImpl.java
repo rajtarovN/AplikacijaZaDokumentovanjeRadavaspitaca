@@ -1,12 +1,16 @@
 package com.diplomski.myapp.service.impl;
 
+import com.diplomski.myapp.domain.Objekat;
 import com.diplomski.myapp.domain.PotrebanMaterijal;
 import com.diplomski.myapp.repository.PotrebanMaterijalRepository;
+import com.diplomski.myapp.repository.VaspitacRepository;
 import com.diplomski.myapp.service.PotrebanMaterijalService;
+import java.util.List;
 import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,13 +26,17 @@ public class PotrebanMaterijalServiceImpl implements PotrebanMaterijalService {
 
     private final PotrebanMaterijalRepository potrebanMaterijalRepository;
 
-    public PotrebanMaterijalServiceImpl(PotrebanMaterijalRepository potrebanMaterijalRepository) {
+    private final VaspitacRepository vaspitacRepository;
+
+    public PotrebanMaterijalServiceImpl(PotrebanMaterijalRepository potrebanMaterijalRepository, VaspitacRepository vaspitacRepository) {
         this.potrebanMaterijalRepository = potrebanMaterijalRepository;
+        this.vaspitacRepository = vaspitacRepository;
     }
 
     @Override
-    public PotrebanMaterijal save(PotrebanMaterijal potrebanMaterijal) {
+    public PotrebanMaterijal save(PotrebanMaterijal potrebanMaterijal, String username) {
         log.debug("Request to save PotrebanMaterijal : {}", potrebanMaterijal);
+        potrebanMaterijal.setObjekat(this.vaspitacRepository.getObjekatByUsername(username));
         return potrebanMaterijalRepository.save(potrebanMaterijal);
     }
 
@@ -78,5 +86,16 @@ public class PotrebanMaterijalServiceImpl implements PotrebanMaterijalService {
     public void delete(Long id) {
         log.debug("Request to delete PotrebanMaterijal : {}", id);
         potrebanMaterijalRepository.deleteById(id);
+    }
+
+    @Override
+    public Page<PotrebanMaterijal> findAllForVaspitac(Pageable pageable, String username) {
+        Long objekatId = this.vaspitacRepository.getByUsername(username);
+        List<PotrebanMaterijal> materijals = this.potrebanMaterijalRepository.findByObjekatId(objekatId); //.subList(
+        //            (pageable.getPageNumber())*pageable.getPageSize(),
+        //            pageable.getPageSize());
+
+        Page<PotrebanMaterijal> page = new PageImpl<>(materijals);
+        return page;
     }
 }

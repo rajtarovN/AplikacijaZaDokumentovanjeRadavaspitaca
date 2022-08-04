@@ -34,23 +34,46 @@ export class NeDolasciComponent implements OnInit {
   loadPage(page?: number, dontNavigate?: boolean): void {
     this.isLoading = true;
     const pageToLoad: number = page ?? this.page ?? 1;
+    const idGrupe = localStorage.getItem('grupa');
 
-    this.neDolasciService
-      .query({
-        page: pageToLoad - 1,
-        size: this.itemsPerPage,
-        sort: this.sort(),
-      })
-      .subscribe({
-        next: (res: HttpResponse<INeDolasci[]>) => {
-          this.isLoading = false;
-          this.onSuccess(res.body, res.headers, pageToLoad, !dontNavigate);
-        },
-        error: () => {
-          this.isLoading = false;
-          this.onError();
-        },
-      });
+    if (idGrupe) {
+      this.neDolasciService
+        .queryByGrupa(
+          {
+            page: pageToLoad - 1,
+            size: this.itemsPerPage,
+            sort: this.sort(),
+          },
+          idGrupe
+        )
+        .subscribe({
+          next: (res: HttpResponse<INeDolasci[]>) => {
+            this.isLoading = false;
+            this.onSuccess(res.body, res.headers, pageToLoad, !dontNavigate);
+          },
+          error: () => {
+            this.isLoading = false;
+            this.onError();
+          },
+        });
+    } else {
+      this.neDolasciService
+        .query({
+          page: pageToLoad - 1,
+          size: this.itemsPerPage,
+          sort: this.sort(),
+        })
+        .subscribe({
+          next: (res: HttpResponse<INeDolasci[]>) => {
+            this.isLoading = false;
+            this.onSuccess(res.body, res.headers, pageToLoad, !dontNavigate);
+          },
+          error: () => {
+            this.isLoading = false;
+            this.onError();
+          },
+        });
+    }
   }
 
   ngOnInit(): void {

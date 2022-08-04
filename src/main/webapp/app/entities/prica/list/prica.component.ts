@@ -34,23 +34,66 @@ export class PricaComponent implements OnInit {
   loadPage(page?: number, dontNavigate?: boolean): void {
     this.isLoading = true;
     const pageToLoad: number = page ?? this.page ?? 1;
-
-    this.pricaService
-      .query({
-        page: pageToLoad - 1,
-        size: this.itemsPerPage,
-        sort: this.sort(),
-      })
-      .subscribe({
-        next: (res: HttpResponse<IPrica[]>) => {
-          this.isLoading = false;
-          this.onSuccess(res.body, res.headers, pageToLoad, !dontNavigate);
-        },
-        error: () => {
-          this.isLoading = false;
-          this.onError();
-        },
-      });
+    const username = localStorage.getItem('username');
+    const dnevnik = localStorage.getItem('dnevnik');
+    if (dnevnik) {
+      this.pricaService
+        .queryOldDnevnik(
+          {
+            page: pageToLoad - 1,
+            size: this.itemsPerPage,
+            sort: this.sort(),
+          },
+          dnevnik
+        )
+        .subscribe({
+          next: (res: HttpResponse<IPrica[]>) => {
+            this.isLoading = false;
+            this.onSuccess(res.body, res.headers, pageToLoad, !dontNavigate);
+          },
+          error: () => {
+            this.isLoading = false;
+            this.onError();
+          },
+        });
+    } else if (username) {
+      this.pricaService
+        .queryCurrentDnevnik(
+          {
+            page: pageToLoad - 1,
+            size: this.itemsPerPage,
+            sort: this.sort(),
+          },
+          username
+        )
+        .subscribe({
+          next: (res: HttpResponse<IPrica[]>) => {
+            this.isLoading = false;
+            this.onSuccess(res.body, res.headers, pageToLoad, !dontNavigate);
+          },
+          error: () => {
+            this.isLoading = false;
+            this.onError();
+          },
+        });
+    } else {
+      this.pricaService
+        .query({
+          page: pageToLoad - 1,
+          size: this.itemsPerPage,
+          sort: this.sort(),
+        })
+        .subscribe({
+          next: (res: HttpResponse<IPrica[]>) => {
+            this.isLoading = false;
+            this.onSuccess(res.body, res.headers, pageToLoad, !dontNavigate);
+          },
+          error: () => {
+            this.isLoading = false;
+            this.onError();
+          },
+        });
+    }
   }
 
   ngOnInit(): void {

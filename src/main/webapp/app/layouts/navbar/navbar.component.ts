@@ -72,7 +72,7 @@ export class NavbarComponent implements OnInit {
     this.accountService.getAuthenticationState().subscribe(account => {
       if (account) {
         // eslint-disable-next-line no-console
-        console.log(account);
+        console.log('----------', account, '-------------------------');
         if (account.authorities[0] === 'ROLE_VASPITAC') {
           localStorage.setItem('username', account.login);
         }

@@ -28,18 +28,12 @@ export class EditorComponent implements OnInit {
   constructor(protected konacnaPricaService: KonacnaPricaService) {}
 
   ngOnInit(): void {
+    // eslint-disable-next-line no-console
+    console.log('aaa', localStorage.getItem('prica'), 'aaa');
     if (localStorage.getItem('prica') !== null) {
       this.text = localStorage.getItem('prica')!;
-    } else {
-      const id = localStorage.getItem('idPrice');
-      this.konacnaPricaService.getPocetnaPrica(id!).subscribe({
-        next: (res: any) => {
-          this.text = res.body.tekst!;
-          // eslint-disable-next-line no-console
-          console.log('aaa', this.text, 'aaa');
-        },
-        error: () => this.onSaveError(),
-      });
+      // eslint-disable-next-line no-console
+      console.log('aaa', localStorage.getItem('prica'), 'aaa');
     }
   }
 

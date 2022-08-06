@@ -93,11 +93,11 @@ public class PricaServiceImpl implements PricaService {
         StringBuilder text = new StringBuilder();
         text.append("Prica: Prica o projektu ");
         text.append(plan.getNazivTeme());
-        text.append("/n");
+        text.append("</br>");
         text.append("Vaspitno-obrazovna grupa " + prica.getDnevnik().getGrupa().getTipGrupe());
-        text.append("/n");
+        text.append("</br>");
         text.append("E-Vrtic Leptiric");
-        text.append("/n");
+        text.append("</br>");
         text.append("Projekat " + plan.getNazivTeme());
         text.append(" razvijan je sa decom od ");
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy.");
@@ -131,9 +131,8 @@ public class PricaServiceImpl implements PricaService {
             }
         }
         if (currentDnevnik != null) {
-            List<Prica> price =
-                this.pricaRepository.findCurrentPricas(currentDnevnik.getId())
-                    .subList((pageable.getPageNumber()) * pageable.getPageSize(), pageable.getPageNumber() * pageable.getPageSize());
+            List<Prica> price = this.pricaRepository.findCurrentPricas(currentDnevnik.getId());
+            //.subList((pageable.getPageNumber()) * pageable.getPageSize(), pageable.getPageNumber() * pageable.getPageSize());
 
             Page<Prica> page = new PageImpl<>(price);
             return page;

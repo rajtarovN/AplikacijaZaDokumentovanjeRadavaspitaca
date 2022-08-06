@@ -10,6 +10,7 @@ import { ASC, DESC, ITEMS_PER_PAGE, SORT } from 'app/config/pagination.constants
 import { PricaService } from '../service/prica.service';
 import { PricaDeleteDialogComponent } from '../delete/prica-delete-dialog.component';
 import { Dayjs } from 'dayjs';
+import { KonacnaPricaService } from '../../konacna-prica/service/konacna-prica.service';
 
 @Component({
   selector: 'jhi-prica',
@@ -30,7 +31,8 @@ export class PricaComponent implements OnInit {
     protected pricaService: PricaService,
     protected activatedRoute: ActivatedRoute,
     protected router: Router,
-    protected modalService: NgbModal
+    protected modalService: NgbModal,
+    protected konacnaPricaService: KonacnaPricaService
   ) {
     this.today = new Date();
   }
@@ -120,10 +122,18 @@ export class PricaComponent implements OnInit {
     });
   }
   pisiPricu(prica: IPrica): void {
+    localStorage.setItem('idPrice', String(prica.id));
+
     if (prica.konacnaPrica !== null) {
       localStorage.setItem('prica', prica.konacnaPrica!.tekst!);
+    } else {
+      const id = localStorage.getItem('idPrice');
+      this.konacnaPricaService.getPocetnaPrica(id!).subscribe({
+        next: (res: any) => localStorage.setItem('prica', res.body.tekst!),
+        error: () => this.onError(),
+      });
     }
-    localStorage.setItem('idPrice', String(prica.id));
+
     this.router.navigate(['/konacna-prica/editor']);
   }
 

@@ -43,6 +43,7 @@
           <th scope="col" jhiSortBy="grupa.id">
             <span jhiTranslate="diplomskiApp.dnevnik.grupa">Grupa</span> <fa-icon icon="sort"></fa-icon>
           </th>
+
           <th scope="col"></th>
         </tr>
       </thead>
@@ -58,6 +59,7 @@
               <a [routerLink]="['/grupa', dnevnik.grupa?.id, 'view']">{{ dnevnik.grupa?.id }}</a>
             </div>
           </td>
+
           <td class="text-end">
             <div class="btn-group">
               <button
@@ -79,7 +81,13 @@
                 <fa-icon icon="eye"></fa-icon>
                 <span class="d-none d-md-inline">Deca</span>
               </button>
-              <button type="submit" (click)="prikaziIzostanke(dnevnik.grupa?.id)" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
+              <button
+                [disabled]="dnevnik.grupa === null"
+                type="submit"
+                (click)="prikaziIzostanke(dnevnik.grupa?.id)"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
                 <fa-icon icon="eye"></fa-icon>
                 <span class="d-none d-md-inline">Izostanci</span>
               </button>

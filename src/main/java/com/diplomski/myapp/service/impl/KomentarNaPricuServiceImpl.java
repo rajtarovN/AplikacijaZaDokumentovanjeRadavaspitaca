@@ -3,6 +3,7 @@ package com.diplomski.myapp.service.impl;
 import com.diplomski.myapp.domain.KomentarNaPricu;
 import com.diplomski.myapp.repository.KomentarNaPricuRepository;
 import com.diplomski.myapp.service.KomentarNaPricuService;
+import java.time.LocalDate;
 import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,6 +30,9 @@ public class KomentarNaPricuServiceImpl implements KomentarNaPricuService {
     @Override
     public KomentarNaPricu save(KomentarNaPricu komentarNaPricu) {
         log.debug("Request to save KomentarNaPricu : {}", komentarNaPricu);
+        if (komentarNaPricu.getDatum() == null) {
+            komentarNaPricu.setDatum(LocalDate.now());
+        }
         return komentarNaPricuRepository.save(komentarNaPricu);
     }
 

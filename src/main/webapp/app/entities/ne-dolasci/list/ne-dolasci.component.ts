@@ -131,6 +131,8 @@ export class NeDolasciComponent implements OnInit {
       });
     }
     this.neDolascis = data ?? [];
+    // eslint-disable-next-line no-console
+    console.log(data);
     this.ngbPaginationPage = this.page;
   }
 

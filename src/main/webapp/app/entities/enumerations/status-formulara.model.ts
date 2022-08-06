@@ -4,4 +4,6 @@ export enum StatusFormulara {
   ODOBREN = 'ODOBREN',
 
   ODBIJEN = 'ODBIJEN',
+
+  RASPOREDJEN = 'RASPOREDJEN',
 }

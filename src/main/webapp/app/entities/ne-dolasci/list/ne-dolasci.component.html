@@ -9,6 +9,7 @@
       </button>
 
       <button
+        *jhiHasAnyAuthority="'ROLE_VASPITAC'"
         id="jh-create-entity"
         data-cy="entityCreateButton"
         class="btn btn-primary jh-create-entity create-ne-dolasci"
@@ -57,6 +58,7 @@
           </td>
           <td>
             <div *ngIf="neDolasci.dete">
+              <!--              formular?.imeDeteta-->
               <a [routerLink]="['/dete', neDolasci.dete?.id, 'view']">{{ neDolasci.dete?.id }}</a>
             </div>
           </td>
@@ -74,22 +76,29 @@
                 data-cy="entityDetailsButton"
               >
                 <fa-icon icon="eye"></fa-icon>
-                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                <span class="d-none d-md-inline">Prikaz</span>
               </button>
 
               <button
+                *jhiHasAnyAuthority="'ROLE_VASPITAC'"
                 type="submit"
                 [routerLink]="['/ne-dolasci', neDolasci.id, 'edit']"
                 class="btn btn-primary btn-sm"
                 data-cy="entityEditButton"
               >
                 <fa-icon icon="pencil-alt"></fa-icon>
-                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                <span class="d-none d-md-inline">Uredi</span>
               </button>
 
-              <button type="submit" (click)="delete(neDolasci)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+              <button
+                *jhiHasAnyAuthority="'ROLE_VASPITAC'"
+                type="submit"
+                (click)="delete(neDolasci)"
+                class="btn btn-danger btn-sm"
+                data-cy="entityDeleteButton"
+              >
                 <fa-icon icon="times"></fa-icon>
-                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                <span class="d-none d-md-inline">Brisanje</span>
               </button>
             </div>
           </td>

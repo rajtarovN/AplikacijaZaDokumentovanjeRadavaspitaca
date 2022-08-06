@@ -210,4 +210,38 @@ public class FormularResource {
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
+
+    @PutMapping("/formulars/odobri/{id}")
+    public ResponseEntity<Formular> approveFormular(
+        @PathVariable(value = "id", required = false) final Long id,
+        @RequestBody String status
+    ) throws URISyntaxException {
+        log.debug("REST request to approve Formular : {}, {}", id);
+
+        if (!formularRepository.existsById(id)) {
+            throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
+        }
+
+        Formular result = formularService.approve(id);
+        return ResponseEntity
+            .ok()
+            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
+            .body(result);
+    }
+
+    @PutMapping("/formulars/odbij/{id}")
+    public ResponseEntity<Formular> rejectFormular(@PathVariable(value = "id", required = false) final Long id, @RequestBody String status)
+        throws URISyntaxException {
+        log.debug("REST request to reject Formular : {}, {}", id);
+
+        if (!formularRepository.existsById(id)) {
+            throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
+        }
+
+        Formular result = formularService.reject(id);
+        return ResponseEntity
+            .ok()
+            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
+            .body(result);
+    }
 }

@@ -43,6 +43,8 @@ export class DeteComponent implements OnInit {
     const vaspitac = localStorage.getItem('vaspitac');
 
     if (vaspitac) {
+      // eslint-disable-next-line no-console
+      console.log('a');
       this.deteService
         .queryDecaOfVaspitac(
           {
@@ -64,6 +66,8 @@ export class DeteComponent implements OnInit {
           },
         });
     } else if (this.username) {
+      // eslint-disable-next-line no-console
+      console.log('b');
       this.deteService
         .queryDeteOfRoditelj({
           page: pageToLoad - 1,
@@ -82,6 +86,8 @@ export class DeteComponent implements OnInit {
           },
         });
     } else {
+      // eslint-disable-next-line no-console
+      console.log('c');
       this.deteService
         .queryByGrupa(
           {

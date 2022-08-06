@@ -75,6 +75,26 @@
           </div>
         </dd>
       </dl>
+      <div *jhiHasAnyAuthority="'ROLE_PEDAGOG'">
+        <button
+          *ngIf="formular.statusFormulara! !== this.status"
+          type="submit"
+          (click)="odobri()"
+          class="btn btn-info"
+          data-cy="entityDetailsBackButton"
+        >
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Odobri</span>
+        </button>
+        <button
+          *ngIf="formular.statusFormulara! !== this.status"
+          type="submit"
+          (click)="odbij()"
+          class="btn btn-info"
+          data-cy="entityDetailsBackButton"
+        >
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Odbij</span>
+        </button>
+      </div>
 
       <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
         <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Nazad</span>

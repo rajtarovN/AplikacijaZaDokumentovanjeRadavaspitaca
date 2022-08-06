@@ -72,4 +72,11 @@ export class FormularService {
     const options = createRequestOption(req);
     return this.http.get<IFormular[]>(this.resourceUrl + '/findByRoditelj/' + username!, { params: options, observe: 'response' });
   }
+
+  odobri(id: number): Observable<EntityResponseType> {
+    return this.http.put<IFormular>(`${this.resourceUrl}/odobri/` + String(id), 'ODOBREN', { observe: 'response' });
+  }
+  odbij(id: number): Observable<EntityResponseType> {
+    return this.http.put<IFormular>(`${this.resourceUrl}/odbij/` + String(id), 'ODBIJEN', { observe: 'response' });
+  }
 }

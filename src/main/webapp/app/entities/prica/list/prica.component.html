@@ -1,14 +1,15 @@
 <div>
   <h2 id="page-heading" data-cy="PricaHeading">
-    <span jhiTranslate="diplomskiApp.prica.home.title">Pricas</span>
+    <span>Price</span>
 
     <div class="d-flex justify-content-end">
       <button class="btn btn-info me-2" (click)="loadPage()" [disabled]="isLoading">
         <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
-        <span jhiTranslate="diplomskiApp.prica.home.refreshListLabel">Refresh List</span>
+        <span>Osvezi listu</span>
       </button>
 
       <button
+        *jhiHasAnyAuthority="'ROLE_VASPITAC'"
         id="jh-create-entity"
         data-cy="entityCreateButton"
         class="btn btn-primary jh-create-entity create-prica"
@@ -25,7 +26,7 @@
   <jhi-alert></jhi-alert>
 
   <div class="alert alert-warning" id="no-result" *ngIf="pricas?.length === 0">
-    <span jhiTranslate="diplomskiApp.prica.home.notFound">No pricas found</span>
+    <span>Nijedna prica nije pronadjena</span>
   </div>
 
   <div class="table-responsive" id="entities" *ngIf="pricas && pricas.length > 0">
@@ -74,14 +75,20 @@
                 <span class="d-none d-md-inline">Plan price</span>
               </button>
 
-              <button type="submit" (click)="pisiPricu(prica)" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
+              <button
+                *jhiHasAnyAuthority="'ROLE_VASPITAC'"
+                type="submit"
+                (click)="pisiPricu(prica)"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
                 <fa-icon icon="eye"></fa-icon>
                 <span class="d-none d-md-inline">Zapocni pricu</span>
               </button>
               <button
                 type="submit"
                 [disabled]="prica.konacnaPrica === null"
-                [routerLink]="['/konacna-prica', prica.konacnaPrica?.id, 'view']"
+                (click)="viewKonacnaPrica(prica.id!, prica.konacnaPrica!.id!)"
                 class="btn btn-info btn-sm"
                 data-cy="entityDetailsButton"
               >

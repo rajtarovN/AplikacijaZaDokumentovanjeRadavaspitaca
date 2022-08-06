@@ -136,6 +136,11 @@ export class PricaComponent implements OnInit {
 
     this.router.navigate(['/konacna-prica/editor']);
   }
+  //[routerLink]="['/konacna-prica', prica.konacnaPrica?.id, 'view']"
+  viewKonacnaPrica(id: number, idKonacna: number): void {
+    localStorage.setItem('idPrice', String(id));
+    this.router.navigate(['/konacna-prica/' + String(idKonacna) + '/view']);
+  }
 
   protected sort(): string[] {
     const result = [this.predicate + ',' + (this.ascending ? ASC : DESC)];
@@ -173,7 +178,8 @@ export class PricaComponent implements OnInit {
       });
     }
     this.pricas = data ?? [];
-
+    // eslint-disable-next-line no-console
+    console.log(data);
     this.ngbPaginationPage = this.page;
   }
 

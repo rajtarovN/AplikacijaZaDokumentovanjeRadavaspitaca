@@ -67,4 +67,8 @@ public interface FormularService {
     List<DeteZaGrupuDTO> findAllDecaZaGrupu();
 
     Page<Formular> findAllByRoditelj(Pageable pageable, String username);
+
+    Formular approve(Long id);
+
+    Formular reject(Long id);
 }

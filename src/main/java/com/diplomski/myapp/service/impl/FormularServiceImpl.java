@@ -2,6 +2,7 @@ package com.diplomski.myapp.service.impl;
 
 import com.diplomski.myapp.domain.Dete;
 import com.diplomski.myapp.domain.Formular;
+import com.diplomski.myapp.domain.enumeration.StatusFormulara;
 import com.diplomski.myapp.repository.FormularRepository;
 import com.diplomski.myapp.service.FormularService;
 import com.diplomski.myapp.web.rest.dto.DeteZaGrupuDTO;
@@ -144,5 +145,19 @@ public class FormularServiceImpl implements FormularService {
 
         Page<Formular> page = new PageImpl<>(formular);
         return page;
+    }
+
+    @Override
+    public Formular approve(Long id) {
+        Optional<Formular> formular = this.formularRepository.findById(id);
+        formular.get().setStatusFormulara(StatusFormulara.ODOBREN);
+        return this.formularRepository.save(formular.get());
+    }
+
+    @Override
+    public Formular reject(Long id) {
+        Optional<Formular> formular = this.formularRepository.findById(id);
+        formular.get().setStatusFormulara(StatusFormulara.ODBIJEN);
+        return this.formularRepository.save(formular.get());
     }
 }

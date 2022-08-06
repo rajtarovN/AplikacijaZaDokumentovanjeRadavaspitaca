@@ -100,7 +100,7 @@ public class PricaServiceImpl implements PricaService {
         text.append("/n");
         text.append("Projekat " + plan.getNazivTeme());
         text.append(" razvijan je sa decom od ");
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.mm.yyyy.");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy.");
         text.append(" razvijan je sa decom od ");
         text.append(plan.getDatumPocetka().format(formatter));
         text.append(" do ");
@@ -144,9 +144,8 @@ public class PricaServiceImpl implements PricaService {
 
     @Override
     public Page<Prica> findAllByDnevnik(Pageable pageable, Long id) {
-        List<Prica> price =
-            this.pricaRepository.findCurrentPricas(id)
-                .subList((pageable.getPageNumber()) * pageable.getPageSize(), pageable.getPageNumber() * pageable.getPageSize());
+        List<Prica> price = this.pricaRepository.findCurrentPricas(id);
+        //.subList((pageable.getPageNumber()) * pageable.getPageSize(), pageable.getPageNumber() * pageable.getPageSize());
 
         Page<Prica> page = new PageImpl<>(price);
         return page;

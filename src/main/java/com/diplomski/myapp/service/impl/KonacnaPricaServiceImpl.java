@@ -1,7 +1,9 @@
 package com.diplomski.myapp.service.impl;
 
 import com.diplomski.myapp.domain.KonacnaPrica;
+import com.diplomski.myapp.domain.Prica;
 import com.diplomski.myapp.repository.KonacnaPricaRepository;
+import com.diplomski.myapp.repository.PricaRepository;
 import com.diplomski.myapp.service.KonacnaPricaService;
 import java.util.Optional;
 import org.slf4j.Logger;
@@ -21,15 +23,21 @@ public class KonacnaPricaServiceImpl implements KonacnaPricaService {
     private final Logger log = LoggerFactory.getLogger(KonacnaPricaServiceImpl.class);
 
     private final KonacnaPricaRepository konacnaPricaRepository;
+    private final PricaRepository pricaRepository;
 
-    public KonacnaPricaServiceImpl(KonacnaPricaRepository konacnaPricaRepository) {
+    public KonacnaPricaServiceImpl(KonacnaPricaRepository konacnaPricaRepository, PricaRepository pricaRepository) {
         this.konacnaPricaRepository = konacnaPricaRepository;
+        this.pricaRepository = pricaRepository;
     }
 
     @Override
-    public KonacnaPrica save(KonacnaPrica konacnaPrica) {
+    public KonacnaPrica save(KonacnaPrica konacnaPrica, Long idprice) {
         log.debug("Request to save KonacnaPrica : {}", konacnaPrica);
-        return konacnaPricaRepository.save(konacnaPrica);
+        Prica prica = this.pricaRepository.getById(idprice);
+        prica.setKonacnaPrica(konacnaPrica);
+        KonacnaPrica retValue = konacnaPricaRepository.save(konacnaPrica);
+        this.pricaRepository.save(prica);
+        return retValue;
     }
 
     @Override

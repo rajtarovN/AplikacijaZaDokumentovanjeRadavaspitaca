@@ -74,8 +74,13 @@
                 <span class="d-none d-md-inline">Plan price</span>
               </button>
 
+              <button type="submit" (click)="pisiPricu(prica)" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline">Zapocni pricu</span>
+              </button>
               <button
                 type="submit"
+                [disabled]="prica.konacnaPrica === null"
                 [routerLink]="['/konacna-prica', prica.konacnaPrica?.id, 'view']"
                 class="btn btn-info btn-sm"
                 data-cy="entityDetailsButton"

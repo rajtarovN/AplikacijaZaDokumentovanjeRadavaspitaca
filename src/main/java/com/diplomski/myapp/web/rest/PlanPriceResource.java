@@ -53,13 +53,14 @@ public class PlanPriceResource {
      * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new planPrice, or with status {@code 400 (Bad Request)} if the planPrice has already an ID.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
-    @PostMapping("/plan-prices")
-    public ResponseEntity<PlanPrice> createPlanPrice(@RequestBody PlanPrice planPrice) throws URISyntaxException {
+    @PostMapping("/plan-prices/{username}")
+    public ResponseEntity<PlanPrice> createPlanPrice(@RequestBody PlanPrice planPrice, @PathVariable String username)
+        throws URISyntaxException {
         log.debug("REST request to save PlanPrice : {}", planPrice);
         if (planPrice.getId() != null) {
             throw new BadRequestAlertException("A new planPrice cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        PlanPrice result = planPriceService.save(planPrice);
+        PlanPrice result = planPriceService.save(planPrice, username);
         return ResponseEntity
             .created(new URI("/api/plan-prices/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))

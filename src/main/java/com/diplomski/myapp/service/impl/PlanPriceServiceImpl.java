@@ -1,8 +1,15 @@
 package com.diplomski.myapp.service.impl;
 
+import com.diplomski.myapp.domain.Dnevnik;
 import com.diplomski.myapp.domain.PlanPrice;
+import com.diplomski.myapp.domain.Prica;
+import com.diplomski.myapp.domain.Vaspitac;
+import com.diplomski.myapp.repository.DnevnikRepository;
 import com.diplomski.myapp.repository.PlanPriceRepository;
+import com.diplomski.myapp.repository.PricaRepository;
+import com.diplomski.myapp.repository.VaspitacRepository;
 import com.diplomski.myapp.service.PlanPriceService;
+import java.time.LocalDate;
 import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,15 +28,44 @@ public class PlanPriceServiceImpl implements PlanPriceService {
     private final Logger log = LoggerFactory.getLogger(PlanPriceServiceImpl.class);
 
     private final PlanPriceRepository planPriceRepository;
+    private final PricaRepository pricaRepository;
+    private final DnevnikRepository dnevnikRepository;
+    private final VaspitacRepository vaspitacRepository;
 
-    public PlanPriceServiceImpl(PlanPriceRepository planPriceRepository) {
+    public PlanPriceServiceImpl(
+        PlanPriceRepository planPriceRepository,
+        PricaRepository pricaRepository,
+        DnevnikRepository dnevnikRepository,
+        VaspitacRepository vaspitacRepository
+    ) {
         this.planPriceRepository = planPriceRepository;
+        this.pricaRepository = pricaRepository;
+        this.dnevnikRepository = dnevnikRepository;
+        this.vaspitacRepository = vaspitacRepository;
     }
 
     @Override
-    public PlanPrice save(PlanPrice planPrice) {
+    public PlanPrice save(PlanPrice planPrice, String username) {
         log.debug("Request to save PlanPrice : {}", planPrice);
-        return planPriceRepository.save(planPrice);
+
+        Prica newPrica = new Prica();
+        PlanPrice returnedValue = planPriceRepository.save(planPrice);
+        newPrica.setPlanPrice(planPrice);
+
+        Vaspitac vaspitac = vaspitacRepository.getVaspitacIdByUsername(username);
+
+        for (Dnevnik d : vaspitac.getDnevniks()) {
+            if (d.getPocetakVazenja().isBefore(LocalDate.now()) && d.getKrajVazenja().isAfter(LocalDate.now())) {
+                newPrica.setDnevnik(d);
+                d.getPricas().add(newPrica);
+
+                pricaRepository.save(newPrica);
+                dnevnikRepository.save(d);
+                break;
+            }
+        }
+
+        return returnedValue;
     }
 
     @Override

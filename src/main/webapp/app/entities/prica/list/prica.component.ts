@@ -9,6 +9,7 @@ import { IPrica } from '../prica.model';
 import { ASC, DESC, ITEMS_PER_PAGE, SORT } from 'app/config/pagination.constants';
 import { PricaService } from '../service/prica.service';
 import { PricaDeleteDialogComponent } from '../delete/prica-delete-dialog.component';
+import { Dayjs } from 'dayjs';
 
 @Component({
   selector: 'jhi-prica',
@@ -23,16 +24,20 @@ export class PricaComponent implements OnInit {
   predicate!: string;
   ascending!: boolean;
   ngbPaginationPage = 1;
+  today: Date;
 
   constructor(
     protected pricaService: PricaService,
     protected activatedRoute: ActivatedRoute,
     protected router: Router,
     protected modalService: NgbModal
-  ) {}
+  ) {
+    this.today = new Date();
+  }
 
   loadPage(page?: number, dontNavigate?: boolean): void {
     this.isLoading = true;
+    this.today = new Date();
     const pageToLoad: number = page ?? this.page ?? 1;
     const username = localStorage.getItem('username');
     const dnevnik = localStorage.getItem('dnevnik');
@@ -114,6 +119,13 @@ export class PricaComponent implements OnInit {
       }
     });
   }
+  pisiPricu(prica: IPrica): void {
+    if (prica.konacnaPrica !== null) {
+      localStorage.setItem('prica', prica.konacnaPrica!.tekst!);
+    }
+    localStorage.setItem('idPrice', String(prica.id));
+    this.router.navigate(['/konacna-prica/editor']);
+  }
 
   protected sort(): string[] {
     const result = [this.predicate + ',' + (this.ascending ? ASC : DESC)];
@@ -151,6 +163,7 @@ export class PricaComponent implements OnInit {
       });
     }
     this.pricas = data ?? [];
+
     this.ngbPaginationPage = this.page;
   }
 

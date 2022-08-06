@@ -107,9 +107,8 @@ public class NeDolasciServiceImpl implements NeDolasciService {
 
     @Override
     public Page<NeDolasci> findAllByGrupa(Pageable pageable, Long id) {
-        List<NeDolasci> izostanci =
-            this.neDolasciRepository.findByGrupaId(id)
-                .subList((pageable.getPageNumber()) * pageable.getPageSize(), pageable.getPageNumber() * pageable.getPageSize());
+        List<NeDolasci> izostanci = this.neDolasciRepository.findByGrupaId(id);
+        //.subList((pageable.getPageNumber()) * pageable.getPageSize(), pageable.getPageNumber() * pageable.getPageSize());
 
         Page<NeDolasci> page = new PageImpl<>(izostanci);
         return page;

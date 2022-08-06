@@ -6,47 +6,108 @@
   <jhi-alert-error></jhi-alert-error>
 
   <jhi-alert></jhi-alert>
+  <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+    <div class="row mb-3">
+      <label class="form-label" jhiTranslate="diplomskiApp.planPrice.nazivTeme" for="field_nazivTeme">Naziv Teme</label>
+      <input type="text" class="form-control" name="nazivTeme" id="field_nazivTeme" data-cy="nazivTeme" formControlName="nazivTeme" />
+    </div>
 
-  <div class="table-responsive" id="entities">
-    <table class="table table-striped" aria-describedby="page-heading">
-      <thead>
-        <tr>
-          <th scope="col">
-            <span>Izvori Saznanja</span>
-          </th>
+    <div class="divHalf">
+      <div class="mb-3 half rowH">
+        <label class="form-label" jhiTranslate="diplomskiApp.planPrice.datumPocetka" for="field_datumPocetka">Datum Pocetka</label>
+        <div class="input-group">
+          <input
+            id="field_datumPocetka"
+            data-cy="datumPocetka"
+            type="text"
+            class="rowH form-control"
+            name="datumPocetka"
+            ngbDatepicker
+            #datumPocetkaDp="ngbDatepicker"
+            formControlName="datumPocetka"
+          />
+          <button type="button" class="btn btn-secondary" (click)="datumPocetkaDp.toggle()">
+            <fa-icon icon="calendar-alt"></fa-icon>
+          </button>
+        </div>
+      </div>
 
-          <th scope="col">
-            <span>Pocetna Ideja</span>
-          </th>
+      <div class="mb-3 rowH">
+        <label class="form-label" jhiTranslate="diplomskiApp.planPrice.datumZavrsetka" for="field_datumZavrsetka">Datum Zavrsetka</label>
+        <div class="input-group">
+          <input
+            id="field_datumZavrsetka"
+            data-cy="datumZavrsetka"
+            type="text"
+            class="form-control"
+            name="datumZavrsetka"
+            ngbDatepicker
+            #datumZavrsetkaDp="ngbDatepicker"
+            formControlName="datumZavrsetka"
+          />
+          <button type="button" class="btn btn-secondary" (click)="datumZavrsetkaDp.toggle()">
+            <fa-icon icon="calendar-alt"></fa-icon>
+          </button>
+        </div>
+      </div>
+    </div>
 
-          <th scope="col">
-            <span>Nacin Ucesca Vaspitaca</span>
-          </th>
-          <th scope="col">
-            <span>Materijali</span>
-          </th>
-          <th scope="col">
-            <span>Ucesce Porodice</span>
-          </th>
-          <th scope="col">
-            <span>Mesta</span>
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>
-            <textarea class="areaClass" id="w3review" name="w3review"></textarea>
-          </td>
-          <td><textarea class="areaClass" id="w1review" name="w3review"></textarea></td>
-          <td><textarea class="areaClass" id="w2review" name="w3review"></textarea></td>
-          <td><textarea class="areaClass" id="w4review" name="w3review"></textarea></td>
-          <td><textarea class="areaClass" id="w5review" name="w3review"></textarea></td>
-          <td class="text-end">
-            <textarea class="areaClass" id="w6review" name="w3review"></textarea>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+    <div class="table-responsive" id="entities">
+      <table class="table table-striped" aria-describedby="page-heading">
+        <thead>
+          <tr>
+            <th scope="col">
+              <span>Izvori Saznanja</span>
+            </th>
+
+            <th scope="col">
+              <span>Pocetna Ideja</span>
+            </th>
+
+            <th scope="col">
+              <span>Nacin Ucesca Vaspitaca</span>
+            </th>
+            <th scope="col">
+              <span>Materijali</span>
+            </th>
+            <th scope="col">
+              <span>Ucesce Porodice</span>
+            </th>
+            <th scope="col">
+              <span>Mesta</span>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><textarea class="form-control areaClass" id="w3review" name="w3review" formControlName="izvoriSaznanja"></textarea></td>
+            <td><textarea class="form-control areaClass" id="w1review" name="w3review" formControlName="pocetnaIdeja"></textarea></td>
+            <td>
+              <textarea class="form-control areaClass" id="w2review" name="w3review" formControlName="nacinUcescaVaspitaca"></textarea>
+            </td>
+            <td><textarea class="form-control areaClass" id="w4review" name="w3review" formControlName="materijali"></textarea></td>
+            <td><textarea class="form-control areaClass" id="w5review" name="w3review" formControlName="ucescePorodice"></textarea></td>
+            <td class="text-end">
+              <textarea class="form-control areaClass" id="w6review" name="w3review" formControlName="mesta"></textarea>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div>
+      <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+        <fa-icon icon="ban"></fa-icon>&nbsp;<span> Otkazi promene</span>
+      </button>
+
+      <button
+        type="submit"
+        id="save-entity"
+        data-cy="entityCreateSaveButton"
+        [disabled]="editForm.invalid || isSaving"
+        class="btn btn-primary"
+      >
+        <fa-icon icon="save"></fa-icon>&nbsp;<span>Sacuvaj promene</span>
+      </button>
+    </div>
+  </form>
 </div>

@@ -2,7 +2,9 @@ package com.diplomski.myapp.web.rest;
 
 import com.diplomski.myapp.domain.KonacnaPrica;
 import com.diplomski.myapp.repository.KonacnaPricaRepository;
+import com.diplomski.myapp.repository.PricaRepository;
 import com.diplomski.myapp.service.KonacnaPricaService;
+import com.diplomski.myapp.service.PricaService;
 import com.diplomski.myapp.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -15,7 +17,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -41,9 +42,20 @@ public class KonacnaPricaResource {
 
     private final KonacnaPricaRepository konacnaPricaRepository;
 
-    public KonacnaPricaResource(KonacnaPricaService konacnaPricaService, KonacnaPricaRepository konacnaPricaRepository) {
+    private final PricaService pricaService;
+
+    private final PricaRepository pricaRepository;
+
+    public KonacnaPricaResource(
+        KonacnaPricaService konacnaPricaService,
+        KonacnaPricaRepository konacnaPricaRepository,
+        PricaService pricaService,
+        PricaRepository pricaRepository
+    ) {
         this.konacnaPricaService = konacnaPricaService;
         this.konacnaPricaRepository = konacnaPricaRepository;
+        this.pricaService = pricaService;
+        this.pricaRepository = pricaRepository;
     }
 
     /**
@@ -53,13 +65,14 @@ public class KonacnaPricaResource {
      * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new konacnaPrica, or with status {@code 400 (Bad Request)} if the konacnaPrica has already an ID.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
-    @PostMapping("/konacna-pricas")
-    public ResponseEntity<KonacnaPrica> createKonacnaPrica(@RequestBody KonacnaPrica konacnaPrica) throws URISyntaxException {
+    @PostMapping("/konacna-pricas/{id}")
+    public ResponseEntity<KonacnaPrica> createKonacnaPrica(@RequestBody KonacnaPrica konacnaPrica, @PathVariable Long id)
+        throws URISyntaxException {
         log.debug("REST request to save KonacnaPrica : {}", konacnaPrica);
         if (konacnaPrica.getId() != null) {
             throw new BadRequestAlertException("A new konacnaPrica cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        KonacnaPrica result = konacnaPricaService.save(konacnaPrica);
+        KonacnaPrica result = konacnaPricaService.save(konacnaPrica, id);
         return ResponseEntity
             .created(new URI("/api/konacna-pricas/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
@@ -177,5 +190,15 @@ public class KonacnaPricaResource {
             .noContent()
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))
             .build();
+    }
+
+    @GetMapping("/konacna-pricas/getPocetnaPrica/{id}")
+    public ResponseEntity<KonacnaPrica> getPocetnaPrica(
+        @org.springdoc.api.annotations.ParameterObject Pageable pageable,
+        @PathVariable Long id
+    ) {
+        log.debug("REST request to get a page of KonacnaPricas");
+        KonacnaPrica prica = this.pricaService.startWriting(id);
+        return ResponseEntity.ok(prica);
     }
 }

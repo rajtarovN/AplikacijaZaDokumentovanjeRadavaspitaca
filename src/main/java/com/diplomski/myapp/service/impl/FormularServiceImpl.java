@@ -139,9 +139,8 @@ public class FormularServiceImpl implements FormularService {
 
     @Override
     public Page<Formular> findAllByRoditelj(Pageable pageable, String username) {
-        List<Formular> formular =
-            this.formularRepository.findAllByRoditelj(username)
-                .subList((pageable.getPageNumber()) * pageable.getPageSize(), pageable.getPageNumber() * pageable.getPageSize());
+        List<Formular> formular = this.formularRepository.findAllByRoditelj(username);
+        //.subList((pageable.getPageNumber()) * pageable.getPageSize(), pageable.getPageNumber() * pageable.getPageSize());
 
         Page<Formular> page = new PageImpl<>(formular);
         return page;

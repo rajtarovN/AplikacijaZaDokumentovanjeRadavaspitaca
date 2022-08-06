@@ -131,9 +131,8 @@ public class DeteServiceImpl implements DeteService {
 
     @Override
     public Page<Dete> findAllByRoditelj(Pageable pageable, String username) {
-        List<Dete> deca =
-            this.deteRepository.findAllByRoditelj(username)
-                .subList((pageable.getPageNumber()) * pageable.getPageSize(), pageable.getPageNumber() * pageable.getPageSize());
+        List<Dete> deca = this.deteRepository.findAllByRoditelj(username);
+        //.subList((pageable.getPageNumber()) * pageable.getPageSize(), pageable.getPageNumber() * pageable.getPageSize());
 
         Page<Dete> page = new PageImpl<>(deca);
         return page;
@@ -147,9 +146,8 @@ public class DeteServiceImpl implements DeteService {
         for (Dnevnik d : dnevniks) {
             if (d.getPocetakVazenja().isBefore(LocalDate.now()) && d.getKrajVazenja().isAfter(LocalDate.now())) {
                 dnevnik = d;
-                List<Dete> deca =
-                    this.deteRepository.findAllByGrupa(dnevnik.getGrupa().getId())
-                        .subList((pageable.getPageNumber()) * pageable.getPageSize(), pageable.getPageNumber() * pageable.getPageSize());
+                List<Dete> deca = this.deteRepository.findAllByGrupa(dnevnik.getGrupa().getId());
+                //.subList((pageable.getPageNumber()) * pageable.getPageSize(), pageable.getPageNumber() * pageable.getPageSize());
 
                 Page<Dete> page = new PageImpl<>(deca);
                 return page;

@@ -14,22 +14,28 @@
         <dd>
           <span>{{ planPrice.id }}</span>
         </dd>
-        <dt><span jhiTranslate="diplomskiApp.planPrice.izvoriSaznanja">Izvori Saznanja</span></dt>
+        <dt><span jhiTranslate="diplomskiApp.planPrice.datumPocetka">Datum Pocetka</span></dt>
         <dd>
-          <span>{{ planPrice.izvoriSaznanja }}</span>
+          <span>{{ planPrice.datumPocetka | formatMediumDate }}</span>
+        </dd>
+        <dt><span jhiTranslate="diplomskiApp.planPrice.datumZavrsetka">Datum Zavrsetka</span></dt>
+        <dd>
+          <span>{{ planPrice.datumZavrsetka | formatMediumDate }}</span>
         </dd>
         <dt><span jhiTranslate="diplomskiApp.planPrice.nazivTeme">Naziv Teme</span></dt>
         <dd>
           <span>{{ planPrice.nazivTeme }}</span>
         </dd>
+        <dt><span jhiTranslate="diplomskiApp.planPrice.izvoriSaznanja">Izvori Saznanja</span></dt>
+        <dd>
+          <span>{{ planPrice.izvoriSaznanja }}</span>
+        </dd>
+
         <dt><span jhiTranslate="diplomskiApp.planPrice.pocetnaIdeja">Pocetna Ideja</span></dt>
         <dd>
           <span>{{ planPrice.pocetnaIdeja }}</span>
         </dd>
-        <dt><span jhiTranslate="diplomskiApp.planPrice.datumPocetka">Datum Pocetka</span></dt>
-        <dd>
-          <span>{{ planPrice.datumPocetka | formatMediumDate }}</span>
-        </dd>
+
         <dt><span jhiTranslate="diplomskiApp.planPrice.nacinUcescaVaspitaca">Nacin Ucesca Vaspitaca</span></dt>
         <dd>
           <span>{{ planPrice.nacinUcescaVaspitaca }}</span>
@@ -45,10 +51,6 @@
         <dt><span jhiTranslate="diplomskiApp.planPrice.mesta">Mesta</span></dt>
         <dd>
           <span>{{ planPrice.mesta }}</span>
-        </dd>
-        <dt><span jhiTranslate="diplomskiApp.planPrice.datumZavrsetka">Datum Zavrsetka</span></dt>
-        <dd>
-          <span>{{ planPrice.datumZavrsetka | formatMediumDate }}</span>
         </dd>
       </dl>
 

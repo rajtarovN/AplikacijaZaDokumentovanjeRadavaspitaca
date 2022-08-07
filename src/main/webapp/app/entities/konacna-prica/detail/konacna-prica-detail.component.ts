@@ -5,11 +5,12 @@ import { IKonacnaPrica } from '../konacna-prica.model';
 import { FormBuilder } from '@angular/forms';
 import { IKomentarNaPricu, KomentarNaPricu } from '../../komentar-na-pricu/komentar-na-pricu.model';
 import { Observable } from 'rxjs';
-import { HttpResponse } from '@angular/common/http';
+import { HttpHeaders, HttpResponse } from '@angular/common/http';
 import { finalize } from 'rxjs/operators';
 import { Dayjs } from 'dayjs';
 import { Prica } from '../../prica/prica.model';
 import { KomentarNaPricuService } from '../../komentar-na-pricu/service/komentar-na-pricu.service';
+import { ASC, DESC } from '../../../config/pagination.constants';
 
 @Component({
   selector: 'jhi-konacna-prica-detail',
@@ -19,6 +20,7 @@ export class KonacnaPricaDetailComponent implements OnInit {
   konacnaPrica: IKonacnaPrica | null = null;
   idPrice?: number;
   isSaving = false;
+  komentarNaPricus?: IKomentarNaPricu[];
   editForm = this.fb.group({
     tekstKomentara: [],
   });
@@ -33,6 +35,13 @@ export class KonacnaPricaDetailComponent implements OnInit {
     this.idPrice = Number(localStorage.getItem('idPrice'));
     this.activatedRoute.data.subscribe(({ konacnaPrica }) => {
       this.konacnaPrica = konacnaPrica;
+    });
+    this.pozovi();
+  }
+  pozovi(): void {
+    this.komentarNaPricuService.queryByIdPrica({ page: 1, size: 10, sort: ['ASC'] }, localStorage.getItem('idPrice')!).subscribe({
+      next: (res: any) => this.onGetSucces(res.body),
+      error: () => this.onSaveError(),
     });
   }
 
@@ -72,5 +81,11 @@ export class KonacnaPricaDetailComponent implements OnInit {
       datum: null,
       prica: new Prica(this.idPrice),
     };
+  }
+
+  private onGetSucces(data: IKomentarNaPricu[] | null): void {
+    // eslint-disable-next-line no-console
+    console.log('a', data);
+    this.komentarNaPricus = data ?? [];
   }
 }

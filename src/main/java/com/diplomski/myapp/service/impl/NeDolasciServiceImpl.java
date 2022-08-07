@@ -9,6 +9,8 @@ import com.diplomski.myapp.repository.DnevnikRepository;
 import com.diplomski.myapp.repository.NeDolasciRepository;
 import com.diplomski.myapp.service.NeDolasciService;
 import com.diplomski.myapp.web.rest.dto.NeDolasciDTO;
+import com.diplomski.myapp.web.rest.dto.NeDolazakViewDTO;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import org.slf4j.Logger;
@@ -106,11 +108,17 @@ public class NeDolasciServiceImpl implements NeDolasciService {
     }
 
     @Override
-    public Page<NeDolasci> findAllByGrupa(Pageable pageable, Long id) {
+    public Page<NeDolazakViewDTO> findAllByGrupa(Pageable pageable, Long id) {
         List<NeDolasci> izostanci = this.neDolasciRepository.findByGrupaId(id);
+        List<NeDolazakViewDTO> izostanciDTO = new ArrayList<>();
+        //
+        izostanci.forEach(i ->
+            izostanciDTO.add(new NeDolazakViewDTO(i, this.deteRepository.findById(i.getDete().getId()).get().getFormular().getImeDeteta()))
+        );
+
         //.subList((pageable.getPageNumber()) * pageable.getPageSize(), pageable.getPageNumber() * pageable.getPageSize());
 
-        Page<NeDolasci> page = new PageImpl<>(izostanci);
+        Page<NeDolazakViewDTO> page = new PageImpl<>(izostanciDTO);
         return page;
     }
 }

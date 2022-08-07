@@ -42,6 +42,10 @@
         <dd>
           <span>{{ formular.drzava }}</span>
         </dd>
+        <dt><span>Adresa</span></dt>
+        <dd>
+          <span>{{ formular.adresa?.mesto }} {{ formular.adresa?.ulica }} {{ formular.adresa?.broj }}</span>
+        </dd>
         <dt><span jhiTranslate="diplomskiApp.formular.brDeceUPorodici">Br Dece U Porodici</span></dt>
         <dd>
           <span>{{ formular.brDeceUPorodici }}</span>
@@ -62,16 +66,10 @@
         <dd>
           <span jhiTranslate="{{ 'diplomskiApp.TipGrupe.' + formular.tipGrupe }}">{{ formular.tipGrupe }}</span>
         </dd>
-        <dt><span jhiTranslate="diplomskiApp.formular.adresa">Adresa</span></dt>
-        <dd>
-          <div *ngIf="formular.adresa">
-            <a [routerLink]="['/adresa', formular.adresa?.id, 'view']">{{ formular.adresa?.id }}</a>
-          </div>
-        </dd>
         <dt><span jhiTranslate="diplomskiApp.formular.roditelj">Roditelj</span></dt>
         <dd>
           <div *ngIf="formular.roditelj">
-            <a [routerLink]="['/roditelj', formular.roditelj?.id, 'view']">{{ formular.roditelj?.id }}</a>
+            <a>{{ formular.roditelj?.user?.firstName }} {{ formular.roditelj?.user?.lastName }}</a>
           </div>
         </dd>
       </dl>

@@ -4,6 +4,7 @@ import com.diplomski.myapp.domain.NeDolasci;
 import com.diplomski.myapp.repository.NeDolasciRepository;
 import com.diplomski.myapp.service.NeDolasciService;
 import com.diplomski.myapp.web.rest.dto.NeDolasciDTO;
+import com.diplomski.myapp.web.rest.dto.NeDolazakViewDTO;
 import com.diplomski.myapp.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -196,12 +197,12 @@ public class NeDolasciResource {
     }
 
     @GetMapping("/ne-dolascis/findByGrupa/{id}")
-    public ResponseEntity<List<NeDolasci>> getAllNeDolascis(
+    public ResponseEntity<List<NeDolazakViewDTO>> getAllNeDolascis(
         @org.springdoc.api.annotations.ParameterObject Pageable pageable,
         @PathVariable Long id
     ) {
         log.debug("REST request to get a page of NeDolascis");
-        Page<NeDolasci> page = neDolasciService.findAllByGrupa(pageable, id);
+        Page<NeDolazakViewDTO> page = neDolasciService.findAllByGrupa(pageable, id);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }

@@ -1,6 +1,7 @@
 package com.diplomski.myapp.repository;
 
 import com.diplomski.myapp.domain.Roditelj;
+import com.diplomski.myapp.domain.User;
 import org.springframework.data.jpa.repository.*;
 import org.springframework.stereotype.Repository;
 
@@ -9,4 +10,7 @@ import org.springframework.stereotype.Repository;
  */
 @SuppressWarnings("unused")
 @Repository
-public interface RoditeljRepository extends JpaRepository<Roditelj, Long> {}
+public interface RoditeljRepository extends JpaRepository<Roditelj, Long> {
+    @Query("SELECT u.user from Roditelj u where u.id = ?1 ")
+    User findByUser(Long id);
+}

@@ -1,6 +1,7 @@
 package com.diplomski.myapp.web.rest;
 
 import com.diplomski.myapp.domain.KomentarNaPricu;
+import com.diplomski.myapp.domain.Prica;
 import com.diplomski.myapp.repository.KomentarNaPricuRepository;
 import com.diplomski.myapp.service.KomentarNaPricuService;
 import com.diplomski.myapp.web.rest.errors.BadRequestAlertException;
@@ -177,5 +178,16 @@ public class KomentarNaPricuResource {
             .noContent()
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))
             .build();
+    }
+
+    @GetMapping("/komentar-na-pricus/getByPrica/{id}")
+    public ResponseEntity<List<KomentarNaPricu>> getByPricaKomentarNaPricus(
+        @org.springdoc.api.annotations.ParameterObject Pageable pageable,
+        @PathVariable Long id
+    ) {
+        log.debug("REST request to get a page of KomentarNaPricus");
+        Page<KomentarNaPricu> page = komentarNaPricuService.findByPrica(id);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
 }

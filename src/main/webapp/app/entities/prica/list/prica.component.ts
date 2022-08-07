@@ -136,7 +136,7 @@ export class PricaComponent implements OnInit {
 
     this.router.navigate(['/konacna-prica/editor']);
   }
-  //[routerLink]="['/konacna-prica', prica.konacnaPrica?.id, 'view']"
+
   viewKonacnaPrica(id: number, idKonacna: number): void {
     localStorage.setItem('idPrice', String(id));
     this.router.navigate(['/konacna-prica/' + String(idKonacna) + '/view']);

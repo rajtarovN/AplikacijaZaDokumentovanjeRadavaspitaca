@@ -2,6 +2,7 @@ package com.diplomski.myapp.service;
 
 import com.diplomski.myapp.domain.NeDolasci;
 import com.diplomski.myapp.web.rest.dto.NeDolasciDTO;
+import com.diplomski.myapp.web.rest.dto.NeDolazakViewDTO;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.data.domain.Page;
@@ -60,5 +61,5 @@ public interface NeDolasciService {
 
     String saveList(List<NeDolasciDTO> neDolasci);
 
-    Page<NeDolasci> findAllByGrupa(Pageable pageable, Long id);
+    Page<NeDolazakViewDTO> findAllByGrupa(Pageable pageable, Long id);
 }

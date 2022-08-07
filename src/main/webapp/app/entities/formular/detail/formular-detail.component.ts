@@ -26,6 +26,8 @@ export class FormularDetailComponent implements OnInit {
     this.isSaving = false;
     this.activatedRoute.data.subscribe(({ formular }) => {
       this.formular = formular;
+      // eslint-disable-next-line no-console
+      console.log(formular);
     });
   }
 

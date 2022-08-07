@@ -1,5 +1,5 @@
 <div>
-  <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+  <form name="editForm" role="form" novalidate [formGroup]="editForm">
     <div class="row mb-3">
       <label class="form-label" jhiTranslate="diplomskiApp.dnevnik.pocetakVazenja" for="field_pocetakVazenja">Pocetak Vazenja</label>
       <div class="input-group">
@@ -44,7 +44,7 @@
           [ngValue]="getSelectedVaspitac(vaspitacOption, editForm.get('vaspitacs')!.value)"
           *ngFor="let vaspitacOption of listaVasapitaca"
         >
-          {{ vaspitacOption.id }}
+          {{ vaspitacOption.ime }}
         </option>
       </select>
     </div>

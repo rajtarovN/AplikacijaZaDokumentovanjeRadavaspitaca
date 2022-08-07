@@ -19,6 +19,16 @@
           <span [innerHTML]="konacnaPrica.tekst"></span>
         </dd>
       </dl>
+      <ul class="example-card" *ngFor="let komentar of komentarNaPricus">
+        <div class="card">
+          <dt>
+            <span>Datum komentara: {{ komentar.datum }}</span>
+          </dt>
+          <dd>
+            <span>{{ komentar.tekst }}</span>
+          </dd>
+        </div>
+      </ul>
       <div *jhiHasAnyAuthority="'ROLE_PEDAGOG'">
         <dt><span>Unesite komentar:</span></dt>
         <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">

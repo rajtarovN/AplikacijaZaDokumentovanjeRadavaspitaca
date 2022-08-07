@@ -43,7 +43,7 @@
           <th scope="col" jhiSortBy="dete.id">
             <span jhiTranslate="diplomskiApp.neDolasci.dete">Dete</span> <fa-icon icon="sort"></fa-icon>
           </th>
-          <th scope="col" jhiSortBy="dnevnik.id">
+          <th scope="col" jhiSortBy="dnevnik">
             <span jhiTranslate="diplomskiApp.neDolasci.dnevnik">Dnevnik</span> <fa-icon icon="sort"></fa-icon>
           </th>
           <th scope="col"></th>
@@ -59,12 +59,12 @@
           <td>
             <div *ngIf="neDolasci.dete">
               <!--              formular?.imeDeteta-->
-              <a [routerLink]="['/dete', neDolasci.dete?.id, 'view']">{{ neDolasci.dete?.id }}</a>
+              <a>{{ neDolasci.dete }}</a>
             </div>
           </td>
           <td>
             <div *ngIf="neDolasci.dnevnik">
-              <a [routerLink]="['/dnevnik', neDolasci.dnevnik?.id, 'view']">{{ neDolasci.dnevnik?.id }}</a>
+              <a [routerLink]="['/dnevnik', neDolasci.dnevnik, 'view']">{{ neDolasci.dnevnik }}</a>
             </div>
           </td>
           <td class="text-end">

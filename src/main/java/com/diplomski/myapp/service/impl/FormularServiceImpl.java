@@ -1,9 +1,10 @@
 package com.diplomski.myapp.service.impl;
 
-import com.diplomski.myapp.domain.Dete;
 import com.diplomski.myapp.domain.Formular;
+import com.diplomski.myapp.domain.User;
 import com.diplomski.myapp.domain.enumeration.StatusFormulara;
 import com.diplomski.myapp.repository.FormularRepository;
+import com.diplomski.myapp.repository.RoditeljRepository;
 import com.diplomski.myapp.service.FormularService;
 import com.diplomski.myapp.web.rest.dto.DeteZaGrupuDTO;
 import java.util.ArrayList;
@@ -30,8 +31,11 @@ public class FormularServiceImpl implements FormularService {
 
     private final FormularRepository formularRepository;
 
-    public FormularServiceImpl(FormularRepository formularRepository) {
+    private final RoditeljRepository roditeljRepository;
+
+    public FormularServiceImpl(FormularRepository formularRepository, RoditeljRepository roditeljRepository) {
         this.formularRepository = formularRepository;
+        this.roditeljRepository = roditeljRepository;
     }
 
     @Override
@@ -119,7 +123,10 @@ public class FormularServiceImpl implements FormularService {
     @Transactional(readOnly = true)
     public Optional<Formular> findOne(Long id) {
         log.debug("Request to get Formular : {}", id);
-        return formularRepository.findById(id);
+        User u = this.roditeljRepository.findByUser(formularRepository.findById(id).get().getRoditelj().getId());
+        Optional<Formular> formular = formularRepository.findById(id);
+        formular.get().getRoditelj().setUser(u);
+        return formular;
     }
 
     @Override

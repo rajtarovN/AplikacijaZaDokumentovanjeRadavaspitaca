@@ -16,7 +16,11 @@ public class VaspitacDTO {
 
     public VaspitacDTO(Vaspitac f) {
         this.id = f.getId();
-        this.ime = "a"; // todo f.getIme();
+        if (f.getUser() != null) {
+            this.ime = f.getUser().getFirstName() + " " + f.getUser().getLastName();
+        } else {
+            this.ime = "nema imena";
+        }
     }
 
     public String getIme() {

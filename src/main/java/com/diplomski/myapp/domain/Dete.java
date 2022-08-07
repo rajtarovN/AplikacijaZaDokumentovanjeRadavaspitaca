@@ -52,6 +52,33 @@ public class Dete implements Serializable {
     @JsonIgnoreProperties(value = { "detes", "dnevnik" }, allowSetters = true)
     private Grupa grupa;
 
+    public Dete(Formular f) {
+        this.formular = f;
+        this.roditelj = f.getRoditelj();
+    }
+
+    public Dete() {}
+
+    public Dete(
+        Integer visina,
+        Integer tezina,
+        Long id,
+        Formular formular,
+        Set<ZapazanjeUVeziDeteta> zapazanjeUVeziDetetas,
+        NeDolasci neDolasci,
+        Roditelj roditelj,
+        Grupa grupa
+    ) {
+        this.visina = visina;
+        this.tezina = tezina;
+        this.id = id;
+        this.formular = formular;
+        this.zapazanjeUVeziDetetas = zapazanjeUVeziDetetas;
+        this.neDolasci = neDolasci;
+        this.roditelj = roditelj;
+        this.grupa = grupa;
+    }
+
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
     public Integer getVisina() {

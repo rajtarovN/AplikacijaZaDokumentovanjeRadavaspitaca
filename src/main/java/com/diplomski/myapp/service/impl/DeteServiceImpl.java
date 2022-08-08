@@ -2,16 +2,15 @@ package com.diplomski.myapp.service.impl;
 
 import com.diplomski.myapp.domain.Dete;
 import com.diplomski.myapp.domain.Dnevnik;
+import com.diplomski.myapp.domain.PodaciORoditeljima;
 import com.diplomski.myapp.domain.Vaspitac;
 import com.diplomski.myapp.repository.DeteRepository;
+import com.diplomski.myapp.repository.PodaciORoditeljimaRepository;
 import com.diplomski.myapp.repository.VaspitacRepository;
 import com.diplomski.myapp.service.DeteService;
 import com.diplomski.myapp.web.rest.dto.ProfilDetetaDTO;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 import org.slf4j.Logger;
@@ -35,9 +34,16 @@ public class DeteServiceImpl implements DeteService {
 
     private final VaspitacRepository vaspitacRepository;
 
-    public DeteServiceImpl(DeteRepository deteRepository, VaspitacRepository vaspitacRepository) {
+    private final PodaciORoditeljimaRepository podaciORoditeljimaRepository;
+
+    public DeteServiceImpl(
+        DeteRepository deteRepository,
+        VaspitacRepository vaspitacRepository,
+        PodaciORoditeljimaRepository podaciORoditeljimaRepository
+    ) {
         this.deteRepository = deteRepository;
         this.vaspitacRepository = vaspitacRepository;
+        this.podaciORoditeljimaRepository = podaciORoditeljimaRepository;
     }
 
     @Override
@@ -107,12 +113,21 @@ public class DeteServiceImpl implements DeteService {
     @Override
     public ProfilDetetaDTO findProfil(Long id) {
         Optional<Dete> dete = deteRepository.findById(id);
+
         if (dete.isPresent()) {
+            Set<PodaciORoditeljima> podaci = this.podaciORoditeljimaRepository.findByFormular(dete.get().getFormular().getId());
+            dete.get().getFormular().setPodaciORoditeljimas(podaci);
             ProfilDetetaDTO profilDTO = new ProfilDetetaDTO(dete.get());
             //int izostanci = dete.get().getNeDolasci().stream().filter(nd -> nd.)
             profilDTO.setBrojIzostanaka(0);
-            //profilDTO.setVaspitac(dete.get().getGrupa().getDnevnik().getVaspitacs()[0]);
-            profilDTO.setVaspitac("Mira Lazic");
+            Object[] vaspitaci = dete.get().getGrupa().getDnevnik().getVaspitacs().toArray();
+            String imenaVaspitaca = "";
+            for (Object o : vaspitaci) {
+                if (((Vaspitac) o).getUser() == null) {} else {
+                    imenaVaspitaca += ((Vaspitac) o).getUser().getFirstName() + " " + ((Vaspitac) o).getUser().getLastName();
+                }
+            }
+            profilDTO.setVaspitac(imenaVaspitaca);
             return profilDTO;
         }
 

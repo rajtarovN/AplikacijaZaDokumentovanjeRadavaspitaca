@@ -17,7 +17,7 @@ public interface FormularService {
      * @param formular the entity to save.
      * @return the persisted entity.
      */
-    Formular save(Formular formular);
+    Formular save(Formular formular, String username);
 
     /**
      * Updates a formular.

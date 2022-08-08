@@ -1,15 +1,20 @@
 package com.diplomski.myapp.service.impl;
 
 import com.diplomski.myapp.domain.Formular;
+import com.diplomski.myapp.domain.PodaciORoditeljima;
+import com.diplomski.myapp.domain.Roditelj;
 import com.diplomski.myapp.domain.User;
 import com.diplomski.myapp.domain.enumeration.StatusFormulara;
+import com.diplomski.myapp.repository.AdresaRepository;
 import com.diplomski.myapp.repository.FormularRepository;
+import com.diplomski.myapp.repository.PodaciORoditeljimaRepository;
 import com.diplomski.myapp.repository.RoditeljRepository;
 import com.diplomski.myapp.service.FormularService;
 import com.diplomski.myapp.web.rest.dto.DeteZaGrupuDTO;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 import org.slf4j.Logger;
@@ -33,15 +38,40 @@ public class FormularServiceImpl implements FormularService {
 
     private final RoditeljRepository roditeljRepository;
 
-    public FormularServiceImpl(FormularRepository formularRepository, RoditeljRepository roditeljRepository) {
+    private final PodaciORoditeljimaRepository podaciORoditeljimaRepository;
+
+    private final AdresaRepository adresaRepository;
+
+    public FormularServiceImpl(
+        FormularRepository formularRepository,
+        RoditeljRepository roditeljRepository,
+        PodaciORoditeljimaRepository podaciORoditeljimaRepository,
+        AdresaRepository adresaRepository
+    ) {
         this.formularRepository = formularRepository;
         this.roditeljRepository = roditeljRepository;
+        this.podaciORoditeljimaRepository = podaciORoditeljimaRepository;
+        this.adresaRepository = adresaRepository;
     }
 
     @Override
-    public Formular save(Formular formular) {
+    public Formular save(Formular formular, String username) {
         log.debug("Request to save Formular : {}", formular);
-        return formularRepository.save(formular);
+        Roditelj roditelj = this.roditeljRepository.findByUsername(username);
+        this.adresaRepository.save(formular.getAdresa());
+
+        Formular ret = formularRepository.save(formular);
+        if (ret != null) {
+            ret.setRoditelj(roditelj);
+            formularRepository.save(ret);
+        }
+        roditelj.getFormulars().add(ret);
+        this.roditeljRepository.save(roditelj);
+        for (PodaciORoditeljima p : formular.getPodaciORoditeljimas()) {
+            p.setFormular(ret);
+            this.podaciORoditeljimaRepository.save(p);
+        }
+        return ret;
     }
 
     @Override
@@ -123,9 +153,11 @@ public class FormularServiceImpl implements FormularService {
     @Transactional(readOnly = true)
     public Optional<Formular> findOne(Long id) {
         log.debug("Request to get Formular : {}", id);
+        Set<PodaciORoditeljima> podaci = this.podaciORoditeljimaRepository.findByFormular(id);
         User u = this.roditeljRepository.findByUser(formularRepository.findById(id).get().getRoditelj().getId());
         Optional<Formular> formular = formularRepository.findById(id);
         formular.get().getRoditelj().setUser(u);
+        formular.get().setPodaciORoditeljimas(podaci);
         return formular;
     }
 

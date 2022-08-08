@@ -55,13 +55,14 @@ public class FormularResource {
      * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new formular, or with status {@code 400 (Bad Request)} if the formular has already an ID.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
-    @PostMapping("/formulars")
-    public ResponseEntity<Formular> createFormular(@RequestBody Formular formular) throws URISyntaxException {
+    @PostMapping("/formulars/{username}")
+    public ResponseEntity<Formular> createFormular(@RequestBody Formular formular, @PathVariable String username)
+        throws URISyntaxException {
         log.debug("REST request to save Formular : {}", formular);
         if (formular.getId() != null) {
             throw new BadRequestAlertException("A new formular cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        Formular result = formularService.save(formular);
+        Formular result = formularService.save(formular, username);
         return ResponseEntity
             .created(new URI("/api/formulars/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))

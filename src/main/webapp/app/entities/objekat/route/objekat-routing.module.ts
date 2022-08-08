@@ -14,7 +14,7 @@ const objekatRoute: Routes = [
     component: ObjekatComponent,
     data: {
       defaultSort: 'id,asc',
-      authorities: [Authority.ADMIN, Authority.DIREKTOR], //
+      authorities: [Authority.ADMIN, Authority.DIREKTOR, Authority.RODITELJ], //
     },
     canActivate: [UserRouteAccessService],
   },

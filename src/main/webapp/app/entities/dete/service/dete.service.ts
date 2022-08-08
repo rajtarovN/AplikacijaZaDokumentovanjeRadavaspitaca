@@ -68,14 +68,16 @@ export class DeteService {
     return this.http.get<any>(`${this.resourceUrl}/profil/${id}`, { observe: 'response' });
   }
 
-  queryDeteOfRoditelj(req: {
-    size: number;
-    page: number;
-    sort: string[];
-    username: string | undefined;
-  }): Observable<EntityArrayResponseType> {
+  queryDeteOfRoditelj(
+    req: {
+      size: number;
+      page: number;
+      sort: string[];
+    },
+    username: string
+  ): Observable<EntityArrayResponseType> {
     const options = createRequestOption(req);
-    return this.http.get<IDete[]>(this.resourceUrl, { params: options, observe: 'response' });
+    return this.http.get<IDete[]>(this.resourceUrl + '/findByRoditelj/' + username, { params: options, observe: 'response' });
   }
 
   queryDecaOfVaspitac(

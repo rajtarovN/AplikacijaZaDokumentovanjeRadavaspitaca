@@ -45,17 +45,17 @@ export class ProfilDetetaComponent implements OnInit {
     this.dete = data ?? null;
     // eslint-disable-next-line no-console
     console.log('asa', data, 'asa');
-    const p1: PodaciORoditeljimaDTO = {
-      id: 1,
-      telefon: '03232',
-      radniStatus: RadniStatus.NOV,
-      firma: 'A1',
-      ime: 'Vera',
-      prezime: 'Veric',
-      radnoVreme: 'aaa',
-    };
-    const li = [p1, p1, p1];
-    this.dete!.roditelji = li;
+    // const p1: PodaciORoditeljimaDTO = {
+    //   id: 1,
+    //   telefon: '03232',
+    //   radniStatus: RadniStatus.NEZAPOSLEN,
+    //   firma: 'A1',
+    //   ime: 'Vera',
+    //   prezime: 'Veric',
+    //   radnoVreme: 'aaa',
+    // };
+    // const li = [p1, p1, p1];
+    // this.dete!.roditelji = li;
   }
 
   protected onError(): void {

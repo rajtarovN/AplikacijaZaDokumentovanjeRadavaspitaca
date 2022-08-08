@@ -1,6 +1,7 @@
 package com.diplomski.myapp.repository;
 
 import com.diplomski.myapp.domain.PodaciORoditeljima;
+import java.util.Set;
 import org.springframework.data.jpa.repository.*;
 import org.springframework.stereotype.Repository;
 
@@ -9,4 +10,7 @@ import org.springframework.stereotype.Repository;
  */
 @SuppressWarnings("unused")
 @Repository
-public interface PodaciORoditeljimaRepository extends JpaRepository<PodaciORoditeljima, Long> {}
+public interface PodaciORoditeljimaRepository extends JpaRepository<PodaciORoditeljima, Long> {
+    @Query("SELECT u from PodaciORoditeljima u where u.formular.id = ?1 ")
+    Set<PodaciORoditeljima> findByFormular(Long id);
+}

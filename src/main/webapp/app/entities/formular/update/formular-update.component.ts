@@ -5,14 +5,18 @@ import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { finalize, map } from 'rxjs/operators';
 
-import { IFormular, Formular } from '../formular.model';
+import { Formular, IFormular } from '../formular.model';
 import { FormularService } from '../service/formular.service';
-import { IAdresa } from 'app/entities/adresa/adresa.model';
+import { Adresa, IAdresa } from 'app/entities/adresa/adresa.model';
 import { AdresaService } from 'app/entities/adresa/service/adresa.service';
 import { IRoditelj } from 'app/entities/roditelj/roditelj.model';
 import { RoditeljService } from 'app/entities/roditelj/service/roditelj.service';
 import { StatusFormulara } from 'app/entities/enumerations/status-formulara.model';
 import { TipGrupe } from 'app/entities/enumerations/tip-grupe.model';
+import { RadniStatus } from '../../enumerations/radni-status.model';
+import { IPodaciORoditeljima, PodaciORoditeljima } from '../../podaci-o-roditeljima/podaci-o-roditeljima.model';
+import { PodaciORoditeljimaService } from '../../podaci-o-roditeljima/service/podaci-o-roditeljima.service';
+import { AccountService } from '../../../core/auth/account.service';
 
 @Component({
   selector: 'jhi-formular-update',
@@ -20,11 +24,16 @@ import { TipGrupe } from 'app/entities/enumerations/tip-grupe.model';
 })
 export class FormularUpdateComponent implements OnInit {
   isSaving = false;
+  isSavedRoditelj1 = false;
   statusFormularaValues = Object.keys(StatusFormulara);
   tipGrupeValues = Object.keys(TipGrupe);
+  radniStatusValues = Object.keys(RadniStatus);
 
   adresasCollection: IAdresa[] = [];
   roditeljsSharedCollection: IRoditelj[] = [];
+
+  roditelj1: IPodaciORoditeljima = {};
+  roditelj2: IPodaciORoditeljima = {};
 
   editForm = this.fb.group({
     id: [],
@@ -42,6 +51,33 @@ export class FormularUpdateComponent implements OnInit {
     tipGrupe: [],
     adresa: [],
     roditelj: [],
+    ulica: [],
+    mesto: [],
+    broj: [],
+  });
+
+  editFormRoditelj1 = this.fb.group({
+    id1: [],
+    jmbg1: [],
+    ime1: [],
+    prezime1: [],
+    telefon1: [],
+    firma1: [],
+    radnoVreme1: [],
+    radniStatus1: [],
+    formular1: [],
+  });
+
+  editFormRoditelj2 = this.fb.group({
+    id2: [],
+    jmbg2: [],
+    ime2: [],
+    prezime2: [],
+    telefon2: [],
+    firma2: [],
+    radnoVreme2: [],
+    radniStatus2: [],
+    formular2: [],
   });
 
   constructor(
@@ -49,7 +85,9 @@ export class FormularUpdateComponent implements OnInit {
     protected adresaService: AdresaService,
     protected roditeljService: RoditeljService,
     protected activatedRoute: ActivatedRoute,
-    protected fb: FormBuilder
+    protected podaciORoditeljimaService: PodaciORoditeljimaService,
+    protected fb: FormBuilder,
+    protected accountService: AccountService
   ) {}
 
   ngOnInit(): void {
@@ -66,11 +104,26 @@ export class FormularUpdateComponent implements OnInit {
 
   save(): void {
     this.isSaving = true;
+    const podaciORoditeljima1 = this.createFromFormPodaci(1);
+    const podaciORoditeljima2 = this.createFromFormPodaci(2);
     const formular = this.createFromForm();
+    // eslint-disable-next-line no-console
+    console.log(formular);
+
     if (formular.id !== undefined) {
       this.subscribeToSaveResponse(this.formularService.update(formular));
     } else {
-      this.subscribeToSaveResponse(this.formularService.create(formular));
+      this.subscribeToSaveResponseR(this.podaciORoditeljimaService.create(podaciORoditeljima1));
+      this.subscribeToSaveResponseR(this.podaciORoditeljimaService.create(podaciORoditeljima2));
+      this.accountService.getAuthenticationState().subscribe(account => {
+        if (account) {
+          // eslint-disable-next-line no-console
+          console.log(account);
+          if (account.authorities[0] === 'ROLE_RODITELJ') {
+            this.subscribeToSaveResponse(this.formularService.create(formular, account.login));
+          }
+        }
+      });
     }
   }
 
@@ -89,8 +142,23 @@ export class FormularUpdateComponent implements OnInit {
     });
   }
 
+  protected subscribeToSaveResponseR(result: Observable<HttpResponse<IPodaciORoditeljima>>): void {
+    result.pipe(finalize(() => this.onSaveFinalize())).subscribe({
+      next: (res: HttpResponse<IPodaciORoditeljima>) => this.onSaveSuccessRoditelj(res),
+      error: () => this.onSaveError(),
+    });
+  }
+
   protected onSaveSuccess(): void {
     this.previousState();
+  }
+  protected onSaveSuccessRoditelj(res: HttpResponse<IPodaciORoditeljima>): void {
+    if (!this.isSavedRoditelj1) {
+      this.roditelj1 = res.body!;
+      this.isSavedRoditelj1 = true;
+    } else {
+      this.roditelj2 = res.body!;
+    }
   }
 
   protected onSaveError(): void {
@@ -146,7 +214,14 @@ export class FormularUpdateComponent implements OnInit {
   }
 
   protected createFromForm(): IFormular {
-    return {
+    const adresa = {
+      ...new Adresa(),
+      mesto: this.editForm.get(['mesto'])!.value,
+      ulica: this.editForm.get(['ulica'])!.value,
+      broj: this.editForm.get(['broj'])!.value,
+    };
+    const listPodaciORoditeljima = [this.roditelj2, this.roditelj1];
+    const formular = {
       ...new Formular(),
       id: this.editForm.get(['id'])!.value,
       mesecUpisa: this.editForm.get(['mesecUpisa'])!.value,
@@ -159,10 +234,43 @@ export class FormularUpdateComponent implements OnInit {
       brDeceUPorodici: this.editForm.get(['brDeceUPorodici'])!.value,
       zdravstveniProblemi: this.editForm.get(['zdravstveniProblemi'])!.value,
       zdravstveniUslovi: this.editForm.get(['zdravstveniUslovi'])!.value,
-      statusFormulara: this.editForm.get(['statusFormulara'])!.value,
+      statusFormulara: StatusFormulara.NOV,
       tipGrupe: this.editForm.get(['tipGrupe'])!.value,
-      adresa: this.editForm.get(['adresa'])!.value,
+      adresa: {},
       roditelj: this.editForm.get(['roditelj'])!.value,
+      podaciORoditeljimas: listPodaciORoditeljima,
     };
+    formular.adresa = adresa;
+    return formular;
+  }
+
+  protected createFromFormPodaci(num: number): IPodaciORoditeljima {
+    if (num === 1) {
+      return {
+        ...new PodaciORoditeljima(),
+        id: this.editFormRoditelj1.get(['id1'])!.value,
+        jmbg: this.editFormRoditelj1.get(['jmbg1'])!.value,
+        ime: this.editFormRoditelj1.get(['ime1'])!.value,
+        prezime: this.editFormRoditelj1.get(['prezime1'])!.value,
+        telefon: this.editFormRoditelj1.get(['telefon1'])!.value,
+        firma: this.editFormRoditelj1.get(['firma1'])!.value,
+        radnoVreme: this.editFormRoditelj1.get(['radnoVreme1'])!.value,
+        radniStatus: this.editFormRoditelj1.get(['radniStatus1'])!.value,
+        formular: this.editFormRoditelj1.get(['formular1'])!.value,
+      };
+    } else {
+      return {
+        ...new PodaciORoditeljima(),
+        id: this.editFormRoditelj2.get(['id2'])!.value,
+        jmbg: this.editFormRoditelj2.get(['jmbg2'])!.value,
+        ime: this.editFormRoditelj2.get(['ime2'])!.value,
+        prezime: this.editFormRoditelj2.get(['prezime2'])!.value,
+        telefon: this.editFormRoditelj2.get(['telefon2'])!.value,
+        firma: this.editFormRoditelj2.get(['firma2'])!.value,
+        radnoVreme: this.editFormRoditelj2.get(['radnoVreme2'])!.value,
+        radniStatus: this.editFormRoditelj2.get(['radniStatus2'])!.value,
+        formular: this.editFormRoditelj2.get(['formular2'])!.value,
+      };
+    }
   }
 }

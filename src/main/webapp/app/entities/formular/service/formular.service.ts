@@ -19,8 +19,8 @@ export class FormularService {
 
   constructor(protected http: HttpClient, protected applicationConfigService: ApplicationConfigService) {}
 
-  create(formular: IFormular): Observable<EntityResponseType> {
-    return this.http.post<IFormular>(this.resourceUrl, formular, { observe: 'response' });
+  create(formular: IFormular, username: string): Observable<EntityResponseType> {
+    return this.http.post<IFormular>(this.resourceUrl + '/' + username, formular, { observe: 'response' });
   }
 
   update(formular: IFormular): Observable<EntityResponseType> {

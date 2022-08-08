@@ -8,7 +8,7 @@
         Zvati u hitnim situacijama:
         <ul class="example-card" *ngIf="dete.roditelji">
           {{
-            dete.roditelji[0].telefon
+            dete.roditelji[0]?.telefon
           }}
         </ul>
       </h5>
@@ -71,7 +71,7 @@
           <div style="display: inline">
             Ime: {{ objekat.ime }}<br />
             Prezime: {{ objekat.prezime }}<br />
-            Telefon: {{ objekat.telefon }}<br />
+            Telefon: {{ objekat?.telefon }}<br />
             Radni status: {{ objekat.radniStatus }}<br />
             Firma: {{ objekat.firma }}<br />
             Radno vreme: {{ objekat.radnoVreme }}<br />

@@ -69,12 +69,14 @@ export class DeteComponent implements OnInit {
       // eslint-disable-next-line no-console
       console.log('b');
       this.deteService
-        .queryDeteOfRoditelj({
-          page: pageToLoad - 1,
-          size: this.itemsPerPage,
-          sort: this.sort(),
-          username: this.username,
-        })
+        .queryDeteOfRoditelj(
+          {
+            page: pageToLoad - 1,
+            size: this.itemsPerPage,
+            sort: this.sort(),
+          },
+          this.username
+        )
         .subscribe({
           next: (res: HttpResponse<IDete[]>) => {
             this.isLoading = false;

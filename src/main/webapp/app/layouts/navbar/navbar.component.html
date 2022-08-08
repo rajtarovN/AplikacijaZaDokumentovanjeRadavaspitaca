@@ -31,7 +31,7 @@
         <li *jhiHasAnyAuthority="'ROLE_RODITELJ'">
           <a
             class="dropdown-item"
-            routerLink="objekat"
+            routerLink="pregled-objekata"
             routerLinkActive="active"
             [routerLinkActiveOptions]="{ exact: true }"
             (click)="collapseNavbar()"
@@ -41,12 +41,12 @@
             Objekti/Vrtici
           </a>
         </li>
-        <li *jhiHasAnyAuthority="'ROLE_RODITELJ'">
-          <a class="dropdown-item" (click)="pregledVaspitaca()" id="pregledVaspitaca" data-cy="pregledVaspitaca"> Vaspitaci </a>
-        </li>
+        <!--        <li *jhiHasAnyAuthority="'ROLE_RODITELJ'">-->
+        <!--          <a class="dropdown-item" (click)="pregledVaspitaca()" id="pregledVaspitaca" data-cy="pregledVaspitaca"> Vaspitaci </a>-->
+        <!--        </li>-->
 
         <li *jhiHasAnyAuthority="'ROLE_RODITELJ'">
-          <a class="dropdown-item" (click)="pregledVaspitaca()" id="konkurisanje" data-cy="pregledVaspitaca"> Konkurs </a>
+          <a class="dropdown-item" routerLink="formular" id="konkurisanje" data-cy="pregledVaspitaca"> Konkurs </a>
         </li>
 
         <li *jhiHasAnyAuthority="'ROLE_VASPITAC'">

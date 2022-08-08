@@ -46,7 +46,7 @@
         <dd>
           <span>{{ formular.adresa?.mesto }} {{ formular.adresa?.ulica }} {{ formular.adresa?.broj }}</span>
         </dd>
-        <dt><span jhiTranslate="diplomskiApp.formular.brDeceUPorodici">Br Dece U Porodici</span></dt>
+        <dt><span>Broj Dece U Porodici</span></dt>
         <dd>
           <span>{{ formular.brDeceUPorodici }}</span>
         </dd>
@@ -73,6 +73,81 @@
           </div>
         </dd>
       </dl>
+
+      <dl class="row-md jh-entity-details">
+        <dt>
+          <span><u>Podaci o prvom roditelju</u></span>
+        </dt>
+        <br /><br />
+        <dt><span jhiTranslate="diplomskiApp.podaciORoditeljima.jmbg">Jmbg</span></dt>
+        <dd>
+          <span>{{ podaciORoditeljima1?.jmbg }}</span>
+        </dd>
+        <dt><span jhiTranslate="diplomskiApp.podaciORoditeljima.ime">Ime</span></dt>
+        <dd>
+          <span>{{ podaciORoditeljima1?.ime }}</span>
+        </dd>
+        <dt><span jhiTranslate="diplomskiApp.podaciORoditeljima.prezime">Prezime</span></dt>
+        <dd>
+          <span>{{ podaciORoditeljima1?.prezime }}</span>
+        </dd>
+        <dt><span jhiTranslate="diplomskiApp.podaciORoditeljima.telefon">Telefon</span></dt>
+        <dd>
+          <span>{{ podaciORoditeljima1?.telefon }}</span>
+        </dd>
+        <dt><span jhiTranslate="diplomskiApp.podaciORoditeljima.firma">Firma</span></dt>
+        <dd>
+          <span>{{ podaciORoditeljima1?.firma }}</span>
+        </dd>
+        <dt><span jhiTranslate="diplomskiApp.podaciORoditeljima.radnoVreme">Radno Vreme</span></dt>
+        <dd>
+          <span>{{ podaciORoditeljima1?.radnoVreme }}</span>
+        </dd>
+        <dt><span jhiTranslate="diplomskiApp.podaciORoditeljima.radniStatus">Radni Status</span></dt>
+        <dd>
+          <span jhiTranslate="{{ 'diplomskiApp.RadniStatus.' + podaciORoditeljima1?.radniStatus }}">{{
+            podaciORoditeljima1?.radniStatus
+          }}</span>
+        </dd>
+      </dl>
+
+      <dl class="row-md jh-entity-details">
+        <dt>
+          <span><u>Podaci o drugom roditelju</u></span>
+        </dt>
+        <br /><br />
+        <dt><span jhiTranslate="diplomskiApp.podaciORoditeljima.jmbg">Jmbg</span></dt>
+        <dd>
+          <span>{{ podaciORoditeljima2?.jmbg }}</span>
+        </dd>
+        <dt><span jhiTranslate="diplomskiApp.podaciORoditeljima.ime">Ime</span></dt>
+        <dd>
+          <span>{{ podaciORoditeljima2?.ime }}</span>
+        </dd>
+        <dt><span jhiTranslate="diplomskiApp.podaciORoditeljima.prezime">Prezime</span></dt>
+        <dd>
+          <span>{{ podaciORoditeljima2?.prezime }}</span>
+        </dd>
+        <dt><span jhiTranslate="diplomskiApp.podaciORoditeljima.telefon">Telefon</span></dt>
+        <dd>
+          <span>{{ podaciORoditeljima2?.telefon }}</span>
+        </dd>
+        <dt><span jhiTranslate="diplomskiApp.podaciORoditeljima.firma">Firma</span></dt>
+        <dd>
+          <span>{{ podaciORoditeljima2?.firma }}</span>
+        </dd>
+        <dt><span jhiTranslate="diplomskiApp.podaciORoditeljima.radnoVreme">Radno Vreme</span></dt>
+        <dd>
+          <span>{{ podaciORoditeljima2?.radnoVreme }}</span>
+        </dd>
+        <dt><span jhiTranslate="diplomskiApp.podaciORoditeljima.radniStatus">Radni Status</span></dt>
+        <dd>
+          <span jhiTranslate="{{ 'diplomskiApp.RadniStatus.' + podaciORoditeljima2?.radniStatus }}">{{
+            podaciORoditeljima2?.radniStatus
+          }}</span>
+        </dd>
+      </dl>
+
       <div *jhiHasAnyAuthority="'ROLE_PEDAGOG'">
         <button
           *ngIf="formular.statusFormulara! !== this.status"

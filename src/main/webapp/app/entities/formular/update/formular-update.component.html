@@ -1,6 +1,6 @@
 <div class="d-flex justify-content-center">
   <div class="col-8">
-    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+    <form name="editForm" role="form" novalidate [formGroup]="editForm">
       <h2 id="jhi-formular-heading" data-cy="FormularCreateUpdateHeading" jhiTranslate="diplomskiApp.formular.home.createOrEditLabel">
         Create or edit a Formular
       </h2>
@@ -148,48 +148,143 @@
           </select>
         </div>
 
-        <div class="row mb-3">
-          <label class="form-label" jhiTranslate="diplomskiApp.formular.adresa" for="field_adresa">Adresa</label>
-          <select class="form-control" id="field_adresa" data-cy="adresa" name="adresa" formControlName="adresa">
-            <option [ngValue]="null"></option>
-            <option
-              [ngValue]="adresaOption.id === editForm.get('adresa')!.value?.id ? editForm.get('adresa')!.value : adresaOption"
-              *ngFor="let adresaOption of adresasCollection; trackBy: trackAdresaById"
-            >
-              {{ adresaOption.id }}
-            </option>
-          </select>
+        <div>
+          <label class="col-form-label-lg"><u>Adresa: </u></label>
+          <div class="row mb-3">
+            <label class="form-label" for="field_mesto">Mesto: </label>
+            <input type="text" class="form-control" name="mesto" id="field_mesto" data-cy="mesto" formControlName="mesto" />
+          </div>
+          <div class="row mb-3">
+            <label class="form-label" for="field_ulica">Ulica: </label>
+            <input type="text" class="form-control" name="ulica" id="field_ulica" data-cy="ulica" formControlName="ulica" />
+          </div>
+          <div class="row mb-3">
+            <label class="form-label" for="field_broj">Broj: </label>
+            <input type="text" class="form-control" name="broj" id="field_broj" data-cy="broj" formControlName="broj" />
+          </div>
         </div>
-
-        <div class="row mb-3">
-          <label class="form-label" jhiTranslate="diplomskiApp.formular.roditelj" for="field_roditelj">Roditelj</label>
-          <select class="form-control" id="field_roditelj" data-cy="roditelj" name="roditelj" formControlName="roditelj">
-            <option [ngValue]="null"></option>
-            <option
-              [ngValue]="roditeljOption.id === editForm.get('roditelj')!.value?.id ? editForm.get('roditelj')!.value : roditeljOption"
-              *ngFor="let roditeljOption of roditeljsSharedCollection; trackBy: trackRoditeljById"
-            >
-              {{ roditeljOption.id }}
-            </option>
-          </select>
-        </div>
-      </div>
-
-      <div>
-        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
-          <fa-icon icon="ban"></fa-icon>&nbsp;<span>Otkazi promene</span>
-        </button>
-
-        <button
-          type="submit"
-          id="save-entity"
-          data-cy="entityCreateSaveButton"
-          [disabled]="editForm.invalid || isSaving"
-          class="btn btn-primary"
-        >
-          <fa-icon icon="save"></fa-icon>&nbsp;<span>Sacuvaj formular</span>
-        </button>
       </div>
     </form>
+
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editFormRoditelj2">
+      <div>
+        <label class="col-form-label-lg"><u>Podaci o prvom roditelju: </u></label>
+        <div class="row mb-3">
+          <label class="form-label" for="field_jmbg2">Jmbg</label>
+          <input type="text" class="form-control" name="jmbg2" id="field_jmbg2" data-cy="jmbg2" formControlName="jmbg2" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_ime2">Ime</label>
+          <input type="text" class="form-control" name="ime2" id="field_ime2" data-cy="ime2" formControlName="ime2" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_prezime2">Prezime</label>
+          <input type="text" class="form-control" name="prezime2" id="field_prezime2" data-cy="prezime2" formControlName="prezime2" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_telefon2">Telefon</label>
+          <input type="text" class="form-control" name="telefon2" id="field_telefon2" data-cy="telefon2" formControlName="telefon2" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_firma2">Firma</label>
+          <input type="text" class="form-control" name="firma2" id="field_firma2" data-cy="firma2" formControlName="firma2" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_radnoVreme2">Radno Vreme</label>
+          <input
+            type="text"
+            class="form-control"
+            name="radnoVreme"
+            id="field_radnoVreme2"
+            data-cy="radnoVreme2"
+            formControlName="radnoVreme2"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_radniStatus">Radni Status</label>
+          <select class="form-control" name="radniStatus" formControlName="radniStatus2" id="field_radniStatus2" data-cy="radniStatus">
+            <option [ngValue]="null">{{ 'diplomskiApp.RadniStatus.null' | translate }}</option>
+            <option *ngFor="let radniStatus of radniStatusValues" [value]="radniStatus">
+              {{ 'diplomskiApp.RadniStatus.' + radniStatus | translate }}
+            </option>
+          </select>
+        </div>
+      </div>
+    </form>
+
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editFormRoditelj1">
+      <div>
+        <label class="col-form-label-lg"><u>Podaci o drugom roditelju: </u></label>
+        <div class="row mb-3">
+          <label class="form-label" for="field_jmbg1">Jmbg</label>
+          <input type="text" class="form-control" name="jmbg1" id="field_jmbg1" data-cy="jmbg1" formControlName="jmbg1" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_ime1">Ime</label>
+          <input type="text" class="form-control" name="ime1" id="field_ime1" data-cy="ime1" formControlName="ime1" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_prezime1">Prezime</label>
+          <input type="text" class="form-control" name="prezime1" id="field_prezime1" data-cy="prezime1" formControlName="prezime1" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_telefon1">Telefon</label>
+          <input type="text" class="form-control" name="telefon1" id="field_telefon1" data-cy="telefon1" formControlName="telefon1" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_firma1">Firma</label>
+          <input type="text" class="form-control" name="firma" id="field_firma1" data-cy="firma1" formControlName="firma1" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_radnoVreme1">Radno Vreme</label>
+          <input
+            type="text"
+            class="form-control"
+            name="radnoVreme1"
+            id="field_radnoVreme1"
+            data-cy="radnoVreme1"
+            formControlName="radnoVreme1"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" for="field_radniStatus">Radni Status</label>
+          <select class="form-control" name="radniStatus" formControlName="radniStatus1" id="field_radniStatus" data-cy="radniStatus">
+            <option [ngValue]="null">{{ 'diplomskiApp.RadniStatus.null' | translate }}</option>
+            <option *ngFor="let radniStatus of radniStatusValues" [value]="radniStatus">
+              {{ 'diplomskiApp.RadniStatus.' + radniStatus | translate }}
+            </option>
+          </select>
+        </div>
+      </div>
+    </form>
+
+    <div>
+      <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+        <fa-icon icon="ban"></fa-icon>&nbsp;<span>Otkazi promene</span>
+      </button>
+
+      <button
+        (click)="save()"
+        type="submit"
+        id="save-entity"
+        data-cy="entityCreateSaveButton"
+        [disabled]="editForm.invalid || isSaving"
+        class="btn btn-primary"
+      >
+        <fa-icon icon="save"></fa-icon>&nbsp;<span>Sacuvaj formular</span>
+      </button>
+    </div>
   </div>
 </div>

@@ -35,6 +35,7 @@ public class ProfilDetetaDTO {
             this.zdravstveniProblemi = dete.getFormular().getZdravstveniProblemi();
             this.zdravstveniUslovi = dete.getFormular().getZdravstveniUslovi();
             this.datumRodjenja = dete.getFormular().getDatumRodjenja();
+            this.roditelji = new ArrayList<>();
             if (dete.getFormular().getPodaciORoditeljimas() != null) {
                 for (PodaciORoditeljima r : dete.getFormular().getPodaciORoditeljimas()) {
                     roditelji.add(new PodaciORoditeljimaDTO(r));
@@ -48,7 +49,6 @@ public class ProfilDetetaDTO {
         this.brojIzostanaka = 0;
         this.visina = dete.getVisina();
         this.tezina = dete.getTezina();
-        this.roditelji = new ArrayList<>();
         this.id = dete.getId();
     }
 

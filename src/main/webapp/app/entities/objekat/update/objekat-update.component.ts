@@ -120,6 +120,7 @@ export class ObjekatUpdateComponent implements OnInit {
       naziv: this.editForm.get(['naziv'])!.value,
       id: this.editForm.get(['id'])!.value,
       adresa: this.editForm.get(['adresa'])!.value,
+      slika: this.url,
     };
   }
 }

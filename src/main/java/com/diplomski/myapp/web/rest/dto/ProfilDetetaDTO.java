@@ -3,6 +3,7 @@ package com.diplomski.myapp.web.rest.dto;
 import com.diplomski.myapp.domain.Dete;
 import com.diplomski.myapp.domain.PodaciORoditeljima;
 import com.diplomski.myapp.domain.Roditelj;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -34,7 +35,10 @@ public class ProfilDetetaDTO {
             this.drzava = dete.getFormular().getDrzava();
             this.zdravstveniProblemi = dete.getFormular().getZdravstveniProblemi();
             this.zdravstveniUslovi = dete.getFormular().getZdravstveniUslovi();
-            this.datumRodjenja = dete.getFormular().getDatumRodjenja();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy.");
+            if (dete.getFormular().getDatumRodjenja() != null) {
+                this.datumRodjenja = dete.getFormular().getDatumRodjenja().format(formatter);
+            }
             this.roditelji = new ArrayList<>();
             if (dete.getFormular().getPodaciORoditeljimas() != null) {
                 for (PodaciORoditeljima r : dete.getFormular().getPodaciORoditeljimas()) {

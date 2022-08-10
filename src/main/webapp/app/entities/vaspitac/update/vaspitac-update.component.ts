@@ -24,6 +24,8 @@ export class VaspitacUpdateComponent implements OnInit {
   authorities: string[] = [];
   user!: User;
   doNotMatch = false;
+  url: any;
+  isImageSaved = false;
 
   objekatsSharedCollection: IObjekat[] = [];
 
@@ -106,6 +108,19 @@ export class VaspitacUpdateComponent implements OnInit {
     return item.id!;
   }
 
+  onFileSelected(event: any): void {
+    const reader = new FileReader();
+    if (event.target.files && event.target.files.length > 0) {
+      const file = event.target.files[0];
+      reader.readAsDataURL(file);
+      reader.onload = () => {
+        this.url = reader.result;
+        this.isImageSaved = true;
+        //console.log(this.isImageSaved)
+      };
+    }
+  }
+
   protected subscribeToSaveResponse(result: Observable<HttpResponse<IVaspitac>>): void {
     result.pipe(finalize(() => this.onSaveFinalize())).subscribe({
       next: () => this.onSaveSuccess(),
@@ -155,6 +170,7 @@ export class VaspitacUpdateComponent implements OnInit {
       opis: this.editForm.get(['opis'])!.value,
       id: this.editForm.get(['id'])!.value,
       objekat: this.editForm.get(['objekat'])!.value,
+      slika: this.url,
     };
   }
   private updateUser(user: User): void {

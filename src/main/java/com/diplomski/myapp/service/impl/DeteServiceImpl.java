@@ -123,10 +123,17 @@ public class DeteServiceImpl implements DeteService {
             if (dete.get().getFormular() != null) {
                 dete.get().getFormular().setPodaciORoditeljimas(podaci);
                 ProfilDetetaDTO profilDTO = new ProfilDetetaDTO(dete.get());
+                int brojIzostanaka = 0;
 
-                int brojIzostanaka = this.neDolasciRepository.findByDeteAndGrupa(dete.get().getGrupa().getId(), dete.get().getId()).size();
                 profilDTO.setBrojIzostanaka(brojIzostanaka);
-                Object[] vaspitaci = dete.get().getGrupa().getDnevnik().getVaspitacs().toArray();
+                Object[] vaspitaci = new ArrayList<Object>().toArray();
+                if (dete.get().getGrupa() != null) {
+                    brojIzostanaka = this.neDolasciRepository.findByDeteAndGrupa(dete.get().getGrupa().getId(), dete.get().getId()).size();
+
+                    if (dete.get().getGrupa().getDnevnik() != null) {
+                        vaspitaci = dete.get().getGrupa().getDnevnik().getVaspitacs().toArray();
+                    }
+                }
                 String imenaVaspitaca = "";
                 for (Object o : vaspitaci) {
                     if (((Vaspitac) o).getUser() == null) {} else {

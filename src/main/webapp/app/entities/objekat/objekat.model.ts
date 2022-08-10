@@ -5,6 +5,7 @@ import { IVaspitac } from 'app/entities/vaspitac/vaspitac.model';
 export interface IObjekat {
   opis?: string | null;
   naziv?: string | null;
+  slika?: string | null;
   id?: number;
   adresa?: IAdresa | null;
   potrebanMaterijals?: IPotrebanMaterijal[] | null;
@@ -15,6 +16,7 @@ export class Objekat implements IObjekat {
   constructor(
     public opis?: string | null,
     public naziv?: string | null,
+    public slika?: string | null,
     public id?: number,
     public adresa?: IAdresa | null,
     public potrebanMaterijals?: IPotrebanMaterijal[] | null,
@@ -23,7 +25,13 @@ export class Objekat implements IObjekat {
 }
 
 export class ObjekatDTO {
-  constructor(public opis: string | null, public naziv: string | null, public id: number, public adresa: AdresaDTO) {}
+  constructor(
+    public opis: string | null,
+    public naziv: string | null,
+    public id: number,
+    public adresa: AdresaDTO,
+    public slika?: string | null
+  ) {}
 }
 
 export function getObjekatIdentifier(objekat: IObjekat): number | undefined {

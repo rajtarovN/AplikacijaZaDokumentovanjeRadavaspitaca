@@ -1,5 +1,7 @@
 package com.diplomski.myapp.domain;
 
+import com.diplomski.myapp.domain.enumeration.Status;
+import com.diplomski.myapp.domain.enumeration.StatusFormulara;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -27,6 +29,13 @@ public class Vaspitac implements Serializable {
 
     @Column(name = "opis")
     private String opis;
+
+    @Column(name = "slika")
+    private String slika;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status")
+    private Status status;
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
@@ -77,6 +86,14 @@ public class Vaspitac implements Serializable {
 
     public void setGodineIskustva(Integer godineIskustva) {
         this.godineIskustva = godineIskustva;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
     }
 
     public String getOpis() {
@@ -204,5 +221,13 @@ public class Vaspitac implements Serializable {
             ", godineIskustva=" + getGodineIskustva() +
             ", opis='" + getOpis() + "'" +
             "}";
+    }
+
+    public String getSlika() {
+        return slika;
+    }
+
+    public void setSlika(String slika) {
+        this.slika = slika;
     }
 }

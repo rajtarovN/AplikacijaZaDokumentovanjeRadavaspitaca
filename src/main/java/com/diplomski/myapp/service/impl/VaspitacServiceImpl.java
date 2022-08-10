@@ -1,6 +1,7 @@
 package com.diplomski.myapp.service.impl;
 
 import com.diplomski.myapp.domain.Vaspitac;
+import com.diplomski.myapp.domain.enumeration.Status;
 import com.diplomski.myapp.repository.UserRepository;
 import com.diplomski.myapp.repository.VaspitacRepository;
 import com.diplomski.myapp.service.VaspitacService;
@@ -38,6 +39,7 @@ public class VaspitacServiceImpl implements VaspitacService {
     public Vaspitac save(Vaspitac vaspitac) {
         log.debug("Request to save Vaspitac : {}", vaspitac);
         vaspitac.setUser(this.userRepository.getById(vaspitac.getUser().getId()));
+        vaspitac.setStatus(Status.RADI);
         return vaspitacRepository.save(vaspitac);
     }
 

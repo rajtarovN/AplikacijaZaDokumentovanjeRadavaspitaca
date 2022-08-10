@@ -5,7 +5,10 @@
       <table>
         <tr>
           <th class="imageClass">
-            <span class="imageClass">
+            <span *ngIf="this.vaspitac.slika != null" class="imageClass">
+              <img class="imageClass" [src]="this.vaspitac.slika" alt="" />
+            </span>
+            <span *ngIf="this.vaspitac.slika == null" class="imageClass">
               <img class="imageClass" src="../content/images/krug.png" alt="Italian Trulli" />
             </span>
           </th>

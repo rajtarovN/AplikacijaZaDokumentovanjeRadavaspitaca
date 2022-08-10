@@ -4,6 +4,7 @@ import com.diplomski.myapp.domain.enumeration.StatusFormulara;
 import com.diplomski.myapp.domain.enumeration.TipGrupe;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.*;
@@ -33,7 +34,7 @@ public class Formular implements Serializable {
     private String jmbg;
 
     @Column(name = "datum_rodjenja")
-    private String datumRodjenja;
+    private LocalDate datumRodjenja;
 
     @Column(name = "ime_deteta")
     private String imeDeteta;
@@ -123,16 +124,16 @@ public class Formular implements Serializable {
         this.jmbg = jmbg;
     }
 
-    public String getDatumRodjenja() {
+    public LocalDate getDatumRodjenja() {
         return this.datumRodjenja;
     }
 
-    public Formular datumRodjenja(String datumRodjenja) {
+    public Formular datumRodjenja(LocalDate datumRodjenja) {
         this.setDatumRodjenja(datumRodjenja);
         return this;
     }
 
-    public void setDatumRodjenja(String datumRodjenja) {
+    public void setDatumRodjenja(LocalDate datumRodjenja) {
         this.datumRodjenja = datumRodjenja;
     }
 

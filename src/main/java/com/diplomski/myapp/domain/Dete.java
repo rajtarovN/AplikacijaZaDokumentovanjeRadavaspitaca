@@ -40,9 +40,10 @@ public class Dete implements Serializable {
     @JsonIgnoreProperties(value = { "vaspitac", "dete" }, allowSetters = true)
     private Set<ZapazanjeUVeziDeteta> zapazanjeUVeziDetetas = new HashSet<>();
 
+    @OneToMany(mappedBy = "dete")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JsonIgnoreProperties(value = { "dete", "dnevnik" }, allowSetters = true)
-    @OneToOne(mappedBy = "dete")
-    private NeDolasci neDolasci;
+    private Set<NeDolasci> neDolasci = new HashSet<>();
 
     @ManyToOne
     @JsonIgnoreProperties(value = { "detes", "formulars" }, allowSetters = true)
@@ -65,7 +66,7 @@ public class Dete implements Serializable {
         Long id,
         Formular formular,
         Set<ZapazanjeUVeziDeteta> zapazanjeUVeziDetetas,
-        NeDolasci neDolasci,
+        Set<NeDolasci> neDolasci,
         Roditelj roditelj,
         Grupa grupa
     ) {
@@ -164,21 +165,21 @@ public class Dete implements Serializable {
         return this;
     }
 
-    public NeDolasci getNeDolasci() {
+    public Set<NeDolasci> getNeDolasci() {
         return this.neDolasci;
     }
 
-    public void setNeDolasci(NeDolasci neDolasci) {
+    public void setNeDolasci(Set<NeDolasci> neDolasci) {
         if (this.neDolasci != null) {
-            this.neDolasci.setDete(null);
+            //this.neDolasci.setDete(null);
         }
         if (neDolasci != null) {
-            neDolasci.setDete(this);
+            //neDolasci.setDete(this);
         }
         this.neDolasci = neDolasci;
     }
 
-    public Dete neDolasci(NeDolasci neDolasci) {
+    public Dete neDolasci(Set<NeDolasci> neDolasci) {
         this.setNeDolasci(neDolasci);
         return this;
     }

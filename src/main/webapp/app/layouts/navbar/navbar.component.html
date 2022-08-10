@@ -388,6 +388,18 @@
               </a>
             </li>
             <li>
+              <a
+                class="dropdown-item"
+                routerLink="pedagog"
+                routerLinkActive="active"
+                [routerLinkActiveOptions]="{ exact: true }"
+                (click)="collapseNavbar()"
+              >
+                <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
+                <span jhiTranslate="global.menu.entities.pedagog">Pedagog</span>
+              </a>
+            </li>
+            <li>
               <a class="dropdown-item" routerLink="dnevnik" routerLinkActive="active" (click)="collapseNavbar()">
                 <fa-icon icon="book" [fixedWidth]="true"></fa-icon>
                 <span>Pregled dnevnika</span>

@@ -40,7 +40,7 @@ export class PregledZapazanjaComponent implements OnInit {
   loadPage(): void {
     this.isLoading = true;
 
-    this.zapazanjeUVeziDetetaService.query().subscribe({
+    this.zapazanjeUVeziDetetaService.queryByDete(localStorage.getItem('dete')!).subscribe({
       next: (res: HttpResponse<any>) => {
         this.isLoading = false;
         this.onSuccess(res.body, res.headers);
@@ -64,6 +64,8 @@ export class PregledZapazanjaComponent implements OnInit {
   }
 
   protected onError(): void {
+    // eslint-disable-next-line no-console
+    console.log('aaa err aaa');
     this.ngbPaginationPage = this.page ?? 1;
   }
 }

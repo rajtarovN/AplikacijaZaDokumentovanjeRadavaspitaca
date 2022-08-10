@@ -120,7 +120,7 @@
           />
         </div>
 
-        <div class="row mb-3">
+        <div [hidden]="editForm.get('id')!.value !== null" class="row mb-3">
           <label class="form-label" jhiTranslate="diplomskiApp.formular.statusFormulara" for="field_statusFormulara"
             >Status Formulara</label
           >
@@ -166,7 +166,14 @@
       </div>
     </form>
 
-    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editFormRoditelj2">
+    <form
+      [hidden]="editForm.get('id')!.value !== null"
+      name="editForm"
+      role="form"
+      novalidate
+      (ngSubmit)="save()"
+      [formGroup]="editFormRoditelj2"
+    >
       <div>
         <label class="col-form-label-lg"><u>Podaci o prvom roditelju: </u></label>
         <div class="row mb-3">
@@ -218,7 +225,14 @@
       </div>
     </form>
 
-    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editFormRoditelj1">
+    <form
+      [hidden]="editForm.get('id')!.value !== null"
+      name="editForm"
+      role="form"
+      novalidate
+      (ngSubmit)="save()"
+      [formGroup]="editFormRoditelj1"
+    >
       <div>
         <label class="col-form-label-lg"><u>Podaci o drugom roditelju: </u></label>
         <div class="row mb-3">

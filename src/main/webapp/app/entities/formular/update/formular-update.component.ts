@@ -186,6 +186,9 @@ export class FormularUpdateComponent implements OnInit {
       tipGrupe: formular.tipGrupe,
       adresa: formular.adresa,
       roditelj: formular.roditelj,
+      mesto: formular.adresa?.mesto,
+      ulica: formular.adresa?.ulica,
+      broj: formular.adresa?.broj,
     });
 
     this.adresasCollection = this.adresaService.addAdresaToCollectionIfMissing(this.adresasCollection, formular.adresa);

@@ -86,6 +86,12 @@
       <button type="button" [routerLink]="['/dete', dete.id, 'edit']" class="btn btn-primary">
         <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Uredi</span>
       </button>
+      <button *jhiHasAnyAuthority="'ROLE_PEDAGOG'" type="button" (click)="viewZapazanja(dete.id)" class="btn btn-info">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Pregled zapazanja</span>
+      </button>
+      <button *jhiHasAnyAuthority="'ROLE_VASPITAC'" type="button" (click)="viewZapazanja(dete.id)" class="btn btn-info">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Pregled zapazanja</span>
+      </button>
     </div>
   </div>
 </div>

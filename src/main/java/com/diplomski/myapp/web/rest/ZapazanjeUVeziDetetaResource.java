@@ -184,4 +184,12 @@ public class ZapazanjeUVeziDetetaResource {
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))
             .build();
     }
+
+    @GetMapping("/zapazanje-u-vezi-detetas/findByDete/{id}")
+    public ResponseEntity<List<ZapazanjeUVeziDeteta>> getAllZapazanjeUVeziDetetas(@PathVariable Long id) {
+        log.debug("REST request to get a page of ZapazanjeUVeziDetetas by dete");
+        Page<ZapazanjeUVeziDeteta> page = zapazanjeUVeziDetetaService.findByDete(id);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
 }

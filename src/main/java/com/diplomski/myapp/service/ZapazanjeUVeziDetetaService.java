@@ -55,4 +55,6 @@ public interface ZapazanjeUVeziDetetaService {
      * @param id the id of the entity.
      */
     void delete(Long id);
+
+    Page<ZapazanjeUVeziDeteta> findByDete(Long idDeteta);
 }

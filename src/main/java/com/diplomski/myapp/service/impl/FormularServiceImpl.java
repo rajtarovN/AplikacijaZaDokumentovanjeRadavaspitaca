@@ -77,6 +77,8 @@ public class FormularServiceImpl implements FormularService {
     @Override
     public Formular update(Formular formular) {
         log.debug("Request to save Formular : {}", formular);
+        this.adresaRepository.save(formular.getAdresa());
+        formular.setPodaciORoditeljimas(this.podaciORoditeljimaRepository.findByFormular(formular.getId()));
         return formularRepository.save(formular);
     }
 

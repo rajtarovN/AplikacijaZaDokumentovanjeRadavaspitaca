@@ -1,12 +1,17 @@
 package com.diplomski.myapp.service.impl;
 
 import com.diplomski.myapp.domain.ZapazanjeUVeziDeteta;
+import com.diplomski.myapp.repository.DeteRepository;
+import com.diplomski.myapp.repository.VaspitacRepository;
 import com.diplomski.myapp.repository.ZapazanjeUVeziDetetaRepository;
 import com.diplomski.myapp.service.ZapazanjeUVeziDetetaService;
+import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,13 +27,28 @@ public class ZapazanjeUVeziDetetaServiceImpl implements ZapazanjeUVeziDetetaServ
 
     private final ZapazanjeUVeziDetetaRepository zapazanjeUVeziDetetaRepository;
 
-    public ZapazanjeUVeziDetetaServiceImpl(ZapazanjeUVeziDetetaRepository zapazanjeUVeziDetetaRepository) {
+    private final DeteRepository deteRepository;
+
+    private final VaspitacRepository vaspitacRepository;
+
+    public ZapazanjeUVeziDetetaServiceImpl(
+        ZapazanjeUVeziDetetaRepository zapazanjeUVeziDetetaRepository,
+        DeteRepository deteRepository,
+        VaspitacRepository vaspitacRepository
+    ) {
         this.zapazanjeUVeziDetetaRepository = zapazanjeUVeziDetetaRepository;
+        this.deteRepository = deteRepository;
+        this.vaspitacRepository = vaspitacRepository;
     }
 
     @Override
     public ZapazanjeUVeziDeteta save(ZapazanjeUVeziDeteta zapazanjeUVeziDeteta) {
         log.debug("Request to save ZapazanjeUVeziDeteta : {}", zapazanjeUVeziDeteta);
+        zapazanjeUVeziDeteta.setDatum(LocalDate.now());
+        zapazanjeUVeziDeteta.setDete(this.deteRepository.getById(zapazanjeUVeziDeteta.getDete().getId()));
+        zapazanjeUVeziDeteta.setVaspitac(
+            this.vaspitacRepository.getVaspitacIdByUsername(zapazanjeUVeziDeteta.getVaspitac().getUser().getLogin())
+        );
         return zapazanjeUVeziDetetaRepository.save(zapazanjeUVeziDeteta);
     }
 
@@ -84,5 +104,12 @@ public class ZapazanjeUVeziDetetaServiceImpl implements ZapazanjeUVeziDetetaServ
     public void delete(Long id) {
         log.debug("Request to delete ZapazanjeUVeziDeteta : {}", id);
         zapazanjeUVeziDetetaRepository.deleteById(id);
+    }
+
+    @Override
+    public Page<ZapazanjeUVeziDeteta> findByDete(Long idDeteta) {
+        List<ZapazanjeUVeziDeteta> zapazanjeUVeziDetetaList = this.zapazanjeUVeziDetetaRepository.findByDete(idDeteta);
+        Page<ZapazanjeUVeziDeteta> page = new PageImpl<>(zapazanjeUVeziDetetaList);
+        return page;
     }
 }

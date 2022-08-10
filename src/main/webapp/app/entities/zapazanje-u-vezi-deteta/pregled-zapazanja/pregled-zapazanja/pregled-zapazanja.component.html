@@ -10,11 +10,20 @@
       <jhi-alert-error></jhi-alert-error>
 
       <jhi-alert></jhi-alert>
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-zapazanje-u-vezi-deteta"
+        [routerLink]="['/zapazanje-u-vezi-deteta/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span> Dodavanje novog zapazanja </span>
+      </button>
       <table>
         <tr>
           <th>
             <ul *ngFor="let zapazanje of observable">
-              <button (click)="changeZapazanje(zapazanje)">{{ zapazanje.datum }}</button>
+              <button class="btn btn-info btn-color" (click)="changeZapazanje(zapazanje)">{{ zapazanje.datum }}</button>
             </ul>
           </th>
           <th>
@@ -41,12 +50,14 @@
               </dd>
               <dt><span jhiTranslate="diplomskiApp.zapazanjeUVeziDeteta.datum">Datum</span></dt>
               <dd>
-                <span>{{ zapazanjeUVeziDeteta?.datum | formatMediumDate }}</span>
+                <span>{{ zapazanjeUVeziDeteta?.datum }}</span>
               </dd>
               <dt><span jhiTranslate="diplomskiApp.zapazanjeUVeziDeteta.vaspitac">Vaspitac</span></dt>
               <dd>
                 <div *ngIf="zapazanjeUVeziDeteta?.vaspitac">
-                  <a [routerLink]="['/vaspitac', zapazanjeUVeziDeteta?.vaspitac?.id, 'view']">{{ zapazanjeUVeziDeteta?.vaspitac?.id }}</a>
+                  <a [routerLink]="['/vaspitac', zapazanjeUVeziDeteta?.vaspitac?.id, 'view']"
+                    >{{ zapazanjeUVeziDeteta?.vaspitac?.user?.firstName }} {{ zapazanjeUVeziDeteta?.vaspitac?.user?.lastName }}</a
+                  >
                 </div>
               </dd>
               <dt><span jhiTranslate="diplomskiApp.zapazanjeUVeziDeteta.dete">Dete</span></dt>
@@ -61,12 +72,12 @@
       </table>
 
       <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
-        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Nazad</span>
       </button>
 
-      <button type="button" [routerLink]="['/zapazanje-u-vezi-deteta', zapazanjeUVeziDeteta?.id, 'edit']" class="btn btn-primary">
-        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
-      </button>
+      <!--      <button type="button" [routerLink]="['/zapazanje-u-vezi-deteta', zapazanjeUVeziDeteta?.id, 'edit']" class="btn btn-primary">-->
+      <!--        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>-->
+      <!--      </button>-->
     </div>
   </div>
 </div>

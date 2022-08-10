@@ -1,10 +1,8 @@
 package com.diplomski.myapp.service.impl;
 
-import com.diplomski.myapp.domain.Dete;
-import com.diplomski.myapp.domain.Dnevnik;
-import com.diplomski.myapp.domain.PodaciORoditeljima;
-import com.diplomski.myapp.domain.Vaspitac;
+import com.diplomski.myapp.domain.*;
 import com.diplomski.myapp.repository.DeteRepository;
+import com.diplomski.myapp.repository.NeDolasciRepository;
 import com.diplomski.myapp.repository.PodaciORoditeljimaRepository;
 import com.diplomski.myapp.repository.VaspitacRepository;
 import com.diplomski.myapp.service.DeteService;
@@ -36,14 +34,18 @@ public class DeteServiceImpl implements DeteService {
 
     private final PodaciORoditeljimaRepository podaciORoditeljimaRepository;
 
+    private final NeDolasciRepository neDolasciRepository;
+
     public DeteServiceImpl(
         DeteRepository deteRepository,
         VaspitacRepository vaspitacRepository,
-        PodaciORoditeljimaRepository podaciORoditeljimaRepository
+        PodaciORoditeljimaRepository podaciORoditeljimaRepository,
+        NeDolasciRepository neDolasciRepository
     ) {
         this.deteRepository = deteRepository;
         this.vaspitacRepository = vaspitacRepository;
         this.podaciORoditeljimaRepository = podaciORoditeljimaRepository;
+        this.neDolasciRepository = neDolasciRepository;
     }
 
     @Override
@@ -115,20 +117,25 @@ public class DeteServiceImpl implements DeteService {
         Optional<Dete> dete = deteRepository.findById(id);
 
         if (dete.isPresent()) {
-            Set<PodaciORoditeljima> podaci = this.podaciORoditeljimaRepository.findByFormular(dete.get().getFormular().getId());
-            dete.get().getFormular().setPodaciORoditeljimas(podaci);
-            ProfilDetetaDTO profilDTO = new ProfilDetetaDTO(dete.get());
-            //int izostanci = dete.get().getNeDolasci().stream().filter(nd -> nd.)
-            profilDTO.setBrojIzostanaka(0);
-            Object[] vaspitaci = dete.get().getGrupa().getDnevnik().getVaspitacs().toArray();
-            String imenaVaspitaca = "";
-            for (Object o : vaspitaci) {
-                if (((Vaspitac) o).getUser() == null) {} else {
-                    imenaVaspitaca += ((Vaspitac) o).getUser().getFirstName() + " " + ((Vaspitac) o).getUser().getLastName();
+            Set<PodaciORoditeljima> podaci = dete.get().getFormular() != null
+                ? this.podaciORoditeljimaRepository.findByFormular(dete.get().getFormular().getId())
+                : new HashSet<>();
+            if (dete.get().getFormular() != null) {
+                dete.get().getFormular().setPodaciORoditeljimas(podaci);
+                ProfilDetetaDTO profilDTO = new ProfilDetetaDTO(dete.get());
+
+                int brojIzostanaka = this.neDolasciRepository.findByDeteAndGrupa(dete.get().getGrupa().getId(), dete.get().getId()).size();
+                profilDTO.setBrojIzostanaka(brojIzostanaka);
+                Object[] vaspitaci = dete.get().getGrupa().getDnevnik().getVaspitacs().toArray();
+                String imenaVaspitaca = "";
+                for (Object o : vaspitaci) {
+                    if (((Vaspitac) o).getUser() == null) {} else {
+                        imenaVaspitaca += ((Vaspitac) o).getUser().getFirstName() + " " + ((Vaspitac) o).getUser().getLastName();
+                    }
                 }
+                profilDTO.setVaspitac(imenaVaspitaca);
+                return profilDTO;
             }
-            profilDTO.setVaspitac(imenaVaspitaca);
-            return profilDTO;
         }
 
         return null;

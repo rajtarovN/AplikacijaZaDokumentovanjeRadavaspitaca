@@ -10,7 +10,7 @@
   <jhi-alert-error></jhi-alert-error>
 
   <jhi-alert></jhi-alert>
-  <button (click)="sacuvaj()">Sacuvaj</button>
+  <button class="btn btn-info" (click)="sacuvaj()">Sacuvaj</button>
   <div class="table-responsive" id="entities" *ngIf="izostanci && izostanci.length > 0">
     <table class="table table-striped" aria-describedby="page-heading">
       <thead>
@@ -34,7 +34,8 @@
       <tbody>
         <tr *ngFor="let izostanak of izostanci; trackBy: trackId" data-cy="entityTable">
           <td>{{ izostanak.dete }}</td>
-          <td>{{ izostanak.odsutan }}</td>
+          <td *ngIf="izostanak.odsutan">odsutan</td>
+          <td *ngIf="!izostanak.odsutan">prisutan</td>
           <td>
             <button
               [disabled]="!izostanak.odsutan ? 'disabled' : null"

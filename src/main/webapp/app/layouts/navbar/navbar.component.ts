@@ -71,8 +71,6 @@ export class NavbarComponent implements OnInit {
   pregledVazecegDnevnika(): void {
     this.accountService.getAuthenticationState().subscribe(account => {
       if (account) {
-        // eslint-disable-next-line no-console
-        console.log('----------', account, '-------------------------');
         if (account.authorities[0] === 'ROLE_VASPITAC') {
           localStorage.setItem('username', account.login);
         }
@@ -103,5 +101,29 @@ export class NavbarComponent implements OnInit {
 
   toggleNavbar(): void {
     this.isNavbarCollapsed = !this.isNavbarCollapsed;
+  }
+
+  prikaziIzostanke(): void {
+    this.accountService.getAuthenticationState().subscribe(account => {
+      if (account) {
+        if (account.authorities[0] === 'ROLE_VASPITAC') {
+          localStorage.setItem('username', account.login);
+        }
+      }
+    });
+    this.router.navigate(['/ne-dolasci']);
+  }
+
+  showOlderDneviks(): void {
+    this.accountService.getAuthenticationState().subscribe(account => {
+      if (account) {
+        if (account.authorities[0] === 'ROLE_VASPITAC') {
+          localStorage.setItem('username', account.login);
+          localStorage.setItem('olderDnevniks', 'true');
+        }
+      }
+    });
+
+    this.router.navigate(['/dnevnik']);
   }
 }

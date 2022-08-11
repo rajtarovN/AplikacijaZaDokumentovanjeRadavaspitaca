@@ -39,8 +39,13 @@ export class PisanjePlanaComponent implements OnInit {
     this.activatedRoute.data.subscribe(({ planPrice }) => {
       // eslint-disable-next-line no-console
       console.log('aaa');
+      this.updateForm(planPrice);
     });
   }
+  previousState(): void {
+    window.history.back();
+  }
+
   save(): void {
     this.isSaving = true;
     const planPrice = this.createFromForm();
@@ -60,10 +65,6 @@ export class PisanjePlanaComponent implements OnInit {
         }
       });
     }
-  }
-
-  previousState(): void {
-    window.history.back();
   }
 
   protected subscribeToSaveResponse(result: Observable<HttpResponse<IPlanPrice>>): void {
@@ -105,7 +106,7 @@ export class PisanjePlanaComponent implements OnInit {
     console.log('aaa', this.editForm.get(['id'])!.value, 'aaa');
     return {
       ...new PlanPrice(),
-      //id: this.editForm.get(['id'])!.value,
+      id: this.editForm.get(['id'])!.value,
       izvoriSaznanja: this.editForm.get(['izvoriSaznanja'])!.value,
       nazivTeme: this.editForm.get(['nazivTeme'])!.value,
       pocetnaIdeja: this.editForm.get(['pocetnaIdeja'])!.value,

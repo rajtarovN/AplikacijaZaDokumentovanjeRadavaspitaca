@@ -3,13 +3,15 @@ package com.diplomski.myapp.service.impl;
 import com.diplomski.myapp.domain.Dete;
 import com.diplomski.myapp.domain.Dnevnik;
 import com.diplomski.myapp.domain.NeDolasci;
-import com.diplomski.myapp.domain.PotrebanMaterijal;
+import com.diplomski.myapp.domain.Vaspitac;
 import com.diplomski.myapp.repository.DeteRepository;
 import com.diplomski.myapp.repository.DnevnikRepository;
 import com.diplomski.myapp.repository.NeDolasciRepository;
+import com.diplomski.myapp.repository.VaspitacRepository;
 import com.diplomski.myapp.service.NeDolasciService;
 import com.diplomski.myapp.web.rest.dto.NeDolasciDTO;
 import com.diplomski.myapp.web.rest.dto.NeDolazakViewDTO;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -34,15 +36,18 @@ public class NeDolasciServiceImpl implements NeDolasciService {
 
     private final DeteRepository deteRepository;
     private final DnevnikRepository dnevnikRepository;
+    private final VaspitacRepository vaspitacRepository;
 
     public NeDolasciServiceImpl(
         NeDolasciRepository neDolasciRepository,
         DeteRepository deteRepository,
-        DnevnikRepository dnevnikRepository
+        DnevnikRepository dnevnikRepository,
+        VaspitacRepository vaspitacRepository
     ) {
         this.neDolasciRepository = neDolasciRepository;
         this.deteRepository = deteRepository;
         this.dnevnikRepository = dnevnikRepository;
+        this.vaspitacRepository = vaspitacRepository;
     }
 
     @Override
@@ -119,6 +124,31 @@ public class NeDolasciServiceImpl implements NeDolasciService {
         //.subList((pageable.getPageNumber()) * pageable.getPageSize(), pageable.getPageNumber() * pageable.getPageSize());
 
         Page<NeDolazakViewDTO> page = new PageImpl<>(izostanciDTO);
+        return page;
+    }
+
+    @Override
+    public Page<NeDolazakViewDTO> findAllByVaspitac(Pageable pageable, String username) {
+        Vaspitac vaspitac = this.vaspitacRepository.getVaspitacIdByUsername(username);
+        Dnevnik currentDnevnik = null;
+        for (Dnevnik d : vaspitac.getDnevniks()) {
+            if (d.getKrajVazenja().isAfter(LocalDate.now())) {
+                List<NeDolasci> izostanci = this.neDolasciRepository.findByGrupaId(d.getGrupa().getId());
+                List<NeDolazakViewDTO> izostanciDTO = new ArrayList<>();
+                //
+                izostanci.forEach(i ->
+                    izostanciDTO.add(
+                        new NeDolazakViewDTO(i, this.deteRepository.findById(i.getDete().getId()).get().getFormular().getImeDeteta())
+                    )
+                );
+
+                //.subList((pageable.getPageNumber()) * pageable.getPageSize(), pageable.getPageNumber() * pageable.getPageSize());
+
+                Page<NeDolazakViewDTO> page = new PageImpl<>(izostanciDTO);
+                return page;
+            }
+        }
+        Page<NeDolazakViewDTO> page = new PageImpl<>(new ArrayList<>());
         return page;
     }
 }

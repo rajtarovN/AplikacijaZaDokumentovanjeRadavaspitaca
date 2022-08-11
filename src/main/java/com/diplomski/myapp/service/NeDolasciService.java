@@ -62,4 +62,6 @@ public interface NeDolasciService {
     String saveList(List<NeDolasciDTO> neDolasci);
 
     Page<NeDolazakViewDTO> findAllByGrupa(Pageable pageable, Long id);
+
+    Page<NeDolazakViewDTO> findAllByVaspitac(Pageable pageable, String username);
 }

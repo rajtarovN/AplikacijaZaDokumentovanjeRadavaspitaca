@@ -68,4 +68,8 @@ public interface DnevnikService {
     void delete(Long id);
 
     Set<Dete> findAllChildren(Long id);
+
+    List<Dete> getDecaByUsername(String username);
+
+    Page<Dnevnik> findAllByUsername(String username);
 }

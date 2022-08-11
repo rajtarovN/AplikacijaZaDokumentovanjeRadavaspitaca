@@ -2,14 +2,18 @@ package com.diplomski.myapp.service.impl;
 
 import com.diplomski.myapp.domain.Dete;
 import com.diplomski.myapp.domain.Dnevnik;
+import com.diplomski.myapp.domain.Grupa;
+import com.diplomski.myapp.domain.Vaspitac;
+import com.diplomski.myapp.repository.DeteRepository;
 import com.diplomski.myapp.repository.DnevnikRepository;
+import com.diplomski.myapp.repository.VaspitacRepository;
 import com.diplomski.myapp.service.DnevnikService;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.time.LocalDate;
+import java.util.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,8 +29,14 @@ public class DnevnikServiceImpl implements DnevnikService {
 
     private final DnevnikRepository dnevnikRepository;
 
-    public DnevnikServiceImpl(DnevnikRepository dnevnikRepository) {
+    private final VaspitacRepository vaspitacRepository;
+
+    private final DeteRepository deteRepository;
+
+    public DnevnikServiceImpl(DnevnikRepository dnevnikRepository, VaspitacRepository vaspitacRepository, DeteRepository deteRepository) {
         this.dnevnikRepository = dnevnikRepository;
+        this.vaspitacRepository = vaspitacRepository;
+        this.deteRepository = deteRepository;
     }
 
     @Override
@@ -87,5 +97,31 @@ public class DnevnikServiceImpl implements DnevnikService {
     @Override
     public Set<Dete> findAllChildren(Long id) {
         return dnevnikRepository.findById(id).get().getGrupa().getDetes();
+    }
+
+    @Override
+    public List<Dete> getDecaByUsername(String username) {
+        Vaspitac vaspitac = this.vaspitacRepository.getVaspitacIdByUsername(username);
+        for (Dnevnik d : vaspitac.getDnevniks()) {
+            if (d.getKrajVazenja().isAfter(LocalDate.now())) {
+                Grupa grupa = dnevnikRepository.getGrupa(d.getId());
+                if (grupa != null) {
+                    return this.deteRepository.findAllByGrupa(grupa.getId());
+                }
+            }
+        }
+        return new ArrayList<>();
+    }
+
+    @Override
+    public Page<Dnevnik> findAllByUsername(String username) {
+        Vaspitac vaspitac = this.vaspitacRepository.getVaspitacIdByUsername(username);
+        List<Dnevnik> dnevniks = new ArrayList<>();
+        for (Dnevnik d : vaspitac.getDnevniks()) {
+            if (d.getKrajVazenja().isBefore(LocalDate.now())) {
+                dnevniks.add(d);
+            }
+        }
+        return new PageImpl<>(dnevniks);
     }
 }

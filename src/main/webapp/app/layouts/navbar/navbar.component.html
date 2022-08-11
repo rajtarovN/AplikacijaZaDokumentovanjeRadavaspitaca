@@ -440,8 +440,12 @@
                 <span>Tabela dece</span>
               </a>
             </li>
-
-            <!-- jhipster-needle-add-element-to-admin-menu - JHipster will add entities to the admin menu here -->
+            <li>
+              <a class="dropdown-item" (click)="prikaziIzostanke()" routereLinkActive="active" (click)="collapseNavbar()">
+                <fa-icon icon="users" [fixedWidth]="true"></fa-icon>
+                <span>Prikaz izostanaka</span>
+              </a>
+            </li>
           </ul>
         </li>
         <li
@@ -460,7 +464,7 @@
           </a>
           <ul class="dropdown-menu" ngbDropdownMenu aria-labelledby="admin-menu">
             <li>
-              <a class="dropdown-item" routerLink="admin/user-management" routerLinkActive="active" (click)="collapseNavbar()">
+              <a class="dropdown-item" (click)="showOlderDneviks()" routerLinkActive="active" (click)="collapseNavbar()">
                 <fa-icon icon="users" [fixedWidth]="true"></fa-icon>
                 <span>Stariji dnevnici</span>
               </a>

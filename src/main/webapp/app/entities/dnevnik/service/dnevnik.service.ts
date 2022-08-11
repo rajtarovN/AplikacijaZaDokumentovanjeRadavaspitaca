@@ -76,9 +76,11 @@ export class DnevnikService {
     return dnevnikCollection;
   }
 
-  getDeca(id: string): any {
+  getDeca(username: string): any {
     //const options = createRequestOption(id);
-    return this.http.get<DeteDTO[]>(this.resourceUrl + '/getDeca/' + id);
+    // eslint-disable-next-line no-console
+    console.log('aavvabb', username);
+    return this.http.get<DeteDTO[]>(this.resourceUrl + '/getDeca/' + username);
   }
 
   queryOldDnevniks(req: { size: number; page: number; sort: string[] }, username: string): Observable<EntityArrayResponseType> {

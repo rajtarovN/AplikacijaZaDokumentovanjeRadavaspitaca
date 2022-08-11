@@ -206,4 +206,15 @@ public class NeDolasciResource {
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
+
+    @GetMapping("/ne-dolascis/findByVaspitac/{username}")
+    public ResponseEntity<List<NeDolazakViewDTO>> findNeDolasciByVaspitac(
+        @org.springdoc.api.annotations.ParameterObject Pageable pageable,
+        @PathVariable String username
+    ) {
+        log.debug("REST request to get a page of NeDolascis");
+        Page<NeDolazakViewDTO> page = neDolasciService.findAllByVaspitac(pageable, username);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
 }

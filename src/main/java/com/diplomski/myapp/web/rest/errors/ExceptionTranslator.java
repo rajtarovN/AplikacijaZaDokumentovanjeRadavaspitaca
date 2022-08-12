@@ -219,4 +219,24 @@ public class ExceptionTranslator implements ProblemHandling, SecurityAdviceTrait
         // This list is for sure not complete
         return StringUtils.containsAny(message, "org.", "java.", "net.", "javax.", "com.", "io.", "de.", "com.diplomski.myapp");
     }
+
+    //    @ExceptionHandler
+    //    public ResponseEntity<Problem> VaspitacAlreadyHaveDnevnikInGivenPeriodException(
+    //        com.diplomski.myapp.service.VaspitacAlreadyHaveDnevnikInGivenPeriodException ex,
+    //        NativeWebRequest request
+    //    ) {
+    //        VaspitacAlreadyHaveDnevnikInGivenPeriodException problem = new VaspitacAlreadyHaveDnevnikInGivenPeriodException();
+    //        return create(
+    //            problem,
+    //            request,
+    //            HeaderUtil.createFailureAlert(applicationName, true, problem.getEntityName(), problem.getErrorKey(), problem.getMessage())
+    //        );
+    //    }
+    @ExceptionHandler
+    public ResponseEntity<Problem> handleVaspitacAlreadyHaveDnevnikInGivenPeriodException(
+        com.diplomski.myapp.service.VaspitacAlreadyHaveDnevnikInGivenPeriodException ex,
+        NativeWebRequest request
+    ) {
+        return create(new VaspitacAlreadyHaveDnevnikInGivenPeriodException(), request);
+    }
 }

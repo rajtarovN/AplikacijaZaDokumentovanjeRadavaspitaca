@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import dayjs from 'dayjs/esm';
 import { TipGrupe } from '../../entities/enumerations/tip-grupe.model';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { HttpHeaders, HttpResponse } from '@angular/common/http';
+import { HttpErrorResponse, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { VaspitacService } from '../../entities/vaspitac/service/vaspitac.service';
 import { FormularService } from '../../entities/formular/service/formular.service';
 import { DeteZaGrupuDTO } from '../../entities/formular/formular.model';
@@ -17,6 +17,8 @@ import { FormBuilder } from '@angular/forms';
   styleUrls: ['./raspored-dece.component.scss'],
 })
 export class RasporedDeceComponent implements OnInit {
+  errorVaspitacHasDnevnik = false;
+  success = false;
   deca: DeteZaGrupuDTO[];
   dodataDeca: DeteZaGrupuDTO[];
   predicate!: string;
@@ -70,12 +72,14 @@ export class RasporedDeceComponent implements OnInit {
     );
     // eslint-disable-next-line no-console
     console.log(newGrupa);
+    this.success = false;
+    this.errorVaspitacHasDnevnik = false;
     this.grupaService.createGrupa(newGrupa).subscribe({
       next: (res: HttpResponse<any>) => {
         this.onCreateSuccess(res.body, res.headers);
       },
-      error: () => {
-        this.onError();
+      error: response => {
+        this.onError(response);
       },
     });
   }
@@ -106,9 +110,9 @@ export class RasporedDeceComponent implements OnInit {
         this.isLoading = false;
         this.onGetDecaSuccess(res.body, res.headers);
       },
-      error: () => {
+      error: response => {
         this.isLoading = false;
-        this.onError();
+        this.onError(response);
       },
     });
     // eslint-disable-next-line no-console
@@ -119,9 +123,9 @@ export class RasporedDeceComponent implements OnInit {
         this.isLoading = false;
         this.onSuccess(res.body, res.headers);
       },
-      error: () => {
+      error: response => {
         this.isLoading = false;
-        this.onError();
+        this.onError(response);
       },
     });
   }
@@ -159,13 +163,19 @@ export class RasporedDeceComponent implements OnInit {
     }
   }
 
-  protected onError(): void {
-    // eslint-disable-next-line no-console
-    console.log('aaa'); //todo
+  // protected onError(): void {
+  //   // eslint-disable-next-line no-console
+  //   console.log('aaa'); //todo
+  // }
+  private onError(response: HttpErrorResponse): void {
+    if (response.status === 400) {
+      this.errorVaspitacHasDnevnik = true;
+    }
   }
 
   private onCreateSuccess(body: any | null, headers: HttpHeaders): void {
     // eslint-disable-next-line no-console
     console.log('uspeh'); //todo nesto paametnije
+    this.success = true;
   }
 }

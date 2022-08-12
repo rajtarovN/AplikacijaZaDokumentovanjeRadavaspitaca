@@ -3,7 +3,9 @@ package com.diplomski.myapp.service.impl;
 import com.diplomski.myapp.domain.*;
 import com.diplomski.myapp.domain.enumeration.StatusFormulara;
 import com.diplomski.myapp.repository.*;
+import com.diplomski.myapp.service.EmailAlreadyUsedException;
 import com.diplomski.myapp.service.GrupaService;
+import com.diplomski.myapp.service.VaspitacAlreadyHaveDnevnikInGivenPeriodException;
 import com.diplomski.myapp.web.rest.dto.DeteZaGrupuDTO;
 import com.diplomski.myapp.web.rest.dto.GrupaDTO;
 import java.util.*;
@@ -108,6 +110,13 @@ public class GrupaServiceImpl implements GrupaService {
 
     @Override
     public Grupa saveGrupa(GrupaDTO grupa) {
+        Vaspitac vaspitac = this.vaspitacRepository.findById(grupa.getVaspitac().getId()).get();
+        for (Dnevnik d : vaspitac.getDnevniks()) {
+            if (d.getKrajVazenja().isAfter(grupa.getPocetakVazenja())) {
+                throw new VaspitacAlreadyHaveDnevnikInGivenPeriodException();
+            }
+        }
+
         Grupa newGrupa = new Grupa();
         newGrupa.setTipGrupe(grupa.tipGrupe);
         Set<Dete> deca = new HashSet<>();
@@ -127,7 +136,6 @@ public class GrupaServiceImpl implements GrupaService {
         newDnevnik.setKrajVazenja(grupa.getKrajVazenja());
         newDnevnik.setPocetakVazenja(grupa.getPocetakVazenja());
         Set<Vaspitac> vaspitaci = new HashSet<>();
-        Vaspitac vaspitac = this.vaspitacRepository.findById(grupa.getVaspitac().getId()).get();
         vaspitaci.add(vaspitac);
         newDnevnik.setVaspitacs(vaspitaci);
         newGrupa.setDnevnik(newDnevnik);

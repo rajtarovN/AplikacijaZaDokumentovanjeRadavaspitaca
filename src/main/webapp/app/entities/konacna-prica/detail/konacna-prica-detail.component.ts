@@ -11,6 +11,7 @@ import { Dayjs } from 'dayjs';
 import { Prica } from '../../prica/prica.model';
 import { KomentarNaPricuService } from '../../komentar-na-pricu/service/komentar-na-pricu.service';
 import { ASC, DESC } from '../../../config/pagination.constants';
+import { AccountService } from '../../../core/auth/account.service';
 
 @Component({
   selector: 'jhi-konacna-prica-detail',
@@ -28,7 +29,8 @@ export class KonacnaPricaDetailComponent implements OnInit {
   constructor(
     protected komentarNaPricuService: KomentarNaPricuService,
     protected activatedRoute: ActivatedRoute,
-    protected fb: FormBuilder
+    protected fb: FormBuilder,
+    protected accountService: AccountService
   ) {}
 
   ngOnInit(): void {
@@ -75,9 +77,15 @@ export class KonacnaPricaDetailComponent implements OnInit {
   }
 
   protected createFromForm(): IKomentarNaPricu {
+    let potpis = '';
+    this.accountService.getAuthenticationState().subscribe(account => {
+      if (account) {
+        potpis = String(account.firstName) + ' ' + String(account.lastName);
+      }
+    });
     return {
       ...new KomentarNaPricu(),
-      tekst: this.editForm.get(['tekstKomentara'])!.value,
+      tekst: String(this.editForm.get(['tekstKomentara'])!.value) + ' ' + String(potpis),
       datum: null,
       prica: new Prica(this.idPrice),
     };

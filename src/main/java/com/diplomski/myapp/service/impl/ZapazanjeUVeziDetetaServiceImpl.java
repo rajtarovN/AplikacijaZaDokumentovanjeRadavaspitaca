@@ -46,6 +46,7 @@ public class ZapazanjeUVeziDetetaServiceImpl implements ZapazanjeUVeziDetetaServ
         log.debug("Request to save ZapazanjeUVeziDeteta : {}", zapazanjeUVeziDeteta);
         zapazanjeUVeziDeteta.setDatum(LocalDate.now());
         zapazanjeUVeziDeteta.setDete(this.deteRepository.getById(zapazanjeUVeziDeteta.getDete().getId()));
+        //if()
         zapazanjeUVeziDeteta.setVaspitac(
             this.vaspitacRepository.getVaspitacIdByUsername(zapazanjeUVeziDeteta.getVaspitac().getUser().getLogin())
         );

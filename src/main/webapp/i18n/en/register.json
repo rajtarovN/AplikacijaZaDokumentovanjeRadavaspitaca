@@ -17,7 +17,8 @@
       "error": {
         "fail": "<strong>Neuspesna registracija!</strong> Molimo Vas probajte kasnije.",
         "userexists": "<strong>Korisnicko ime vec postoji!</strong> Molimo Vas odaberite novu.",
-        "emailexists": "<strong>Email vec postoji.</strong> Molimo Vas odaberite nov."
+        "emailexists": "<strong>Email vec postoji.</strong> Molimo Vas odaberite nov.",
+        "vaspitachasdnevnik": "<strong>Vaspitac vec ima dnevnik u datom periodu.</strong> Molimo Vas odaberite nov."
       }
     }
   }

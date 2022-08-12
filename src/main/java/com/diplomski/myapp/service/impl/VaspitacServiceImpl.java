@@ -113,7 +113,7 @@ public class VaspitacServiceImpl implements VaspitacService {
 
     @Override
     public List<VaspitacDTO> getImena() {
-        List<Vaspitac> listImena = vaspitacRepository.findAll(); //todo by status, tj da nije u penziji, i sl
+        List<Vaspitac> listImena = vaspitacRepository.findAllByStatus();
         List<VaspitacDTO> dtos = new ArrayList<>();
         listImena.forEach(f -> {
             dtos.add(new VaspitacDTO(f));

@@ -24,6 +24,9 @@ public interface VaspitacRepository extends JpaRepository<Vaspitac, Long> {
 
     @Query("SELECT d.objekat from Vaspitac d where  d.user.login = ?1 ")
     Objekat getObjekatByUsername(String username);
+
+    @Query("SELECT d from Vaspitac d where  d.status = 'RADI' ")
+    List<Vaspitac> findAllByStatus();
     //    @Query("SELECT d.user.firstName from Vaspitac d where  d.user.login = ?1 ")
     //    String getNameOfVaspitac(Long id);
 }

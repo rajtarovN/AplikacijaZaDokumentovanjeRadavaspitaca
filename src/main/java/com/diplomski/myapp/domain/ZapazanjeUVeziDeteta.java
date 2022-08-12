@@ -43,6 +43,10 @@ public class ZapazanjeUVeziDeteta implements Serializable {
     @JoinColumn(unique = true)
     private Vaspitac vaspitac;
 
+    @OneToOne
+    @JoinColumn(unique = false)
+    private User user;
+
     @ManyToOne
     @JsonIgnoreProperties(value = { "formular", "zapazanjeUVeziDetetas", "neDolasci", "roditelj", "grupa" }, allowSetters = true)
     private Dete dete;
@@ -138,6 +142,14 @@ public class ZapazanjeUVeziDeteta implements Serializable {
     public ZapazanjeUVeziDeteta vaspitac(Vaspitac vaspitac) {
         this.setVaspitac(vaspitac);
         return this;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public Dete getDete() {

@@ -128,10 +128,10 @@ public class Vaspitac implements Serializable {
 
     public void setZapazanjeUVeziDeteta(ZapazanjeUVeziDeteta zapazanjeUVeziDeteta) {
         if (this.zapazanjeUVeziDeteta != null) {
-            this.zapazanjeUVeziDeteta.setVaspitac(null);
+            //this.zapazanjeUVeziDeteta.setVaspitac(null);
         }
         if (zapazanjeUVeziDeteta != null) {
-            zapazanjeUVeziDeteta.setVaspitac(this);
+            // zapazanjeUVeziDeteta.setVaspitac(this);
         }
         this.zapazanjeUVeziDeteta = zapazanjeUVeziDeteta;
     }

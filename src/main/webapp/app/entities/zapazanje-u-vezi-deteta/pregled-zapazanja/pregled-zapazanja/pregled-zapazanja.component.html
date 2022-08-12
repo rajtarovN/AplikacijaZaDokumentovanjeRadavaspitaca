@@ -52,12 +52,10 @@
               <dd>
                 <span>{{ zapazanjeUVeziDeteta?.datum }}</span>
               </dd>
-              <dt><span jhiTranslate="diplomskiApp.zapazanjeUVeziDeteta.vaspitac">Vaspitac</span></dt>
+              <dt><span>Napisao/la:</span></dt>
               <dd>
-                <div *ngIf="zapazanjeUVeziDeteta?.vaspitac">
-                  <a [routerLink]="['/vaspitac', zapazanjeUVeziDeteta?.vaspitac?.id, 'view']"
-                    >{{ zapazanjeUVeziDeteta?.vaspitac?.user?.firstName }} {{ zapazanjeUVeziDeteta?.vaspitac?.user?.lastName }}</a
-                  >
+                <div *ngIf="zapazanjeUVeziDeteta?.user">
+                  <a>{{ zapazanjeUVeziDeteta?.user?.firstName }} {{ zapazanjeUVeziDeteta?.user?.lastName }}</a>
                 </div>
               </dd>
               <dt><span jhiTranslate="diplomskiApp.zapazanjeUVeziDeteta.dete">Dete</span></dt>

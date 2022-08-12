@@ -2,6 +2,7 @@ package com.diplomski.myapp.service.impl;
 
 import com.diplomski.myapp.domain.ZapazanjeUVeziDeteta;
 import com.diplomski.myapp.repository.DeteRepository;
+import com.diplomski.myapp.repository.UserRepository;
 import com.diplomski.myapp.repository.VaspitacRepository;
 import com.diplomski.myapp.repository.ZapazanjeUVeziDetetaRepository;
 import com.diplomski.myapp.service.ZapazanjeUVeziDetetaService;
@@ -31,14 +32,18 @@ public class ZapazanjeUVeziDetetaServiceImpl implements ZapazanjeUVeziDetetaServ
 
     private final VaspitacRepository vaspitacRepository;
 
+    private final UserRepository userRepository;
+
     public ZapazanjeUVeziDetetaServiceImpl(
         ZapazanjeUVeziDetetaRepository zapazanjeUVeziDetetaRepository,
         DeteRepository deteRepository,
-        VaspitacRepository vaspitacRepository
+        VaspitacRepository vaspitacRepository,
+        UserRepository userRepository
     ) {
         this.zapazanjeUVeziDetetaRepository = zapazanjeUVeziDetetaRepository;
         this.deteRepository = deteRepository;
         this.vaspitacRepository = vaspitacRepository;
+        this.userRepository = userRepository;
     }
 
     @Override
@@ -47,9 +52,7 @@ public class ZapazanjeUVeziDetetaServiceImpl implements ZapazanjeUVeziDetetaServ
         zapazanjeUVeziDeteta.setDatum(LocalDate.now());
         zapazanjeUVeziDeteta.setDete(this.deteRepository.getById(zapazanjeUVeziDeteta.getDete().getId()));
         //if()
-        zapazanjeUVeziDeteta.setVaspitac(
-            this.vaspitacRepository.getVaspitacIdByUsername(zapazanjeUVeziDeteta.getVaspitac().getUser().getLogin())
-        );
+        zapazanjeUVeziDeteta.setUser(this.userRepository.findOneByLogin(zapazanjeUVeziDeteta.getUser().getLogin()).get());
         return zapazanjeUVeziDetetaRepository.save(zapazanjeUVeziDeteta);
     }
 

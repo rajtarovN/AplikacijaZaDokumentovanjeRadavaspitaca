@@ -65,8 +65,9 @@ export class ZapazanjeUVeziDetetaUpdateComponent implements OnInit {
       if (account) {
         // eslint-disable-next-line no-console
         console.log(account);
-        if (account.authorities[0] === 'ROLE_VASPITAC') {
-          zapazanjeUVeziDeteta.vaspitac = { user: { login: account.login } };
+        if (account.authorities[0] === 'ROLE_VASPITAC' || account.authorities[0] === 'ROLE_PEDAGOG') {
+          //zapazanjeUVeziDeteta.vaspitac = { user: { login: account.login } };
+          zapazanjeUVeziDeteta.user = { login: account.login };
         }
       }
     });
@@ -115,6 +116,7 @@ export class ZapazanjeUVeziDetetaUpdateComponent implements OnInit {
       datum: zapazanjeUVeziDeteta.datum,
       vaspitac: zapazanjeUVeziDeteta.vaspitac,
       dete: zapazanjeUVeziDeteta.dete,
+      user: zapazanjeUVeziDeteta.user,
     });
 
     this.vaspitacsCollection = this.vaspitacService.addVaspitacToCollectionIfMissing(
@@ -153,6 +155,7 @@ export class ZapazanjeUVeziDetetaUpdateComponent implements OnInit {
       datum: this.editForm.get(['datum'])!.value,
       vaspitac: this.editForm.get(['vaspitac'])!.value,
       dete: this.editForm.get(['dete'])!.value,
+      user: this.editForm.get(['vaspitac'])!.value,
     };
   }
 }

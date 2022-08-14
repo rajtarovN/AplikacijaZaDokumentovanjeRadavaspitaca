@@ -110,23 +110,23 @@
     "action": {
       "addblob": "Add blob",
       "addimage": "Add image",
-      "back": "Back",
-      "cancel": "Cancel",
-      "delete": "Delete",
-      "edit": "Edit",
-      "open": "Open",
-      "save": "Save",
-      "view": "View"
+      "back": "Nazad",
+      "cancel": "Otkazi promene",
+      "delete": "Obrisi",
+      "edit": "Uredi",
+      "open": "Otvori",
+      "save": "Sacuvaj",
+      "view": "Prikaz"
     },
     "detail": {
       "field": "Field",
       "value": "Value"
     },
     "delete": {
-      "title": "Confirm delete operation"
+      "title": "Potvrda brisanja"
     },
     "validation": {
-      "required": "This field is required.",
+      "required": "Ovo polje je obavezno.",
       "minlength": "This field is required to be at least {{ min }} characters.",
       "maxlength": "This field cannot be longer than {{ max }} characters.",
       "min": "This field should be at least {{ min }}.",
@@ -140,18 +140,18 @@
     }
   },
   "error": {
-    "internalServerError": "Internal server error",
+    "internalServerError": "Greska na serveru",
     "server.not.reachable": "Server not reachable",
-    "url.not.found": "Not found",
-    "NotNull": "Field {{ fieldName }} cannot be empty!",
+    "url.not.found": "Nije pronadjen",
+    "NotNull": "Polje {{ fieldName }} ne sme biti prazno!",
     "Size": "Field {{ fieldName }} does not meet min/max size requirements!",
-    "userexists": "Login name already used!",
-    "emailexists": "Email is already in use!",
+    "userexists": "Vec postoji dato korisnicko ime!",
+    "emailexists": "Uneti mejl se vec koristi!",
     "vaspitachasdnevnik": "Vaspitac vec ima dnevnik u datom periodu.",
-    "idexists": "A new {{ entityName }} cannot already have an ID",
-    "idnull": "Invalid ID",
-    "idinvalid": "Invalid ID",
-    "idnotfound": "ID cannot be found",
+    "idexists": "Nov {{ entityName }} ne moze da ima unet ID",
+    "idnull": "Nevalidan ID",
+    "idinvalid": "Nevalidan ID",
+    "idnotfound": "ID ne moze biti pronadjen",
     "file": {
       "could.not.extract": "Could not extract file",
       "not.image": "File was expected to be an image but was found to be \"{{ fileType }}\""

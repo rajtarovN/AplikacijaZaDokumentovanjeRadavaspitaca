@@ -82,8 +82,6 @@ export class NavbarComponent implements OnInit {
   pregledDece(): void {
     this.accountService.getAuthenticationState().subscribe(account => {
       if (account) {
-        // eslint-disable-next-line no-console
-        console.log(account);
         if (account.authorities[0] === 'ROLE_VASPITAC') {
           localStorage.setItem('vaspitac', account.login);
         }

@@ -60,8 +60,6 @@ export class PregledObjekataComponent implements OnInit {
   protected onSuccess(data: ObjekatDTO[] | null, headers: HttpHeaders): void {
     this.totalItems = Number(headers.get('X-Total-Count'));
     this.observable = data ?? [];
-    // eslint-disable-next-line no-console
-    console.log('aaa', data, 'aaa');
   }
 
   protected onError(): void {

@@ -59,13 +59,9 @@ export class PregledZapazanjaComponent implements OnInit {
   protected onSuccess(data: ObjekatDTO[] | null, headers: HttpHeaders): void {
     this.totalItems = Number(headers.get('X-Total-Count'));
     this.observable = data ?? [];
-    // eslint-disable-next-line no-console
-    console.log('aaa', this.observable, 'aaa');
   }
 
   protected onError(): void {
-    // eslint-disable-next-line no-console
-    console.log('aaa err aaa');
     this.ngbPaginationPage = this.page ?? 1;
   }
 }

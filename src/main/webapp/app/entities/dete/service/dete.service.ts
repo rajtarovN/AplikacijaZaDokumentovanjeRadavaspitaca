@@ -37,8 +37,6 @@ export class DeteService {
     return this.http.get<IDete[]>(this.resourceUrl, { params: options, observe: 'response' });
   }
   queryByGrupa(req?: any, grupa?: string): Observable<EntityArrayResponseType> {
-    // eslint-disable-next-line no-console
-    console.log(grupa);
     const options = createRequestOption(req);
     return this.http.get<IDete[]>(this.resourceUrl + '/findByGrupa/' + String(grupa), { params: options, observe: 'response' });
   }

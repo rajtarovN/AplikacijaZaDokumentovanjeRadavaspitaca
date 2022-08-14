@@ -35,8 +35,6 @@ export class FormularDetailComponent implements OnInit {
           this.podaciORoditeljima2 = this.formular.podaciORoditeljimas[1];
         }
       }
-      // eslint-disable-next-line no-console
-      console.log(formular);
     });
   }
 

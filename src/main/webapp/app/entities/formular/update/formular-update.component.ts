@@ -107,8 +107,6 @@ export class FormularUpdateComponent implements OnInit {
     const podaciORoditeljima1 = this.createFromFormPodaci(1);
     const podaciORoditeljima2 = this.createFromFormPodaci(2);
     const formular = this.createFromForm();
-    // eslint-disable-next-line no-console
-    console.log(formular);
 
     if (formular.id !== undefined) {
       this.subscribeToSaveResponse(this.formularService.update(formular));
@@ -117,8 +115,6 @@ export class FormularUpdateComponent implements OnInit {
       this.subscribeToSaveResponseR(this.podaciORoditeljimaService.create(podaciORoditeljima2));
       this.accountService.getAuthenticationState().subscribe(account => {
         if (account) {
-          // eslint-disable-next-line no-console
-          console.log(account);
           if (account.authorities[0] === 'ROLE_RODITELJ') {
             this.subscribeToSaveResponse(this.formularService.create(formular, account.login));
           }

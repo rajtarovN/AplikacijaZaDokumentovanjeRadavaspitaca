@@ -77,9 +77,6 @@ export class DnevnikService {
   }
 
   getDeca(username: string): any {
-    //const options = createRequestOption(id);
-    // eslint-disable-next-line no-console
-    console.log('aavvabb', username);
     return this.http.get<DeteDTO[]>(this.resourceUrl + '/getDeca/' + username);
   }
 

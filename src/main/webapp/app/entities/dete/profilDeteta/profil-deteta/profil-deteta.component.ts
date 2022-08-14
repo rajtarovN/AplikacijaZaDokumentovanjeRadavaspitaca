@@ -29,9 +29,6 @@ export class ProfilDetetaComponent implements OnInit {
   ngOnInit(): void {
     this.isLoading = true;
     this.activatedRoute.data.subscribe(({ dete }) => {
-      // eslint-disable-next-line no-console
-      console.log('aaa', dete, 'aaa');
-      //this.dete = dete;
       this.deteService.getprofile(dete.id).subscribe({
         next: (res: HttpResponse<any>) => {
           this.isLoading = false;

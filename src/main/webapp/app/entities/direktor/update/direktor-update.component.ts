@@ -67,8 +67,6 @@ export class DirektorUpdateComponent implements OnInit {
     this.isSaving = true;
     const direktor = this.createFromForm();
     direktor.user = this.user;
-    // eslint-disable-next-line no-console
-    console.log(direktor);
     if (direktor.id !== undefined) {
       this.subscribeToSaveResponse(this.direktorService.update(direktor));
     } else {
@@ -82,8 +80,6 @@ export class DirektorUpdateComponent implements OnInit {
 
     this.direktorService.createZaposlen(this.user).subscribe({
       next: res => {
-        // eslint-disable-next-line no-console
-        console.log(res);
         this.user.id = res.id;
         this.save();
       },

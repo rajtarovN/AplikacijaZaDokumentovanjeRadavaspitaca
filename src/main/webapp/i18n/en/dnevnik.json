@@ -5,7 +5,7 @@
         "title": "Dnevnici",
         "refreshListLabel": "Osvezavanje liste",
         "createLabel": "Dodavanje dnevnika",
-        "createOrEditLabel": "Dodavanje ili uredjivanje vrtica",
+        "createOrEditLabel": "Dodavanje ili uredjivanje dnevnika",
         "notFound": "Nijedan dnevnik nije pronadjen"
       },
       "created": "Kreiran je nov dnevnik sa id-jem {{ param }}",

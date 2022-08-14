@@ -33,6 +33,8 @@
       <thead>
         <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="loadPage()">
           <th scope="col" jhiSortBy="id"><span jhiTranslate="diplomskiApp.pedagog.id">Id</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="user.firstName"><span>Ime</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="user.lastName"><span>Prezime</span> <fa-icon icon="sort"></fa-icon></th>
           <th scope="col"></th>
         </tr>
       </thead>
@@ -40,6 +42,12 @@
         <tr *ngFor="let pedagog of pedagogs; trackBy: trackId" data-cy="entityTable">
           <td>
             <a [routerLink]="['/pedagog', pedagog.id, 'view']">{{ pedagog.id }}</a>
+          </td>
+          <td>
+            <a>{{ pedagog.user?.firstName }}</a>
+          </td>
+          <td>
+            <a>{{ pedagog.user?.lastName }}</a>
           </td>
           <td class="text-end">
             <div class="btn-group">

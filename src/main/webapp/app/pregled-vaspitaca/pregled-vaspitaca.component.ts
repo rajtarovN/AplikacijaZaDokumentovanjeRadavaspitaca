@@ -62,8 +62,6 @@ export class PregledVaspitacaComponent implements OnInit {
       }
     }
     this.observable = data ?? [];
-    // eslint-disable-next-line no-console
-    console.log('aaa', data, 'aaa');
   }
 
   protected onError(): void {

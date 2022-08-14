@@ -58,8 +58,6 @@ export class PotrebanMaterijalUpdateComponent implements OnInit {
     } else {
       this.accountService.getAuthenticationState().subscribe(account => {
         if (account) {
-          // eslint-disable-next-line no-console
-          console.log(account);
           if (account.authorities[0] === 'ROLE_VASPITAC') {
             this.subscribeToSaveResponse(this.potrebanMaterijalService.create(potrebanMaterijal, account.login));
           }

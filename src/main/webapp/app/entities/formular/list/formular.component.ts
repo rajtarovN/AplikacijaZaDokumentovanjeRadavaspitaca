@@ -82,10 +82,8 @@ export class FormularComponent implements OnInit {
   ngOnInit(): void {
     this.accountService.getAuthenticationState().subscribe(account => {
       if (account) {
-        // eslint-disable-next-line no-console
-        console.log(account);
         if (account.authorities[0] === 'ROLE_RODITELJ') {
-          this.username = account.login; //ovo bi trebalo da radi, //todo prilikom menjanja statusa formularu potrebno je da se napravi dete
+          this.username = account.login;
         }
       }
       this.handleNavigation();

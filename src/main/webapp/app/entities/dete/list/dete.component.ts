@@ -43,8 +43,6 @@ export class DeteComponent implements OnInit {
     const vaspitac = localStorage.getItem('vaspitac');
 
     if (vaspitac) {
-      // eslint-disable-next-line no-console
-      console.log('a');
       this.deteService
         .queryDecaOfVaspitac(
           {
@@ -66,8 +64,6 @@ export class DeteComponent implements OnInit {
           },
         });
     } else if (this.username) {
-      // eslint-disable-next-line no-console
-      console.log('b');
       this.deteService
         .queryDeteOfRoditelj(
           {
@@ -88,8 +84,6 @@ export class DeteComponent implements OnInit {
           },
         });
     } else {
-      // eslint-disable-next-line no-console
-      console.log('c');
       this.deteService
         .queryByGrupa(
           {
@@ -115,8 +109,6 @@ export class DeteComponent implements OnInit {
   ngOnInit(): void {
     this.accountService.getAuthenticationState().subscribe(account => {
       if (account) {
-        // eslint-disable-next-line no-console
-        console.log(account);
         if (account.authorities[0] === 'ROLE_RODITELJ') {
           this.username = account.login; //ovo bi trebalo da radi, //todo prilikom menjanja statusa formularu potrebno je da se napravi dete
         }

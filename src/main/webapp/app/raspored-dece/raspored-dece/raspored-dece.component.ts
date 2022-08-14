@@ -70,8 +70,6 @@ export class RasporedDeceComponent implements OnInit {
       this.datumKraja,
       this.editForm.get(['vaspitacs'])!.value[0]
     );
-    // eslint-disable-next-line no-console
-    console.log(newGrupa);
     this.success = false;
     this.errorVaspitacHasDnevnik = false;
     this.grupaService.createGrupa(newGrupa).subscribe({
@@ -115,8 +113,6 @@ export class RasporedDeceComponent implements OnInit {
         this.onError(response);
       },
     });
-    // eslint-disable-next-line no-console
-    console.log(this.deca);
 
     this.vaspitacService.getImena().subscribe({
       next: (res: HttpResponse<VaspitacZaGrupuDTO[]>) => {
@@ -142,8 +138,6 @@ export class RasporedDeceComponent implements OnInit {
   }
   protected onSuccess(data: VaspitacZaGrupuDTO[] | null, headers: HttpHeaders): void {
     this.listaVasapitaca = [];
-    // eslint-disable-next-line no-console
-    console.log(this.deca);
 
     let i: VaspitacZaGrupuDTO;
     for (i of data!) {
@@ -153,9 +147,6 @@ export class RasporedDeceComponent implements OnInit {
   }
   protected onGetDecaSuccess(data: DeteZaGrupuDTO[] | null, headers: HttpHeaders): void {
     this.deca = [];
-    // eslint-disable-next-line no-console
-    console.log(this.deca);
-
     let i: DeteZaGrupuDTO;
     for (i of data!) {
       //todo id dnevnika
@@ -163,10 +154,6 @@ export class RasporedDeceComponent implements OnInit {
     }
   }
 
-  // protected onError(): void {
-  //   // eslint-disable-next-line no-console
-  //   console.log('aaa'); //todo
-  // }
   private onError(response: HttpErrorResponse): void {
     if (response.status === 400) {
       this.errorVaspitacHasDnevnik = true;
@@ -174,8 +161,6 @@ export class RasporedDeceComponent implements OnInit {
   }
 
   private onCreateSuccess(body: any | null, headers: HttpHeaders): void {
-    // eslint-disable-next-line no-console
-    console.log('uspeh'); //todo nesto paametnije
     this.success = true;
   }
 }

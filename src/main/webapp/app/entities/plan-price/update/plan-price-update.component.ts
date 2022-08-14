@@ -85,8 +85,6 @@ export class PlanPriceUpdateComponent implements OnInit {
   }
 
   protected createFromForm(): IPlanPrice {
-    // eslint-disable-next-line no-console
-    console.log('aaa', this.editForm.get(['id'])!.value, 'aaa');
     return {
       ...new PlanPrice(),
       id: this.editForm.get(['id'])!.value,

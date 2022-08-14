@@ -92,8 +92,6 @@ export class KonacnaPricaDetailComponent implements OnInit {
   }
 
   private onGetSucces(data: IKomentarNaPricu[] | null): void {
-    // eslint-disable-next-line no-console
-    console.log('a', data);
     this.komentarNaPricus = data ?? [];
   }
 }

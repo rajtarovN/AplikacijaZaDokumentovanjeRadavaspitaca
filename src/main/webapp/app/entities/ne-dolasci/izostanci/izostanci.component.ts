@@ -43,8 +43,6 @@ export class IzostanciComponent implements OnInit {
     modalRef.componentInstance.neDolasci = nedolazak;
     // unsubscribe not needed because closed completes on modal close
     modalRef.closed.subscribe((reason: string | null) => {
-      // eslint-disable-next-line no-console
-      console.log(reason);
       if (reason !== '') {
         nedolazak.razlog = reason;
       }
@@ -79,8 +77,6 @@ export class IzostanciComponent implements OnInit {
     this.dnevnikService.getDeca(username).subscribe({
       next: (res: any) => {
         this.isLoading = false;
-        // eslint-disable-next-line no-console
-        console.log(res);
         this.onSuccess(res);
       },
       error: () => {
@@ -92,16 +88,7 @@ export class IzostanciComponent implements OnInit {
 
   protected onSuccess(data: any): void {
     this.izostanci = [];
-    // eslint-disable-next-line no-console
-    console.log('aavva', data);
     let i: any;
-    // data = [];
-    // const d1: DeteDTO = { imePrezime: 'a', id: 1 };
-    // const d2: DeteDTO = { imePrezime: 'b', id: 2 };
-    // const d3: DeteDTO = { imePrezime: 'c', id: 3 };
-    // data.push(d1);
-    // data.push(d2);
-    // data.push(d3);
     for (i of data) {
       this.izostanci.push(new NeDolasciDTO(this.datum, '', i.formular.imeDeteta, i.id!, 1, false, null));
     }

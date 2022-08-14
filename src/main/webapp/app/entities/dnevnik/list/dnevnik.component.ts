@@ -39,8 +39,6 @@ export class DnevnikComponent implements OnInit {
     const pageToLoad: number = page ?? this.page ?? 1;
 
     if (this.username) {
-      // eslint-disable-next-line no-console
-      console.log('ovde jeee');
       this.dnevnikService
         .queryOldDnevniks(
           {
@@ -95,8 +93,6 @@ export class DnevnikComponent implements OnInit {
   ngOnInit(): void {
     this.accountService.getAuthenticationState().subscribe(account => {
       if (account) {
-        // eslint-disable-next-line no-console
-        console.log(account);
         if (account.authorities[0] === 'ROLE_VASPITAC') {
           this.username = account.login; //ovo bi trebalo da radi, //todo
         }
@@ -155,8 +151,6 @@ export class DnevnikComponent implements OnInit {
         },
       });
     }
-    // eslint-disable-next-line no-console
-    console.log('ovde jeee', data);
     this.dnevniks = data ?? [];
     this.ngbPaginationPage = this.page;
   }

@@ -71,7 +71,6 @@ export class ObjekatUpdateComponent implements OnInit {
       reader.onload = () => {
         this.url = reader.result;
         this.isImageSaved = true;
-        //console.log(this.isImageSaved)
       };
     }
   }

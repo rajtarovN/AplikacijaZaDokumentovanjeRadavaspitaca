@@ -20,8 +20,6 @@ export class PlanPriceService {
   constructor(protected http: HttpClient, protected applicationConfigService: ApplicationConfigService) {}
 
   create(planPrice: IPlanPrice): Observable<EntityResponseType> {
-    // eslint-disable-next-line no-console
-    console.log('uslo');
     const copy = this.convertDateFromClient(planPrice);
     return this.http
       .post<IPlanPrice>(this.resourceUrl, copy, { observe: 'response' })
@@ -29,8 +27,6 @@ export class PlanPriceService {
   }
 
   createWithUsername(planPrice: IPlanPrice, username: string): Observable<EntityResponseType> {
-    // eslint-disable-next-line no-console
-    console.log('uslo');
     const copy = this.convertDateFromClient(planPrice);
     return this.http
       .post<IPlanPrice>(this.resourceUrl + '/' + username, copy, { observe: 'response' })

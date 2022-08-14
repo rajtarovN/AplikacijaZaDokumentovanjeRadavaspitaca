@@ -8,11 +8,11 @@
         "createOrEditLabel": "Create or edit a Podaci O Roditeljima",
         "notFound": "No Podaci O Roditeljimas found"
       },
-      "created": "A new Podaci O Roditeljima is created with identifier {{ param }}",
-      "updated": "A Podaci O Roditeljima is updated with identifier {{ param }}",
-      "deleted": "A Podaci O Roditeljima is deleted with identifier {{ param }}",
+      "created": "Kreirani su novi  podaci o roditeljima sa id-jem {{ param }}",
+      "updated": "Obnovnljeni su podaci o roditeljima sa id-jem: {{ param }}",
+      "deleted": "Obrisani su podaci o roditeljima sa id-jem {{ param }}",
       "delete": {
-        "question": "Are you sure you want to delete Podaci O Roditeljima {{ id }}?"
+        "question": "Da li ste sigurni da zelite da izbrisete podatke o roditeljima sa id-jem: {{ id }}?"
       },
       "detail": {
         "title": "Podaci O Roditeljima"

@@ -28,20 +28,14 @@ export class EditorComponent implements OnInit {
   constructor(protected konacnaPricaService: KonacnaPricaService) {}
 
   ngOnInit(): void {
-    // eslint-disable-next-line no-console
-    console.log('aaa', localStorage.getItem('prica'), 'aaa');
     if (localStorage.getItem('prica') !== null) {
       this.text = localStorage.getItem('prica')!;
-      // eslint-disable-next-line no-console
-      console.log('aaa', localStorage.getItem('prica'), 'aaa');
     }
   }
 
   getFormattedContent(): void {
     this.buttonElement = document.getElementById('button');
     this.htmlContent = this.componentObject.getHtml();
-    // eslint-disable-next-line no-console
-    console.log(this.htmlContent);
     this.save();
   }
   previousState(): void {

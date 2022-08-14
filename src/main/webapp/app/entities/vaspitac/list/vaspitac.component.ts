@@ -98,8 +98,6 @@ export class VaspitacComponent implements OnInit {
   protected onSuccess(data: IVaspitac[] | null, headers: HttpHeaders, page: number, navigate: boolean): void {
     this.totalItems = Number(headers.get('X-Total-Count'));
     this.page = page;
-    // eslint-disable-next-line no-console
-    console.log('aaa', data, 'aaa');
     if (navigate) {
       this.router.navigate(['/vaspitac'], {
         queryParams: {

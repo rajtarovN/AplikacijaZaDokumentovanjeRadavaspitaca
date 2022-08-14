@@ -80,8 +80,6 @@ export class VaspitacUpdateComponent implements OnInit {
     this.isSaving = true;
     const vaspitac = this.createFromForm();
     vaspitac.user = this.user;
-    // eslint-disable-next-line no-console
-    console.log(vaspitac);
     if (vaspitac.id !== undefined) {
       this.subscribeToSaveResponse(this.vaspitacService.update(vaspitac));
     } else {
@@ -95,8 +93,6 @@ export class VaspitacUpdateComponent implements OnInit {
 
     this.vaspitacService.createZaposlen(this.user).subscribe({
       next: res => {
-        // eslint-disable-next-line no-console
-        console.log(res);
         this.user.id = res.id;
         this.save();
       },
@@ -116,7 +112,6 @@ export class VaspitacUpdateComponent implements OnInit {
       reader.onload = () => {
         this.url = reader.result;
         this.isImageSaved = true;
-        //console.log(this.isImageSaved)
       };
     }
   }

@@ -37,8 +37,6 @@ export class PisanjePlanaComponent implements OnInit {
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ planPrice }) => {
-      // eslint-disable-next-line no-console
-      console.log('aaa');
       this.updateForm(planPrice);
     });
   }
@@ -50,14 +48,10 @@ export class PisanjePlanaComponent implements OnInit {
     this.isSaving = true;
     const planPrice = this.createFromForm();
     if (planPrice.id !== undefined) {
-      // eslint-disable-next-line no-console
-      console.log('ovde', planPrice.id);
       this.subscribeToSaveResponse(this.planPriceService.update(planPrice));
     } else {
       this.accountService.getAuthenticationState().subscribe(account => {
         if (account) {
-          // eslint-disable-next-line no-console
-          console.log(account);
           if (account.authorities[0] === 'ROLE_VASPITAC') {
             const username = account.login; //ovo bi trebalo da radi, //todo prilikom menjanja statusa formularu potrebno je da se napravi dete
             this.subscribeToSaveResponse(this.planPriceService.createWithUsername(planPrice, username));
@@ -102,8 +96,6 @@ export class PisanjePlanaComponent implements OnInit {
   }
 
   protected createFromForm(): IPlanPrice {
-    // eslint-disable-next-line no-console
-    console.log('aaa', this.editForm.get(['id'])!.value, 'aaa');
     return {
       ...new PlanPrice(),
       id: this.editForm.get(['id'])!.value,

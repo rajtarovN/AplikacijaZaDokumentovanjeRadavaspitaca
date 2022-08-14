@@ -78,8 +78,6 @@ export class PedagogUpdateComponent implements OnInit {
 
     this.pedagogService.createZaposlen(this.user).subscribe({
       next: res => {
-        // eslint-disable-next-line no-console
-        console.log(res);
         this.user.id = res.id;
         this.save();
       },

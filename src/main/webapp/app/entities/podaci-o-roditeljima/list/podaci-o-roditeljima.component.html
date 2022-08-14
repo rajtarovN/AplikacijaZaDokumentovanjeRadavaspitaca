@@ -1,11 +1,11 @@
 <div>
   <h2 id="page-heading" data-cy="PodaciORoditeljimaHeading">
-    <span jhiTranslate="diplomskiApp.podaciORoditeljima.home.title">Podaci O Roditeljimas</span>
+    <span>Podaci O Roditeljima</span>
 
     <div class="d-flex justify-content-end">
       <button class="btn btn-info me-2" (click)="loadPage()" [disabled]="isLoading">
         <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
-        <span jhiTranslate="diplomskiApp.podaciORoditeljima.home.refreshListLabel">Refresh List</span>
+        <span>Osvezavanje liste</span>
       </button>
 
       <button
@@ -15,7 +15,7 @@
         [routerLink]="['/podaci-o-roditeljima/new']"
       >
         <fa-icon icon="plus"></fa-icon>
-        <span jhiTranslate="diplomskiApp.podaciORoditeljima.home.createLabel"> Create a new Podaci O Roditeljima </span>
+        <span> Dodavanje novih podataka o roditeljima </span>
       </button>
     </div>
   </h2>
@@ -47,18 +47,7 @@
           <th scope="col" jhiSortBy="telefon">
             <span jhiTranslate="diplomskiApp.podaciORoditeljima.telefon">Telefon</span> <fa-icon icon="sort"></fa-icon>
           </th>
-          <th scope="col" jhiSortBy="firma">
-            <span jhiTranslate="diplomskiApp.podaciORoditeljima.firma">Firma</span> <fa-icon icon="sort"></fa-icon>
-          </th>
-          <th scope="col" jhiSortBy="radnoVreme">
-            <span jhiTranslate="diplomskiApp.podaciORoditeljima.radnoVreme">Radno Vreme</span> <fa-icon icon="sort"></fa-icon>
-          </th>
-          <th scope="col" jhiSortBy="radniStatus">
-            <span jhiTranslate="diplomskiApp.podaciORoditeljima.radniStatus">Radni Status</span> <fa-icon icon="sort"></fa-icon>
-          </th>
-          <th scope="col" jhiSortBy="formular.id">
-            <span jhiTranslate="diplomskiApp.podaciORoditeljima.formular">Formular</span> <fa-icon icon="sort"></fa-icon>
-          </th>
+
           <th scope="col"></th>
         </tr>
       </thead>
@@ -71,14 +60,7 @@
           <td>{{ podaciORoditeljima.ime }}</td>
           <td>{{ podaciORoditeljima.prezime }}</td>
           <td>{{ podaciORoditeljima.telefon }}</td>
-          <td>{{ podaciORoditeljima.firma }}</td>
-          <td>{{ podaciORoditeljima.radnoVreme }}</td>
-          <td jhiTranslate="{{ 'diplomskiApp.RadniStatus.' + podaciORoditeljima.radniStatus }}">{{ podaciORoditeljima.radniStatus }}</td>
-          <td>
-            <div *ngIf="podaciORoditeljima.formular">
-              <a [routerLink]="['/formular', podaciORoditeljima.formular?.id, 'view']">{{ podaciORoditeljima.formular?.id }}</a>
-            </div>
-          </td>
+
           <td class="text-end">
             <div class="btn-group">
               <button

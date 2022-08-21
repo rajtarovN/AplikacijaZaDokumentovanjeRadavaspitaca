@@ -103,9 +103,10 @@ public class NeDolasciServiceImpl implements NeDolasciService {
 
     @Override
     public String saveList(List<NeDolasciDTO> neDolasci) {
+        //todo if
         log.debug("Request to save NeDolasci : {}", neDolasci);
         for (NeDolasciDTO dto : neDolasci) {
-            Optional<Dete> dete = this.deteRepository.findById(dto.getIdDeteta());
+            Optional<Dete> dete = this.deteRepository.findById(dto.getIdDeteta()); //todo dete.get().getGrupa().getDnevnik().getId();
             Optional<Dnevnik> dnevnik = this.dnevnikRepository.findById(dto.getIdDeteta());
             neDolasciRepository.save(new NeDolasci(dto, dete.get(), dnevnik.get()));
         }

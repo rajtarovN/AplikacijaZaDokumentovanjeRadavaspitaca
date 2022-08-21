@@ -64,7 +64,7 @@ public class PlanPriceServiceImpl implements PlanPriceService {
                 break;
             }
         }
-
+        //todo ovo promeni, nije dobar redosled događanja ne moze da vrati vrednost ako nije sacuvana
         return returnedValue;
     }
 

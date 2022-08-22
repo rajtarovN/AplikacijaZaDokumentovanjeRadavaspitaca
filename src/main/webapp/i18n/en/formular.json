@@ -5,7 +5,7 @@
         "title": "Formulari",
         "refreshListLabel": "Osvezavanje liste",
         "createLabel": "Konkurisanje za vrtic",
-        "createOrEditLabel": "Dodavanje ili uredjivanje formulara",
+        "createOrEditLabel": "Konkurisanje ili uredjivanje formulara",
         "notFound": "Nijedan formular nije pronadjen"
       },
       "created": "Prijavili ste dete za vrtic. Broj formulara: {{ param }}",

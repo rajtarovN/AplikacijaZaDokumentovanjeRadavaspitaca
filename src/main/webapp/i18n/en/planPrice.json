@@ -2,11 +2,11 @@
   "diplomskiApp": {
     "planPrice": {
       "home": {
-        "title": "Plan Prices",
+        "title": "Plan Price",
         "refreshListLabel": "Refresh list",
         "createLabel": "Create a new Plan Price",
         "createOrEditLabel": "Create or edit a Plan Price",
-        "notFound": "No Plan Prices found"
+        "notFound": "Nijedan plan nije pronadjen"
       },
       "created": "A new Plan Price is created with identifier {{ param }}",
       "updated": "A Plan Price is updated with identifier {{ param }}",

@@ -13,9 +13,9 @@ import org.springframework.stereotype.Repository;
 @SuppressWarnings("unused")
 @Repository
 public interface DeteRepository extends JpaRepository<Dete, Long> {
-    @Query("SELECT f from Dete f where f.grupa.id = ?1 ")
+    @Query("SELECT d from Dete d where d.grupa.id = ?1 ")
     List<Dete> findAllByGrupa(Long id);
 
-    @Query("SELECT f from Dete f where f.formular.roditelj.user.login = ?1 ")
+    @Query("SELECT d from Dete d where d.formular.roditelj.user.login = ?1 ")
     List<Dete> findAllByRoditelj(String username);
 }

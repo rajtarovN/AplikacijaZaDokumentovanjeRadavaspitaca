@@ -3,10 +3,10 @@
     "podaciORoditeljima": {
       "home": {
         "title": "Podaci O Roditeljimas",
-        "refreshListLabel": "Refresh list",
-        "createLabel": "Create a new Podaci O Roditeljima",
-        "createOrEditLabel": "Create or edit a Podaci O Roditeljima",
-        "notFound": "No Podaci O Roditeljimas found"
+        "refreshListLabel": "Osvezavanje liste",
+        "createLabel": "Dodavanje novih podataka o roditelju",
+        "createOrEditLabel": "Dodavanje ili obnavljanje podataka o roditelju",
+        "notFound": "Podaci nisu pronadjeni"
       },
       "created": "Kreirani su novi  podaci o roditeljima sa id-jem {{ param }}",
       "updated": "Obnovnljeni su podaci o roditeljima sa id-jem: {{ param }}",

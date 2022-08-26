@@ -8,15 +8,15 @@
         <span jhiTranslate="diplomskiApp.dete.home.refreshListLabel">Refresh List</span>
       </button>
 
-      <button
-        id="jh-create-entity"
-        data-cy="entityCreateButton"
-        class="btn btn-primary jh-create-entity create-dete"
-        [routerLink]="['/dete/new']"
-      >
-        <fa-icon icon="plus"></fa-icon>
-        <span jhiTranslate="diplomskiApp.dete.home.createLabel"> Create a new Dete </span>
-      </button>
+      <!--      <button-->
+      <!--        id="jh-create-entity"-->
+      <!--        data-cy="entityCreateButton"-->
+      <!--        class="btn btn-primary jh-create-entity create-dete"-->
+      <!--        [routerLink]="['/dete/new']"-->
+      <!--      >-->
+      <!--        <fa-icon icon="plus"></fa-icon>-->
+      <!--        <span jhiTranslate="diplomskiApp.dete.home.createLabel"> Create a new Dete </span>-->
+      <!--      </button>-->
     </div>
   </h2>
 
@@ -32,17 +32,20 @@
     <table class="table table-striped" aria-describedby="page-heading">
       <thead>
         <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="loadPage()">
+          <th scope="col" jhiSortBy="formular.imeDeteta"><span>Ime i prezime</span> <fa-icon icon="sort"></fa-icon></th>
           <th scope="col" jhiSortBy="visina">
             <span jhiTranslate="diplomskiApp.dete.visina">Visina</span> <fa-icon icon="sort"></fa-icon>
           </th>
           <th scope="col" jhiSortBy="tezina">
             <span jhiTranslate="diplomskiApp.dete.tezina">Tezina</span> <fa-icon icon="sort"></fa-icon>
           </th>
-          <th scope="col" jhiSortBy="id"><span jhiTranslate="diplomskiApp.dete.id">Id</span> <fa-icon icon="sort"></fa-icon></th>
+          <th *ngIf="this.viewField" scope="col" jhiSortBy="id">
+            <span jhiTranslate="diplomskiApp.dete.id">Id</span> <fa-icon icon="sort"></fa-icon>
+          </th>
           <th scope="col" jhiSortBy="formular.id">
             <span jhiTranslate="diplomskiApp.dete.formular">Formular</span> <fa-icon icon="sort"></fa-icon>
           </th>
-          <th scope="col" jhiSortBy="roditelj.id">
+          <th *ngIf="this.viewField" scope="col" jhiSortBy="roditelj.user.firstName">
             <span jhiTranslate="diplomskiApp.dete.roditelj">Roditelj</span> <fa-icon icon="sort"></fa-icon>
           </th>
           <th scope="col" jhiSortBy="grupa.id">
@@ -53,9 +56,10 @@
       </thead>
       <tbody>
         <tr *ngFor="let dete of detes; trackBy: trackId" data-cy="entityTable">
+          <td>{{ dete.formular?.imeDeteta }}</td>
           <td>{{ dete.visina }}</td>
           <td>{{ dete.tezina }}</td>
-          <td>
+          <td *ngIf="this.viewField">
             <a [routerLink]="['/dete', dete.id, 'view']">{{ dete.id }}</a>
           </td>
           <td>
@@ -63,14 +67,17 @@
               <a [routerLink]="['/formular', dete.formular?.id, 'view']">{{ dete.formular?.id }}</a>
             </div>
           </td>
-          <td>
+          <td *ngIf="this.viewField">
             <div *ngIf="dete.roditelj">
-              <a [routerLink]="['/roditelj', dete.roditelj?.id, 'view']">{{ dete.roditelj?.id }}</a>
+              <a [routerLink]="['/roditelj', dete.roditelj?.id, 'view']"
+                >{{ dete.roditelj?.user?.firstName }} {{ dete.roditelj?.user?.lastName }}</a
+              >
             </div>
           </td>
           <td>
             <div *ngIf="dete.grupa">
-              <a [routerLink]="['/grupa', dete.grupa?.id, 'view']">{{ dete.grupa?.id }}</a>
+              <a *ngIf="this.viewField" [routerLink]="['/grupa', dete.grupa?.id, 'view']">{{ dete.grupa?.id }}</a>
+              {{ dete.grupa?.tipGrupe }}
             </div>
           </td>
           <td class="text-end">

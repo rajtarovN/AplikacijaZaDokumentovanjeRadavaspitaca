@@ -146,6 +146,6 @@ public class GrupaServiceImpl implements GrupaService {
         vaspitac.getDnevniks().add(newDnevnik);
         this.vaspitacRepository.save(vaspitac);
         this.dnevnikRepository.save(newDnevnik);
-        return newGrupa; //todo proveri da li se cuvaju svi podaci
+        return newGrupa;
     }
 }

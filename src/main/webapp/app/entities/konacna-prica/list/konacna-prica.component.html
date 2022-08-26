@@ -33,9 +33,9 @@
       <thead>
         <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="loadPage()">
           <th scope="col" jhiSortBy="id"><span jhiTranslate="diplomskiApp.konacnaPrica.id">Id</span> <fa-icon icon="sort"></fa-icon></th>
-          <th scope="col" jhiSortBy="tekst">
-            <span jhiTranslate="diplomskiApp.konacnaPrica.tekst">Tekst</span> <fa-icon icon="sort"></fa-icon>
-          </th>
+          <!--          <th scope="col" jhiSortBy="tekst">-->
+          <!--            <span jhiTranslate="diplomskiApp.konacnaPrica.tekst">Tekst</span> <fa-icon icon="sort"></fa-icon>-->
+          <!--          </th>-->
           <th scope="col"></th>
         </tr>
       </thead>
@@ -44,7 +44,7 @@
           <td>
             <a [routerLink]="['/konacna-prica', konacnaPrica.id, 'view']">{{ konacnaPrica.id }}</a>
           </td>
-          <td>{{ konacnaPrica.tekst }}</td>
+          <!--          <td>{{ konacnaPrica.tekst }}</td>-->
           <td class="text-end">
             <div class="btn-group">
               <button

@@ -2,7 +2,7 @@
   "diplomskiApp": {
     "adresa": {
       "home": {
-        "title": "Adresas",
+        "title": "Adrese",
         "refreshListLabel": "Osvezavanje liste",
         "createLabel": "Dodavanje adrese",
         "createOrEditLabel": "Dodavanje ili uredjivanje adrese",

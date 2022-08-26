@@ -77,14 +77,17 @@ export class DirektorUpdateComponent implements OnInit {
     this.doNotMatch = false;
     this.isSaving = true;
     this.updateUser(this.user);
-
-    this.direktorService.createZaposlen(this.user).subscribe({
-      next: res => {
-        this.user.id = res.id;
-        this.save();
-      },
-      error: () => this.onSaveError(),
-    });
+    if (this.editForm.get(['password'])!.value !== this.editForm.get(['confirmPassword'])!.value) {
+      this.doNotMatch = true;
+    } else {
+      this.direktorService.createZaposlen(this.user).subscribe({
+        next: res => {
+          this.user.id = res.id;
+          this.save();
+        },
+        error: () => this.onSaveError(),
+      });
+    }
   }
   protected subscribeToSaveResponse(result: Observable<HttpResponse<IDirektor>>): void {
     result.pipe(finalize(() => this.onSaveFinalize())).subscribe({

@@ -19,6 +19,8 @@ import { AccountService } from '../../../core/auth/account.service';
 export class PotrebanMaterijalUpdateComponent implements OnInit {
   isSaving = false;
   statusMaterijalaValues = Object.keys(StatusMaterijala);
+  readVaspitac = true;
+  readDirektor = false;
 
   objekatsSharedCollection: IObjekat[] = [];
 
@@ -39,6 +41,17 @@ export class PotrebanMaterijalUpdateComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.accountService.getAuthenticationState().subscribe(account => {
+      if (account) {
+        if (account.authorities[0] === 'ROLE_VASPITAC') {
+          this.readVaspitac = true;
+        } else {
+          this.readVaspitac = false;
+        }
+        this.readDirektor = !this.readVaspitac;
+      }
+    });
+
     this.activatedRoute.data.subscribe(({ potrebanMaterijal }) => {
       this.updateForm(potrebanMaterijal);
 

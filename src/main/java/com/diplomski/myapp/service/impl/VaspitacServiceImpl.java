@@ -46,7 +46,13 @@ public class VaspitacServiceImpl implements VaspitacService {
     @Override
     public Vaspitac update(Vaspitac vaspitac) {
         log.debug("Request to save Vaspitac : {}", vaspitac);
-        return vaspitacRepository.save(vaspitac);
+        Optional<Vaspitac> v = vaspitacRepository.findById(vaspitac.getId());
+        v.get().setDatumZaposlenja(vaspitac.getDatumZaposlenja());
+        v.get().setGodineIskustva(vaspitac.getGodineIskustva());
+        // v.get().setStatus(vaspitac.getStatus()); i slika
+        v.get().setOpis(vaspitac.getOpis());
+        v.get().setObjekat(vaspitac.getObjekat());
+        return vaspitacRepository.save(v.get());
     }
 
     @Override

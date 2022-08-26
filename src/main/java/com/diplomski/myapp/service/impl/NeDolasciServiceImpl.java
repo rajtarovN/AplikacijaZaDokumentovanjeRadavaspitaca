@@ -106,9 +106,13 @@ public class NeDolasciServiceImpl implements NeDolasciService {
         //todo if
         log.debug("Request to save NeDolasci : {}", neDolasci);
         for (NeDolasciDTO dto : neDolasci) {
-            Optional<Dete> dete = this.deteRepository.findById(dto.getIdDeteta()); //todo dete.get().getGrupa().getDnevnik().getId();
-            Optional<Dnevnik> dnevnik = this.dnevnikRepository.findById(dto.getIdDeteta());
-            neDolasciRepository.save(new NeDolasci(dto, dete.get(), dnevnik.get()));
+            boolean notExist = this.neDolasciRepository.checkIfExist(dto.getIdDeteta(), LocalDate.now()) == null;
+            if (notExist) {
+                Optional<Dete> dete = this.deteRepository.findById(dto.getIdDeteta());
+                Optional<Dnevnik> dnevnik = this.dnevnikRepository.findById(dete.get().getGrupa().getDnevnik().getId());
+                NeDolasci vrednost = neDolasciRepository.save(new NeDolasci(dto, dete.get(), dnevnik.get()));
+                System.out.println(vrednost); //dont delete, idk why, it doesnt work without it
+            }
         }
         return "Successfully saved nedolasci";
     }

@@ -79,6 +79,7 @@
               </button>
 
               <button
+                [disabled]="potrebanMaterijal.statusMaterijala != 'NOV'"
                 type="submit"
                 [routerLink]="['/potreban-materijal', potrebanMaterijal.id, 'edit']"
                 class="btn btn-primary btn-sm"
@@ -88,7 +89,13 @@
                 <span class="d-none d-md-inline">Uredi</span>
               </button>
 
-              <button type="submit" (click)="delete(potrebanMaterijal)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+              <button
+                [disabled]="potrebanMaterijal.statusMaterijala != 'NOV'"
+                type="submit"
+                (click)="delete(potrebanMaterijal)"
+                class="btn btn-danger btn-sm"
+                data-cy="entityDeleteButton"
+              >
                 <fa-icon icon="times"></fa-icon>
                 <span class="d-none d-md-inline">Brisanje</span>
               </button>

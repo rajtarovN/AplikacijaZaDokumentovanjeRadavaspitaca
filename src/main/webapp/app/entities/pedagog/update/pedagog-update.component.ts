@@ -75,14 +75,17 @@ export class PedagogUpdateComponent implements OnInit {
     this.doNotMatch = false;
     this.isSaving = true;
     this.updateUser(this.user);
-
-    this.pedagogService.createZaposlen(this.user).subscribe({
-      next: res => {
-        this.user.id = res.id;
-        this.save();
-      },
-      error: () => this.onSaveError(),
-    });
+    if (this.editForm.get(['password'])!.value !== this.editForm.get(['confirmPassword'])!.value) {
+      this.doNotMatch = true;
+    } else {
+      this.pedagogService.createZaposlen(this.user).subscribe({
+        next: res => {
+          this.user.id = res.id;
+          this.save();
+        },
+        error: () => this.onSaveError(),
+      });
+    }
   }
 
   protected subscribeToSaveResponse(result: Observable<HttpResponse<IPedagog>>): void {

@@ -1,6 +1,7 @@
 package com.diplomski.myapp.repository;
 
 import com.diplomski.myapp.domain.NeDolasci;
+import java.time.LocalDate;
 import java.util.Collection;
 import java.util.List;
 import org.springframework.data.jpa.repository.*;
@@ -17,4 +18,7 @@ public interface NeDolasciRepository extends JpaRepository<NeDolasci, Long> {
 
     @Query("SELECT f from NeDolasci f where f.dnevnik.grupa.id = ?1 and f.dete.id = ?2")
     List<Object> findByDeteAndGrupa(Long idGrupe, Long idDeteta);
+
+    @Query("SELECT f from NeDolasci f where f.dete.id = ?1 and f.datum = ?2")
+    NeDolasci checkIfExist(Long idDeteta, LocalDate datum);
 }

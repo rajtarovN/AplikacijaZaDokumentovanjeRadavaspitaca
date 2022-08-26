@@ -3,16 +3,16 @@
     "prica": {
       "home": {
         "title": "Pricas",
-        "refreshListLabel": "Refresh list",
-        "createLabel": "Create a new Prica",
-        "createOrEditLabel": "Create or edit a Prica",
-        "notFound": "No Pricas found"
+        "refreshListLabel": "Osvezavanje liste",
+        "createLabel": "Dodavanje nove price",
+        "createOrEditLabel": "Dodavanje ili uredjivanje price",
+        "notFound": "Nijedna prica nije pronadjena"
       },
-      "created": "A new Prica is created with identifier {{ param }}",
-      "updated": "A Prica is updated with identifier {{ param }}",
-      "deleted": "A Prica is deleted with identifier {{ param }}",
+      "created": "Dodata je nova prica sa id-jem {{ param }}",
+      "updated": "Prica je abdejtovana sa id-jem {{ param }}",
+      "deleted": "Izbrisana je prica sa id-jem{{ param }}",
       "delete": {
-        "question": "Are you sure you want to delete Prica {{ id }}?"
+        "question": "Da li ste sigurni da zelite sa izbrisete pricu sa id-jem {{ id }}?"
       },
       "detail": {
         "title": "Prica"

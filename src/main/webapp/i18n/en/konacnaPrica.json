@@ -3,16 +3,16 @@
     "konacnaPrica": {
       "home": {
         "title": "Konacna Pricas",
-        "refreshListLabel": "Refresh list",
-        "createLabel": "Create a new Konacna Prica",
-        "createOrEditLabel": "Create or edit a Konacna Prica",
-        "notFound": "No Konacna Pricas found"
+        "refreshListLabel": "Osvezavanje liste",
+        "createLabel": "Dodavanje nove price Konacna Prica",
+        "createOrEditLabel": "Dodavanje ili uredjivanje konacne price",
+        "notFound": "Nijedna prica nije pronadjena"
       },
-      "created": "A new Konacna Prica is created with identifier {{ param }}",
-      "updated": "A Konacna Prica is updated with identifier {{ param }}",
-      "deleted": "A Konacna Prica is deleted with identifier {{ param }}",
+      "created": "Dodata je nova konacna prica {{ param }}",
+      "updated": "Obnovljeni su podaci o konacnoj prici {{ param }}",
+      "deleted": "Izbrisana je konacna prica sa id-jem {{ param }}",
       "delete": {
-        "question": "Are you sure you want to delete Konacna Prica {{ id }}?"
+        "question": "Da li ste sigurni da zelite da izbrisete konacnu pricu {{ id }}?"
       },
       "detail": {
         "title": "Konacna Prica"

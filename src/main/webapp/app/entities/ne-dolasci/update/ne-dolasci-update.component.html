@@ -20,8 +20,9 @@
               ngbDatepicker
               #datumDp="ngbDatepicker"
               formControlName="datum"
+              [readonly]="true"
             />
-            <button type="button" class="btn btn-secondary" (click)="datumDp.toggle()"><fa-icon icon="calendar-alt"></fa-icon></button>
+            <!--            <button type="button" class="btn btn-secondary" (click)="datumDp.toggle()"><fa-icon icon="calendar-alt"></fa-icon></button>-->
           </div>
         </div>
 
@@ -48,19 +49,20 @@
           </select>
         </div>
 
-        <div class="row mb-3">
-          <label class="form-label" jhiTranslate="diplomskiApp.neDolasci.dnevnik" for="field_dnevnik">Dnevnik</label>
-          <select class="form-control" id="field_dnevnik" data-cy="dnevnik" name="dnevnik" formControlName="dnevnik">
-            <option [ngValue]="null"></option>
-            <option
-              [ngValue]="dnevnikOption.id === editForm.get('dnevnik')!.value?.id ? editForm.get('dnevnik')!.value : dnevnikOption"
-              *ngFor="let dnevnikOption of dnevniksSharedCollection; trackBy: trackDnevnikById"
-            >
-              {{ dnevnikOption.id }}
-            </option>
-          </select>
-        </div>
+        <input class="row mb-3" />
+        <label class="form-label" jhiTranslate="diplomskiApp.neDolasci.dnevnik" for="field_dnevnik">Dnevnik</label>
+        <!--          <input type="number" class="form-control" name="dnevnik" id="field_dnevnik" data-cy="id" formControlName="dnevnik" [readonly]="true" />-->
+        <select class="form-control" id="field_dnevnik" data-cy="dnevnik" name="dnevnik" formControlName="dnevnik">
+          <option [ngValue]="null"></option>
+          <option
+            [ngValue]="dnevnikOption.id === editForm.get('dnevnik')!.value?.id ? editForm.get('dnevnik')!.value : dnevnikOption"
+            *ngFor="let dnevnikOption of dnevniksSharedCollection; trackBy: trackDnevnikById"
+          >
+            {{ dnevnikOption.id }}
+          </option>
+        </select>
       </div>
+      <!--      </div>-->
 
       <div>
         <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">

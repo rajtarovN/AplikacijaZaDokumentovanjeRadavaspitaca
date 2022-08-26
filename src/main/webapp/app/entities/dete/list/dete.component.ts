@@ -18,6 +18,7 @@ import { UserService } from '../../user/user.service';
 })
 export class DeteComponent implements OnInit {
   detes?: IDete[];
+  viewField = true;
   isLoading = false;
   totalItems = 0;
   itemsPerPage = ITEMS_PER_PAGE;
@@ -110,6 +111,7 @@ export class DeteComponent implements OnInit {
     this.accountService.getAuthenticationState().subscribe(account => {
       if (account) {
         if (account.authorities[0] === 'ROLE_RODITELJ') {
+          this.viewField = false;
           this.username = account.login; //ovo bi trebalo da radi, //todo prilikom menjanja statusa formularu potrebno je da se napravi dete
         }
       }

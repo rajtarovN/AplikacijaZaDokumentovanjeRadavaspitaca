@@ -156,7 +156,7 @@
           class="btn btn-info"
           data-cy="entityDetailsBackButton"
         >
-          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Odobri</span>
+          <span>Odobri</span>
         </button>
         <button
           *ngIf="formular.statusFormulara! !== this.status"
@@ -165,7 +165,7 @@
           class="btn btn-info"
           data-cy="entityDetailsBackButton"
         >
-          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Odbij</span>
+          &nbsp;<span>Odbij</span>
         </button>
       </div>
 
@@ -173,7 +173,12 @@
         <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Nazad</span>
       </button>
 
-      <button type="button" [routerLink]="['/formular', formular.id, 'edit']" class="btn btn-primary">
+      <button
+        *ngIf="formular.statusFormulara === 'NOV'"
+        type="button"
+        [routerLink]="['/formular', formular.id, 'edit']"
+        class="btn btn-primary"
+      >
         <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Uredi</span>
       </button>
     </div>

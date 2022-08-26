@@ -21,21 +21,37 @@
             id="field_naziv"
             data-cy="naziv"
             formControlName="naziv"
+            [readonly]="!this.readVaspitac"
+          />
+        </div>
+        <!--            [readonly]="editForm.get('id')!.value != null"-->
+        <div class="row mb-3" [hidden]="editForm.get('id')!.value == null">
+          <label class="form-label" jhiTranslate="diplomskiApp.potrebanMaterijal.id" for="field_id">Id</label>
+          <input
+            type="number"
+            class="form-control"
+            name="id"
+            id="field_id"
+            data-cy="id"
+            formControlName="id"
             [readonly]="editForm.get('id')!.value != null"
           />
         </div>
 
-        <div class="row mb-3" [hidden]="editForm.get('id')!.value == null">
-          <label class="form-label" jhiTranslate="diplomskiApp.potrebanMaterijal.id" for="field_id">Id</label>
-          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
-        </div>
-
         <div class="row mb-3">
           <label class="form-label" jhiTranslate="diplomskiApp.potrebanMaterijal.kolicina" for="field_kolicina">Kolicina</label>
-          <input type="number" class="form-control" name="kolicina" id="field_kolicina" data-cy="kolicina" formControlName="kolicina" />
+          <input
+            type="number"
+            class="form-control"
+            name="kolicina"
+            id="field_kolicina"
+            data-cy="kolicina"
+            formControlName="kolicina"
+            [readonly]="!this.readVaspitac"
+          />
         </div>
 
-        <div *ngIf="this.editForm.get('id')!.value != null" class="row mb-3">
+        <div *ngIf="this.editForm.get('id')!.value != null && this.readDirektor" class="row mb-3">
           <label class="form-label" jhiTranslate="diplomskiApp.potrebanMaterijal.statusMaterijala" for="field_statusMaterijala"
             >Status Materijala</label
           >
@@ -57,17 +73,21 @@
           <span>NOV</span>
         </div>
 
-        <div class="row mb-3" [hidden]="this.editForm.get(['id'])!.value === undefined">
+        <div *jhiHasAnyAuthority="'ROLE_DIREKTOR'" class="row mb-3" [hidden]="this.editForm.get(['id'])!.value === undefined">
           <label class="form-label" jhiTranslate="diplomskiApp.potrebanMaterijal.objekat" for="field_objekat">Objekat</label>
-          <select class="form-control" id="field_objekat" data-cy="objekat" name="objekat" formControlName="objekat">
-            <option [ngValue]="null"></option>
-            <option
-              [ngValue]="objekatOption.id === editForm.get('objekat')!.value?.id ? editForm.get('objekat')!.value : objekatOption"
-              *ngFor="let objekatOption of objekatsSharedCollection; trackBy: trackObjekatById"
-            >
-              {{ objekatOption.naziv }}
-            </option>
-          </select>
+          <label class="form-control" name="objekat" id="field_objekat" data-cy="objekat" formControlName="objekat">
+            {{ editForm.get('objekat')!.value?.naziv }}
+          </label>
+
+          <!--          <select class="form-control" id="field_objekat" data-cy="objekat" name="objekat" formControlName="objekat">-->
+          <!--            <option [ngValue]="null"></option>-->
+          <!--            <option-->
+          <!--              [ngValue]="objekatOption.id === editForm.get('objekat')!.value?.id ? editForm.get('objekat')!.value : objekatOption"-->
+          <!--              *ngFor="let objekatOption of objekatsSharedCollection; trackBy: trackObjekatById"-->
+          <!--            >-->
+          <!--              {{ objekatOption.naziv }}-->
+          <!--            </option>-->
+          <!--          </select>-->
         </div>
       </div>
 

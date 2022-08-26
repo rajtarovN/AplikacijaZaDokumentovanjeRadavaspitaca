@@ -3,14 +3,14 @@
     "zapazanjeUVeziDeteta": {
       "home": {
         "title": "Zapazanje U Vezi Detetas",
-        "refreshListLabel": "Refresh list",
-        "createLabel": "Create a new Zapazanje U Vezi Deteta",
-        "createOrEditLabel": "Create or edit a Zapazanje U Vezi Deteta",
-        "notFound": "No Zapazanje U Vezi Detetas found"
+        "refreshListLabel": "Osvezvanje liste",
+        "createLabel": "Dodavanje novog zapazanja o detetu",
+        "createOrEditLabel": "Dodavanje ili uredjivanje zapazanja o detetu",
+        "notFound": "Nijedno zapazanje nije pronadjeno"
       },
-      "created": "A new Zapazanje U Vezi Deteta is created with identifier {{ param }}",
-      "updated": "A Zapazanje U Vezi Deteta is updated with identifier {{ param }}",
-      "deleted": "A Zapazanje U Vezi Deteta is deleted with identifier {{ param }}",
+      "created": "Dodato je novo zapazanje sa id-jem {{ param }}",
+      "updated": "Obnovljeno je zapazanje u vezi deteta {{ param }}",
+      "deleted": "Obrisano je zapazanje u vezi deteta {{ param }}",
       "delete": {
         "question": "Are you sure you want to delete Zapazanje U Vezi Deteta {{ id }}?"
       },

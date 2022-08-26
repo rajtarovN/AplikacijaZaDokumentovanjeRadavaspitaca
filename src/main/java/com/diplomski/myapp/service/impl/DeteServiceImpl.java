@@ -129,7 +129,7 @@ public class DeteServiceImpl implements DeteService {
                 Object[] vaspitaci = new ArrayList<Object>().toArray();
                 if (dete.get().getGrupa() != null) {
                     brojIzostanaka = this.neDolasciRepository.findByDeteAndGrupa(dete.get().getGrupa().getId(), dete.get().getId()).size();
-
+                    profilDTO.setBrojIzostanaka(brojIzostanaka);
                     if (dete.get().getGrupa().getDnevnik() != null) {
                         vaspitaci = dete.get().getGrupa().getDnevnik().getVaspitacs().toArray();
                     }

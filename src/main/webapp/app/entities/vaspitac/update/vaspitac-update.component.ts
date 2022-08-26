@@ -81,23 +81,36 @@ export class VaspitacUpdateComponent implements OnInit {
     const vaspitac = this.createFromForm();
     vaspitac.user = this.user;
     if (vaspitac.id !== undefined) {
+      // eslint-disable-next-line no-console
+      console.log('upd');
       this.subscribeToSaveResponse(this.vaspitacService.update(vaspitac));
     } else {
+      // eslint-disable-next-line no-console
+      console.log('gr');
       this.subscribeToSaveResponse(this.vaspitacService.create(vaspitac));
     }
   }
   saveUser(): void {
     this.doNotMatch = false;
-    this.isSaving = true;
-    this.updateUser(this.user);
-
-    this.vaspitacService.createZaposlen(this.user).subscribe({
-      next: res => {
-        this.user.id = res.id;
-        this.save();
-      },
-      error: () => this.onSaveError(),
-    });
+    const vaspitac = this.createFromForm();
+    if (vaspitac.id === undefined) {
+      this.doNotMatch = false;
+      this.isSaving = true;
+      this.updateUser(this.user);
+      if (this.editForm.get(['password'])!.value !== this.editForm.get(['confirmPassword'])!.value) {
+        this.doNotMatch = true;
+      } else {
+        this.vaspitacService.createZaposlen(this.user).subscribe({
+          next: res => {
+            this.user.id = res.id;
+            this.save();
+          },
+          error: () => this.onSaveError(),
+        });
+      }
+    } else {
+      this.save();
+    }
   }
 
   trackObjekatById(_index: number, item: IObjekat): number {
@@ -142,8 +155,16 @@ export class VaspitacUpdateComponent implements OnInit {
       opis: vaspitac.opis,
       id: vaspitac.id,
       objekat: vaspitac.objekat,
+      login: 'pogresno',
+      email: 'pogresno@gmail.com',
+      password: 'Aa1!aaaaaaaa',
+      confirmPassword: 'Aa1!aaaaaaaa',
+      firstName: 'aaaaaaaaa',
+      lastName: 'aaaaaaaa',
+      activated: true,
+      langKey: 'ddd',
+      authorities: ['ROLE_VASPITAC'],
     });
-
     this.objekatsSharedCollection = this.objekatService.addObjekatToCollectionIfMissing(this.objekatsSharedCollection, vaspitac.objekat);
   }
 

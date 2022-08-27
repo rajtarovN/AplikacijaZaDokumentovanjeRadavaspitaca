@@ -2,6 +2,7 @@ package com.diplomski.myapp.web.rest;
 
 import com.diplomski.myapp.domain.Dete;
 import com.diplomski.myapp.repository.DeteRepository;
+import com.diplomski.myapp.security.AuthoritiesConstants;
 import com.diplomski.myapp.service.DeteService;
 import com.diplomski.myapp.web.rest.dto.ProfilDetetaDTO;
 import com.diplomski.myapp.web.rest.errors.BadRequestAlertException;
@@ -19,6 +20,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import tech.jhipster.web.util.HeaderUtil;
@@ -185,6 +187,9 @@ public class DeteResource {
             .build();
     }
 
+    @PreAuthorize(
+        "hasRole('ROLE_ADMIN') or hasRole('ROLE_DIREKTOR') or hasRole('ROLE_PEDAGOG') or hasRole('ROLE_VASPITAC') or hasRole('ROLE_RODITELJ')"
+    )
     @GetMapping("/detes/profil/{id}")
     public ResponseEntity<ProfilDetetaDTO> getProfil(@PathVariable Long id) {
         log.debug("REST request to get Dete profil : {}", id);
@@ -192,7 +197,7 @@ public class DeteResource {
         return ResponseEntity.ok().body(dete);
     }
 
-    //
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_DIREKTOR') or hasRole('ROLE_PEDAGOG') or hasRole('ROLE_VASPITAC')")
     @GetMapping("/detes/findByGrupa/{id}")
     public ResponseEntity<List<Dete>> getAllDetesByGrupa(
         @org.springdoc.api.annotations.ParameterObject Pageable pageable,
@@ -209,6 +214,7 @@ public class DeteResource {
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
 
+    @PreAuthorize("hasRole('ROLE_RODITELJ')")
     @GetMapping("/detes/findByRoditelj/{username}")
     public ResponseEntity<List<Dete>> getAllDetesByGrupa(
         @org.springdoc.api.annotations.ParameterObject Pageable pageable,
@@ -225,6 +231,7 @@ public class DeteResource {
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
 
+    @PreAuthorize("hasRole('ROLE_VASPITAC')")
     @GetMapping("/detes/findForVaspitac/{username}")
     public ResponseEntity<List<Dete>> getAllDetesForVaspitac(
         @org.springdoc.api.annotations.ParameterObject Pageable pageable,

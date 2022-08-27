@@ -55,8 +55,17 @@
       </select>
     </div>
     <button class="btn btn-info" (click)="save()">Sacuvaj</button>
-  </form>
 
+    <div class="row mb-3">
+      <label class="form-label">Tip Grupe</label>
+      <select (change)="onChange()" class="form-control" name="tipGrupe" formControlName="tipGrupe" id="field_tipGrupe" data-cy="tipGrupe">
+        <option [ngValue]="null">{{ 'diplomskiApp.TipGrupe.null' | translate }}</option>
+        <option *ngFor="let tipGrupe of tipGrupeValues" [value]="tipGrupe">
+          {{ 'diplomskiApp.TipGrupe.' + tipGrupe | translate }}
+        </option>
+      </select>
+    </div>
+  </form>
   <div class="tableOrder">
     <div class="tableOrder1">
       Lista dece:

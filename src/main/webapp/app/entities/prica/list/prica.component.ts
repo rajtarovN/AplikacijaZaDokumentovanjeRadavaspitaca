@@ -26,6 +26,7 @@ export class PricaComponent implements OnInit {
   ascending!: boolean;
   ngbPaginationPage = 1;
   today: Date;
+  disableBtn = false;
 
   constructor(
     protected pricaService: PricaService,
@@ -179,6 +180,12 @@ export class PricaComponent implements OnInit {
     }
     this.pricas = data ?? [];
     this.ngbPaginationPage = this.page;
+    let prica: IPrica;
+    data?.forEach(value => {
+      if (value.konacnaPrica == null) {
+        this.disableBtn = true;
+      }
+    });
   }
 
   protected onError(): void {

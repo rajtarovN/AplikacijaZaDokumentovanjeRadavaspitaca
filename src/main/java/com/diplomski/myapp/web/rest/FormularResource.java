@@ -19,6 +19,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import tech.jhipster.web.util.HeaderUtil;
@@ -56,6 +57,7 @@ public class FormularResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/formulars/{username}")
+    @PreAuthorize("hasRole('ROLE_RODITELJ')")
     public ResponseEntity<Formular> createFormular(@RequestBody Formular formular, @PathVariable String username)
         throws URISyntaxException {
         log.debug("REST request to save Formular : {}", formular);
@@ -79,6 +81,7 @@ public class FormularResource {
      * or with status {@code 500 (Internal Server Error)} if the formular couldn't be updated.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
+    @PreAuthorize("hasRole('ROLE_RODITELJ') or hasRole('ROLE_PEDAGOG')")
     @PutMapping("/formulars/{id}")
     public ResponseEntity<Formular> updateFormular(
         @PathVariable(value = "id", required = false) final Long id,
@@ -114,6 +117,7 @@ public class FormularResource {
      * or with status {@code 500 (Internal Server Error)} if the formular couldn't be updated.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
+    @PreAuthorize("hasRole('ROLE_RODITELJ') or hasRole('ROLE_PEDAGOG')")
     @PatchMapping(value = "/formulars/{id}", consumes = { "application/json", "application/merge-patch+json" })
     public ResponseEntity<Formular> partialUpdateFormular(
         @PathVariable(value = "id", required = false) final Long id,

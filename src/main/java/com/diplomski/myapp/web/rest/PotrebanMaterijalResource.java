@@ -17,6 +17,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import tech.jhipster.web.util.HeaderUtil;
@@ -56,6 +57,7 @@ public class PotrebanMaterijalResource {
      * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new potrebanMaterijal, or with status {@code 400 (Bad Request)} if the potrebanMaterijal has already an ID.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_VASPITAC')")
     @PostMapping("/potreban-materijals/username/{username}")
     public ResponseEntity<PotrebanMaterijal> createPotrebanMaterijal(
         @RequestBody PotrebanMaterijal potrebanMaterijal,
@@ -82,6 +84,7 @@ public class PotrebanMaterijalResource {
      * or with status {@code 500 (Internal Server Error)} if the potrebanMaterijal couldn't be updated.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_DIREKTOR')  or hasRole('ROLE_VASPITAC')")
     @PutMapping("/potreban-materijals/{id}")
     public ResponseEntity<PotrebanMaterijal> updatePotrebanMaterijal(
         @PathVariable(value = "id", required = false) final Long id,
@@ -117,6 +120,7 @@ public class PotrebanMaterijalResource {
      * or with status {@code 500 (Internal Server Error)} if the potrebanMaterijal couldn't be updated.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_DIREKTOR')  or hasRole('ROLE_VASPITAC')")
     @PatchMapping(value = "/potreban-materijals/{id}", consumes = { "application/json", "application/merge-patch+json" })
     public ResponseEntity<PotrebanMaterijal> partialUpdatePotrebanMaterijal(
         @PathVariable(value = "id", required = false) final Long id,
@@ -148,6 +152,7 @@ public class PotrebanMaterijalResource {
      * @param pageable the pagination information.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of potrebanMaterijals in body.
      */
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_DIREKTOR')  or hasRole('ROLE_VASPITAC')")
     @GetMapping("/potreban-materijals")
     public ResponseEntity<List<PotrebanMaterijal>> getAllPotrebanMaterijals(
         @org.springdoc.api.annotations.ParameterObject Pageable pageable
@@ -164,6 +169,7 @@ public class PotrebanMaterijalResource {
      * @param id the id of the potrebanMaterijal to retrieve.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the potrebanMaterijal, or with status {@code 404 (Not Found)}.
      */
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_DIREKTOR')  or hasRole('ROLE_VASPITAC')")
     @GetMapping("/potreban-materijals/{id}")
     public ResponseEntity<PotrebanMaterijal> getPotrebanMaterijal(@PathVariable Long id) {
         log.debug("REST request to get PotrebanMaterijal : {}", id);
@@ -177,6 +183,7 @@ public class PotrebanMaterijalResource {
      * @param id the id of the potrebanMaterijal to delete.
      * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
      */
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_DIREKTOR')  or hasRole('ROLE_VASPITAC')")
     @DeleteMapping("/potreban-materijals/{id}")
     public ResponseEntity<Void> deletePotrebanMaterijal(@PathVariable Long id) {
         log.debug("REST request to delete PotrebanMaterijal : {}", id);
@@ -187,6 +194,7 @@ public class PotrebanMaterijalResource {
             .build();
     }
 
+    @PreAuthorize("hasRole('ROLE_VASPITAC')")
     @GetMapping("/potreban-materijals/forVaspitac/{username}")
     public ResponseEntity<List<PotrebanMaterijal>> getAllPotrebanMaterijalsForVaspitac(
         @org.springdoc.api.annotations.ParameterObject Pageable pageable,

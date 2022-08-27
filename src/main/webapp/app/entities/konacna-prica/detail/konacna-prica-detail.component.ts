@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { IKonacnaPrica } from '../konacna-prica.model';
 import { FormBuilder } from '@angular/forms';
@@ -30,7 +30,8 @@ export class KonacnaPricaDetailComponent implements OnInit {
     protected komentarNaPricuService: KomentarNaPricuService,
     protected activatedRoute: ActivatedRoute,
     protected fb: FormBuilder,
-    protected accountService: AccountService
+    protected accountService: AccountService,
+    protected router: Router
   ) {}
 
   ngOnInit(): void {
@@ -55,6 +56,12 @@ export class KonacnaPricaDetailComponent implements OnInit {
     this.isSaving = true;
     const komentarNaPricu = this.createFromForm();
     this.subscribeToSaveResponse(this.komentarNaPricuService.create(komentarNaPricu));
+  }
+
+  edit(): void {
+    localStorage.setItem('prica', this.konacnaPrica!.tekst!);
+    localStorage.setItem('pricaExists', 't');
+    this.router.navigate(['/konacna-prica/editor']);
   }
 
   protected subscribeToSaveResponse(result: Observable<HttpResponse<IKomentarNaPricu>>): void {

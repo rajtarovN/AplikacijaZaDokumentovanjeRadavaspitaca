@@ -119,6 +119,7 @@ public class NeDolasciServiceImpl implements NeDolasciService {
 
     @Override
     public Page<NeDolazakViewDTO> findAllByGrupa(Pageable pageable, Long id) {
+        //String sort = (pageable.getSort()+"").split(":")[0];
         List<NeDolasci> izostanci = this.neDolasciRepository.findByGrupaId(id);
         List<NeDolazakViewDTO> izostanciDTO = new ArrayList<>();
         //
@@ -127,7 +128,6 @@ public class NeDolasciServiceImpl implements NeDolasciService {
         );
 
         //.subList((pageable.getPageNumber()) * pageable.getPageSize(), pageable.getPageNumber() * pageable.getPageSize());
-
         Page<NeDolazakViewDTO> page = new PageImpl<>(izostanciDTO);
         return page;
     }

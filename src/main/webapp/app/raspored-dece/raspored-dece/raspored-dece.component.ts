@@ -20,6 +20,7 @@ export class RasporedDeceComponent implements OnInit {
   errorVaspitacHasDnevnik = false;
   success = false;
   deca: DeteZaGrupuDTO[];
+  svaDeca: DeteZaGrupuDTO[];
   dodataDeca: DeteZaGrupuDTO[];
   predicate!: string;
   datumPocetka: dayjs.Dayjs;
@@ -29,11 +30,13 @@ export class RasporedDeceComponent implements OnInit {
   listaVasapitaca: VaspitacZaGrupuDTO[] | undefined;
   ascending!: boolean;
   isLoading = false;
+  tipGrupeValues = Object.keys(TipGrupe);
 
   editForm = this.fb.group({
     pocetakVazenja: [],
     krajVazenja: [],
     vaspitacs: [],
+    tipGrupe: [],
   });
   panelOpenState = false;
 
@@ -47,6 +50,7 @@ export class RasporedDeceComponent implements OnInit {
     this.datumPocetka = dayjs();
     this.datumKraja = dayjs();
     this.dodataDeca = [];
+    this.svaDeca = [];
     this.deca = [];
     this.tipGrupe = TipGrupe.POLUDNEVNA;
   }
@@ -60,6 +64,24 @@ export class RasporedDeceComponent implements OnInit {
   }
   trackId(_index: number, item: DeteZaGrupuDTO): number {
     return item.id!;
+  }
+  onChange(): void {
+    // eslint-disable-next-line no-console
+    console.log(this.editForm.get('tipGrupe')?.value);
+    const odabranaGrupa = this.editForm.get('tipGrupe')?.value;
+    this.tipGrupe = odabranaGrupa;
+    this.deca = [];
+    this.dodataDeca = [];
+    //ovde menjam todo i pazi na null
+    if (odabranaGrupa === null) {
+      this.deca = this.svaDeca;
+    } else {
+      this.svaDeca.forEach((element, index) => {
+        if (element.tipGrupe === odabranaGrupa) {
+          this.deca.push(element);
+        }
+      });
+    }
   }
 
   save(): void {
@@ -151,6 +173,7 @@ export class RasporedDeceComponent implements OnInit {
     for (i of data!) {
       //todo id dnevnika
       this.deca.push(i);
+      this.svaDeca.push(i);
     }
   }
 

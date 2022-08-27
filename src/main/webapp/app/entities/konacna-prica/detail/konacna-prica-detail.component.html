@@ -66,12 +66,8 @@
         <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Nazad</span>
       </button>
 
-      <button
-        *jhiHasAnyAuthority="'ROLE_VASPITAC'"
-        type="button"
-        [routerLink]="['/konacna-prica', konacnaPrica.id, 'edit']"
-        class="btn btn-primary"
-      >
+      <button *jhiHasAnyAuthority="'ROLE_VASPITAC'" type="button" class="btn btn-primary" (click)="edit()">
+        <!--         [routerLink]="['/konacna-prica', konacnaPrica.id, 'edit']"    -->
         <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Uredi</span>
       </button>
     </div>

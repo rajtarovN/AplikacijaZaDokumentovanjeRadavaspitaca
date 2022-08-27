@@ -4,6 +4,7 @@ import com.diplomski.myapp.domain.Direktor;
 import com.diplomski.myapp.domain.User;
 import com.diplomski.myapp.repository.DirektorRepository;
 import com.diplomski.myapp.repository.UserRepository;
+import com.diplomski.myapp.security.AuthoritiesConstants;
 import com.diplomski.myapp.service.DirektorService;
 import com.diplomski.myapp.service.UserService;
 import com.diplomski.myapp.web.rest.errors.BadRequestAlertException;
@@ -23,6 +24,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import tech.jhipster.web.util.HeaderUtil;
@@ -69,6 +71,7 @@ public class DirektorResource {
      * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new direktor, or with status {@code 400 (Bad Request)} if the direktor has already an ID.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping("/direktors")
     public ResponseEntity<Direktor> createDirektor(@RequestBody Direktor direktor) throws URISyntaxException {
         log.debug("REST request to save Direktor : {}", direktor);
@@ -92,6 +95,7 @@ public class DirektorResource {
      * or with status {@code 500 (Internal Server Error)} if the direktor couldn't be updated.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_DIREKTOR')")
     @PutMapping("/direktors/{id}")
     public ResponseEntity<Direktor> updateDirektor(
         @PathVariable(value = "id", required = false) final Long id,
@@ -127,6 +131,7 @@ public class DirektorResource {
      * or with status {@code 500 (Internal Server Error)} if the direktor couldn't be updated.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_DIREKTOR')")
     @PatchMapping(value = "/direktors/{id}", consumes = { "application/json", "application/merge-patch+json" })
     public ResponseEntity<Direktor> partialUpdateDirektor(
         @PathVariable(value = "id", required = false) final Long id,
@@ -159,6 +164,7 @@ public class DirektorResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of direktors in body.
      */
     @GetMapping("/direktors")
+    @PreAuthorize("hasAuthority(\"" + AuthoritiesConstants.ADMIN + "\")")
     public ResponseEntity<List<Direktor>> getAllDirektors(@org.springdoc.api.annotations.ParameterObject Pageable pageable) {
         log.debug("REST request to get a page of Direktors");
         Page<Direktor> page = direktorService.findAll(pageable);
@@ -173,6 +179,7 @@ public class DirektorResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the direktor, or with status {@code 404 (Not Found)}.
      */
     @GetMapping("/direktors/{id}")
+    @PreAuthorize("hasAuthority(\"" + AuthoritiesConstants.ADMIN + "\")")
     public ResponseEntity<Direktor> getDirektor(@PathVariable Long id) {
         log.debug("REST request to get Direktor : {}", id);
         Optional<Direktor> direktor = direktorService.findOne(id);
@@ -186,6 +193,7 @@ public class DirektorResource {
      * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
      */
     @DeleteMapping("/direktors/{id}")
+    @PreAuthorize("hasAuthority(\"" + AuthoritiesConstants.ADMIN + "\")")
     public ResponseEntity<Void> deleteDirektor(@PathVariable Long id) {
         log.debug("REST request to delete Direktor : {}", id);
         direktorService.delete(id);
@@ -196,7 +204,7 @@ public class DirektorResource {
     }
 
     @PostMapping("/createDirektor")
-    //@PreAuthorize("hasAuthority(\"" + AuthoritiesConstants.ADMIN + "\")")
+    @PreAuthorize("hasAuthority(\"" + AuthoritiesConstants.ADMIN + "\")")
     public ResponseEntity<User> createUser(@Valid @RequestBody ManagedUserVM managedUserVM) throws URISyntaxException {
         log.debug("REST request to save User : {}", managedUserVM);
 

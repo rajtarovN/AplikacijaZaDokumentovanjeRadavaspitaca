@@ -34,10 +34,27 @@ public class KonacnaPricaServiceImpl implements KonacnaPricaService {
     public KonacnaPrica save(KonacnaPrica konacnaPrica, Long idprice) {
         log.debug("Request to save KonacnaPrica : {}", konacnaPrica);
         Prica prica = this.pricaRepository.getById(idprice);
-        prica.setKonacnaPrica(konacnaPrica);
-        KonacnaPrica retValue = konacnaPricaRepository.save(konacnaPrica);
+        this.processText(konacnaPrica);
+        if (prica.getKonacnaPrica() != null) {
+            prica.getKonacnaPrica().setTekst(konacnaPrica.getTekst());
+        } else {
+            prica.setKonacnaPrica(konacnaPrica);
+        }
+        KonacnaPrica retValue = konacnaPricaRepository.save(prica.getKonacnaPrica());
         this.pricaRepository.save(prica);
         return retValue;
+    }
+
+    private void processText(KonacnaPrica konacnaPrica) {
+        System.out.println(konacnaPrica.getTekst());
+        String[] text = konacnaPrica.getTekst().split("<p><br></p>");
+        //System.out.println(konacnaPrica.getTekst().split("<p><br></p>")[0]+"**"+konacnaPrica.getTekst().split("<p><br></p>")[1]);
+        if (text[0].split("<br></p><p>").length > 1) {
+            String newText = text[0].split("<br></p><p>")[0] + text[0].split("<br></p><p>")[1];
+            konacnaPrica.setTekst(newText);
+        } else {
+            konacnaPrica.setTekst(text[0]);
+        }
     }
 
     @Override

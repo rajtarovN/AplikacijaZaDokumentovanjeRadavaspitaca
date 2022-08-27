@@ -25,6 +25,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import tech.jhipster.web.util.HeaderUtil;
@@ -72,6 +73,7 @@ public class VaspitacResource {
      * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new vaspitac, or with status {@code 400 (Bad Request)} if the vaspitac has already an ID.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_DIREKTOR') ")
     @PostMapping("/vaspitacs")
     public ResponseEntity<Vaspitac> createVaspitac(@RequestBody Vaspitac vaspitac) throws URISyntaxException {
         log.debug("REST request to save Vaspitac : {}", vaspitac);
@@ -95,6 +97,7 @@ public class VaspitacResource {
      * or with status {@code 500 (Internal Server Error)} if the vaspitac couldn't be updated.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_DIREKTOR')  or hasRole('ROLE_VASPITAC')")
     @PutMapping("/vaspitacs/{id}")
     public ResponseEntity<Vaspitac> updateVaspitac(
         @PathVariable(value = "id", required = false) final Long id,
@@ -130,6 +133,7 @@ public class VaspitacResource {
      * or with status {@code 500 (Internal Server Error)} if the vaspitac couldn't be updated.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_DIREKTOR')  or hasRole('ROLE_VASPITAC')")
     @PatchMapping(value = "/vaspitacs/{id}", consumes = { "application/json", "application/merge-patch+json" })
     public ResponseEntity<Vaspitac> partialUpdateVaspitac(
         @PathVariable(value = "id", required = false) final Long id,
@@ -162,6 +166,9 @@ public class VaspitacResource {
      * @param filter the filter of the request.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of vaspitacs in body.
      */
+    @PreAuthorize(
+        "hasRole('ROLE_ADMIN') or hasRole('ROLE_DIREKTOR')  or hasRole('ROLE_VASPITAC') or hasRole('ROLE_PEDAGOG')  or hasRole('ROLE_RODITELJ')"
+    )
     @GetMapping("/vaspitacs")
     public ResponseEntity<List<Vaspitac>> getAllVaspitacs(
         @org.springdoc.api.annotations.ParameterObject Pageable pageable,
@@ -183,6 +190,9 @@ public class VaspitacResource {
      * @param id the id of the vaspitac to retrieve.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the vaspitac, or with status {@code 404 (Not Found)}.
      */
+    @PreAuthorize(
+        "hasRole('ROLE_ADMIN') or hasRole('ROLE_DIREKTOR')  or hasRole('ROLE_VASPITAC') or hasRole('ROLE_PEDAGOG')  or hasRole('ROLE_RODITELJ')"
+    )
     @GetMapping("/vaspitacs/{id}")
     public ResponseEntity<Vaspitac> getVaspitac(@PathVariable Long id) {
         log.debug("REST request to get Vaspitac : {}", id);
@@ -196,6 +206,7 @@ public class VaspitacResource {
      * @param id the id of the vaspitac to delete.
      * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
      */
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_DIREKTOR')  or hasRole('ROLE_VASPITAC')")
     @DeleteMapping("/vaspitacs/{id}")
     public ResponseEntity<Void> deleteVaspitac(@PathVariable Long id) {
         log.debug("REST request to delete Vaspitac : {}", id);
@@ -206,7 +217,9 @@ public class VaspitacResource {
             .build();
     }
 
-    //getByObjekat
+    @PreAuthorize(
+        "hasRole('ROLE_ADMIN') or hasRole('ROLE_DIREKTOR')  or hasRole('ROLE_VASPITAC') or hasRole('ROLE_PEDAGOG')  or hasRole('ROLE_RODITELJ')"
+    )
     @GetMapping("/vaspitacs/getByObjekat/{id}")
     public ResponseEntity<List<Vaspitac>> getByObjekat(@PathVariable Long id) {
         log.debug("REST request to get Vaspitac : {}", id);
@@ -214,6 +227,9 @@ public class VaspitacResource {
         return ResponseEntity.ok().body(vaspitac);
     }
 
+    @PreAuthorize(
+        "hasRole('ROLE_ADMIN') or hasRole('ROLE_DIREKTOR')  or hasRole('ROLE_VASPITAC') or hasRole('ROLE_PEDAGOG')  or hasRole('ROLE_RODITELJ')"
+    )
     @GetMapping("/vaspitacs/getImena")
     public ResponseEntity<List<VaspitacDTO>> getImena() {
         log.debug("REST request to get imena Vaspitac");

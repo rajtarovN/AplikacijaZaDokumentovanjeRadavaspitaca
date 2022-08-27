@@ -1,17 +1,20 @@
 package com.diplomski.myapp.web.rest.dto;
 
 import com.diplomski.myapp.domain.Formular;
+import com.diplomski.myapp.domain.enumeration.TipGrupe;
 
 public class DeteZaGrupuDTO {
 
     public Long id;
     public String imeDeteta;
     public boolean dodato;
+    public TipGrupe tipGrupe;
 
-    public DeteZaGrupuDTO(Long id, String imeDeteta, boolean dodato) {
+    public DeteZaGrupuDTO(Long id, String imeDeteta, boolean dodato, TipGrupe tipGrupe) {
         this.id = id;
         this.imeDeteta = imeDeteta;
         this.dodato = dodato;
+        this.tipGrupe = tipGrupe;
     }
 
     public DeteZaGrupuDTO() {}
@@ -20,6 +23,7 @@ public class DeteZaGrupuDTO {
         this.id = f.getId();
         this.dodato = false;
         this.imeDeteta = f.getImeDeteta();
+        this.tipGrupe = f.getTipGrupe();
     }
 
     public Long getId() {
@@ -44,5 +48,13 @@ public class DeteZaGrupuDTO {
 
     public void setDodato(boolean dodato) {
         this.dodato = dodato;
+    }
+
+    public TipGrupe getTipGrupe() {
+        return tipGrupe;
+    }
+
+    public void setTipGrupe(TipGrupe tipGrupe) {
+        this.tipGrupe = tipGrupe;
     }
 }

@@ -18,6 +18,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import tech.jhipster.web.util.HeaderUtil;
@@ -65,6 +66,7 @@ public class KonacnaPricaResource {
      * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new konacnaPrica, or with status {@code 400 (Bad Request)} if the konacnaPrica has already an ID.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
+    @PreAuthorize("hasRole('ROLE_ADMIN')  or hasRole('ROLE_VASPITAC')")
     @PostMapping("/konacna-pricas/{id}")
     public ResponseEntity<KonacnaPrica> createKonacnaPrica(@RequestBody KonacnaPrica konacnaPrica, @PathVariable Long id)
         throws URISyntaxException {
@@ -89,6 +91,7 @@ public class KonacnaPricaResource {
      * or with status {@code 500 (Internal Server Error)} if the konacnaPrica couldn't be updated.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
+    @PreAuthorize("hasRole('ROLE_ADMIN')  or hasRole('ROLE_VASPITAC')")
     @PutMapping("/konacna-pricas/{id}")
     public ResponseEntity<KonacnaPrica> updateKonacnaPrica(
         @PathVariable(value = "id", required = false) final Long id,
@@ -124,6 +127,7 @@ public class KonacnaPricaResource {
      * or with status {@code 500 (Internal Server Error)} if the konacnaPrica couldn't be updated.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_PEDAGOG') or hasRole('ROLE_DIREKTOR') or hasRole('ROLE_VASPITAC')")
     @PatchMapping(value = "/konacna-pricas/{id}", consumes = { "application/json", "application/merge-patch+json" })
     public ResponseEntity<KonacnaPrica> partialUpdateKonacnaPrica(
         @PathVariable(value = "id", required = false) final Long id,
@@ -155,6 +159,7 @@ public class KonacnaPricaResource {
      * @param pageable the pagination information.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of konacnaPricas in body.
      */
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_PEDAGOG') or hasRole('ROLE_DIREKTOR') or hasRole('ROLE_VASPITAC')")
     @GetMapping("/konacna-pricas")
     public ResponseEntity<List<KonacnaPrica>> getAllKonacnaPricas(@org.springdoc.api.annotations.ParameterObject Pageable pageable) {
         log.debug("REST request to get a page of KonacnaPricas");
@@ -169,6 +174,7 @@ public class KonacnaPricaResource {
      * @param id the id of the konacnaPrica to retrieve.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the konacnaPrica, or with status {@code 404 (Not Found)}.
      */
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_PEDAGOG') or hasRole('ROLE_DIREKTOR') or hasRole('ROLE_VASPITAC')")
     @GetMapping("/konacna-pricas/{id}")
     public ResponseEntity<KonacnaPrica> getKonacnaPrica(@PathVariable Long id) {
         log.debug("REST request to get KonacnaPrica : {}", id);
@@ -182,6 +188,7 @@ public class KonacnaPricaResource {
      * @param id the id of the konacnaPrica to delete.
      * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
      */
+    @PreAuthorize("hasRole('ROLE_ADMIN')  or hasRole('ROLE_VASPITAC')")
     @DeleteMapping("/konacna-pricas/{id}")
     public ResponseEntity<Void> deleteKonacnaPrica(@PathVariable Long id) {
         log.debug("REST request to delete KonacnaPrica : {}", id);
@@ -192,6 +199,7 @@ public class KonacnaPricaResource {
             .build();
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_PEDAGOG') or hasRole('ROLE_DIREKTOR') or hasRole('ROLE_VASPITAC')")
     @GetMapping("/konacna-pricas/getPocetnaPrica/{id}")
     public ResponseEntity<KonacnaPrica> getPocetnaPrica(
         @org.springdoc.api.annotations.ParameterObject Pageable pageable,

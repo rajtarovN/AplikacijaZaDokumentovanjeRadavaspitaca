@@ -21,6 +21,8 @@ export class IzostanciComponent implements OnInit {
   datum: dayjs.Dayjs;
   ascending!: boolean;
   isLoading = false;
+  errorr = false;
+  success = false;
 
   constructor(
     public dnevnikService: DnevnikService,
@@ -53,10 +55,13 @@ export class IzostanciComponent implements OnInit {
     izostanak.odsutan = !izostanak.odsutan;
   }
   sacuvaj(): void {
+    this.success = false;
+    this.errorr = false;
     const listaIzostanaka = this.izostanci!.filter(x => x.odsutan);
     this.nedolasciService.createNeDolasci(listaIzostanaka).subscribe({
       next: (res: HttpResponse<any>) => {
-        this.onSuccess(res.body);
+        //this.onSuccess(res.body);
+        this.success = true;
       },
       error: () => {
         this.onError();
@@ -97,5 +102,6 @@ export class IzostanciComponent implements OnInit {
   protected onError(): void {
     // eslint-disable-next-line no-console
     console.log('aaa'); //todo
+    this.errorr = true;
   }
 }

@@ -8,6 +8,7 @@ import com.diplomski.myapp.service.VaspitacService;
 import com.diplomski.myapp.web.rest.dto.VaspitacDTO;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -125,5 +126,13 @@ public class VaspitacServiceImpl implements VaspitacService {
             dtos.add(new VaspitacDTO(f));
         });
         return dtos;
+    }
+
+    @Override
+    public String changeStatus(Long id, String status) {
+        Optional<Vaspitac> v = vaspitacRepository.findById(id);
+        v.get().setStatus(status.toLowerCase() == "penzija" ? Status.PENZIJA : Status.OTKAZ);
+        vaspitacRepository.save(v.get());
+        return "saved";
     }
 }

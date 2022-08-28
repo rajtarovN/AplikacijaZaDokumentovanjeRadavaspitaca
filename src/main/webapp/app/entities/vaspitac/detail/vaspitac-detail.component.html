@@ -33,8 +33,22 @@
             <a [routerLink]="['/objekat', vaspitac.objekat?.id, 'view']">{{ vaspitac.objekat?.id }}</a>
           </div>
         </dd>
+        <dt><span>Trenutno:</span></dt>
+        <dd>
+          <span>{{ vaspitac.status }}</span>
+        </dd>
       </dl>
-
+      <div *jhiHasAnyAuthority="'ROLE_DIREKTOR'">
+        <div *ngIf="vaspitac.status === 'RADI'">
+          <dt><span>Promena statusa u:</span></dt>
+          <button type="submit" (click)="changeStatus('PENZIJA')" class="btn btn-info" data-cy="entityDetailsBackButton">
+            <span>Penzija</span>
+          </button>
+          <button type="submit" (click)="changeStatus('OTKAZ')" class="btn btn-info" data-cy="entityDetailsBackButton">
+            <span>Ne radi vise</span>
+          </button>
+        </div>
+      </div>
       <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
         <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Nazad</span>
       </button>

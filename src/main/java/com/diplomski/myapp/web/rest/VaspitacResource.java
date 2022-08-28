@@ -257,4 +257,12 @@ public class VaspitacResource {
                 .body(newUser);
         }
     }
+
+    @PostMapping("/changeStatus/{id}")
+    public ResponseEntity<String> changeStatus(@PathVariable Long id, @RequestBody String status) {
+        log.debug("REST request to change status Vaspitac : {}", id);
+
+        String ret = vaspitacService.changeStatus(id, status);
+        return ResponseEntity.ok().body(ret);
+    }
 }

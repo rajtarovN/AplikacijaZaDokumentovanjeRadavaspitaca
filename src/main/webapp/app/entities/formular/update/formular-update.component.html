@@ -32,14 +32,22 @@
 
         <div class="row mb-3">
           <label class="form-label" jhiTranslate="diplomskiApp.formular.datumRodjenja" for="field_datumRodjenja">Datum Rodjenja</label>
-          <input
-            type="text"
-            class="form-control"
-            name="datumRodjenja"
-            id="field_datumRodjenja"
-            data-cy="datumRodjenja"
-            formControlName="datumRodjenja"
-          />
+          <div class="input-group">
+            <input
+              type="text"
+              class="form-control"
+              name="datumRodjenja"
+              id="field_datumRodjenja"
+              data-cy="datumRodjenja"
+              formControlName="datumRodjenja"
+              ngbDatepicker
+              [maxDate]="{ year: 2022, month: 8, day: 27 }"
+              #pocetakVazenjaDp="ngbDatepicker"
+            />
+            <button type="button" class="btn btn-secondary" (click)="pocetakVazenjaDp.toggle()">
+              <fa-icon icon="calendar-alt"></fa-icon>
+            </button>
+          </div>
         </div>
 
         <div class="row mb-3">
@@ -166,14 +174,7 @@
       </div>
     </form>
 
-    <form
-      [hidden]="editForm.get('id')!.value !== null"
-      name="editForm"
-      role="form"
-      novalidate
-      (ngSubmit)="save()"
-      [formGroup]="editFormRoditelj2"
-    >
+    <form *ngIf="isCreating" name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editFormRoditelj2">
       <div>
         <label class="col-form-label-lg"><u>Podaci o prvom roditelju: </u></label>
         <div class="row mb-3">
@@ -225,14 +226,7 @@
       </div>
     </form>
 
-    <form
-      [hidden]="editForm.get('id')!.value !== null"
-      name="editForm"
-      role="form"
-      novalidate
-      (ngSubmit)="save()"
-      [formGroup]="editFormRoditelj1"
-    >
+    <form *ngIf="isCreating" name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editFormRoditelj1">
       <div>
         <label class="col-form-label-lg"><u>Podaci o drugom roditelju: </u></label>
         <div class="row mb-3">

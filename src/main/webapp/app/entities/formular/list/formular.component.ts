@@ -34,7 +34,10 @@ export class FormularComponent implements OnInit {
     protected modalService: NgbModal,
     protected accountService: AccountService
   ) {}
-
+  openCreatingFormular(): void {
+    localStorage.setItem('createF', 'c');
+    this.router.navigate(['/formular/new']);
+  }
   loadPage(page?: number, dontNavigate?: boolean): void {
     this.isLoading = true;
     const pageToLoad: number = page ?? this.page ?? 1;

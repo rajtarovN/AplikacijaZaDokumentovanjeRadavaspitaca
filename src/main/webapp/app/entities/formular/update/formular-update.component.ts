@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { finalize, map } from 'rxjs/operators';
@@ -24,10 +24,12 @@ import { AccountService } from '../../../core/auth/account.service';
 })
 export class FormularUpdateComponent implements OnInit {
   isSaving = false;
+  isCreating = false;
   isSavedRoditelj1 = false;
   statusFormularaValues = Object.keys(StatusFormulara);
   tipGrupeValues = Object.keys(TipGrupe);
   radniStatusValues = Object.keys(RadniStatus);
+  minDate = Date.now();
 
   adresasCollection: IAdresa[] = [];
   roditeljsSharedCollection: IRoditelj[] = [];
@@ -36,19 +38,27 @@ export class FormularUpdateComponent implements OnInit {
   roditelj2: IPodaciORoditeljima = {};
 
   editForm = this.fb.group({
-    id: [],
+    id: null,
     mesecUpisa: [],
-    jmbg: [],
+    jmbg: [
+      null,
+      [
+        Validators.required,
+        Validators.minLength(13),
+        Validators.maxLength(13),
+        Validators.pattern('[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]'),
+      ],
+    ],
     datumRodjenja: [],
-    imeDeteta: [],
-    mestoRodjenja: [],
-    opstinaRodjenja: [],
-    drzava: [],
+    imeDeteta: [null, [Validators.required]],
+    mestoRodjenja: [null, [Validators.required]],
+    opstinaRodjenja: [null, [Validators.required]],
+    drzava: [null, [Validators.required]],
     brDeceUPorodici: [],
     zdravstveniProblemi: [],
     zdravstveniUslovi: [],
     statusFormulara: [],
-    tipGrupe: [],
+    tipGrupe: [null, [Validators.required]],
     adresa: [],
     roditelj: [],
     ulica: [],
@@ -58,7 +68,14 @@ export class FormularUpdateComponent implements OnInit {
 
   editFormRoditelj1 = this.fb.group({
     id1: [],
-    jmbg1: [],
+    jmbg1: [
+      null,
+      [
+        Validators.minLength(13),
+        Validators.maxLength(13),
+        Validators.pattern('[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]'),
+      ],
+    ],
     ime1: [],
     prezime1: [],
     telefon1: [],
@@ -70,7 +87,14 @@ export class FormularUpdateComponent implements OnInit {
 
   editFormRoditelj2 = this.fb.group({
     id2: [],
-    jmbg2: [],
+    jmbg2: [
+      null,
+      [
+        Validators.minLength(13),
+        Validators.maxLength(13),
+        Validators.pattern('[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]'),
+      ],
+    ],
     ime2: [],
     prezime2: [],
     telefon2: [],
@@ -91,6 +115,11 @@ export class FormularUpdateComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    if (localStorage.getItem('createF') != null) {
+      if (localStorage.getItem('createF') === 'c') {
+        this.isCreating = true;
+      }
+    }
     this.activatedRoute.data.subscribe(({ formular }) => {
       this.updateForm(formular);
 
@@ -108,7 +137,7 @@ export class FormularUpdateComponent implements OnInit {
     const podaciORoditeljima2 = this.createFromFormPodaci(2);
     const formular = this.createFromForm();
 
-    if (formular.id !== undefined) {
+    if (!this.isCreating) {
       this.subscribeToSaveResponse(this.formularService.update(formular));
     } else {
       this.subscribeToSaveResponseR(this.podaciORoditeljimaService.create(podaciORoditeljima1));
@@ -146,6 +175,7 @@ export class FormularUpdateComponent implements OnInit {
   }
 
   protected onSaveSuccess(): void {
+    localStorage.setItem('createF', '');
     this.previousState();
   }
   protected onSaveSuccessRoditelj(res: HttpResponse<IPodaciORoditeljima>): void {

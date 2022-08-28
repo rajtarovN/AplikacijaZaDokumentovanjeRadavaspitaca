@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { finalize, map } from 'rxjs/operators';
@@ -25,9 +25,9 @@ export class PotrebanMaterijalUpdateComponent implements OnInit {
   objekatsSharedCollection: IObjekat[] = [];
 
   editForm = this.fb.group({
-    naziv: [],
+    naziv: [null, [Validators.required]],
     id: [],
-    kolicina: [],
+    kolicina: [null, [Validators.required]],
     statusMaterijala: [],
     objekat: [],
   });

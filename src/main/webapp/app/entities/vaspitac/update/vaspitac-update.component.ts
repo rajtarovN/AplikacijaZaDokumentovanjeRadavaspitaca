@@ -26,6 +26,7 @@ export class VaspitacUpdateComponent implements OnInit {
   doNotMatch = false;
   url: any;
   isImageSaved = false;
+  vaspitac: IVaspitac | null = null;
 
   objekatsSharedCollection: IObjekat[] = [];
 
@@ -66,7 +67,7 @@ export class VaspitacUpdateComponent implements OnInit {
     this.user = new User();
     this.activatedRoute.data.subscribe(({ vaspitac }) => {
       this.updateForm(vaspitac);
-
+      this.vaspitac = vaspitac;
       this.loadRelationshipsOptions();
     });
     this.userService.authorities().subscribe(authorities => (this.authorities = authorities));
@@ -75,7 +76,12 @@ export class VaspitacUpdateComponent implements OnInit {
   previousState(): void {
     window.history.back();
   }
-
+  changeStatus(status: any): void {
+    this.vaspitacService.changeStatus(this.vaspitac!.id, status).subscribe(res => {
+      // eslint-disable-next-line no-console
+      console.log('uspeh', res); //todo
+    });
+  }
   save(): void {
     this.isSaving = true;
     const vaspitac = this.createFromForm();
@@ -100,6 +106,7 @@ export class VaspitacUpdateComponent implements OnInit {
       if (this.editForm.get(['password'])!.value !== this.editForm.get(['confirmPassword'])!.value) {
         this.doNotMatch = true;
       } else {
+        this.user.authorities = ['ROLE_VASPITAC'];
         this.vaspitacService.createZaposlen(this.user).subscribe({
           next: res => {
             this.user.id = res.id;
@@ -149,22 +156,43 @@ export class VaspitacUpdateComponent implements OnInit {
   }
 
   protected updateForm(vaspitac: IVaspitac): void {
-    this.editForm.patchValue({
-      datumZaposlenja: vaspitac.datumZaposlenja,
-      godineIskustva: vaspitac.godineIskustva,
-      opis: vaspitac.opis,
-      id: vaspitac.id,
-      objekat: vaspitac.objekat,
-      login: 'pogresno',
-      email: 'pogresno@gmail.com',
-      password: 'Aa1!aaaaaaaa',
-      confirmPassword: 'Aa1!aaaaaaaa',
-      firstName: 'aaaaaaaaa',
-      lastName: 'aaaaaaaa',
-      activated: true,
-      langKey: 'ddd',
-      authorities: ['ROLE_VASPITAC'],
-    });
+    // eslint-disable-next-line no-console
+    console.log(vaspitac); //todo
+    if (vaspitac.user !== undefined) {
+      this.editForm.patchValue({
+        datumZaposlenja: vaspitac.datumZaposlenja,
+        godineIskustva: vaspitac.godineIskustva,
+        opis: vaspitac.opis,
+        id: vaspitac.id,
+        objekat: vaspitac.objekat,
+        login: 'pogresno',
+        email: 'pogresno@gmail.com',
+        password: 'Aa1!aaaaaaaa',
+        confirmPassword: 'Aa1!aaaaaaaa',
+        firstName: 'aaaaaaaaa',
+        lastName: 'aaaaaaaa',
+        activated: true,
+        langKey: 'ddd',
+        authorities: ['ROLE_VASPITAC'],
+      });
+    } else {
+      this.editForm.patchValue({
+        datumZaposlenja: vaspitac.datumZaposlenja,
+        godineIskustva: vaspitac.godineIskustva,
+        opis: vaspitac.opis,
+        id: vaspitac.id,
+        objekat: vaspitac.objekat,
+        login: '',
+        email: '',
+        password: '',
+        confirmPassword: '',
+        firstName: '',
+        lastName: '',
+        activated: true,
+        langKey: '',
+        authorities: ['ROLE_VASPITAC'],
+      });
+    }
     this.objekatsSharedCollection = this.objekatService.addObjekatToCollectionIfMissing(this.objekatsSharedCollection, vaspitac.objekat);
   }
 

@@ -90,6 +90,9 @@ export class VaspitacService {
   createZaposlen(user: IUser): Observable<IUser> {
     return this.http.post<IUser>('api/createVaspitac', user);
   }
+  changeStatus(id: number | undefined, status: any): Observable<string> {
+    return this.http.post<string>('api/changeStatus/' + String(id), status);
+  }
   protected convertDateFromClient(vaspitac: IVaspitac): IVaspitac {
     return Object.assign({}, vaspitac, {
       datumZaposlenja: vaspitac.datumZaposlenja?.isValid() ? vaspitac.datumZaposlenja.format(DATE_FORMAT) : undefined,

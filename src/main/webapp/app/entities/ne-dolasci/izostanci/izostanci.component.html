@@ -8,6 +8,12 @@
   </h2>
 
   <jhi-alert-error></jhi-alert-error>
+  <div class="alert alert-success" *ngIf="success">
+    <span><strong>Uspesno ste dodali izostanke.</strong></span>
+  </div>
+  <div class="alert alert-success" *ngIf="errorr">
+    <span><strong>Desila se greska.</strong></span>
+  </div>
 
   <jhi-alert></jhi-alert>
   <button class="btn btn-info" (click)="sacuvaj()">Sacuvaj</button>

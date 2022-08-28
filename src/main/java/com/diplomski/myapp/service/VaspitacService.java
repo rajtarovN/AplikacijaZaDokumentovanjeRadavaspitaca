@@ -67,4 +67,6 @@ public interface VaspitacService {
     List<Vaspitac> getByObjekat(Long id);
 
     List<VaspitacDTO> getImena();
+
+    String changeStatus(Long id, String status);
 }

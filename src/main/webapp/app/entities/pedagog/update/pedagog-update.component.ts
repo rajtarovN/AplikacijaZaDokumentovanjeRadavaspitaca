@@ -78,6 +78,7 @@ export class PedagogUpdateComponent implements OnInit {
     if (this.editForm.get(['password'])!.value !== this.editForm.get(['confirmPassword'])!.value) {
       this.doNotMatch = true;
     } else {
+      this.user.authorities = ['ROLE_PEDAGOG'];
       this.pedagogService.createZaposlen(this.user).subscribe({
         next: res => {
           this.user.id = res.id;

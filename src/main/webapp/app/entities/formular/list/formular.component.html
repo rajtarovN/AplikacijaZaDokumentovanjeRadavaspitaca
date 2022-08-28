@@ -13,11 +13,12 @@
         id="jh-create-entity"
         data-cy="entityCreateButton"
         class="btn btn-primary jh-create-entity create-formular"
-        [routerLink]="['/formular/new']"
+        (click)="openCreatingFormular()"
       >
         <fa-icon icon="plus"></fa-icon>
         <span jhiTranslate="diplomskiApp.formular.home.createLabel"> Create a new Formular </span>
       </button>
+      <!--      [routerLink]="['/formular/new']"-->
     </div>
   </h2>
 

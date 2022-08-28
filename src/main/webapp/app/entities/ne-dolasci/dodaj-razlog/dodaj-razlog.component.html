@@ -1,6 +1,6 @@
 <form *ngIf="neDolasci" name="deleteForm" (ngSubmit)="save()">
   <div class="modal-header">
-    <h4 class="modal-title" data-cy="neDolasciDeleteDialogHeading" jhiTranslate="entity.delete.title">Unos razloga za izostanak</h4>
+    <h4 class="modal-title" data-cy="neDolasciDeleteDialogHeading">Unos razloga za izostanak</h4>
 
     <button type="button" class="btn-close" data-dismiss="modal" aria-hidden="true" (click)="cancel()">&times;</button>
   </div>
@@ -20,6 +20,6 @@
       <fa-icon icon="ban"></fa-icon>&nbsp;<span>Otkazi promene</span>
     </button>
 
-    <button (click)="save()" type="submit" class="btn btn-danger"><fa-icon icon="times"></fa-icon>&nbsp;<span>Sacuvaj</span></button>
+    <button (click)="save()" type="submit" class="btn btn-danger"><fa-icon icon="save"></fa-icon>&nbsp;<span>Sacuvaj</span></button>
   </div>
 </form>

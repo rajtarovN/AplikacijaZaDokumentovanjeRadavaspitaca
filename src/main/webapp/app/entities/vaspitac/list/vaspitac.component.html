@@ -39,6 +39,9 @@
           <th scope="col">
             <span>Prezime</span>
           </th>
+          <th scope="col">
+            <span>Radi</span>
+          </th>
           <th scope="col" jhiSortBy="datumZaposlenja">
             <span jhiTranslate="diplomskiApp.vaspitac.datumZaposlenja">Datum Zaposlenja</span> <fa-icon icon="sort"></fa-icon>
           </th>
@@ -57,6 +60,7 @@
         <tr *ngFor="let vaspitac of vaspitacs; trackBy: trackId" data-cy="entityTable">
           <td>{{ vaspitac.user?.firstName }}</td>
           <td>{{ vaspitac.user?.lastName }}</td>
+          <td>{{ vaspitac.status }}</td>
           <td>{{ vaspitac.datumZaposlenja | formatMediumDate }}</td>
           <td>{{ vaspitac.godineIskustva }}</td>
           <!--          <td>{{ vaspitac.opis }}</td>-->

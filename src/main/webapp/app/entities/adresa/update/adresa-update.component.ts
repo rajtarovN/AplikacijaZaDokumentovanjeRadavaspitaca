@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { finalize } from 'rxjs/operators';
@@ -16,9 +16,9 @@ export class AdresaUpdateComponent implements OnInit {
   isSaving = false;
 
   editForm = this.fb.group({
-    mesto: [],
-    ulica: [],
-    broj: [],
+    mesto: [null, [Validators.required]],
+    ulica: [null, [Validators.required]],
+    broj: [null, [Validators.required]],
     id: [],
   });
 

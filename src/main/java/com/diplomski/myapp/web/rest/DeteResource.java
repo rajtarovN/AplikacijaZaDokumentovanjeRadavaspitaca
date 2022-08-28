@@ -197,7 +197,9 @@ public class DeteResource {
         return ResponseEntity.ok().body(dete);
     }
 
-    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_DIREKTOR') or hasRole('ROLE_PEDAGOG') or hasRole('ROLE_VASPITAC')")
+    @PreAuthorize(
+        "hasRole('ROLE_ADMIN') or hasRole('ROLE_DIREKTOR') or hasRole('ROLE_PEDAGOG') or hasRole('ROLE_VASPITAC')  or hasRole('ROLE_RODITELJ')"
+    )
     @GetMapping("/detes/findByGrupa/{id}")
     public ResponseEntity<List<Dete>> getAllDetesByGrupa(
         @org.springdoc.api.annotations.ParameterObject Pageable pageable,

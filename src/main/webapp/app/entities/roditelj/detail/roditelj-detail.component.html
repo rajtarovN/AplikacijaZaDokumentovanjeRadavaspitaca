@@ -18,6 +18,14 @@
         <dd>
           <span>{{ roditelj.user?.firstName }} {{ roditelj.user?.lastName }}</span>
         </dd>
+        <dt><span>E-mail</span></dt>
+        <dd>
+          <span>{{ roditelj.user?.email }}</span>
+        </dd>
+        <dt><span>Telefon</span></dt>
+        <dd>
+          <span>{{ roditelj.telefon }}</span>
+        </dd>
       </dl>
 
       <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">

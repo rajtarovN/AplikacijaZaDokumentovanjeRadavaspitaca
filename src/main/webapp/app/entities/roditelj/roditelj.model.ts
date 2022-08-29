@@ -7,10 +7,17 @@ export interface IRoditelj {
   detes?: IDete[] | null;
   formulars?: IFormular[] | null;
   user?: IUser | null;
+  telefon?: string | null;
 }
 
 export class Roditelj implements IRoditelj {
-  constructor(public id?: number, public detes?: IDete[] | null, public formulars?: IFormular[] | null, user?: IUser | null) {}
+  constructor(
+    public id?: number,
+    public detes?: IDete[] | null,
+    public formulars?: IFormular[] | null,
+    user?: IUser | null,
+    public telefon?: string | null
+  ) {}
 }
 
 export function getRoditeljIdentifier(roditelj: IRoditelj): number | undefined {

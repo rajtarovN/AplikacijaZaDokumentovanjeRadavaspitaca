@@ -4,6 +4,7 @@ import com.diplomski.myapp.domain.NeDolasci;
 import com.diplomski.myapp.repository.NeDolasciRepository;
 import com.diplomski.myapp.service.NeDolasciService;
 import com.diplomski.myapp.web.rest.dto.NeDolasciDTO;
+import com.diplomski.myapp.web.rest.dto.NeDolazakViewDTO;
 import com.diplomski.myapp.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -18,6 +19,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import tech.jhipster.web.util.HeaderUtil;
@@ -54,6 +56,7 @@ public class NeDolasciResource {
      * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new neDolasci, or with status {@code 400 (Bad Request)} if the neDolasci has already an ID.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_PEDAGOG') or hasRole('ROLE_DIREKTOR') or hasRole('ROLE_VASPITAC')")
     @PostMapping("/ne-dolascis")
     public ResponseEntity<NeDolasci> createNeDolasci(@RequestBody NeDolasci neDolasci) throws URISyntaxException {
         log.debug("REST request to save NeDolasci : {}", neDolasci);
@@ -77,6 +80,7 @@ public class NeDolasciResource {
      * or with status {@code 500 (Internal Server Error)} if the neDolasci couldn't be updated.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_PEDAGOG') or hasRole('ROLE_DIREKTOR') or hasRole('ROLE_VASPITAC')")
     @PutMapping("/ne-dolascis/{id}")
     public ResponseEntity<NeDolasci> updateNeDolasci(
         @PathVariable(value = "id", required = false) final Long id,
@@ -112,6 +116,7 @@ public class NeDolasciResource {
      * or with status {@code 500 (Internal Server Error)} if the neDolasci couldn't be updated.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_PEDAGOG') or hasRole('ROLE_DIREKTOR') or hasRole('ROLE_VASPITAC')")
     @PatchMapping(value = "/ne-dolascis/{id}", consumes = { "application/json", "application/merge-patch+json" })
     public ResponseEntity<NeDolasci> partialUpdateNeDolasci(
         @PathVariable(value = "id", required = false) final Long id,
@@ -143,6 +148,7 @@ public class NeDolasciResource {
      * @param pageable the pagination information.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of neDolascis in body.
      */
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_PEDAGOG') or hasRole('ROLE_DIREKTOR') or hasRole('ROLE_VASPITAC')")
     @GetMapping("/ne-dolascis")
     public ResponseEntity<List<NeDolasci>> getAllNeDolascis(@org.springdoc.api.annotations.ParameterObject Pageable pageable) {
         log.debug("REST request to get a page of NeDolascis");
@@ -157,6 +163,7 @@ public class NeDolasciResource {
      * @param id the id of the neDolasci to retrieve.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the neDolasci, or with status {@code 404 (Not Found)}.
      */
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_PEDAGOG') or hasRole('ROLE_DIREKTOR') or hasRole('ROLE_VASPITAC')")
     @GetMapping("/ne-dolascis/{id}")
     public ResponseEntity<NeDolasci> getNeDolasci(@PathVariable Long id) {
         log.debug("REST request to get NeDolasci : {}", id);
@@ -170,6 +177,7 @@ public class NeDolasciResource {
      * @param id the id of the neDolasci to delete.
      * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
      */
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_PEDAGOG') or hasRole('ROLE_DIREKTOR') or hasRole('ROLE_VASPITAC')")
     @DeleteMapping("/ne-dolascis/{id}")
     public ResponseEntity<Void> deleteNeDolasci(@PathVariable Long id) {
         log.debug("REST request to delete NeDolasci : {}", id);
@@ -180,6 +188,7 @@ public class NeDolasciResource {
             .build();
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')  or hasRole('ROLE_VASPITAC')")
     @PostMapping("/ne-dolascis/create-list")
     public ResponseEntity<String> createNeDolasciList(@RequestBody List<NeDolasciDTO> neDolasci) throws URISyntaxException {
         log.debug("REST request to save list NeDolasci : {}", neDolasci);
@@ -193,5 +202,29 @@ public class NeDolasciResource {
             .created(new URI("/api/ne-dolascis/create-list/"))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result))
             .body(result);
+    }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_PEDAGOG') or hasRole('ROLE_DIREKTOR') or hasRole('ROLE_VASPITAC')")
+    @GetMapping("/ne-dolascis/findByGrupa/{id}")
+    public ResponseEntity<List<NeDolazakViewDTO>> getAllNeDolascis(
+        @org.springdoc.api.annotations.ParameterObject Pageable pageable,
+        @PathVariable Long id
+    ) {
+        log.debug("REST request to get a page of NeDolascis");
+        Page<NeDolazakViewDTO> page = neDolasciService.findAllByGrupa(pageable, id);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_PEDAGOG') or hasRole('ROLE_DIREKTOR') or hasRole('ROLE_VASPITAC')")
+    @GetMapping("/ne-dolascis/findByVaspitac/{username}")
+    public ResponseEntity<List<NeDolazakViewDTO>> findNeDolasciByVaspitac(
+        @org.springdoc.api.annotations.ParameterObject Pageable pageable,
+        @PathVariable String username
+    ) {
+        log.debug("REST request to get a page of NeDolascis");
+        Page<NeDolazakViewDTO> page = neDolasciService.findAllByVaspitac(pageable, username);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
 }

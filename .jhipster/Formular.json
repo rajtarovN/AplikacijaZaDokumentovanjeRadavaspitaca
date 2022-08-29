@@ -52,7 +52,7 @@
     {
       "fieldName": "statusFormulara",
       "fieldType": "StatusFormulara",
-      "fieldValues": "NOV,ODOBREN,ODBIJEN"
+      "fieldValues": "NOV,ODOBREN,ODBIJEN,RASPOREDJEN"
     },
     {
       "fieldName": "tipGrupe",

@@ -10,6 +10,7 @@ import com.diplomski.myapp.domain.Formular;
 import com.diplomski.myapp.domain.enumeration.StatusFormulara;
 import com.diplomski.myapp.domain.enumeration.TipGrupe;
 import com.diplomski.myapp.repository.FormularRepository;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;
@@ -37,8 +38,8 @@ class FormularResourceIT {
     private static final String DEFAULT_JMBG = "AAAAAAAAAA";
     private static final String UPDATED_JMBG = "BBBBBBBBBB";
 
-    private static final String DEFAULT_DATUM_RODJENJA = "AAAAAAAAAA";
-    private static final String UPDATED_DATUM_RODJENJA = "BBBBBBBBBB";
+    private static final LocalDate DEFAULT_DATUM_RODJENJA = LocalDate.now();
+    private static final LocalDate UPDATED_DATUM_RODJENJA = LocalDate.now();
 
     private static final String DEFAULT_IME_DETETA = "AAAAAAAAAA";
     private static final String UPDATED_IME_DETETA = "BBBBBBBBBB";

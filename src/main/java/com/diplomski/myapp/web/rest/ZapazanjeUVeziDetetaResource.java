@@ -17,6 +17,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import tech.jhipster.web.util.HeaderUtil;
@@ -56,6 +57,7 @@ public class ZapazanjeUVeziDetetaResource {
      * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new zapazanjeUVeziDeteta, or with status {@code 400 (Bad Request)} if the zapazanjeUVeziDeteta has already an ID.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
+    @PreAuthorize("hasRole('ROLE_ADMIN')  or hasRole('ROLE_VASPITAC') or hasRole('ROLE_PEDAGOG') ")
     @PostMapping("/zapazanje-u-vezi-detetas")
     public ResponseEntity<ZapazanjeUVeziDeteta> createZapazanjeUVeziDeteta(@RequestBody ZapazanjeUVeziDeteta zapazanjeUVeziDeteta)
         throws URISyntaxException {
@@ -80,6 +82,7 @@ public class ZapazanjeUVeziDetetaResource {
      * or with status {@code 500 (Internal Server Error)} if the zapazanjeUVeziDeteta couldn't be updated.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
+    @PreAuthorize("hasRole('ROLE_ADMIN')  or hasRole('ROLE_VASPITAC') or hasRole('ROLE_PEDAGOG') ")
     @PutMapping("/zapazanje-u-vezi-detetas/{id}")
     public ResponseEntity<ZapazanjeUVeziDeteta> updateZapazanjeUVeziDeteta(
         @PathVariable(value = "id", required = false) final Long id,
@@ -115,6 +118,7 @@ public class ZapazanjeUVeziDetetaResource {
      * or with status {@code 500 (Internal Server Error)} if the zapazanjeUVeziDeteta couldn't be updated.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
+    @PreAuthorize("hasRole('ROLE_ADMIN')   or hasRole('ROLE_VASPITAC') or hasRole('ROLE_PEDAGOG')")
     @PatchMapping(value = "/zapazanje-u-vezi-detetas/{id}", consumes = { "application/json", "application/merge-patch+json" })
     public ResponseEntity<ZapazanjeUVeziDeteta> partialUpdateZapazanjeUVeziDeteta(
         @PathVariable(value = "id", required = false) final Long id,
@@ -146,6 +150,7 @@ public class ZapazanjeUVeziDetetaResource {
      * @param pageable the pagination information.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of zapazanjeUVeziDetetas in body.
      */
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_DIREKTOR')  or hasRole('ROLE_VASPITAC') or hasRole('ROLE_PEDAGOG')")
     @GetMapping("/zapazanje-u-vezi-detetas")
     public ResponseEntity<List<ZapazanjeUVeziDeteta>> getAllZapazanjeUVeziDetetas(
         @org.springdoc.api.annotations.ParameterObject Pageable pageable
@@ -162,6 +167,7 @@ public class ZapazanjeUVeziDetetaResource {
      * @param id the id of the zapazanjeUVeziDeteta to retrieve.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the zapazanjeUVeziDeteta, or with status {@code 404 (Not Found)}.
      */
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_DIREKTOR')  or hasRole('ROLE_VASPITAC') or hasRole('ROLE_PEDAGOG')")
     @GetMapping("/zapazanje-u-vezi-detetas/{id}")
     public ResponseEntity<ZapazanjeUVeziDeteta> getZapazanjeUVeziDeteta(@PathVariable Long id) {
         log.debug("REST request to get ZapazanjeUVeziDeteta : {}", id);
@@ -175,6 +181,7 @@ public class ZapazanjeUVeziDetetaResource {
      * @param id the id of the zapazanjeUVeziDeteta to delete.
      * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
      */
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_DIREKTOR')  or hasRole('ROLE_VASPITAC') or hasRole('ROLE_PEDAGOG') ")
     @DeleteMapping("/zapazanje-u-vezi-detetas/{id}")
     public ResponseEntity<Void> deleteZapazanjeUVeziDeteta(@PathVariable Long id) {
         log.debug("REST request to delete ZapazanjeUVeziDeteta : {}", id);
@@ -183,5 +190,14 @@ public class ZapazanjeUVeziDetetaResource {
             .noContent()
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))
             .build();
+    }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_DIREKTOR')  or hasRole('ROLE_VASPITAC') or hasRole('ROLE_PEDAGOG')")
+    @GetMapping("/zapazanje-u-vezi-detetas/findByDete/{id}")
+    public ResponseEntity<List<ZapazanjeUVeziDeteta>> getAllZapazanjeUVeziDetetas(@PathVariable Long id) {
+        log.debug("REST request to get a page of ZapazanjeUVeziDetetas by dete");
+        Page<ZapazanjeUVeziDeteta> page = zapazanjeUVeziDetetaService.findByDete(id);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
 }

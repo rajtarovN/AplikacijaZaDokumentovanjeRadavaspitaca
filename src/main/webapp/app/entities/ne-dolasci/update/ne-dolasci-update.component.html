@@ -20,8 +20,9 @@
               ngbDatepicker
               #datumDp="ngbDatepicker"
               formControlName="datum"
+              [readonly]="true"
             />
-            <button type="button" class="btn btn-secondary" (click)="datumDp.toggle()"><fa-icon icon="calendar-alt"></fa-icon></button>
+            <!--            <button type="button" class="btn btn-secondary" (click)="datumDp.toggle()"><fa-icon icon="calendar-alt"></fa-icon></button>-->
           </div>
         </div>
 
@@ -37,29 +38,34 @@
 
         <div class="row mb-3">
           <label class="form-label" jhiTranslate="diplomskiApp.neDolasci.dete" for="field_dete">Dete</label>
-          <select class="form-control" id="field_dete" data-cy="dete" name="dete" formControlName="dete">
-            <option [ngValue]="null"></option>
-            <option
-              [ngValue]="deteOption.id === editForm.get('dete')!.value?.id ? editForm.get('dete')!.value : deteOption"
-              *ngFor="let deteOption of detesCollection; trackBy: trackDeteById"
-            >
-              {{ deteOption.id }}
-            </option>
-          </select>
+          <label style="background: #eee" class="form-control" name="id" id="field_dete" data-cy="dete" formControlName="dete">{{
+            editForm.get('dete')!.value?.id
+          }}</label>
+          <!--          <select class="form-control" id="field_dete" data-cy="dete" name="dete" formControlName="dete">-->
+          <!--            <option [ngValue]="null"></option>-->
+          <!--            <option-->
+          <!--              [ngValue]="deteOption.id === editForm.get('dete')!.value?.id ? editForm.get('dete')!.value : deteOption"-->
+          <!--              *ngFor="let deteOption of detesCollection; trackBy: trackDeteById"-->
+          <!--            >-->
+          <!--              {{ deteOption.id }}-->
+          <!--            </option>-->
+          <!--          </select>-->
         </div>
 
-        <div class="row mb-3">
-          <label class="form-label" jhiTranslate="diplomskiApp.neDolasci.dnevnik" for="field_dnevnik">Dnevnik</label>
-          <select class="form-control" id="field_dnevnik" data-cy="dnevnik" name="dnevnik" formControlName="dnevnik">
-            <option [ngValue]="null"></option>
-            <option
-              [ngValue]="dnevnikOption.id === editForm.get('dnevnik')!.value?.id ? editForm.get('dnevnik')!.value : dnevnikOption"
-              *ngFor="let dnevnikOption of dnevniksSharedCollection; trackBy: trackDnevnikById"
-            >
-              {{ dnevnikOption.id }}
-            </option>
-          </select>
-        </div>
+        <label class="form-label" jhiTranslate="diplomskiApp.neDolasci.dnevnik" for="field_dnevnik">Dnevnik</label>
+        <label style="background: #eee" class="form-control" name="id" id="field_dnevnik" data-cy="dnevnik" formControlName="dnevnik">{{
+          editForm.get('dnevnik')!.value?.id
+        }}</label>
+        <!--        <select class="form-control" id="field_dnevnik" data-cy="dnevnik" name="dnevnik" formControlName="dnevnik">-->
+        <!--          <option [ngValue]="null"></option>-->
+        <!--          <option-->
+        <!--            [ngValue]="dnevnikOption.id === editForm.get('dnevnik')!.value?.id ? editForm.get('dnevnik')!.value : dnevnikOption"-->
+        <!--            *ngFor="let dnevnikOption of dnevniksSharedCollection; trackBy: trackDnevnikById"-->
+        <!--          >-->
+        <!--            {{ dnevnikOption.id }}-->
+        <!--          </option>-->
+        <!--        </select>-->
+        <!--      </div>-->
       </div>
 
       <div>

@@ -9,6 +9,8 @@ import { IPrica } from '../prica.model';
 import { ASC, DESC, ITEMS_PER_PAGE, SORT } from 'app/config/pagination.constants';
 import { PricaService } from '../service/prica.service';
 import { PricaDeleteDialogComponent } from '../delete/prica-delete-dialog.component';
+import { Dayjs } from 'dayjs';
+import { KonacnaPricaService } from '../../konacna-prica/service/konacna-prica.service';
 
 @Component({
   selector: 'jhi-prica',
@@ -23,34 +25,83 @@ export class PricaComponent implements OnInit {
   predicate!: string;
   ascending!: boolean;
   ngbPaginationPage = 1;
+  today: Date;
+  disableBtn = false;
 
   constructor(
     protected pricaService: PricaService,
     protected activatedRoute: ActivatedRoute,
     protected router: Router,
-    protected modalService: NgbModal
-  ) {}
+    protected modalService: NgbModal,
+    protected konacnaPricaService: KonacnaPricaService
+  ) {
+    this.today = new Date();
+  }
 
   loadPage(page?: number, dontNavigate?: boolean): void {
     this.isLoading = true;
+    this.today = new Date();
     const pageToLoad: number = page ?? this.page ?? 1;
-
-    this.pricaService
-      .query({
-        page: pageToLoad - 1,
-        size: this.itemsPerPage,
-        sort: this.sort(),
-      })
-      .subscribe({
-        next: (res: HttpResponse<IPrica[]>) => {
-          this.isLoading = false;
-          this.onSuccess(res.body, res.headers, pageToLoad, !dontNavigate);
-        },
-        error: () => {
-          this.isLoading = false;
-          this.onError();
-        },
-      });
+    const username = localStorage.getItem('username');
+    const dnevnik = localStorage.getItem('dnevnik');
+    if (dnevnik) {
+      this.pricaService
+        .queryOldDnevnik(
+          {
+            page: pageToLoad - 1,
+            size: this.itemsPerPage,
+            sort: this.sort(),
+          },
+          dnevnik
+        )
+        .subscribe({
+          next: (res: HttpResponse<IPrica[]>) => {
+            this.isLoading = false;
+            this.onSuccess(res.body, res.headers, pageToLoad, !dontNavigate);
+          },
+          error: () => {
+            this.isLoading = false;
+            this.onError();
+          },
+        });
+    } else if (username) {
+      this.pricaService
+        .queryCurrentDnevnik(
+          {
+            page: pageToLoad - 1,
+            size: this.itemsPerPage,
+            sort: this.sort(),
+          },
+          username
+        )
+        .subscribe({
+          next: (res: HttpResponse<IPrica[]>) => {
+            this.isLoading = false;
+            this.onSuccess(res.body, res.headers, pageToLoad, !dontNavigate);
+          },
+          error: () => {
+            this.isLoading = false;
+            this.onError();
+          },
+        });
+    } else {
+      this.pricaService
+        .query({
+          page: pageToLoad - 1,
+          size: this.itemsPerPage,
+          sort: this.sort(),
+        })
+        .subscribe({
+          next: (res: HttpResponse<IPrica[]>) => {
+            this.isLoading = false;
+            this.onSuccess(res.body, res.headers, pageToLoad, !dontNavigate);
+          },
+          error: () => {
+            this.isLoading = false;
+            this.onError();
+          },
+        });
+    }
   }
 
   ngOnInit(): void {
@@ -70,6 +121,26 @@ export class PricaComponent implements OnInit {
         this.loadPage();
       }
     });
+  }
+  pisiPricu(prica: IPrica): void {
+    localStorage.setItem('idPrice', String(prica.id));
+
+    if (prica.konacnaPrica !== null) {
+      localStorage.setItem('prica', prica.konacnaPrica!.tekst!);
+    } else {
+      const id = localStorage.getItem('idPrice');
+      this.konacnaPricaService.getPocetnaPrica(id!).subscribe({
+        next: (res: any) => localStorage.setItem('prica', res.body.tekst!),
+        error: () => this.onError(),
+      });
+    }
+
+    this.router.navigate(['/konacna-prica/editor']);
+  }
+
+  viewKonacnaPrica(id: number, idKonacna: number): void {
+    localStorage.setItem('idPrice', String(id));
+    this.router.navigate(['/konacna-prica/' + String(idKonacna) + '/view']);
   }
 
   protected sort(): string[] {
@@ -109,6 +180,12 @@ export class PricaComponent implements OnInit {
     }
     this.pricas = data ?? [];
     this.ngbPaginationPage = this.page;
+    let prica: IPrica;
+    data?.forEach(value => {
+      if (value.konacnaPrica == null) {
+        this.disableBtn = true;
+      }
+    });
   }
 
   protected onError(): void {

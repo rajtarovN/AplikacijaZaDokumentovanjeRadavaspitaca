@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import dayjs from 'dayjs/esm';
 import { TipGrupe } from '../../entities/enumerations/tip-grupe.model';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { HttpHeaders, HttpResponse } from '@angular/common/http';
+import { HttpErrorResponse, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { VaspitacService } from '../../entities/vaspitac/service/vaspitac.service';
 import { FormularService } from '../../entities/formular/service/formular.service';
 import { DeteZaGrupuDTO } from '../../entities/formular/formular.model';
@@ -17,7 +17,10 @@ import { FormBuilder } from '@angular/forms';
   styleUrls: ['./raspored-dece.component.scss'],
 })
 export class RasporedDeceComponent implements OnInit {
+  errorVaspitacHasDnevnik = false;
+  success = false;
   deca: DeteZaGrupuDTO[];
+  svaDeca: DeteZaGrupuDTO[];
   dodataDeca: DeteZaGrupuDTO[];
   predicate!: string;
   datumPocetka: dayjs.Dayjs;
@@ -27,11 +30,13 @@ export class RasporedDeceComponent implements OnInit {
   listaVasapitaca: VaspitacZaGrupuDTO[] | undefined;
   ascending!: boolean;
   isLoading = false;
+  tipGrupeValues = Object.keys(TipGrupe);
 
   editForm = this.fb.group({
     pocetakVazenja: [],
     krajVazenja: [],
     vaspitacs: [],
+    tipGrupe: [],
   });
   panelOpenState = false;
 
@@ -45,6 +50,7 @@ export class RasporedDeceComponent implements OnInit {
     this.datumPocetka = dayjs();
     this.datumKraja = dayjs();
     this.dodataDeca = [];
+    this.svaDeca = [];
     this.deca = [];
     this.tipGrupe = TipGrupe.POLUDNEVNA;
   }
@@ -59,6 +65,24 @@ export class RasporedDeceComponent implements OnInit {
   trackId(_index: number, item: DeteZaGrupuDTO): number {
     return item.id!;
   }
+  onChange(): void {
+    // eslint-disable-next-line no-console
+    console.log(this.editForm.get('tipGrupe')?.value);
+    const odabranaGrupa = this.editForm.get('tipGrupe')?.value;
+    this.tipGrupe = odabranaGrupa;
+    this.deca = [];
+    this.dodataDeca = [];
+    //ovde menjam todo i pazi na null
+    if (odabranaGrupa === null) {
+      this.deca = this.svaDeca;
+    } else {
+      this.svaDeca.forEach((element, index) => {
+        if (element.tipGrupe === odabranaGrupa) {
+          this.deca.push(element);
+        }
+      });
+    }
+  }
 
   save(): void {
     const newGrupa = new GrupaDTO(
@@ -68,14 +92,14 @@ export class RasporedDeceComponent implements OnInit {
       this.datumKraja,
       this.editForm.get(['vaspitacs'])!.value[0]
     );
-    // eslint-disable-next-line no-console
-    console.log(newGrupa);
+    this.success = false;
+    this.errorVaspitacHasDnevnik = false;
     this.grupaService.createGrupa(newGrupa).subscribe({
       next: (res: HttpResponse<any>) => {
         this.onCreateSuccess(res.body, res.headers);
       },
-      error: () => {
-        this.onError();
+      error: response => {
+        this.onError(response);
       },
     });
   }
@@ -106,22 +130,20 @@ export class RasporedDeceComponent implements OnInit {
         this.isLoading = false;
         this.onGetDecaSuccess(res.body, res.headers);
       },
-      error: () => {
+      error: response => {
         this.isLoading = false;
-        this.onError();
+        this.onError(response);
       },
     });
-    // eslint-disable-next-line no-console
-    console.log(this.deca);
 
     this.vaspitacService.getImena().subscribe({
       next: (res: HttpResponse<VaspitacZaGrupuDTO[]>) => {
         this.isLoading = false;
         this.onSuccess(res.body, res.headers);
       },
-      error: () => {
+      error: response => {
         this.isLoading = false;
-        this.onError();
+        this.onError(response);
       },
     });
   }
@@ -138,8 +160,6 @@ export class RasporedDeceComponent implements OnInit {
   }
   protected onSuccess(data: VaspitacZaGrupuDTO[] | null, headers: HttpHeaders): void {
     this.listaVasapitaca = [];
-    // eslint-disable-next-line no-console
-    console.log(this.deca);
 
     let i: VaspitacZaGrupuDTO;
     for (i of data!) {
@@ -149,23 +169,21 @@ export class RasporedDeceComponent implements OnInit {
   }
   protected onGetDecaSuccess(data: DeteZaGrupuDTO[] | null, headers: HttpHeaders): void {
     this.deca = [];
-    // eslint-disable-next-line no-console
-    console.log(this.deca);
-
     let i: DeteZaGrupuDTO;
     for (i of data!) {
       //todo id dnevnika
       this.deca.push(i);
+      this.svaDeca.push(i);
     }
   }
 
-  protected onError(): void {
-    // eslint-disable-next-line no-console
-    console.log('aaa'); //todo
+  private onError(response: HttpErrorResponse): void {
+    if (response.status === 400) {
+      this.errorVaspitacHasDnevnik = true;
+    }
   }
 
   private onCreateSuccess(body: any | null, headers: HttpHeaders): void {
-    // eslint-disable-next-line no-console
-    console.log('uspeh'); //todo nesto paametnije
+    this.success = true;
   }
 }

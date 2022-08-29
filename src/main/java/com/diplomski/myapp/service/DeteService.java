@@ -65,4 +65,10 @@ public interface DeteService {
     void delete(Long id);
 
     ProfilDetetaDTO findProfil(Long id);
+
+    Page<Dete> findAllByGrupa(Pageable pageable, Long id);
+
+    Page<Dete> findAllByRoditelj(Pageable pageable, String username);
+
+    Page<Dete> findAllForVaspitac(Pageable pageable, String username);
 }

@@ -2,6 +2,7 @@ package com.diplomski.myapp.web.rest;
 
 import com.diplomski.myapp.domain.Objekat;
 import com.diplomski.myapp.repository.ObjekatRepository;
+import com.diplomski.myapp.security.AuthoritiesConstants;
 import com.diplomski.myapp.service.ObjekatService;
 import com.diplomski.myapp.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
@@ -17,6 +18,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import tech.jhipster.web.util.HeaderUtil;
@@ -53,7 +55,9 @@ public class ObjekatResource {
      * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new objekat, or with status {@code 400 (Bad Request)} if the objekat has already an ID.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_DIREKTOR')")
     @PostMapping("/objekats")
+    //@PreAuthorize("hasAuthority(\"" + AuthoritiesConstants.DIREKTOR + "\")")
     public ResponseEntity<Objekat> createObjekat(@RequestBody Objekat objekat) throws URISyntaxException {
         log.debug("REST request to save Objekat : {}", objekat);
         if (objekat.getId() != null) {
@@ -76,7 +80,9 @@ public class ObjekatResource {
      * or with status {@code 500 (Internal Server Error)} if the objekat couldn't be updated.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_PEDAGOG') or hasRole('ROLE_DIREKTOR') or hasRole('ROLE_VASPITAC')")
     @PutMapping("/objekats/{id}")
+    //@PreAuthorize("hasAuthority(\"" + AuthoritiesConstants.DIREKTOR + "\")")
     public ResponseEntity<Objekat> updateObjekat(@PathVariable(value = "id", required = false) final Long id, @RequestBody Objekat objekat)
         throws URISyntaxException {
         log.debug("REST request to update Objekat : {}, {}", id, objekat);
@@ -109,6 +115,7 @@ public class ObjekatResource {
      * or with status {@code 500 (Internal Server Error)} if the objekat couldn't be updated.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_PEDAGOG') or hasRole('ROLE_DIREKTOR') or hasRole('ROLE_VASPITAC')")
     @PatchMapping(value = "/objekats/{id}", consumes = { "application/json", "application/merge-patch+json" })
     public ResponseEntity<Objekat> partialUpdateObjekat(
         @PathVariable(value = "id", required = false) final Long id,
@@ -140,7 +147,11 @@ public class ObjekatResource {
      * @param pageable the pagination information.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of objekats in body.
      */
+    @PreAuthorize(
+        "hasRole('ROLE_ADMIN') or hasRole('ROLE_PEDAGOG') or hasRole('ROLE_DIREKTOR') or hasRole('ROLE_VASPITAC') or hasRole('ROLE_RODITELJ')"
+    )
     @GetMapping("/objekats")
+    //@PreAuthorize("hasAuthority(\"" + AuthoritiesConstants.DIREKTOR + "\")")
     public ResponseEntity<List<Objekat>> getAllObjekats(@org.springdoc.api.annotations.ParameterObject Pageable pageable) {
         log.debug("REST request to get a page of Objekats");
         Page<Objekat> page = objekatService.findAll(pageable);
@@ -154,7 +165,11 @@ public class ObjekatResource {
      * @param id the id of the objekat to retrieve.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the objekat, or with status {@code 404 (Not Found)}.
      */
+    @PreAuthorize(
+        "hasRole('ROLE_ADMIN') or hasRole('ROLE_PEDAGOG') or hasRole('ROLE_DIREKTOR') or hasRole('ROLE_VASPITAC') or hasRole('ROLE_RODITELJ')"
+    )
     @GetMapping("/objekats/{id}")
+    //@PreAuthorize("hasAuthority(\"" + AuthoritiesConstants.DIREKTOR + "\")")
     public ResponseEntity<Objekat> getObjekat(@PathVariable Long id) {
         log.debug("REST request to get Objekat : {}", id);
         Optional<Objekat> objekat = objekatService.findOne(id);
@@ -167,7 +182,9 @@ public class ObjekatResource {
      * @param id the id of the objekat to delete.
      * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
      */
+    @PreAuthorize("hasRole('ROLE_ADMIN')  or hasRole('ROLE_DIREKTOR')")
     @DeleteMapping("/objekats/{id}")
+    // @PreAuthorize("hasAuthority(\"" + AuthoritiesConstants.DIREKTOR + "\")")
     public ResponseEntity<Void> deleteObjekat(@PathVariable Long id) {
         log.debug("REST request to delete Objekat : {}", id);
         objekatService.delete(id);
@@ -178,6 +195,7 @@ public class ObjekatResource {
     }
 
     @GetMapping("/objekats/all")
+    @PreAuthorize("hasAuthority(\"" + AuthoritiesConstants.RODITELJ + "\")")
     public ResponseEntity<List<Objekat>> getAllObjekat() {
         log.debug("REST request to get all Objekat :");
         List<Objekat> objekat = objekatService.findAll();

@@ -67,8 +67,6 @@ export class DirektorUpdateComponent implements OnInit {
     this.isSaving = true;
     const direktor = this.createFromForm();
     direktor.user = this.user;
-    // eslint-disable-next-line no-console
-    console.log(direktor);
     if (direktor.id !== undefined) {
       this.subscribeToSaveResponse(this.direktorService.update(direktor));
     } else {
@@ -79,16 +77,17 @@ export class DirektorUpdateComponent implements OnInit {
     this.doNotMatch = false;
     this.isSaving = true;
     this.updateUser(this.user);
-
-    this.direktorService.createZaposlen(this.user).subscribe({
-      next: res => {
-        // eslint-disable-next-line no-console
-        console.log(res);
-        this.user.id = res.id;
-        this.save();
-      },
-      error: () => this.onSaveError(),
-    });
+    if (this.editForm.get(['password'])!.value !== this.editForm.get(['confirmPassword'])!.value) {
+      this.doNotMatch = true;
+    } else {
+      this.direktorService.createZaposlen(this.user).subscribe({
+        next: res => {
+          this.user.id = res.id;
+          this.save();
+        },
+        error: () => this.onSaveError(),
+      });
+    }
   }
   protected subscribeToSaveResponse(result: Observable<HttpResponse<IDirektor>>): void {
     result.pipe(finalize(() => this.onSaveFinalize())).subscribe({

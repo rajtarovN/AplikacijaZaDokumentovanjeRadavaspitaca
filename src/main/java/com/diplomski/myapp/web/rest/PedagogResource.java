@@ -74,6 +74,7 @@ public class PedagogResource {
      * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new pedagog, or with status {@code 400 (Bad Request)} if the pedagog has already an ID.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_PEDAGOG') or hasRole('ROLE_DIREKTOR')")
     @PostMapping("/pedagogs")
     public ResponseEntity<Pedagog> createPedagog(@RequestBody Pedagog pedagog) throws URISyntaxException {
         log.debug("REST request to save Pedagog : {}", pedagog);
@@ -87,6 +88,7 @@ public class PedagogResource {
             .body(result);
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_PEDAGOG') or hasRole('ROLE_DIREKTOR')")
     @PostMapping("/createPedagog")
     //@PreAuthorize("hasAuthority(\"" + AuthoritiesConstants.ADMIN + "\")")
     public ResponseEntity<User> createUser(@Valid @RequestBody ManagedUserVM managedUserVM) throws URISyntaxException {
@@ -118,6 +120,7 @@ public class PedagogResource {
      * or with status {@code 500 (Internal Server Error)} if the pedagog couldn't be updated.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_PEDAGOG') or hasRole('ROLE_DIREKTOR')")
     @PutMapping("/pedagogs/{id}")
     public ResponseEntity<Pedagog> updatePedagog(@PathVariable(value = "id", required = false) final Long id, @RequestBody Pedagog pedagog)
         throws URISyntaxException {
@@ -151,6 +154,7 @@ public class PedagogResource {
      * or with status {@code 500 (Internal Server Error)} if the pedagog couldn't be updated.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_PEDAGOG') or hasRole('ROLE_DIREKTOR')")
     @PatchMapping(value = "/pedagogs/{id}", consumes = { "application/json", "application/merge-patch+json" })
     public ResponseEntity<Pedagog> partialUpdatePedagog(
         @PathVariable(value = "id", required = false) final Long id,
@@ -182,6 +186,7 @@ public class PedagogResource {
      * @param pageable the pagination information.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of pedagogs in body.
      */
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_PEDAGOG') or hasRole('ROLE_DIREKTOR')")
     @GetMapping("/pedagogs")
     public ResponseEntity<List<Pedagog>> getAllPedagogs(@org.springdoc.api.annotations.ParameterObject Pageable pageable) {
         log.debug("REST request to get a page of Pedagogs");
@@ -196,6 +201,7 @@ public class PedagogResource {
      * @param id the id of the pedagog to retrieve.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the pedagog, or with status {@code 404 (Not Found)}.
      */
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_PEDAGOG') or hasRole('ROLE_DIREKTOR')")
     @GetMapping("/pedagogs/{id}")
     public ResponseEntity<Pedagog> getPedagog(@PathVariable Long id) {
         log.debug("REST request to get Pedagog : {}", id);
@@ -209,6 +215,7 @@ public class PedagogResource {
      * @param id the id of the pedagog to delete.
      * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
      */
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_PEDAGOG') or hasRole('ROLE_DIREKTOR')")
     @DeleteMapping("/pedagogs/{id}")
     public ResponseEntity<Void> deletePedagog(@PathVariable Long id) {
         log.debug("REST request to delete Pedagog : {}", id);

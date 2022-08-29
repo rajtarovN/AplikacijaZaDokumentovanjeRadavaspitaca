@@ -14,15 +14,27 @@
         <dd>
           <span>{{ roditelj.id }}</span>
         </dd>
+        <dt><span>Ime i prezime</span></dt>
+        <dd>
+          <span>{{ roditelj.user?.firstName }} {{ roditelj.user?.lastName }}</span>
+        </dd>
+        <dt><span>E-mail</span></dt>
+        <dd>
+          <span>{{ roditelj.user?.email }}</span>
+        </dd>
+        <dt><span>Telefon</span></dt>
+        <dd>
+          <span>{{ roditelj.telefon }}</span>
+        </dd>
       </dl>
 
       <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
         <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
       </button>
 
-      <button type="button" [routerLink]="['/roditelj', roditelj.id, 'edit']" class="btn btn-primary">
-        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
-      </button>
+      <!--      <button type="button" [routerLink]="['/roditelj', roditelj.id, 'edit']" class="btn btn-primary" *jhiHasAuthority>-->
+      <!--        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>-->
+      <!--      </button>-->
     </div>
   </div>
 </div>

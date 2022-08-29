@@ -42,7 +42,11 @@
         <dd>
           <span>{{ formular.drzava }}</span>
         </dd>
-        <dt><span jhiTranslate="diplomskiApp.formular.brDeceUPorodici">Br Dece U Porodici</span></dt>
+        <dt><span>Adresa</span></dt>
+        <dd>
+          <span>{{ formular.adresa?.mesto }} {{ formular.adresa?.ulica }} {{ formular.adresa?.broj }}</span>
+        </dd>
+        <dt><span>Broj Dece U Porodici</span></dt>
         <dd>
           <span>{{ formular.brDeceUPorodici }}</span>
         </dd>
@@ -62,25 +66,119 @@
         <dd>
           <span jhiTranslate="{{ 'diplomskiApp.TipGrupe.' + formular.tipGrupe }}">{{ formular.tipGrupe }}</span>
         </dd>
-        <dt><span jhiTranslate="diplomskiApp.formular.adresa">Adresa</span></dt>
-        <dd>
-          <div *ngIf="formular.adresa">
-            <a [routerLink]="['/adresa', formular.adresa?.id, 'view']">{{ formular.adresa?.id }}</a>
-          </div>
-        </dd>
         <dt><span jhiTranslate="diplomskiApp.formular.roditelj">Roditelj</span></dt>
         <dd>
           <div *ngIf="formular.roditelj">
-            <a [routerLink]="['/roditelj', formular.roditelj?.id, 'view']">{{ formular.roditelj?.id }}</a>
+            <a>{{ formular.roditelj?.user?.firstName }} {{ formular.roditelj?.user?.lastName }}</a>
           </div>
         </dd>
       </dl>
+
+      <dl class="row-md jh-entity-details">
+        <dt>
+          <span><u>Podaci o prvom roditelju</u></span>
+        </dt>
+        <br /><br />
+        <dt><span jhiTranslate="diplomskiApp.podaciORoditeljima.jmbg">Jmbg</span></dt>
+        <dd>
+          <span>{{ podaciORoditeljima1?.jmbg }}</span>
+        </dd>
+        <dt><span jhiTranslate="diplomskiApp.podaciORoditeljima.ime">Ime</span></dt>
+        <dd>
+          <span>{{ podaciORoditeljima1?.ime }}</span>
+        </dd>
+        <dt><span jhiTranslate="diplomskiApp.podaciORoditeljima.prezime">Prezime</span></dt>
+        <dd>
+          <span>{{ podaciORoditeljima1?.prezime }}</span>
+        </dd>
+        <dt><span jhiTranslate="diplomskiApp.podaciORoditeljima.telefon">Telefon</span></dt>
+        <dd>
+          <span>{{ podaciORoditeljima1?.telefon }}</span>
+        </dd>
+        <dt><span jhiTranslate="diplomskiApp.podaciORoditeljima.firma">Firma</span></dt>
+        <dd>
+          <span>{{ podaciORoditeljima1?.firma }}</span>
+        </dd>
+        <dt><span jhiTranslate="diplomskiApp.podaciORoditeljima.radnoVreme">Radno Vreme</span></dt>
+        <dd>
+          <span>{{ podaciORoditeljima1?.radnoVreme }}</span>
+        </dd>
+        <dt><span jhiTranslate="diplomskiApp.podaciORoditeljima.radniStatus">Radni Status</span></dt>
+        <dd>
+          <span jhiTranslate="{{ 'diplomskiApp.RadniStatus.' + podaciORoditeljima1?.radniStatus }}">{{
+            podaciORoditeljima1?.radniStatus
+          }}</span>
+        </dd>
+      </dl>
+
+      <dl class="row-md jh-entity-details">
+        <dt>
+          <span><u>Podaci o drugom roditelju</u></span>
+        </dt>
+        <br /><br />
+        <dt><span jhiTranslate="diplomskiApp.podaciORoditeljima.jmbg">Jmbg</span></dt>
+        <dd>
+          <span>{{ podaciORoditeljima2?.jmbg }}</span>
+        </dd>
+        <dt><span jhiTranslate="diplomskiApp.podaciORoditeljima.ime">Ime</span></dt>
+        <dd>
+          <span>{{ podaciORoditeljima2?.ime }}</span>
+        </dd>
+        <dt><span jhiTranslate="diplomskiApp.podaciORoditeljima.prezime">Prezime</span></dt>
+        <dd>
+          <span>{{ podaciORoditeljima2?.prezime }}</span>
+        </dd>
+        <dt><span jhiTranslate="diplomskiApp.podaciORoditeljima.telefon">Telefon</span></dt>
+        <dd>
+          <span>{{ podaciORoditeljima2?.telefon }}</span>
+        </dd>
+        <dt><span jhiTranslate="diplomskiApp.podaciORoditeljima.firma">Firma</span></dt>
+        <dd>
+          <span>{{ podaciORoditeljima2?.firma }}</span>
+        </dd>
+        <dt><span jhiTranslate="diplomskiApp.podaciORoditeljima.radnoVreme">Radno Vreme</span></dt>
+        <dd>
+          <span>{{ podaciORoditeljima2?.radnoVreme }}</span>
+        </dd>
+        <dt><span jhiTranslate="diplomskiApp.podaciORoditeljima.radniStatus">Radni Status</span></dt>
+        <dd>
+          <span jhiTranslate="{{ 'diplomskiApp.RadniStatus.' + podaciORoditeljima2?.radniStatus }}">{{
+            podaciORoditeljima2?.radniStatus
+          }}</span>
+        </dd>
+      </dl>
+
+      <div *jhiHasAnyAuthority="'ROLE_PEDAGOG'">
+        <button
+          *ngIf="formular.statusFormulara! !== this.status"
+          type="submit"
+          (click)="odobri()"
+          class="btn btn-info"
+          data-cy="entityDetailsBackButton"
+        >
+          <span>Odobri</span>
+        </button>
+        <button
+          *ngIf="formular.statusFormulara! !== this.status"
+          type="submit"
+          (click)="odbij()"
+          class="btn btn-info"
+          data-cy="entityDetailsBackButton"
+        >
+          &nbsp;<span>Odbij</span>
+        </button>
+      </div>
 
       <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
         <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Nazad</span>
       </button>
 
-      <button type="button" [routerLink]="['/formular', formular.id, 'edit']" class="btn btn-primary">
+      <button
+        *ngIf="formular.statusFormulara === 'NOV'"
+        type="button"
+        [routerLink]="['/formular', formular.id, 'edit']"
+        class="btn btn-primary"
+      >
         <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Uredi</span>
       </button>
     </div>

@@ -8,15 +8,16 @@
         <span jhiTranslate="diplomskiApp.dnevnik.home.refreshListLabel">Refresh List</span>
       </button>
 
-      <button
-        id="jh-create-entity"
-        data-cy="entityCreateButton"
-        class="btn btn-primary jh-create-entity create-dnevnik"
-        [routerLink]="['/dnevnik/new']"
-      >
-        <fa-icon icon="plus"></fa-icon>
-        <span jhiTranslate="diplomskiApp.dnevnik.home.createLabel"> Create a new Dnevnik </span>
-      </button>
+      <!--      <button-->
+      <!--        id="jh-create-entity"-->
+      <!--        data-cy="entityCreateButton"-->
+      <!--        class="btn btn-primary jh-create-entity create-dnevnik"-->
+      <!--        [routerLink]="['/dnevnik/new']"-->
+      <!--      >-->
+      <!--        <fa-icon icon="plus"></fa-icon>-->
+      <!--        <span jhiTranslate="diplomskiApp.dnevnik.home.createLabel"> Create a new Dnevnik </span>-->
+      <!--      </button>-->
+      <!--      mislim da ovo ni u  kom slucaju ne treba da postoji ali neka stoji bar zakomentarisano pa cemo videti-->
     </div>
   </h2>
 
@@ -42,6 +43,7 @@
           <th scope="col" jhiSortBy="grupa.id">
             <span jhiTranslate="diplomskiApp.dnevnik.grupa">Grupa</span> <fa-icon icon="sort"></fa-icon>
           </th>
+
           <th scope="col"></th>
         </tr>
       </thead>
@@ -57,6 +59,7 @@
               <a [routerLink]="['/grupa', dnevnik.grupa?.id, 'view']">{{ dnevnik.grupa?.id }}</a>
             </div>
           </td>
+
           <td class="text-end">
             <div class="btn-group">
               <button
@@ -66,22 +69,53 @@
                 data-cy="entityDetailsButton"
               >
                 <fa-icon icon="eye"></fa-icon>
-                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                <span class="d-none d-md-inline">Prikaz</span>
+              </button>
+              <button
+                [disabled]="dnevnik.grupa === null"
+                type="submit"
+                (click)="prikaziDecu(dnevnik.grupa?.id)"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline">Deca</span>
+              </button>
+              <button
+                [disabled]="dnevnik.grupa === null"
+                type="submit"
+                (click)="prikaziIzostanke(dnevnik.grupa?.id)"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline">Izostanci</span>
+              </button>
+              <button type="submit" (click)="prikaziPrice(dnevnik.id)" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline">Price</span>
               </button>
 
               <button
+                *jhiHasAnyAuthority="'ROLE_ADMIN'"
                 type="submit"
                 [routerLink]="['/dnevnik', dnevnik.id, 'edit']"
                 class="btn btn-primary btn-sm"
                 data-cy="entityEditButton"
               >
                 <fa-icon icon="pencil-alt"></fa-icon>
-                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                <span class="d-none d-md-inline">Uredi</span>
               </button>
 
-              <button type="submit" (click)="delete(dnevnik)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+              <button
+                *jhiHasAnyAuthority="'ROLE_ADMIN'"
+                type="submit"
+                (click)="delete(dnevnik)"
+                class="btn btn-danger btn-sm"
+                data-cy="entityDeleteButton"
+              >
                 <fa-icon icon="times"></fa-icon>
-                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                <span class="d-none d-md-inline">Brisanje</span>
               </button>
             </div>
           </td>

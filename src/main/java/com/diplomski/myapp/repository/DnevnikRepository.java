@@ -1,6 +1,7 @@
 package com.diplomski.myapp.repository;
 
 import com.diplomski.myapp.domain.Dnevnik;
+import com.diplomski.myapp.domain.Grupa;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.data.domain.Page;
@@ -25,4 +26,7 @@ public interface DnevnikRepository extends DnevnikRepositoryWithBagRelationships
     default Page<Dnevnik> findAllWithEagerRelationships(Pageable pageable) {
         return this.fetchBagRelationships(this.findAll(pageable));
     }
+
+    @Query("SELECT d.grupa from Dnevnik d where  d.id = ?1 ")
+    Grupa getGrupa(Long id);
 }

@@ -5,20 +5,24 @@
       <table>
         <tr>
           <th class="imageClass">
-            <span class="imageClass">
+            <span *ngIf="objekat.slika != null" class="imageClass">
+              <img class="imageClass" [src]="objekat.slika" alt="" />
+            </span>
+            <span *ngIf="objekat.slika == null" class="imageClass">
               <img class="imageClass" src="../content/images/krug.png" alt="Italian Trulli" />
             </span>
           </th>
           <th class="thClass">
             <span class="field">
+              <!--              <img  [src]="objekat.slika" alt="" />-->
               <h1 id="title{{ this.objekat.naziv }}">{{ this.objekat.naziv }}</h1>
               <p>Opis: {{ this.objekat.opis }}</p>
               <p>
-                Ulica: {{ this.objekat.adresa.ulica }} {{ this.objekat.adresa.broj }},
+                Ulica: {{ this.objekat.adresa?.ulica }} {{ this.objekat.adresa?.broj }},
                 <br />
-                Mesto: {{ this.objekat.adresa.mesto }}
+                Mesto: {{ this.objekat.adresa?.mesto }}
               </p>
-              <button class="btn btn-info">Vaspitaci</button>
+              <button class="btn btn-info" (click)="this.setObjekat(this.objekat.id)">Vaspitaci</button>
             </span>
           </th>
         </tr>

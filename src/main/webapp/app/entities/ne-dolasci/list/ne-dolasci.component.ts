@@ -9,6 +9,7 @@ import { INeDolasci } from '../ne-dolasci.model';
 import { ASC, DESC, ITEMS_PER_PAGE, SORT } from 'app/config/pagination.constants';
 import { NeDolasciService } from '../service/ne-dolasci.service';
 import { NeDolasciDeleteDialogComponent } from '../delete/ne-dolasci-delete-dialog.component';
+import { AccountService } from '../../../core/auth/account.service';
 
 @Component({
   selector: 'jhi-ne-dolasci',
@@ -28,29 +29,80 @@ export class NeDolasciComponent implements OnInit {
     protected neDolasciService: NeDolasciService,
     protected activatedRoute: ActivatedRoute,
     protected router: Router,
-    protected modalService: NgbModal
+    protected modalService: NgbModal,
+    protected accountService: AccountService
   ) {}
 
   loadPage(page?: number, dontNavigate?: boolean): void {
     this.isLoading = true;
     const pageToLoad: number = page ?? this.page ?? 1;
-
-    this.neDolasciService
-      .query({
-        page: pageToLoad - 1,
-        size: this.itemsPerPage,
-        sort: this.sort(),
-      })
-      .subscribe({
-        next: (res: HttpResponse<INeDolasci[]>) => {
-          this.isLoading = false;
-          this.onSuccess(res.body, res.headers, pageToLoad, !dontNavigate);
-        },
-        error: () => {
-          this.isLoading = false;
-          this.onError();
-        },
-      });
+    let username = '';
+    this.accountService.getAuthenticationState().subscribe(account => {
+      if (account) {
+        if (account.authorities[0] === 'ROLE_VASPITAC') {
+          username = account.login;
+        }
+      }
+    });
+    const idGrupe = localStorage.getItem('grupa');
+    if (username !== '' && idGrupe === null) {
+      this.neDolasciService
+        .queryByVaspitac(
+          {
+            page: pageToLoad - 1,
+            size: this.itemsPerPage,
+            sort: this.sort(),
+          },
+          localStorage.getItem('username')!
+        )
+        .subscribe({
+          next: (res: HttpResponse<INeDolasci[]>) => {
+            this.isLoading = false;
+            this.onSuccess(res.body, res.headers, pageToLoad, !dontNavigate);
+          },
+          error: () => {
+            this.isLoading = false;
+            this.onError();
+          },
+        });
+    } else if (idGrupe) {
+      this.neDolasciService
+        .queryByGrupa(
+          {
+            page: pageToLoad - 1,
+            size: this.itemsPerPage,
+            sort: this.sort(),
+          },
+          idGrupe
+        )
+        .subscribe({
+          next: (res: HttpResponse<INeDolasci[]>) => {
+            this.isLoading = false;
+            this.onSuccess(res.body, res.headers, pageToLoad, !dontNavigate);
+          },
+          error: () => {
+            this.isLoading = false;
+            this.onError();
+          },
+        });
+    } else {
+      this.neDolasciService
+        .query({
+          page: pageToLoad - 1,
+          size: this.itemsPerPage,
+          sort: this.sort(),
+        })
+        .subscribe({
+          next: (res: HttpResponse<INeDolasci[]>) => {
+            this.isLoading = false;
+            this.onSuccess(res.body, res.headers, pageToLoad, !dontNavigate);
+          },
+          error: () => {
+            this.isLoading = false;
+            this.onError();
+          },
+        });
+    }
   }
 
   ngOnInit(): void {

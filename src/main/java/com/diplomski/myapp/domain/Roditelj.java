@@ -38,6 +38,17 @@ public class Roditelj implements Serializable {
     @JoinColumn(unique = true)
     private User user;
 
+    @Column(name = "telefon")
+    private String telefon;
+
+    public String getTelefon() {
+        return telefon;
+    }
+
+    public void setTelefon(String telefon) {
+        this.telefon = telefon;
+    }
+
     public User getUser() {
         return user;
     }

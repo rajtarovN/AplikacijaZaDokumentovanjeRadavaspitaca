@@ -18,7 +18,7 @@ export class EditorComponent implements OnInit {
   public mode = 'Markdown';
   @ViewChild('exampleRTE')
   public componentObject!: RichTextEditorComponent;
-
+  public text?: string;
   public customToolbar: any = {
     items: ['Bold', 'Italic', 'Undo', 'Redo', 'CreateTable', 'Image', 'CreateLink'],
   };
@@ -28,15 +28,14 @@ export class EditorComponent implements OnInit {
   constructor(protected konacnaPricaService: KonacnaPricaService) {}
 
   ngOnInit(): void {
-    // eslint-disable-next-line no-console
-    console.log('aa');
+    if (localStorage.getItem('prica') !== null) {
+      this.text = localStorage.getItem('prica')!;
+    }
   }
 
   getFormattedContent(): void {
     this.buttonElement = document.getElementById('button');
     this.htmlContent = this.componentObject.getHtml();
-    // eslint-disable-next-line no-console
-    console.log(this.htmlContent);
     this.save();
   }
   previousState(): void {
@@ -45,7 +44,7 @@ export class EditorComponent implements OnInit {
   save(): void {
     this.isSaving = true;
     const konacnaPrica = this.createFromForm();
-    this.subscribeToSaveResponse(this.konacnaPricaService.create(konacnaPrica));
+    this.subscribeToSaveResponse(this.konacnaPricaService.create(konacnaPrica, localStorage.getItem('idPrice')));
   }
 
   protected subscribeToSaveResponse(result: Observable<HttpResponse<IKonacnaPrica>>): void {

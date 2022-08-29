@@ -1,12 +1,14 @@
 package com.diplomski.myapp.service.impl;
 
 import com.diplomski.myapp.domain.Vaspitac;
+import com.diplomski.myapp.domain.enumeration.Status;
 import com.diplomski.myapp.repository.UserRepository;
 import com.diplomski.myapp.repository.VaspitacRepository;
 import com.diplomski.myapp.service.VaspitacService;
 import com.diplomski.myapp.web.rest.dto.VaspitacDTO;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -38,13 +40,20 @@ public class VaspitacServiceImpl implements VaspitacService {
     public Vaspitac save(Vaspitac vaspitac) {
         log.debug("Request to save Vaspitac : {}", vaspitac);
         vaspitac.setUser(this.userRepository.getById(vaspitac.getUser().getId()));
+        vaspitac.setStatus(Status.RADI);
         return vaspitacRepository.save(vaspitac);
     }
 
     @Override
     public Vaspitac update(Vaspitac vaspitac) {
         log.debug("Request to save Vaspitac : {}", vaspitac);
-        return vaspitacRepository.save(vaspitac);
+        Optional<Vaspitac> v = vaspitacRepository.findById(vaspitac.getId());
+        v.get().setDatumZaposlenja(vaspitac.getDatumZaposlenja());
+        v.get().setGodineIskustva(vaspitac.getGodineIskustva());
+        // v.get().setStatus(vaspitac.getStatus()); i slika
+        v.get().setOpis(vaspitac.getOpis());
+        v.get().setObjekat(vaspitac.getObjekat());
+        return vaspitacRepository.save(v.get());
     }
 
     @Override
@@ -111,11 +120,19 @@ public class VaspitacServiceImpl implements VaspitacService {
 
     @Override
     public List<VaspitacDTO> getImena() {
-        List<Vaspitac> listImena = vaspitacRepository.findAll(); //todo by status, tj da nije u penziji, i sl
+        List<Vaspitac> listImena = vaspitacRepository.findAllByStatus();
         List<VaspitacDTO> dtos = new ArrayList<>();
         listImena.forEach(f -> {
             dtos.add(new VaspitacDTO(f));
         });
         return dtos;
+    }
+
+    @Override
+    public String changeStatus(Long id, String status) {
+        Optional<Vaspitac> v = vaspitacRepository.findById(id);
+        v.get().setStatus(status.toLowerCase() == "penzija" ? Status.PENZIJA : Status.OTKAZ);
+        vaspitacRepository.save(v.get());
+        return "saved";
     }
 }

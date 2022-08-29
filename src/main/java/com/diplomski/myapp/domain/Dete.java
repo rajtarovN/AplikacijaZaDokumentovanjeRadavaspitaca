@@ -40,9 +40,10 @@ public class Dete implements Serializable {
     @JsonIgnoreProperties(value = { "vaspitac", "dete" }, allowSetters = true)
     private Set<ZapazanjeUVeziDeteta> zapazanjeUVeziDetetas = new HashSet<>();
 
+    @OneToMany(mappedBy = "dete")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JsonIgnoreProperties(value = { "dete", "dnevnik" }, allowSetters = true)
-    @OneToOne(mappedBy = "dete")
-    private NeDolasci neDolasci;
+    private Set<NeDolasci> neDolasci = new HashSet<>();
 
     @ManyToOne
     @JsonIgnoreProperties(value = { "detes", "formulars" }, allowSetters = true)
@@ -51,6 +52,33 @@ public class Dete implements Serializable {
     @ManyToOne
     @JsonIgnoreProperties(value = { "detes", "dnevnik" }, allowSetters = true)
     private Grupa grupa;
+
+    public Dete(Formular f) {
+        this.formular = f;
+        this.roditelj = f.getRoditelj();
+    }
+
+    public Dete() {}
+
+    public Dete(
+        Integer visina,
+        Integer tezina,
+        Long id,
+        Formular formular,
+        Set<ZapazanjeUVeziDeteta> zapazanjeUVeziDetetas,
+        Set<NeDolasci> neDolasci,
+        Roditelj roditelj,
+        Grupa grupa
+    ) {
+        this.visina = visina;
+        this.tezina = tezina;
+        this.id = id;
+        this.formular = formular;
+        this.zapazanjeUVeziDetetas = zapazanjeUVeziDetetas;
+        this.neDolasci = neDolasci;
+        this.roditelj = roditelj;
+        this.grupa = grupa;
+    }
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -137,21 +165,21 @@ public class Dete implements Serializable {
         return this;
     }
 
-    public NeDolasci getNeDolasci() {
+    public Set<NeDolasci> getNeDolasci() {
         return this.neDolasci;
     }
 
-    public void setNeDolasci(NeDolasci neDolasci) {
+    public void setNeDolasci(Set<NeDolasci> neDolasci) {
         if (this.neDolasci != null) {
-            this.neDolasci.setDete(null);
+            //this.neDolasci.setDete(null);
         }
         if (neDolasci != null) {
-            neDolasci.setDete(this);
+            //neDolasci.setDete(this);
         }
         this.neDolasci = neDolasci;
     }
 
-    public Dete neDolasci(NeDolasci neDolasci) {
+    public Dete neDolasci(Set<NeDolasci> neDolasci) {
         this.setNeDolasci(neDolasci);
         return this;
     }

@@ -4,7 +4,7 @@
       <h2 id="jhi-vaspitac-heading" data-cy="VaspitacCreateUpdateHeading" jhiTranslate="diplomskiApp.vaspitac.home.createOrEditLabel">
         Create or edit a Vaspitac
       </h2>
-
+      <div class="alert alert-danger" *ngIf="doNotMatch">Lozinek se ne poklapaju!</div>
       <div>
         <jhi-alert-error></jhi-alert-error>
 
@@ -64,7 +64,7 @@
           </select>
         </div>
       </div>
-      <div class="mb-3">
+      <div class="mb-3" [hidden]="editForm.get('id')!.value != null">
         <label class="form-label" jhiTranslate="userManagement.login">Login</label>
         <input type="text" class="form-control" name="login" formControlName="login" />
 
@@ -88,7 +88,7 @@
         </div>
       </div>
 
-      <div class="mb-3">
+      <div class="mb-3" [hidden]="editForm.get('id')!.value != null">
         <label class="form-label" jhiTranslate="userManagement.firstName">First Name</label>
         <input type="text" class="form-control" name="firstName" formControlName="firstName" />
 
@@ -104,7 +104,7 @@
         </div>
       </div>
 
-      <div class="mb-3">
+      <div class="mb-3" [hidden]="editForm.get('id')!.value != null">
         <label jhiTranslate="userManagement.lastName">Last Name</label>
         <input type="text" class="form-control" name="lastName" formControlName="lastName" />
 
@@ -120,7 +120,7 @@
         </div>
       </div>
 
-      <div class="mb-3">
+      <div class="mb-3" [hidden]="editForm.get('id')!.value != null">
         <label class="form-label" jhiTranslate="userManagement.email">Email</label>
         <input type="email" class="form-control" name="email" formControlName="email" />
 
@@ -157,7 +157,7 @@
         </div>
       </div>
 
-      <div class="form-check">
+      <div class="form-check" [hidden]="editForm.get('id')!.value != null">
         <label class="form-check-label" for="activated">
           <input
             class="form-check-input"
@@ -178,14 +178,14 @@
         </select>
       </div>
 
-      <div class="mb-3">
-        <label jhiTranslate="userManagement.profiles">Profiles</label>
-        <select class="form-control" multiple name="authority" formControlName="authorities">
-          <option *ngFor="let authority of authorities" [value]="authority">{{ authority }}</option>
-        </select>
-      </div>
+      <!--      <div class="mb-3" [hidden]="editForm.get('id')!.value != null">-->
+      <!--        <label jhiTranslate="userManagement.profiles">Profiles</label>-->
+      <!--        <select class="form-control" multiple name="authority" formControlName="authorities">-->
+      <!--          <option *ngFor="let authority of authorities" [value]="authority">{{ authority }}</option>-->
+      <!--        </select>-->
+      <!--      </div>-->
 
-      <div class="mb-3">
+      <div class="mb-3" [hidden]="editForm.get('id')!.value != null">
         <label class="form-label" for="password" jhiTranslate="global.form.newpassword.label">New password</label>
         <input
           type="password"
@@ -224,7 +224,7 @@
         </div>
       </div>
 
-      <div class="mb-3">
+      <div class="mb-3" [hidden]="editForm.get('id')!.value != null">
         <label class="form-label" for="confirmPassword" jhiTranslate="global.form.confirmpassword.label">New password confirmation</label>
         <input
           type="password"
@@ -267,7 +267,35 @@
         </div>
       </div>
 
+      <div class="img-space">
+        <ng-container *ngIf="isImageSaved; else elseTemplate">
+          <img style="width: 95px; height: 95%" [src]="url" alt="Image" id="realImg" />
+        </ng-container>
+        <ng-template #elseTemplate>
+          <img
+            style="max-width: 50%; max-height: 50%"
+            src="assets/images/1176381.png"
+            class="img-responsive"
+            id="img-responsive"
+            alt="Default image"
+          />
+        </ng-template>
+        <input accept=".png, .jpg" type="file" id="file-upload" (change)="onFileSelected($event)" #fileInput />
+      </div>
+
       <div>
+        <div *jhiHasAnyAuthority="'ROLE_DIREKTOR'">
+          <div *ngIf="vaspitac?.status === 'RADI'">
+            <dt><span>Promena statusa u:</span></dt>
+            <button type="submit" (click)="changeStatus('PENZIJA')" class="btn btn-info" data-cy="entityDetailsBackButton">
+              <span>Penzija</span>
+            </button>
+            <button type="submit" (click)="changeStatus('OTKAZ')" class="btn btn-info" data-cy="entityDetailsBackButton">
+              <span>Ne radi vise</span>
+            </button>
+          </div>
+        </div>
+
         <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
           <fa-icon icon="ban"></fa-icon>&nbsp;<span>Otkazi promene</span>
         </button>

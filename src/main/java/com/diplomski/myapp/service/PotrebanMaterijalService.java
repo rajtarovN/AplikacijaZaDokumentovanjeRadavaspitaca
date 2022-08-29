@@ -15,7 +15,7 @@ public interface PotrebanMaterijalService {
      * @param potrebanMaterijal the entity to save.
      * @return the persisted entity.
      */
-    PotrebanMaterijal save(PotrebanMaterijal potrebanMaterijal);
+    PotrebanMaterijal save(PotrebanMaterijal potrebanMaterijal, String username);
 
     /**
      * Updates a potrebanMaterijal.
@@ -55,4 +55,6 @@ public interface PotrebanMaterijalService {
      * @param id the id of the entity.
      */
     void delete(Long id);
+
+    Page<PotrebanMaterijal> findAllForVaspitac(Pageable pageable, String username);
 }

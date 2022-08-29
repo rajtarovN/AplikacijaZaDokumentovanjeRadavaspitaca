@@ -15,7 +15,7 @@ public interface PlanPriceService {
      * @param planPrice the entity to save.
      * @return the persisted entity.
      */
-    PlanPrice save(PlanPrice planPrice);
+    PlanPrice save(PlanPrice planPrice, String username);
 
     /**
      * Updates a planPrice.

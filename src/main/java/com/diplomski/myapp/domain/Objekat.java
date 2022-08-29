@@ -24,6 +24,9 @@ public class Objekat implements Serializable {
     @Column(name = "naziv")
     private String naziv;
 
+    @Column(name = "slika")
+    private String slika;
+
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
     @SequenceGenerator(name = "sequenceGenerator")
@@ -92,6 +95,14 @@ public class Objekat implements Serializable {
     public Objekat adresa(Adresa adresa) {
         this.setAdresa(adresa);
         return this;
+    }
+
+    public String getSlika() {
+        return slika;
+    }
+
+    public void setSlika(String slika) {
+        this.slika = slika;
     }
 
     public Set<PotrebanMaterijal> getPotrebanMaterijals() {

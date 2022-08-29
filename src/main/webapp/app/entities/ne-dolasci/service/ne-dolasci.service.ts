@@ -77,6 +77,19 @@ export class NeDolasciService {
     return neDolasciCollection;
   }
 
+  queryByGrupa(req: { size: number; page: number; sort: string[] }, idGrupe: string): Observable<EntityArrayResponseType> {
+    const options = createRequestOption(req);
+    return this.http
+      .get<INeDolasci[]>(this.resourceUrl + '/findByGrupa/' + String(idGrupe), { params: options, observe: 'response' })
+      .pipe(map((res: EntityArrayResponseType) => this.convertDateArrayFromServer(res)));
+  }
+  queryByVaspitac(req: { size: number; page: number; sort: string[] }, s: string): Observable<EntityArrayResponseType> {
+    const options = createRequestOption(req);
+    return this.http
+      .get<INeDolasci[]>(this.resourceUrl + '/findByVaspitac/' + s, { params: options, observe: 'response' })
+      .pipe(map((res: EntityArrayResponseType) => this.convertDateArrayFromServer(res)));
+  }
+
   createNeDolasci(listaIzostanaka: NeDolasciDTO[]): Observable<EntityResponseType> {
     //const copy = this.convertDateFromClient(listaIzostanaka);
     return this.http

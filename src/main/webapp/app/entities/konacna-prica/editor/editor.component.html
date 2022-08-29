@@ -13,6 +13,7 @@
 
 <ejs-richtexteditor #exampleRTE>
   <ng-template #valueTemplate>
-    <p></p>
+    <p [innerHTML]="this.text"></p>
+    <!--    <p >{{this.text}}</p>-->
   </ng-template>
 </ejs-richtexteditor>

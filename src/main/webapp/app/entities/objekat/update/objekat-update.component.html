@@ -37,6 +37,22 @@
         </div>
       </div>
 
+      <div class="img-space">
+        <ng-container *ngIf="isImageSaved; else elseTemplate">
+          <img style="width: 95px; height: 95%" [src]="url" alt="Image" id="realImg" />
+        </ng-container>
+        <ng-template #elseTemplate>
+          <img
+            style="max-width: 50%; max-height: 50%"
+            src="assets/images/1176381.png"
+            class="img-responsive"
+            id="img-responsive"
+            alt="Default image"
+          />
+        </ng-template>
+        <input accept=".png, .jpg" type="file" id="file-upload" (change)="onFileSelected($event)" #fileInput />
+      </div>
+
       <div>
         <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
           <fa-icon icon="ban"></fa-icon>&nbsp;<span>Otkazi promene</span>

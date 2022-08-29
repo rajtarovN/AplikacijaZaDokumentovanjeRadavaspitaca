@@ -31,7 +31,7 @@ public class NeDolasci implements Serializable {
     private Long id;
 
     @JsonIgnoreProperties(value = { "formular", "zapazanjeUVeziDetetas", "neDolasci", "roditelj", "grupa" }, allowSetters = true)
-    @OneToOne
+    @ManyToOne
     @JoinColumn(unique = false)
     private Dete dete;
 

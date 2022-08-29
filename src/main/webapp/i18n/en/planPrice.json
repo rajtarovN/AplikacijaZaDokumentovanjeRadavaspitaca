@@ -2,17 +2,17 @@
   "diplomskiApp": {
     "planPrice": {
       "home": {
-        "title": "Plan Prices",
-        "refreshListLabel": "Refresh list",
-        "createLabel": "Create a new Plan Price",
-        "createOrEditLabel": "Create or edit a Plan Price",
-        "notFound": "No Plan Prices found"
+        "title": "Planovi price o projektu",
+        "refreshListLabel": "Osvezavanje liste",
+        "createLabel": "Dodavanje novog plana price",
+        "createOrEditLabel": "Dodavanje ili obnavljanje plana price o projektu",
+        "notFound": "Nijedan plan nije pronadjen"
       },
-      "created": "A new Plan Price is created with identifier {{ param }}",
-      "updated": "A Plan Price is updated with identifier {{ param }}",
-      "deleted": "A Plan Price is deleted with identifier {{ param }}",
+      "created": "Dodat je novi plan price {{ param }}",
+      "updated": "Obnovljeni su podaci o planu price {{ param }}",
+      "deleted": "Obrisan je plan price sa id-jem {{ param }}",
       "delete": {
-        "question": "Are you sure you want to delete Plan Price {{ id }}?"
+        "question": "Da li ste sigurni da zelite da izbrisete plan price {{ id }}?"
       },
       "detail": {
         "title": "Plan Price"

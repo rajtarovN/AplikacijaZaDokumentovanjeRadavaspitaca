@@ -14,50 +14,102 @@
         <dd>
           <span>{{ planPrice.id }}</span>
         </dd>
-        <dt><span jhiTranslate="diplomskiApp.planPrice.izvoriSaznanja">Izvori Saznanja</span></dt>
-        <dd>
-          <span>{{ planPrice.izvoriSaznanja }}</span>
-        </dd>
-        <dt><span jhiTranslate="diplomskiApp.planPrice.nazivTeme">Naziv Teme</span></dt>
-        <dd>
-          <span>{{ planPrice.nazivTeme }}</span>
-        </dd>
-        <dt><span jhiTranslate="diplomskiApp.planPrice.pocetnaIdeja">Pocetna Ideja</span></dt>
-        <dd>
-          <span>{{ planPrice.pocetnaIdeja }}</span>
-        </dd>
         <dt><span jhiTranslate="diplomskiApp.planPrice.datumPocetka">Datum Pocetka</span></dt>
         <dd>
           <span>{{ planPrice.datumPocetka | formatMediumDate }}</span>
-        </dd>
-        <dt><span jhiTranslate="diplomskiApp.planPrice.nacinUcescaVaspitaca">Nacin Ucesca Vaspitaca</span></dt>
-        <dd>
-          <span>{{ planPrice.nacinUcescaVaspitaca }}</span>
-        </dd>
-        <dt><span jhiTranslate="diplomskiApp.planPrice.materijali">Materijali</span></dt>
-        <dd>
-          <span>{{ planPrice.materijali }}</span>
-        </dd>
-        <dt><span jhiTranslate="diplomskiApp.planPrice.ucescePorodice">Ucesce Porodice</span></dt>
-        <dd>
-          <span>{{ planPrice.ucescePorodice }}</span>
-        </dd>
-        <dt><span jhiTranslate="diplomskiApp.planPrice.mesta">Mesta</span></dt>
-        <dd>
-          <span>{{ planPrice.mesta }}</span>
         </dd>
         <dt><span jhiTranslate="diplomskiApp.planPrice.datumZavrsetka">Datum Zavrsetka</span></dt>
         <dd>
           <span>{{ planPrice.datumZavrsetka | formatMediumDate }}</span>
         </dd>
-      </dl>
+        <dt><span jhiTranslate="diplomskiApp.planPrice.nazivTeme">Naziv Teme</span></dt>
+        <dd>
+          <span>{{ planPrice.nazivTeme }}</span>
+        </dd>
+        <!--        <dt><span jhiTranslate="diplomskiApp.planPrice.izvoriSaznanja">Izvori Saznanja</span></dt>-->
+        <!--        <dd>-->
+        <!--          <span>{{ planPrice.izvoriSaznanja }}</span>-->
+        <!--        </dd>-->
 
+        <!--        <dt><span jhiTranslate="diplomskiApp.planPrice.pocetnaIdeja">Pocetna Ideja</span></dt>-->
+        <!--        <dd>-->
+        <!--          <span>{{ planPrice.pocetnaIdeja }}</span>-->
+        <!--        </dd>-->
+
+        <!--        <dt><span jhiTranslate="diplomskiApp.planPrice.nacinUcescaVaspitaca">Nacin Ucesca Vaspitaca</span></dt>-->
+        <!--        <dd>-->
+        <!--          <span>{{ planPrice.nacinUcescaVaspitaca }}</span>-->
+        <!--        </dd>-->
+        <!--        <dt><span jhiTranslate="diplomskiApp.planPrice.materijali">Materijali</span></dt>-->
+        <!--        <dd>-->
+        <!--          <span>{{ planPrice.materijali }}</span>-->
+        <!--        </dd>-->
+        <!--        <dt><span jhiTranslate="diplomskiApp.planPrice.ucescePorodice">Ucesce Porodice</span></dt>-->
+        <!--        <dd>-->
+        <!--          <span>{{ planPrice.ucescePorodice }}</span>-->
+        <!--        </dd>-->
+        <!--        <dt><span jhiTranslate="diplomskiApp.planPrice.mesta">Mesta</span></dt>-->
+        <!--        <dd>-->
+        <!--          <span>{{ planPrice.mesta }}</span>-->
+        <!--        </dd>-->
+      </dl>
+      <div class="table-responsive" id="entities">
+        <table class="table table-striped" style="height: 700px" aria-describedby="page-heading">
+          <thead>
+            <th scope="col">
+              <span>Izvori Saznanja</span>
+            </th>
+
+            <th scope="col">
+              <span>Pocetna Ideja</span>
+            </th>
+
+            <th scope="col">
+              <span>Ucesce Vaspitaca</span>
+            </th>
+            <th scope="col">
+              <span>Materijali</span>
+            </th>
+            <th scope="col">
+              <span>Ucesce Porodice</span>
+            </th>
+            <th scope="col">
+              <span>Mesta</span>
+            </th>
+          </thead>
+          <tr>
+            <td>
+              <label class="form-control" style="height: 500px">{{ planPrice.izvoriSaznanja }}</label>
+            </td>
+            <td>
+              <label class="form-control" style="height: 500px"> {{ planPrice.pocetnaIdeja }}</label>
+            </td>
+            <td>
+              <label class="form-control" style="height: 500px"> {{ planPrice.nacinUcescaVaspitaca }}</label>
+            </td>
+            <td>
+              <label class="form-control" style="height: 500px"> {{ planPrice.materijali }}</label>
+            </td>
+            <td>
+              <label class="form-control" style="height: 500px"> {{ planPrice.ucescePorodice }}</label>
+            </td>
+            <td>
+              <label class="form-control" style="height: 500px"> {{ planPrice.mesta }}</label>
+            </td>
+          </tr>
+        </table>
+      </div>
       <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
-        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Nazad</span>
       </button>
 
-      <button type="button" [routerLink]="['/plan-price', planPrice.id, 'edit']" class="btn btn-primary">
-        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      <button
+        *jhiHasAnyAuthority="'ROLE_VASPITAC'"
+        type="button"
+        [routerLink]="['/plan-price', planPrice.id, 'nesto']"
+        class="btn btn-primary"
+      >
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Uredi</span>
       </button>
     </div>
   </div>

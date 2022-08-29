@@ -7,7 +7,7 @@
 
       <div>
         <jhi-alert-error></jhi-alert-error>
-
+        <div class="alert alert-danger" *ngIf="doNotMatch">Lozinke se ne poklapaju!</div>
         <div class="row mb-3" [hidden]="editForm.get('id')!.value == null">
           <label class="form-label" jhiTranslate="diplomskiApp.pedagog.id" for="field_id">Id</label>
           <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
@@ -134,12 +134,12 @@
           </select>
         </div>
 
-        <div class="mb-3">
-          <label jhiTranslate="userManagement.profiles">Profiles</label>
-          <select class="form-control" multiple name="authority" formControlName="authorities">
-            <option *ngFor="let authority of authorities" [value]="authority">{{ authority }}</option>
-          </select>
-        </div>
+        <!--        <div class="mb-3">-->
+        <!--          <label jhiTranslate="userManagement.profiles">Profiles</label>-->
+        <!--          <select class="form-control" multiple name="authority" formControlName="authorities">-->
+        <!--            <option *ngFor="let authority of authorities" [value]="authority">{{ authority }}</option>-->
+        <!--          </select>-->
+        <!--        </div>-->
       </div>
       <div class="mb-3">
         <label class="form-label" for="password" jhiTranslate="global.form.newpassword.label">New password</label>
@@ -225,7 +225,7 @@
 
       <div>
         <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
-          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span>Otkazi promene</span>
         </button>
 
         <button
@@ -235,7 +235,7 @@
           [disabled]="editForm.invalid || isSaving"
           class="btn btn-primary"
         >
-          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+          <fa-icon icon="save"></fa-icon>&nbsp;<span>Sacuvaj</span>
         </button>
       </div>
     </form>

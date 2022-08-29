@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { finalize, map } from 'rxjs/operators';
@@ -23,7 +23,15 @@ export class PodaciORoditeljimaUpdateComponent implements OnInit {
 
   editForm = this.fb.group({
     id: [],
-    jmbg: [],
+    jmbg: [
+      null,
+      [
+        Validators.required,
+        Validators.minLength(13),
+        Validators.maxLength(13),
+        Validators.pattern('[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]'),
+      ],
+    ],
     ime: [],
     prezime: [],
     telefon: [],

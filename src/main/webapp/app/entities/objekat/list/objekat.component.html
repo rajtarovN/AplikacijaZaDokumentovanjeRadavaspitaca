@@ -32,6 +32,7 @@
     <table class="table table-striped" aria-describedby="page-heading">
       <thead>
         <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="loadPage()">
+          <th scope="col"><span j>Naziv</span></th>
           <th scope="col" jhiSortBy="opis"><span jhiTranslate="diplomskiApp.objekat.opis">Opis</span> <fa-icon icon="sort"></fa-icon></th>
           <th scope="col" jhiSortBy="id"><span jhiTranslate="diplomskiApp.objekat.id">Id</span> <fa-icon icon="sort"></fa-icon></th>
           <th scope="col" jhiSortBy="adresa.id">
@@ -42,6 +43,7 @@
       </thead>
       <tbody>
         <tr *ngFor="let objekat of objekats; trackBy: trackId" data-cy="entityTable">
+          <td>{{ objekat.naziv }}</td>
           <td>{{ objekat.opis }}</td>
           <td>
             <a [routerLink]="['/objekat', objekat.id, 'view']">{{ objekat.id }}</a>

@@ -2,17 +2,17 @@
   "diplomskiApp": {
     "komentarNaPricu": {
       "home": {
-        "title": "Komentar Na Pricus",
-        "refreshListLabel": "Refresh list",
-        "createLabel": "Create a new Komentar Na Pricu",
-        "createOrEditLabel": "Create or edit a Komentar Na Pricu",
-        "notFound": "No Komentar Na Pricus found"
+        "title": "Komentari na price o projektima",
+        "refreshListLabel": "Osvezavanje liste",
+        "createLabel": "Kreiranje novog komentara na pricu",
+        "createOrEditLabel": "Dodavanje ili uredjivanje komentara na pricu",
+        "notFound": "Nijedan komentar  nije pronadjen"
       },
-      "created": "A new Komentar Na Pricu is created with identifier {{ param }}",
-      "updated": "A Komentar Na Pricu is updated with identifier {{ param }}",
-      "deleted": "A Komentar Na Pricu is deleted with identifier {{ param }}",
+      "created": "Dodat je novi komentar na pricu {{ param }}",
+      "updated": "Obnovljeni su podaci o komentaru na pricu {{ param }}",
+      "deleted": "Izbrisan je komentar na pricu sa id-jem {{ param }}",
       "delete": {
-        "question": "Are you sure you want to delete Komentar Na Pricu {{ id }}?"
+        "question": "Da li ste sigurni da zelite da izbrisete komentar na pricu {{ id }}?"
       },
       "detail": {
         "title": "Komentar Na Pricu"

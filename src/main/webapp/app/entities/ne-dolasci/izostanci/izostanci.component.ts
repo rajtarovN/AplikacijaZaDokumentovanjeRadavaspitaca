@@ -8,6 +8,7 @@ import { NeDolasciDeleteDialogComponent } from '../delete/ne-dolasci-delete-dial
 import { DodajRazlogComponent } from '../dodaj-razlog/dodaj-razlog.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NeDolasciService } from '../service/ne-dolasci.service';
+import { AccountService } from '../../../core/auth/account.service';
 
 @Component({
   selector: 'jhi-izostanci',
@@ -20,8 +21,15 @@ export class IzostanciComponent implements OnInit {
   datum: dayjs.Dayjs;
   ascending!: boolean;
   isLoading = false;
+  errorr = false;
+  success = false;
 
-  constructor(public dnevnikService: DnevnikService, protected modalService: NgbModal, public nedolasciService: NeDolasciService) {
+  constructor(
+    public dnevnikService: DnevnikService,
+    protected modalService: NgbModal,
+    public nedolasciService: NeDolasciService,
+    protected accountService: AccountService
+  ) {
     this.datum = dayjs();
   }
 
@@ -37,8 +45,6 @@ export class IzostanciComponent implements OnInit {
     modalRef.componentInstance.neDolasci = nedolazak;
     // unsubscribe not needed because closed completes on modal close
     modalRef.closed.subscribe((reason: string | null) => {
-      // eslint-disable-next-line no-console
-      console.log(reason);
       if (reason !== '') {
         nedolazak.razlog = reason;
       }
@@ -49,10 +55,13 @@ export class IzostanciComponent implements OnInit {
     izostanak.odsutan = !izostanak.odsutan;
   }
   sacuvaj(): void {
+    this.success = false;
+    this.errorr = false;
     const listaIzostanaka = this.izostanci!.filter(x => x.odsutan);
     this.nedolasciService.createNeDolasci(listaIzostanaka).subscribe({
       next: (res: HttpResponse<any>) => {
-        this.onSuccess(res.body, res.headers);
+        //this.onSuccess(res.body);
+        this.success = true;
       },
       error: () => {
         this.onError();
@@ -62,11 +71,18 @@ export class IzostanciComponent implements OnInit {
 
   loadPage(): void {
     this.isLoading = true;
-
-    this.dnevnikService.getDeca('1').subscribe({
-      next: (res: HttpResponse<DeteDTO[]>) => {
+    let username = '';
+    this.accountService.getAuthenticationState().subscribe(account => {
+      if (account) {
+        if (account.authorities[0] === 'ROLE_VASPITAC') {
+          username = account.login;
+        }
+      }
+    });
+    this.dnevnikService.getDeca(username).subscribe({
+      next: (res: any) => {
         this.isLoading = false;
-        this.onSuccess(res.body, res.headers);
+        this.onSuccess(res);
       },
       error: () => {
         this.isLoading = false;
@@ -75,26 +91,17 @@ export class IzostanciComponent implements OnInit {
     });
   }
 
-  protected onSuccess(data: DeteDTO[] | null, headers: HttpHeaders): void {
+  protected onSuccess(data: any): void {
     this.izostanci = [];
-    // eslint-disable-next-line no-console
-    console.log('aavva');
-    let i: DeteDTO;
-    data = [];
-    const d1: DeteDTO = { imePrezime: 'a', id: 1 };
-    const d2: DeteDTO = { imePrezime: 'b', id: 2 };
-    const d3: DeteDTO = { imePrezime: 'c', id: 3 };
-    data.push(d1);
-    data.push(d2);
-    data.push(d3);
+    let i: any;
     for (i of data) {
-      //todo id dnevnika
-      this.izostanci.push(new NeDolasciDTO(this.datum, '', i.imePrezime, i.id!, 1, false, null));
+      this.izostanci.push(new NeDolasciDTO(this.datum, '', i.formular.imeDeteta, i.id!, 1, false, null));
     }
   }
 
   protected onError(): void {
     // eslint-disable-next-line no-console
     console.log('aaa'); //todo
+    this.errorr = true;
   }
 }

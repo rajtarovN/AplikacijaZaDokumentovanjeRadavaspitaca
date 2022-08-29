@@ -2,17 +2,17 @@
   "diplomskiApp": {
     "dnevnik": {
       "home": {
-        "title": "Dnevniks",
-        "refreshListLabel": "Refresh list",
-        "createLabel": "Create a new Dnevnik",
-        "createOrEditLabel": "Create or edit a Dnevnik",
-        "notFound": "No Dnevniks found"
+        "title": "Dnevnici",
+        "refreshListLabel": "Osvezavanje liste",
+        "createLabel": "Dodavanje dnevnika",
+        "createOrEditLabel": "Dodavanje ili uredjivanje dnevnika",
+        "notFound": "Nijedan dnevnik nije pronadjen"
       },
-      "created": "A new Dnevnik is created with identifier {{ param }}",
-      "updated": "A Dnevnik is updated with identifier {{ param }}",
-      "deleted": "A Dnevnik is deleted with identifier {{ param }}",
+      "created": "Kreiran je nov dnevnik sa id-jem {{ param }}",
+      "updated": "Obnovnljeni su podaci dnevnika sa id-jem: {{ param }}",
+      "deleted": "Obrisan je dnevnik sa id-jem {{ param }}",
       "delete": {
-        "question": "Are you sure you want to delete Dnevnik {{ id }}?"
+        "question": "Da li ste sigurni da zelite da izbrisete dnevnik sa id-jem: {{ id }}?"
       },
       "detail": {
         "title": "Dnevnik"

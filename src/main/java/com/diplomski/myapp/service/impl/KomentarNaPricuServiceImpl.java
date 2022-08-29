@@ -3,10 +3,13 @@ package com.diplomski.myapp.service.impl;
 import com.diplomski.myapp.domain.KomentarNaPricu;
 import com.diplomski.myapp.repository.KomentarNaPricuRepository;
 import com.diplomski.myapp.service.KomentarNaPricuService;
+import com.diplomski.myapp.web.rest.dto.NeDolazakViewDTO;
+import java.time.LocalDate;
 import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,6 +32,9 @@ public class KomentarNaPricuServiceImpl implements KomentarNaPricuService {
     @Override
     public KomentarNaPricu save(KomentarNaPricu komentarNaPricu) {
         log.debug("Request to save KomentarNaPricu : {}", komentarNaPricu);
+        if (komentarNaPricu.getDatum() == null) {
+            komentarNaPricu.setDatum(LocalDate.now());
+        }
         return komentarNaPricuRepository.save(komentarNaPricu);
     }
 
@@ -75,5 +81,11 @@ public class KomentarNaPricuServiceImpl implements KomentarNaPricuService {
     public void delete(Long id) {
         log.debug("Request to delete KomentarNaPricu : {}", id);
         komentarNaPricuRepository.deleteById(id);
+    }
+
+    @Override
+    public Page<KomentarNaPricu> findByPrica(Long idPrice) {
+        Page<KomentarNaPricu> page = new PageImpl<>(komentarNaPricuRepository.findByPrica(idPrice));
+        return page;
     }
 }

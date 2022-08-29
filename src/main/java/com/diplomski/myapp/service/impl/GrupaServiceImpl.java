@@ -1,14 +1,11 @@
 package com.diplomski.myapp.service.impl;
 
-import com.diplomski.myapp.domain.Dete;
-import com.diplomski.myapp.domain.Dnevnik;
-import com.diplomski.myapp.domain.Grupa;
-import com.diplomski.myapp.domain.Vaspitac;
-import com.diplomski.myapp.repository.DeteRepository;
-import com.diplomski.myapp.repository.DnevnikRepository;
-import com.diplomski.myapp.repository.GrupaRepository;
-import com.diplomski.myapp.repository.VaspitacRepository;
+import com.diplomski.myapp.domain.*;
+import com.diplomski.myapp.domain.enumeration.StatusFormulara;
+import com.diplomski.myapp.repository.*;
+import com.diplomski.myapp.service.EmailAlreadyUsedException;
 import com.diplomski.myapp.service.GrupaService;
+import com.diplomski.myapp.service.VaspitacAlreadyHaveDnevnikInGivenPeriodException;
 import com.diplomski.myapp.web.rest.dto.DeteZaGrupuDTO;
 import com.diplomski.myapp.web.rest.dto.GrupaDTO;
 import java.util.*;
@@ -34,17 +31,20 @@ public class GrupaServiceImpl implements GrupaService {
     private final DeteRepository deteRepository;
     private final VaspitacRepository vaspitacRepository;
     private final DnevnikRepository dnevnikRepository;
+    private final FormularRepository formularRepository;
 
     public GrupaServiceImpl(
         GrupaRepository grupaRepository,
         DeteRepository deteRepository,
         VaspitacRepository vaspitacRepository,
-        DnevnikRepository dnevnikRepository
+        DnevnikRepository dnevnikRepository,
+        FormularRepository formularRepository
     ) {
         this.grupaRepository = grupaRepository;
         this.deteRepository = deteRepository;
         this.vaspitacRepository = vaspitacRepository;
         this.dnevnikRepository = dnevnikRepository;
+        this.formularRepository = formularRepository;
     }
 
     @Override
@@ -110,12 +110,23 @@ public class GrupaServiceImpl implements GrupaService {
 
     @Override
     public Grupa saveGrupa(GrupaDTO grupa) {
+        Vaspitac vaspitac = this.vaspitacRepository.findById(grupa.getVaspitac().getId()).get();
+        for (Dnevnik d : vaspitac.getDnevniks()) {
+            if (d.getKrajVazenja().isAfter(grupa.getPocetakVazenja())) {
+                throw new VaspitacAlreadyHaveDnevnikInGivenPeriodException();
+            }
+        }
+
         Grupa newGrupa = new Grupa();
         newGrupa.setTipGrupe(grupa.tipGrupe);
         Set<Dete> deca = new HashSet<>();
         for (DeteZaGrupuDTO d : grupa.getDeca()) {
-            Dete dete = this.deteRepository.findById(d.getId()).get();
+            Formular f = this.formularRepository.getFormularById(d.getId());
+            f.setStatusFormulara(StatusFormulara.RASPOREDJEN);
+            this.formularRepository.save(f);
+            Dete dete = new Dete(); //this.deteRepository.findById(d.getId()).get();
             deca.add(dete);
+            this.deteRepository.save(dete);
             dete.setGrupa(newGrupa);
         }
         newGrupa.setDetes(deca);
@@ -125,7 +136,6 @@ public class GrupaServiceImpl implements GrupaService {
         newDnevnik.setKrajVazenja(grupa.getKrajVazenja());
         newDnevnik.setPocetakVazenja(grupa.getPocetakVazenja());
         Set<Vaspitac> vaspitaci = new HashSet<>();
-        Vaspitac vaspitac = this.vaspitacRepository.findById(grupa.getVaspitac().getId()).get();
         vaspitaci.add(vaspitac);
         newDnevnik.setVaspitacs(vaspitaci);
         newGrupa.setDnevnik(newDnevnik);
@@ -136,6 +146,6 @@ public class GrupaServiceImpl implements GrupaService {
         vaspitac.getDnevniks().add(newDnevnik);
         this.vaspitacRepository.save(vaspitac);
         this.dnevnikRepository.save(newDnevnik);
-        return newGrupa; //todo proveri da li se cuvaju svi podaci
+        return newGrupa;
     }
 }

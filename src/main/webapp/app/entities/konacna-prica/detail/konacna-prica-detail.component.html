@@ -19,13 +19,56 @@
           <span [innerHTML]="konacnaPrica.tekst"></span>
         </dd>
       </dl>
+      <ul class="example-card" *ngFor="let komentar of komentarNaPricus">
+        <div class="card">
+          <dt>
+            <span>Datum komentara: {{ komentar.datum }}</span>
+          </dt>
+          <dd>
+            <span>{{ komentar.tekst }}</span>
+          </dd>
+        </div>
+      </ul>
+      <div *jhiHasAnyAuthority="'ROLE_PEDAGOG'">
+        <dt><span>Unesite komentar:</span></dt>
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+          <textarea class="form-control areaClass" id="w4review" name="w3review" formControlName="tekstKomentara"></textarea>
+
+          <button
+            type="submit"
+            id="save-entity"
+            data-cy="entityCreateSaveButton"
+            [disabled]="editForm.invalid || isSaving"
+            class="btn btn-primary"
+          >
+            <fa-icon icon="save"></fa-icon>&nbsp;<span>Sacuvaj promene</span>
+          </button>
+        </form>
+      </div>
+      <div *jhiHasAnyAuthority="'ROLE_DIREKTOR'">
+        <dt><span>Unesite komentar:</span></dt>
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+          <textarea class="form-control areaClass" id="w4revieiw" name="w3review" formControlName="tekstKomentara"></textarea>
+
+          <button
+            type="submit"
+            id="savei-entity"
+            data-cy="entityCreateSaveButton"
+            [disabled]="editForm.invalid || isSaving"
+            class="btn btn-primary"
+          >
+            <fa-icon icon="save"></fa-icon>&nbsp;<span>Sacuvaj promene</span>
+          </button>
+        </form>
+      </div>
 
       <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
-        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Nazad</span>
       </button>
 
-      <button type="button" [routerLink]="['/konacna-prica', konacnaPrica.id, 'edit']" class="btn btn-primary">
-        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      <button *jhiHasAnyAuthority="'ROLE_VASPITAC'" type="button" class="btn btn-primary" (click)="edit()">
+        <!--         [routerLink]="['/konacna-prica', konacnaPrica.id, 'edit']"    -->
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Uredi</span>
       </button>
     </div>
   </div>

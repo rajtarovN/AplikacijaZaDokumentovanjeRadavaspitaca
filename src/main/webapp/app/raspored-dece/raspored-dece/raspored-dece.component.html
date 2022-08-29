@@ -1,5 +1,11 @@
 <div>
-  <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+  <div class="alert alert-danger" *ngIf="errorVaspitacHasDnevnik" jhiTranslate="register.messages.error.vaspitachasdnevnik">
+    <strong>Vaspitac vec ima dnevnik za dati period!</strong> Molimo unesite nov.
+  </div>
+  <div class="alert alert-success" *ngIf="success">
+    <strong>Uspesno kreirana grupa!</strong>
+  </div>
+  <form name="editForm" role="form" novalidate [formGroup]="editForm">
     <div class="row mb-3">
       <label class="form-label" jhiTranslate="diplomskiApp.dnevnik.pocetakVazenja" for="field_pocetakVazenja">Pocetak Vazenja</label>
       <div class="input-group">
@@ -44,13 +50,22 @@
           [ngValue]="getSelectedVaspitac(vaspitacOption, editForm.get('vaspitacs')!.value)"
           *ngFor="let vaspitacOption of listaVasapitaca"
         >
-          {{ vaspitacOption.id }}
+          {{ vaspitacOption.ime }}
         </option>
       </select>
     </div>
-    <button (click)="save()">Sacuvaj</button>
-  </form>
+    <button class="btn btn-info" (click)="save()">Sacuvaj</button>
 
+    <div class="row mb-3">
+      <label class="form-label">Tip Grupe</label>
+      <select (change)="onChange()" class="form-control" name="tipGrupe" formControlName="tipGrupe" id="field_tipGrupe" data-cy="tipGrupe">
+        <option [ngValue]="null">{{ 'diplomskiApp.TipGrupe.null' | translate }}</option>
+        <option *ngFor="let tipGrupe of tipGrupeValues" [value]="tipGrupe">
+          {{ 'diplomskiApp.TipGrupe.' + tipGrupe | translate }}
+        </option>
+      </select>
+    </div>
+  </form>
   <div class="tableOrder">
     <div class="tableOrder1">
       Lista dece:
@@ -72,7 +87,7 @@
               <div class="btn-group">
                 <button type="submit" (click)="addDeteToGroup(dete)" class="btn btn-primary btn-sm" data-cy="entityEditButton">
                   <fa-icon icon="pencil-alt"></fa-icon>
-                  <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Dodaj dete u grupu</span>
+                  <span class="d-none d-md-inline">Dodaj dete u grupu</span>
                 </button>
               </div>
             </td>
@@ -101,7 +116,7 @@
               <div class="btn-group">
                 <button type="submit" (click)="removeFromGrupa(dete.id)" class="btn btn-primary btn-sm" data-cy="entityEditButton">
                   <fa-icon icon="pencil-alt"></fa-icon>
-                  <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Izbaci dete iz grupe</span>
+                  <span class="d-none d-md-inline">Izbaci dete iz grupe</span>
                 </button>
               </div>
             </td>

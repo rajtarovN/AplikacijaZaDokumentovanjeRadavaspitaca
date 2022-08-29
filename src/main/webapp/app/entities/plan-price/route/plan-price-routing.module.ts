@@ -42,6 +42,14 @@ const planPriceRoute: Routes = [
     canActivate: [UserRouteAccessService],
   },
   {
+    path: ':id/nesto',
+    component: PisanjePlanaComponent,
+    resolve: {
+      planPrice: PlanPriceRoutingResolveService,
+    },
+    canActivate: [UserRouteAccessService],
+  },
+  {
     path: 'pisanje-plana',
     component: PisanjePlanaComponent,
     resolve: {

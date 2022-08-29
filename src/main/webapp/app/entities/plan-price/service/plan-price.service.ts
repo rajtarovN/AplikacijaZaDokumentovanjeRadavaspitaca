@@ -26,6 +26,13 @@ export class PlanPriceService {
       .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
   }
 
+  createWithUsername(planPrice: IPlanPrice, username: string): Observable<EntityResponseType> {
+    const copy = this.convertDateFromClient(planPrice);
+    return this.http
+      .post<IPlanPrice>(this.resourceUrl + '/' + username, copy, { observe: 'response' })
+      .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
+  }
+
   update(planPrice: IPlanPrice): Observable<EntityResponseType> {
     const copy = this.convertDateFromClient(planPrice);
     return this.http

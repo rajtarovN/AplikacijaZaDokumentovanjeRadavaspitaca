@@ -17,6 +17,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import tech.jhipster.web.util.HeaderUtil;
@@ -53,13 +54,15 @@ public class PlanPriceResource {
      * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new planPrice, or with status {@code 400 (Bad Request)} if the planPrice has already an ID.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
-    @PostMapping("/plan-prices")
-    public ResponseEntity<PlanPrice> createPlanPrice(@RequestBody PlanPrice planPrice) throws URISyntaxException {
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_VASPITAC') or hasRole('ROLE_DIREKTOR')")
+    @PostMapping("/plan-prices/{username}")
+    public ResponseEntity<PlanPrice> createPlanPrice(@RequestBody PlanPrice planPrice, @PathVariable String username)
+        throws URISyntaxException {
         log.debug("REST request to save PlanPrice : {}", planPrice);
         if (planPrice.getId() != null) {
             throw new BadRequestAlertException("A new planPrice cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        PlanPrice result = planPriceService.save(planPrice);
+        PlanPrice result = planPriceService.save(planPrice, username);
         return ResponseEntity
             .created(new URI("/api/plan-prices/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
@@ -76,6 +79,7 @@ public class PlanPriceResource {
      * or with status {@code 500 (Internal Server Error)} if the planPrice couldn't be updated.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_VASPITAC') or hasRole('ROLE_DIREKTOR')")
     @PutMapping("/plan-prices/{id}")
     public ResponseEntity<PlanPrice> updatePlanPrice(
         @PathVariable(value = "id", required = false) final Long id,
@@ -111,6 +115,7 @@ public class PlanPriceResource {
      * or with status {@code 500 (Internal Server Error)} if the planPrice couldn't be updated.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_VASPITAC') or hasRole('ROLE_DIREKTOR')")
     @PatchMapping(value = "/plan-prices/{id}", consumes = { "application/json", "application/merge-patch+json" })
     public ResponseEntity<PlanPrice> partialUpdatePlanPrice(
         @PathVariable(value = "id", required = false) final Long id,
@@ -142,6 +147,7 @@ public class PlanPriceResource {
      * @param pageable the pagination information.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of planPrices in body.
      */
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_VASPITAC') or hasRole('ROLE_DIREKTOR') or hasRole('ROLE_PEDAGOG')")
     @GetMapping("/plan-prices")
     public ResponseEntity<List<PlanPrice>> getAllPlanPrices(@org.springdoc.api.annotations.ParameterObject Pageable pageable) {
         log.debug("REST request to get a page of PlanPrices");
@@ -156,6 +162,7 @@ public class PlanPriceResource {
      * @param id the id of the planPrice to retrieve.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the planPrice, or with status {@code 404 (Not Found)}.
      */
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_VASPITAC') or hasRole('ROLE_DIREKTOR') or hasRole('ROLE_PEDAGOG')")
     @GetMapping("/plan-prices/{id}")
     public ResponseEntity<PlanPrice> getPlanPrice(@PathVariable Long id) {
         log.debug("REST request to get PlanPrice : {}", id);
@@ -169,6 +176,7 @@ public class PlanPriceResource {
      * @param id the id of the planPrice to delete.
      * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
      */
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_VASPITAC') ")
     @DeleteMapping("/plan-prices/{id}")
     public ResponseEntity<Void> deletePlanPrice(@PathVariable Long id) {
         log.debug("REST request to delete PlanPrice : {}", id);

@@ -2,6 +2,7 @@ package com.diplomski.myapp.web.rest;
 
 import com.diplomski.myapp.domain.Dete;
 import com.diplomski.myapp.repository.DeteRepository;
+import com.diplomski.myapp.security.AuthoritiesConstants;
 import com.diplomski.myapp.service.DeteService;
 import com.diplomski.myapp.web.rest.dto.ProfilDetetaDTO;
 import com.diplomski.myapp.web.rest.errors.BadRequestAlertException;
@@ -19,6 +20,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import tech.jhipster.web.util.HeaderUtil;
@@ -185,10 +187,66 @@ public class DeteResource {
             .build();
     }
 
+    @PreAuthorize(
+        "hasRole('ROLE_ADMIN') or hasRole('ROLE_DIREKTOR') or hasRole('ROLE_PEDAGOG') or hasRole('ROLE_VASPITAC') or hasRole('ROLE_RODITELJ')"
+    )
     @GetMapping("/detes/profil/{id}")
     public ResponseEntity<ProfilDetetaDTO> getProfil(@PathVariable Long id) {
         log.debug("REST request to get Dete profil : {}", id);
         ProfilDetetaDTO dete = deteService.findProfil(id);
         return ResponseEntity.ok().body(dete);
+    }
+
+    @PreAuthorize(
+        "hasRole('ROLE_ADMIN') or hasRole('ROLE_DIREKTOR') or hasRole('ROLE_PEDAGOG') or hasRole('ROLE_VASPITAC')  or hasRole('ROLE_RODITELJ')"
+    )
+    @GetMapping("/detes/findByGrupa/{id}")
+    public ResponseEntity<List<Dete>> getAllDetesByGrupa(
+        @org.springdoc.api.annotations.ParameterObject Pageable pageable,
+        @RequestParam(required = false) String filter,
+        @PathVariable Long id
+    ) {
+        if ("nedolasci-is-null".equals(filter)) {
+            log.debug("REST request to get all Detes where neDolasci is null");
+            return new ResponseEntity<>(deteService.findAllWhereNeDolasciIsNull(), HttpStatus.OK);
+        }
+        log.debug("REST request to get a page of Detes");
+        Page<Dete> page = deteService.findAllByGrupa(pageable, id);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
+
+    @PreAuthorize("hasRole('ROLE_RODITELJ')")
+    @GetMapping("/detes/findByRoditelj/{username}")
+    public ResponseEntity<List<Dete>> getAllDetesByGrupa(
+        @org.springdoc.api.annotations.ParameterObject Pageable pageable,
+        @RequestParam(required = false) String filter,
+        @PathVariable String username
+    ) {
+        if ("nedolasci-is-null".equals(filter)) {
+            log.debug("REST request to get all Detes where neDolasci is null");
+            return new ResponseEntity<>(deteService.findAllWhereNeDolasciIsNull(), HttpStatus.OK);
+        }
+        log.debug("REST request to get a page of Detes");
+        Page<Dete> page = deteService.findAllByRoditelj(pageable, username);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
+
+    @PreAuthorize("hasRole('ROLE_VASPITAC')")
+    @GetMapping("/detes/findForVaspitac/{username}")
+    public ResponseEntity<List<Dete>> getAllDetesForVaspitac(
+        @org.springdoc.api.annotations.ParameterObject Pageable pageable,
+        @RequestParam(required = false) String filter,
+        @PathVariable String username
+    ) {
+        if ("nedolasci-is-null".equals(filter)) {
+            log.debug("REST request to get all Detes where neDolasci is null");
+            return new ResponseEntity<>(deteService.findAllWhereNeDolasciIsNull(), HttpStatus.OK);
+        }
+        log.debug("REST request to get a page of Detes");
+        Page<Dete> page = deteService.findAllForVaspitac(pageable, username);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
 }

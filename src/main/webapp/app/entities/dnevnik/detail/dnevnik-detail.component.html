@@ -25,7 +25,7 @@
         <dt><span jhiTranslate="diplomskiApp.dnevnik.grupa">Grupa</span></dt>
         <dd>
           <div *ngIf="dnevnik.grupa">
-            <a [routerLink]="['/grupa', dnevnik.grupa?.id, 'view']">{{ dnevnik.grupa?.id }}</a>
+            <a [routerLink]="['/grupa', dnevnik.grupa?.id, 'view']">{{ dnevnik.grupa?.tipGrupe }}</a>
           </div>
         </dd>
         <dt><span jhiTranslate="diplomskiApp.dnevnik.vaspitac">Vaspitac</span></dt>
@@ -41,7 +41,12 @@
         <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
       </button>
 
-      <button type="button" [routerLink]="['/dnevnik', dnevnik.id, 'edit']" class="btn btn-primary">
+      <button
+        type="button"
+        [routerLink]="['/dnevnik', dnevnik.id, 'edit']"
+        class="btn btn-primary"
+        *jhiHasAuthority="'ROLE_ADMIN'; rOLE_PEDAGOG: 'ROLE_DIREKTOR'"
+      >
         <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
       </button>
     </div>

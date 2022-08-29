@@ -189,10 +189,28 @@ public class DnevnikResource {
     }
 
     //getDeca
-    @GetMapping("/dnevniks/getDeca/{id}")
-    public ResponseEntity<Set<Dete>> getDeca(@PathVariable Long id) {
-        log.debug("REST request to get deca from Dnevnik : {}", id);
-        Set<Dete> deca = dnevnikService.findAllChildren(id);
+    @GetMapping("/dnevniks/getDeca/{username}")
+    public ResponseEntity<List<Dete>> getDeca(@PathVariable String username) {
+        log.debug("REST request to get deca from Dnevnik ---------- : {}", username);
+        System.out.println(username);
+        List<Dete> deca = dnevnikService.getDecaByUsername(username);
         return ResponseEntity.ok().body(deca);
+    }
+
+    @GetMapping("/dnevniks/findByUsername/{username}")
+    public ResponseEntity<List<Dnevnik>> getAllDnevniksByUsername(
+        @org.springdoc.api.annotations.ParameterObject Pageable pageable,
+        @RequestParam(required = false, defaultValue = "true") boolean eagerload,
+        @PathVariable String username
+    ) {
+        log.debug("REST request to get a page of Dnevniks by username");
+        Page<Dnevnik> page;
+        //        if (eagerload) {
+        //            page = dnevnikService.findAllWithEagerRelationships(pageable);
+        //        } else {
+        page = dnevnikService.findAllByUsername(username);
+        //}
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
 }

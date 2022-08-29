@@ -17,6 +17,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import tech.jhipster.web.util.HeaderUtil;
@@ -56,6 +57,7 @@ public class PodaciORoditeljimaResource {
      * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new podaciORoditeljima, or with status {@code 400 (Bad Request)} if the podaciORoditeljima has already an ID.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_RODITELJ') ")
     @PostMapping("/podaci-o-roditeljimas")
     public ResponseEntity<PodaciORoditeljima> createPodaciORoditeljima(@RequestBody PodaciORoditeljima podaciORoditeljima)
         throws URISyntaxException {
@@ -80,6 +82,7 @@ public class PodaciORoditeljimaResource {
      * or with status {@code 500 (Internal Server Error)} if the podaciORoditeljima couldn't be updated.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_RODITELJ') or hasRole('ROLE_DIREKTOR') or hasRole('ROLE_PEDAGOG')")
     @PutMapping("/podaci-o-roditeljimas/{id}")
     public ResponseEntity<PodaciORoditeljima> updatePodaciORoditeljima(
         @PathVariable(value = "id", required = false) final Long id,
@@ -115,6 +118,7 @@ public class PodaciORoditeljimaResource {
      * or with status {@code 500 (Internal Server Error)} if the podaciORoditeljima couldn't be updated.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_RODITELJ') or hasRole('ROLE_DIREKTOR') or hasRole('ROLE_PEDAGOG')")
     @PatchMapping(value = "/podaci-o-roditeljimas/{id}", consumes = { "application/json", "application/merge-patch+json" })
     public ResponseEntity<PodaciORoditeljima> partialUpdatePodaciORoditeljima(
         @PathVariable(value = "id", required = false) final Long id,
@@ -146,6 +150,9 @@ public class PodaciORoditeljimaResource {
      * @param pageable the pagination information.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of podaciORoditeljimas in body.
      */
+    @PreAuthorize(
+        "hasRole('ROLE_ADMIN') or hasRole('ROLE_RODITELJ') or hasRole('ROLE_DIREKTOR') or hasRole('ROLE_PEDAGOG') or hasRole('ROLE_VASPITAC')"
+    )
     @GetMapping("/podaci-o-roditeljimas")
     public ResponseEntity<List<PodaciORoditeljima>> getAllPodaciORoditeljimas(
         @org.springdoc.api.annotations.ParameterObject Pageable pageable
@@ -162,6 +169,9 @@ public class PodaciORoditeljimaResource {
      * @param id the id of the podaciORoditeljima to retrieve.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the podaciORoditeljima, or with status {@code 404 (Not Found)}.
      */
+    @PreAuthorize(
+        "hasRole('ROLE_ADMIN') or hasRole('ROLE_RODITELJ') or hasRole('ROLE_DIREKTOR') or hasRole('ROLE_PEDAGOG') or hasRole('ROLE_VASPITAC')"
+    )
     @GetMapping("/podaci-o-roditeljimas/{id}")
     public ResponseEntity<PodaciORoditeljima> getPodaciORoditeljima(@PathVariable Long id) {
         log.debug("REST request to get PodaciORoditeljima : {}", id);
@@ -175,6 +185,7 @@ public class PodaciORoditeljimaResource {
      * @param id the id of the podaciORoditeljima to delete.
      * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
      */
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_RODITELJ') ")
     @DeleteMapping("/podaci-o-roditeljimas/{id}")
     public ResponseEntity<Void> deletePodaciORoditeljima(@PathVariable Long id) {
         log.debug("REST request to delete PodaciORoditeljima : {}", id);

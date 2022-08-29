@@ -9,6 +9,7 @@
       </button>
 
       <button
+        *jhiHasAnyAuthority="'ROLE_DIREKTOR'"
         id="jh-create-entity"
         data-cy="entityCreateButton"
         class="btn btn-primary jh-create-entity create-vaspitac"
@@ -32,13 +33,22 @@
     <table class="table table-striped" aria-describedby="page-heading">
       <thead>
         <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="loadPage()">
+          <th scope="col">
+            <span>Ime</span>
+          </th>
+          <th scope="col">
+            <span>Prezime</span>
+          </th>
+          <th scope="col">
+            <span>Radi</span>
+          </th>
           <th scope="col" jhiSortBy="datumZaposlenja">
             <span jhiTranslate="diplomskiApp.vaspitac.datumZaposlenja">Datum Zaposlenja</span> <fa-icon icon="sort"></fa-icon>
           </th>
           <th scope="col" jhiSortBy="godineIskustva">
             <span jhiTranslate="diplomskiApp.vaspitac.godineIskustva">Godine Iskustva</span> <fa-icon icon="sort"></fa-icon>
           </th>
-          <th scope="col" jhiSortBy="opis"><span jhiTranslate="diplomskiApp.vaspitac.opis">Opis</span> <fa-icon icon="sort"></fa-icon></th>
+          <!--          <th scope="col" jhiSortBy="opis"><span jhiTranslate="diplomskiApp.vaspitac.opis">Opis</span> <fa-icon icon="sort"></fa-icon></th>-->
           <th scope="col" jhiSortBy="id"><span jhiTranslate="diplomskiApp.vaspitac.id">Id</span> <fa-icon icon="sort"></fa-icon></th>
           <th scope="col" jhiSortBy="objekat.naziv">
             <span jhiTranslate="diplomskiApp.vaspitac.objekat">Objekat</span> <fa-icon icon="sort"></fa-icon>
@@ -48,15 +58,18 @@
       </thead>
       <tbody>
         <tr *ngFor="let vaspitac of vaspitacs; trackBy: trackId" data-cy="entityTable">
+          <td>{{ vaspitac.user?.firstName }}</td>
+          <td>{{ vaspitac.user?.lastName }}</td>
+          <td>{{ vaspitac.status }}</td>
           <td>{{ vaspitac.datumZaposlenja | formatMediumDate }}</td>
           <td>{{ vaspitac.godineIskustva }}</td>
-          <td>{{ vaspitac.opis }}</td>
+          <!--          <td>{{ vaspitac.opis }}</td>-->
           <td>
             <a [routerLink]="['/vaspitac', vaspitac.id, 'view']">{{ vaspitac.id }}</a>
           </td>
           <td>
             <div *ngIf="vaspitac.objekat">
-              <a [routerLink]="['/objekat', vaspitac.objekat?.naziv, 'view']">{{ vaspitac.objekat?.naziv }}</a>
+              <a [routerLink]="['/objekat', vaspitac.objekat?.id, 'view']">{{ vaspitac.objekat?.naziv }}</a>
             </div>
           </td>
           <td class="text-end">
@@ -72,6 +85,7 @@
               </button>
 
               <button
+                *jhiHasAnyAuthority="'ROLE_DIREKTOR'"
                 type="submit"
                 [routerLink]="['/vaspitac', vaspitac.id, 'edit']"
                 class="btn btn-primary btn-sm"
@@ -81,7 +95,13 @@
                 <span class="d-none d-md-inline">Uredi</span>
               </button>
 
-              <button type="submit" (click)="delete(vaspitac)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+              <button
+                *jhiHasAnyAuthority="'ROLE_DIREKTOR'"
+                type="submit"
+                (click)="delete(vaspitac)"
+                class="btn btn-danger btn-sm"
+                data-cy="entityDeleteButton"
+              >
                 <fa-icon icon="times"></fa-icon>
                 <span class="d-none d-md-inline">Brisanje</span>
               </button>

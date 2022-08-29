@@ -46,7 +46,7 @@
           <input type="text" class="form-control" name="predlozi" id="field_predlozi" data-cy="predlozi" formControlName="predlozi" />
         </div>
 
-        <div class="row mb-3">
+        <div [hidden]="true" class="row mb-3">
           <label class="form-label" jhiTranslate="diplomskiApp.zapazanjeUVeziDeteta.datum" for="field_datum">Datum</label>
           <div class="input-group">
             <input
@@ -63,7 +63,7 @@
           </div>
         </div>
 
-        <div class="row mb-3">
+        <div [hidden]="true" class="row mb-3">
           <label class="form-label" jhiTranslate="diplomskiApp.zapazanjeUVeziDeteta.vaspitac" for="field_vaspitac">Vaspitac</label>
           <select class="form-control" id="field_vaspitac" data-cy="vaspitac" name="vaspitac" formControlName="vaspitac">
             <option [ngValue]="null"></option>
@@ -76,7 +76,7 @@
           </select>
         </div>
 
-        <div class="row mb-3">
+        <div [hidden]="true" class="row mb-3">
           <label class="form-label" jhiTranslate="diplomskiApp.zapazanjeUVeziDeteta.dete" for="field_dete">Dete</label>
           <select class="form-control" id="field_dete" data-cy="dete" name="dete" formControlName="dete">
             <option [ngValue]="null"></option>

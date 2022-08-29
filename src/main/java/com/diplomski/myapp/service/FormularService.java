@@ -17,7 +17,7 @@ public interface FormularService {
      * @param formular the entity to save.
      * @return the persisted entity.
      */
-    Formular save(Formular formular);
+    Formular save(Formular formular, String username);
 
     /**
      * Updates a formular.
@@ -65,4 +65,10 @@ public interface FormularService {
     void delete(Long id);
 
     List<DeteZaGrupuDTO> findAllDecaZaGrupu();
+
+    Page<Formular> findAllByRoditelj(Pageable pageable, String username);
+
+    Formular approve(Long id);
+
+    Formular reject(Long id);
 }

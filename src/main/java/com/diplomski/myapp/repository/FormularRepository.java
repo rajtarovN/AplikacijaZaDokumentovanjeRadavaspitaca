@@ -14,4 +14,10 @@ import org.springframework.stereotype.Repository;
 public interface FormularRepository extends JpaRepository<Formular, Long> {
     @Query("SELECT f from Formular f where f.statusFormulara = 'ODOBREN' ")
     List<Formular> findAllOdobren();
+
+    @Query("SELECT f from Formular f where f.roditelj.user.login = ?1")
+    List<Formular> findAllByRoditelj(String username);
+
+    @Query("SELECT f from Formular f where f.id = ?1")
+    Formular getFormularById(Long id);
 }

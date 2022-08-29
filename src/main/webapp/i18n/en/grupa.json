@@ -2,17 +2,17 @@
   "diplomskiApp": {
     "grupa": {
       "home": {
-        "title": "Grupas",
-        "refreshListLabel": "Refresh list",
-        "createLabel": "Create a new Grupa",
-        "createOrEditLabel": "Create or edit a Grupa",
-        "notFound": "No Grupas found"
+        "title": "Grupe",
+        "refreshListLabel": "Osvezavanje liste",
+        "createLabel": "Dodavanje grupe",
+        "createOrEditLabel": "Dodavanje ili uredjivanje grupe",
+        "notFound": "Nijedna grupa nije pronadjena"
       },
-      "created": "A new Grupa is created with identifier {{ param }}",
-      "updated": "A Grupa is updated with identifier {{ param }}",
-      "deleted": "A Grupa is deleted with identifier {{ param }}",
+      "created": "Kreirana je nova grupa sa id-jem {{ param }}",
+      "updated": "Obnovnljeni su podaci grupe sa id-jem: {{ param }}",
+      "deleted": "Obrisana je grupa sa id-jem {{ param }}",
       "delete": {
-        "question": "Are you sure you want to delete Grupa {{ id }}?"
+        "question": "Da li ste sigurni da zelite da izbrisete grupu sa id-jem: {{ id }}?"
       },
       "detail": {
         "title": "Grupa"

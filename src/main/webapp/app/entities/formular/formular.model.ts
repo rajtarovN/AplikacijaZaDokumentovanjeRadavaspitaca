@@ -26,7 +26,7 @@ export interface IFormular {
 }
 
 export class DeteZaGrupuDTO {
-  constructor(public id?: number, public imeDeteta?: string | null, public dodato?: boolean | null) {}
+  constructor(public id?: number, public imeDeteta?: string | null, public dodato?: boolean | null, public tipGrupe?: TipGrupe | null) {}
 }
 
 export class Formular implements IFormular {

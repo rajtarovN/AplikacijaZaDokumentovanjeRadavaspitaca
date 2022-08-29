@@ -8,38 +8,38 @@ import { KorisnikUpdateComponent } from '../update/korisnik-update.component';
 import { KorisnikRoutingResolveService } from './korisnik-routing-resolve.service';
 
 const korisnikRoute: Routes = [
-  {
-    path: '',
-    component: KorisnikComponent,
-    data: {
-      defaultSort: 'id,asc',
-    },
-    canActivate: [UserRouteAccessService],
-  },
-  {
-    path: ':id/view',
-    component: KorisnikDetailComponent,
-    resolve: {
-      korisnik: KorisnikRoutingResolveService,
-    },
-    canActivate: [UserRouteAccessService],
-  },
-  {
-    path: 'new',
-    component: KorisnikUpdateComponent,
-    resolve: {
-      korisnik: KorisnikRoutingResolveService,
-    },
-    canActivate: [UserRouteAccessService],
-  },
-  {
-    path: ':id/edit',
-    component: KorisnikUpdateComponent,
-    resolve: {
-      korisnik: KorisnikRoutingResolveService,
-    },
-    canActivate: [UserRouteAccessService],
-  },
+  // {
+  //   path: '',
+  //   component: KorisnikComponent,
+  //   data: {
+  //     defaultSort: 'id,asc',
+  //   },
+  //   canActivate: [UserRouteAccessService],
+  // },
+  // {
+  //   path: ':id/view',
+  //   component: KorisnikDetailComponent,
+  //   resolve: {
+  //     korisnik: KorisnikRoutingResolveService,
+  //   },
+  //   canActivate: [UserRouteAccessService],
+  // },
+  // {
+  //   path: 'new',
+  //   component: KorisnikUpdateComponent,
+  //   resolve: {
+  //     korisnik: KorisnikRoutingResolveService,
+  //   },
+  //   canActivate: [UserRouteAccessService],
+  // },
+  // {
+  //   path: ':id/edit',
+  //   component: KorisnikUpdateComponent,
+  //   resolve: {
+  //     korisnik: KorisnikRoutingResolveService,
+  //   },
+  //   canActivate: [UserRouteAccessService],
+  // },
 ];
 
 @NgModule({

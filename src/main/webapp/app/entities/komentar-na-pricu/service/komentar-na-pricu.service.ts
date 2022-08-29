@@ -9,6 +9,7 @@ import { DATE_FORMAT } from 'app/config/input.constants';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
 import { createRequestOption } from 'app/core/request/request-util';
 import { IKomentarNaPricu, getKomentarNaPricuIdentifier } from '../komentar-na-pricu.model';
+import { IPrica } from '../../prica/prica.model';
 
 export type EntityResponseType = HttpResponse<IKomentarNaPricu>;
 export type EntityArrayResponseType = HttpResponse<IKomentarNaPricu[]>;
@@ -59,6 +60,10 @@ export class KomentarNaPricuService {
 
   delete(id: number): Observable<HttpResponse<{}>> {
     return this.http.delete(`${this.resourceUrl}/${id}`, { observe: 'response' });
+  }
+  queryByIdPrica(req: { size: number; page: number; sort: string[] }, dnevnik: string): Observable<EntityArrayResponseType> {
+    const options = createRequestOption(req);
+    return this.http.get<IKomentarNaPricu[]>(this.resourceUrl + '/getByPrica/' + dnevnik, { params: options, observe: 'response' });
   }
 
   addKomentarNaPricuToCollectionIfMissing(

@@ -30,7 +30,12 @@
         <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Nazad</span>
       </button>
 
-      <button type="button" [routerLink]="['/objekat', objekat.id, 'edit']" class="btn btn-primary">
+      <button
+        *jhiHasAnyAuthority="'ROLE_DIREKTOR'; rOLE_ADMIN"
+        type="button"
+        [routerLink]="['/objekat', objekat.id, 'edit']"
+        class="btn btn-primary"
+      >
         <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Uredi</span>
       </button>
     </div>

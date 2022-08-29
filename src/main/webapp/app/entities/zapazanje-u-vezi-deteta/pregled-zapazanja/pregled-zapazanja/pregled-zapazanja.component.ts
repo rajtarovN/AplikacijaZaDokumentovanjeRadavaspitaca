@@ -40,7 +40,7 @@ export class PregledZapazanjaComponent implements OnInit {
   loadPage(): void {
     this.isLoading = true;
 
-    this.zapazanjeUVeziDetetaService.query().subscribe({
+    this.zapazanjeUVeziDetetaService.queryByDete(localStorage.getItem('dete')!).subscribe({
       next: (res: HttpResponse<any>) => {
         this.isLoading = false;
         this.onSuccess(res.body, res.headers);
@@ -59,8 +59,6 @@ export class PregledZapazanjaComponent implements OnInit {
   protected onSuccess(data: ObjekatDTO[] | null, headers: HttpHeaders): void {
     this.totalItems = Number(headers.get('X-Total-Count'));
     this.observable = data ?? [];
-    // eslint-disable-next-line no-console
-    console.log('aaa', this.observable, 'aaa');
   }
 
   protected onError(): void {

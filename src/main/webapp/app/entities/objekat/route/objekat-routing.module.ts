@@ -6,6 +6,7 @@ import { ObjekatComponent } from '../list/objekat.component';
 import { ObjekatDetailComponent } from '../detail/objekat-detail.component';
 import { ObjekatUpdateComponent } from '../update/objekat-update.component';
 import { ObjekatRoutingResolveService } from './objekat-routing-resolve.service';
+import { Authority } from 'app/config/authority.constants';
 
 const objekatRoute: Routes = [
   {
@@ -13,6 +14,7 @@ const objekatRoute: Routes = [
     component: ObjekatComponent,
     data: {
       defaultSort: 'id,asc',
+      authorities: [Authority.ADMIN, Authority.DIREKTOR, Authority.RODITELJ], //
     },
     canActivate: [UserRouteAccessService],
   },

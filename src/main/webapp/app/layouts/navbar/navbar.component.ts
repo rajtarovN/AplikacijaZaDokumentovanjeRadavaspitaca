@@ -65,6 +65,31 @@ export class NavbarComponent implements OnInit {
   pregledObjekata(): void {
     this.router.navigate(['/pregled-objekata']);
   }
+  pregledVaspitaca(): void {
+    this.router.navigate(['/pregled-vaspitaca']);
+  }
+  pregledVazecegDnevnika(): void {
+    this.accountService.getAuthenticationState().subscribe(account => {
+      if (account) {
+        if (account.authorities[0] === 'ROLE_VASPITAC') {
+          localStorage.setItem('username', account.login);
+        }
+      }
+    });
+
+    this.router.navigate(['/prica']);
+  }
+  pregledDece(): void {
+    this.accountService.getAuthenticationState().subscribe(account => {
+      if (account) {
+        if (account.authorities[0] === 'ROLE_VASPITAC') {
+          localStorage.setItem('vaspitac', account.login);
+        }
+      }
+    });
+
+    this.router.navigate(['/dete']);
+  }
 
   logout(): void {
     this.collapseNavbar();
@@ -74,5 +99,29 @@ export class NavbarComponent implements OnInit {
 
   toggleNavbar(): void {
     this.isNavbarCollapsed = !this.isNavbarCollapsed;
+  }
+
+  prikaziIzostanke(): void {
+    this.accountService.getAuthenticationState().subscribe(account => {
+      if (account) {
+        if (account.authorities[0] === 'ROLE_VASPITAC') {
+          localStorage.setItem('username', account.login);
+        }
+      }
+    });
+    this.router.navigate(['/ne-dolasci']);
+  }
+
+  showOlderDneviks(): void {
+    this.accountService.getAuthenticationState().subscribe(account => {
+      if (account) {
+        if (account.authorities[0] === 'ROLE_VASPITAC') {
+          localStorage.setItem('username', account.login);
+          localStorage.setItem('olderDnevniks', 'true');
+        }
+      }
+    });
+
+    this.router.navigate(['/dnevnik']);
   }
 }

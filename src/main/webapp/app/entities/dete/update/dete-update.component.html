@@ -25,42 +25,48 @@
 
         <div class="row mb-3">
           <label class="form-label" jhiTranslate="diplomskiApp.dete.formular" for="field_formular">Formular</label>
-          <select class="form-control" id="field_formular" data-cy="formular" name="formular" formControlName="formular">
-            <option [ngValue]="null"></option>
-            <option
-              [ngValue]="formularOption.id === editForm.get('formular')!.value?.id ? editForm.get('formular')!.value : formularOption"
-              *ngFor="let formularOption of formularsCollection; trackBy: trackFormularById"
-            >
-              {{ formularOption.id }}
-            </option>
-          </select>
+          <label type="number" class="form-control" name="formular" id="field_formular" data-cy="formular" formControlName="formular">
+            {{ editForm.get('formular')!.value?.id }}
+          </label>
+          <!--          <select class="form-control" id="field_formular" data-cy="formular" name="formular" formControlName="formular">-->
+          <!--            <option [ngValue]="null">[readonly]="true"</option>-->
+          <!--            <option-->
+          <!--              [ngValue]="formularOption.id === editForm.get('formular')!.value?.id ? editForm.get('formular')!.value : formularOption"-->
+          <!--              *ngFor="let formularOption of formularsCollection; trackBy: trackFormularById"-->
+          <!--            >-->
+          <!--              {{ formularOption.id }}-->
+          <!--            </option>-->
+          <!--          </select>-->
         </div>
 
-        <div class="row mb-3">
-          <label class="form-label" jhiTranslate="diplomskiApp.dete.roditelj" for="field_roditelj">Roditelj</label>
-          <select class="form-control" id="field_roditelj" data-cy="roditelj" name="roditelj" formControlName="roditelj">
-            <option [ngValue]="null"></option>
-            <option
-              [ngValue]="roditeljOption.id === editForm.get('roditelj')!.value?.id ? editForm.get('roditelj')!.value : roditeljOption"
-              *ngFor="let roditeljOption of roditeljsSharedCollection; trackBy: trackRoditeljById"
-            >
-              {{ roditeljOption.id }}
-            </option>
-          </select>
-        </div>
+        <!--        <div class="row mb-3">-->
+        <!--          <label class="form-label" jhiTranslate="diplomskiApp.dete.roditelj" for="field_roditelj">Roditelj</label>-->
+        <!--          <label type="number" class="form-control" name="formular" id="field_roditelj" data-cy="roditelj" formControlName="roditelj"  >-->
+        <!--            {{editForm.get('formular')!.value?.id}}-->
+        <!--          </label>-->
+        <!--          <select class="form-control" id="field_roditelj" data-cy="roditelj" name="roditelj" formControlName="roditelj">-->
+        <!--            <option [ngValue]="null"></option>-->
+        <!--            <option-->
+        <!--              [ngValue]="roditeljOption.id === editForm.get('roditelj')!.value?.id ? editForm.get('roditelj')!.value : roditeljOption"-->
+        <!--              *ngFor="let roditeljOption of roditeljsSharedCollection; trackBy: trackRoditeljById"-->
+        <!--            >-->
+        <!--              {{ roditeljOption.id }}-->
+        <!--            </option>-->
+        <!--          </select>-->
+        <!--        </div>-->
 
-        <div class="row mb-3">
-          <label class="form-label" jhiTranslate="diplomskiApp.dete.grupa" for="field_grupa">Grupa</label>
-          <select class="form-control" id="field_grupa" data-cy="grupa" name="grupa" formControlName="grupa">
-            <option [ngValue]="null"></option>
-            <option
-              [ngValue]="grupaOption.id === editForm.get('grupa')!.value?.id ? editForm.get('grupa')!.value : grupaOption"
-              *ngFor="let grupaOption of grupasSharedCollection; trackBy: trackGrupaById"
-            >
-              {{ grupaOption.id }}
-            </option>
-          </select>
-        </div>
+        <!--        <div class="row mb-3">-->
+        <!--          <label class="form-label" jhiTranslate="diplomskiApp.dete.grupa" for="field_grupa">Grupa</label>-->
+        <!--          <select class="form-control" id="field_grupa" data-cy="grupa" name="grupa" formControlName="grupa">-->
+        <!--            <option [ngValue]="null"></option>-->
+        <!--            <option-->
+        <!--              [ngValue]="grupaOption.id === editForm.get('grupa')!.value?.id ? editForm.get('grupa')!.value : grupaOption"-->
+        <!--              *ngFor="let grupaOption of grupasSharedCollection; trackBy: trackGrupaById"-->
+        <!--            >-->
+        <!--              {{ grupaOption.id }}-->
+        <!--            </option>-->
+        <!--          </select>-->
+        <!--        </div>-->
       </div>
 
       <div>

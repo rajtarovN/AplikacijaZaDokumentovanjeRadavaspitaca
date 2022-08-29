@@ -15,7 +15,7 @@ public interface KonacnaPricaService {
      * @param konacnaPrica the entity to save.
      * @return the persisted entity.
      */
-    KonacnaPrica save(KonacnaPrica konacnaPrica);
+    KonacnaPrica save(KonacnaPrica konacnaPrica, Long idPrice);
 
     /**
      * Updates a konacnaPrica.

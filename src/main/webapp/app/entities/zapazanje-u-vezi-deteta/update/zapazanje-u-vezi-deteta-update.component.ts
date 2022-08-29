@@ -11,6 +11,8 @@ import { IVaspitac } from 'app/entities/vaspitac/vaspitac.model';
 import { VaspitacService } from 'app/entities/vaspitac/service/vaspitac.service';
 import { IDete } from 'app/entities/dete/dete.model';
 import { DeteService } from 'app/entities/dete/service/dete.service';
+import { Account } from '../../../core/auth/account.model';
+import { AccountService } from '../../../core/auth/account.service';
 
 @Component({
   selector: 'jhi-zapazanje-u-vezi-deteta-update',
@@ -38,7 +40,8 @@ export class ZapazanjeUVeziDetetaUpdateComponent implements OnInit {
     protected vaspitacService: VaspitacService,
     protected deteService: DeteService,
     protected activatedRoute: ActivatedRoute,
-    protected fb: FormBuilder
+    protected fb: FormBuilder,
+    protected accountService: AccountService
   ) {}
 
   ngOnInit(): void {
@@ -56,6 +59,17 @@ export class ZapazanjeUVeziDetetaUpdateComponent implements OnInit {
   save(): void {
     this.isSaving = true;
     const zapazanjeUVeziDeteta = this.createFromForm();
+    zapazanjeUVeziDeteta.dete = { id: Number(localStorage.getItem('dete')) };
+
+    this.accountService.getAuthenticationState().subscribe(account => {
+      if (account) {
+        if (account.authorities[0] === 'ROLE_VASPITAC' || account.authorities[0] === 'ROLE_PEDAGOG') {
+          //zapazanjeUVeziDeteta.vaspitac = { user: { login: account.login } };
+          zapazanjeUVeziDeteta.user = { login: account.login };
+        }
+      }
+    });
+
     if (zapazanjeUVeziDeteta.id !== undefined) {
       this.subscribeToSaveResponse(this.zapazanjeUVeziDetetaService.update(zapazanjeUVeziDeteta));
     } else {
@@ -100,6 +114,7 @@ export class ZapazanjeUVeziDetetaUpdateComponent implements OnInit {
       datum: zapazanjeUVeziDeteta.datum,
       vaspitac: zapazanjeUVeziDeteta.vaspitac,
       dete: zapazanjeUVeziDeteta.dete,
+      user: zapazanjeUVeziDeteta.user,
     });
 
     this.vaspitacsCollection = this.vaspitacService.addVaspitacToCollectionIfMissing(
@@ -138,6 +153,7 @@ export class ZapazanjeUVeziDetetaUpdateComponent implements OnInit {
       datum: this.editForm.get(['datum'])!.value,
       vaspitac: this.editForm.get(['vaspitac'])!.value,
       dete: this.editForm.get(['dete'])!.value,
+      user: this.editForm.get(['vaspitac'])!.value,
     };
   }
 }

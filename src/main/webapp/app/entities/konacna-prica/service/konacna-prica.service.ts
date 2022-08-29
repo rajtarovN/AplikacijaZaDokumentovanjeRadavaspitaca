@@ -16,8 +16,8 @@ export class KonacnaPricaService {
 
   constructor(protected http: HttpClient, protected applicationConfigService: ApplicationConfigService) {}
 
-  create(konacnaPrica: IKonacnaPrica): Observable<EntityResponseType> {
-    return this.http.post<IKonacnaPrica>(this.resourceUrl, konacnaPrica, { observe: 'response' });
+  create(konacnaPrica: IKonacnaPrica, pricaId?: string | null): Observable<EntityResponseType> {
+    return this.http.post<IKonacnaPrica>(this.resourceUrl + '/' + pricaId!, konacnaPrica, { observe: 'response' });
   }
 
   update(konacnaPrica: IKonacnaPrica): Observable<EntityResponseType> {
@@ -65,5 +65,9 @@ export class KonacnaPricaService {
       return [...konacnaPricasToAdd, ...konacnaPricaCollection];
     }
     return konacnaPricaCollection;
+  }
+
+  getPocetnaPrica(id: string): any {
+    return this.http.get<IKonacnaPrica>(`${this.resourceUrl}/getPocetnaPrica/${id}`, { observe: 'response' });
   }
 }

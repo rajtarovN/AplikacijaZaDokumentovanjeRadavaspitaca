@@ -1,6 +1,7 @@
 package com.diplomski.myapp.web.rest;
 
 import com.diplomski.myapp.domain.KomentarNaPricu;
+import com.diplomski.myapp.domain.Prica;
 import com.diplomski.myapp.repository.KomentarNaPricuRepository;
 import com.diplomski.myapp.service.KomentarNaPricuService;
 import com.diplomski.myapp.web.rest.errors.BadRequestAlertException;
@@ -17,6 +18,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import tech.jhipster.web.util.HeaderUtil;
@@ -53,6 +55,7 @@ public class KomentarNaPricuResource {
      * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new komentarNaPricu, or with status {@code 400 (Bad Request)} if the komentarNaPricu has already an ID.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_PEDAGOG') or hasRole('ROLE_DIREKTOR')")
     @PostMapping("/komentar-na-pricus")
     public ResponseEntity<KomentarNaPricu> createKomentarNaPricu(@RequestBody KomentarNaPricu komentarNaPricu) throws URISyntaxException {
         log.debug("REST request to save KomentarNaPricu : {}", komentarNaPricu);
@@ -142,6 +145,7 @@ public class KomentarNaPricuResource {
      * @param pageable the pagination information.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of komentarNaPricus in body.
      */
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_PEDAGOG') or hasRole('ROLE_DIREKTOR') or hasRole('ROLE_VASPITAC')")
     @GetMapping("/komentar-na-pricus")
     public ResponseEntity<List<KomentarNaPricu>> getAllKomentarNaPricus(@org.springdoc.api.annotations.ParameterObject Pageable pageable) {
         log.debug("REST request to get a page of KomentarNaPricus");
@@ -156,6 +160,7 @@ public class KomentarNaPricuResource {
      * @param id the id of the komentarNaPricu to retrieve.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the komentarNaPricu, or with status {@code 404 (Not Found)}.
      */
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_PEDAGOG') or hasRole('ROLE_DIREKTOR') or hasRole('ROLE_VASPITAC')")
     @GetMapping("/komentar-na-pricus/{id}")
     public ResponseEntity<KomentarNaPricu> getKomentarNaPricu(@PathVariable Long id) {
         log.debug("REST request to get KomentarNaPricu : {}", id);
@@ -169,6 +174,7 @@ public class KomentarNaPricuResource {
      * @param id the id of the komentarNaPricu to delete.
      * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
      */
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_PEDAGOG') or hasRole('ROLE_DIREKTOR') or hasRole('ROLE_VASPITAC')")
     @DeleteMapping("/komentar-na-pricus/{id}")
     public ResponseEntity<Void> deleteKomentarNaPricu(@PathVariable Long id) {
         log.debug("REST request to delete KomentarNaPricu : {}", id);
@@ -177,5 +183,17 @@ public class KomentarNaPricuResource {
             .noContent()
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))
             .build();
+    }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_PEDAGOG') or hasRole('ROLE_DIREKTOR') or hasRole('ROLE_VASPITAC')")
+    @GetMapping("/komentar-na-pricus/getByPrica/{id}")
+    public ResponseEntity<List<KomentarNaPricu>> getByPricaKomentarNaPricus(
+        @org.springdoc.api.annotations.ParameterObject Pageable pageable,
+        @PathVariable Long id
+    ) {
+        log.debug("REST request to get a page of KomentarNaPricus");
+        Page<KomentarNaPricu> page = komentarNaPricuService.findByPrica(id);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
 }

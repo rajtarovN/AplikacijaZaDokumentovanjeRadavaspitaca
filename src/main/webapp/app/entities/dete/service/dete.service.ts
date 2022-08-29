@@ -36,6 +36,10 @@ export class DeteService {
     const options = createRequestOption(req);
     return this.http.get<IDete[]>(this.resourceUrl, { params: options, observe: 'response' });
   }
+  queryByGrupa(req?: any, grupa?: string): Observable<EntityArrayResponseType> {
+    const options = createRequestOption(req);
+    return this.http.get<IDete[]>(this.resourceUrl + '/findByGrupa/' + String(grupa), { params: options, observe: 'response' });
+  }
 
   delete(id: number): Observable<HttpResponse<{}>> {
     return this.http.delete(`${this.resourceUrl}/${id}`, { observe: 'response' });
@@ -60,5 +64,25 @@ export class DeteService {
 
   getprofile(id: number): Observable<any> {
     return this.http.get<any>(`${this.resourceUrl}/profil/${id}`, { observe: 'response' });
+  }
+
+  queryDeteOfRoditelj(
+    req: {
+      size: number;
+      page: number;
+      sort: string[];
+    },
+    username: string
+  ): Observable<EntityArrayResponseType> {
+    const options = createRequestOption(req);
+    return this.http.get<IDete[]>(this.resourceUrl + '/findByRoditelj/' + username, { params: options, observe: 'response' });
+  }
+
+  queryDecaOfVaspitac(
+    req: { size: number; page: number; sort: string[]; username: string | undefined },
+    vaspitac: string
+  ): Observable<EntityArrayResponseType> {
+    const options = createRequestOption(req);
+    return this.http.get<IDete[]>(this.resourceUrl + '/findForVaspitac/' + vaspitac, { params: options, observe: 'response' });
   }
 }

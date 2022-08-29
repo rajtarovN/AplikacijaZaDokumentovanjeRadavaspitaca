@@ -3,16 +3,16 @@
     "roditelj": {
       "home": {
         "title": "Roditeljs",
-        "refreshListLabel": "Refresh list",
-        "createLabel": "Create a new Roditelj",
-        "createOrEditLabel": "Create or edit a Roditelj",
-        "notFound": "No Roditeljs found"
+        "refreshListLabel": "Osvezavanje liste",
+        "createLabel": "Dodavanje novog roditelja",
+        "createOrEditLabel": "Dodavanje ili uredjivanje roditelja",
+        "notFound": "Nijedan roditelj nije pronadjen."
       },
-      "created": "A new Roditelj is created with identifier {{ param }}",
-      "updated": "A Roditelj is updated with identifier {{ param }}",
-      "deleted": "A Roditelj is deleted with identifier {{ param }}",
+      "created": "Kreiran je nov roditelj sa id-jem {{ param }}",
+      "updated": "Obnovnljeni su podaci roditelja sa id-jem: {{ param }}",
+      "deleted": "Obrisan je roditelj sa id-jem {{ param }}",
       "delete": {
-        "question": "Are you sure you want to delete Roditelj {{ id }}?"
+        "question": "Da li ste sigurni da zelite da izbrisete roditelja sa id-jem: {{ id }}?"
       },
       "detail": {
         "title": "Roditelj"

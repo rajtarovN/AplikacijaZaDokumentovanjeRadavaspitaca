@@ -76,9 +76,15 @@ export class DnevnikService {
     return dnevnikCollection;
   }
 
-  getDeca(id: string): any {
-    //const options = createRequestOption(id);
-    return this.http.get<DeteDTO[]>(this.resourceUrl + '/getDeca/' + id);
+  getDeca(username: string): any {
+    return this.http.get<DeteDTO[]>(this.resourceUrl + '/getDeca/' + username);
+  }
+
+  queryOldDnevniks(req: { size: number; page: number; sort: string[] }, username: string): Observable<EntityArrayResponseType> {
+    const options = createRequestOption(req);
+    return this.http
+      .get<IDnevnik[]>(this.resourceUrl + '/findByUsername/' + username, { params: options, observe: 'response' })
+      .pipe(map((res: EntityArrayResponseType) => this.convertDateArrayFromServer(res)));
   }
 
   protected convertDateFromClient(dnevnik: IDnevnik): IDnevnik {

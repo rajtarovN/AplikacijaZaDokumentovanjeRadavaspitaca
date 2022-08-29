@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { finalize, map } from 'rxjs/operators';
@@ -17,11 +17,16 @@ import { AdresaService } from 'app/entities/adresa/service/adresa.service';
 export class ObjekatUpdateComponent implements OnInit {
   isSaving = false;
 
+  fileName = '';
+  url: any;
+  isImageSaved = false;
+  isSaved = 'false';
+
   adresasCollection: IAdresa[] = [];
 
   editForm = this.fb.group({
     opis: [],
-    naziv: [],
+    naziv: [null, [Validators.required]],
     id: [],
     adresa: [],
   });
@@ -58,7 +63,17 @@ export class ObjekatUpdateComponent implements OnInit {
   trackAdresaById(_index: number, item: IAdresa): number {
     return item.id!;
   }
-
+  onFileSelected(event: any): void {
+    const reader = new FileReader();
+    if (event.target.files && event.target.files.length > 0) {
+      const file = event.target.files[0];
+      reader.readAsDataURL(file);
+      reader.onload = () => {
+        this.url = reader.result;
+        this.isImageSaved = true;
+      };
+    }
+  }
   protected subscribeToSaveResponse(result: Observable<HttpResponse<IObjekat>>): void {
     result.pipe(finalize(() => this.onSaveFinalize())).subscribe({
       next: () => this.onSaveSuccess(),
@@ -104,6 +119,7 @@ export class ObjekatUpdateComponent implements OnInit {
       naziv: this.editForm.get(['naziv'])!.value,
       id: this.editForm.get(['id'])!.value,
       adresa: this.editForm.get(['adresa'])!.value,
+      slika: this.url,
     };
   }
 }

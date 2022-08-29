@@ -60,7 +60,9 @@ export class ZapazanjeUVeziDetetaService {
   delete(id: number): Observable<HttpResponse<{}>> {
     return this.http.delete(`${this.resourceUrl}/${id}`, { observe: 'response' });
   }
-
+  queryByDete(idDeteta: string): Observable<EntityArrayResponseType> {
+    return this.http.get<IZapazanjeUVeziDeteta[]>(this.resourceUrl + '/findByDete/' + idDeteta, { observe: 'response' });
+  }
   addZapazanjeUVeziDetetaToCollectionIfMissing(
     zapazanjeUVeziDetetaCollection: IZapazanjeUVeziDeteta[],
     ...zapazanjeUVeziDetetasToCheck: (IZapazanjeUVeziDeteta | null | undefined)[]

@@ -8,6 +8,7 @@ import { createRequestOption } from 'app/core/request/request-util';
 import { IFormular, getFormularIdentifier, DeteZaGrupuDTO } from '../formular.model';
 import { IVaspitac } from '../../vaspitac/vaspitac.model';
 import { map } from 'rxjs/operators';
+import { IDete } from '../../dete/dete.model';
 
 export type EntityResponseType = HttpResponse<IFormular>;
 export type EntityArrayResponseType = HttpResponse<IFormular[]>;
@@ -18,8 +19,8 @@ export class FormularService {
 
   constructor(protected http: HttpClient, protected applicationConfigService: ApplicationConfigService) {}
 
-  create(formular: IFormular): Observable<EntityResponseType> {
-    return this.http.post<IFormular>(this.resourceUrl, formular, { observe: 'response' });
+  create(formular: IFormular, username: string): Observable<EntityResponseType> {
+    return this.http.post<IFormular>(this.resourceUrl + '/' + username, formular, { observe: 'response' });
   }
 
   update(formular: IFormular): Observable<EntityResponseType> {
@@ -65,5 +66,17 @@ export class FormularService {
   getDecaZaRaspored(req?: any): Observable<EntityArrayResponseType> {
     const options = createRequestOption(req);
     return this.http.get<DeteZaGrupuDTO[]>(this.resourceUrl + '/getDeca', { params: options, observe: 'response' });
+  }
+
+  queryFormularOfRoditelj(req: { size: number; page: number; sort: string[] }, username?: string): Observable<EntityArrayResponseType> {
+    const options = createRequestOption(req);
+    return this.http.get<IFormular[]>(this.resourceUrl + '/findByRoditelj/' + username!, { params: options, observe: 'response' });
+  }
+
+  odobri(id: number): Observable<EntityResponseType> {
+    return this.http.put<IFormular>(`${this.resourceUrl}/odobri/` + String(id), 'ODOBREN', { observe: 'response' });
+  }
+  odbij(id: number): Observable<EntityResponseType> {
+    return this.http.put<IFormular>(`${this.resourceUrl}/odbij/` + String(id), 'ODBIJEN', { observe: 'response' });
   }
 }
